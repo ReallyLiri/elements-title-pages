@@ -53,12 +53,13 @@ const Row = styled.div<{ justifyStart?: boolean }>`
   width: 100%;
 `;
 
-const Column = styled.div`
+const Column = styled.div<{ minWidth?: string }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  min-width: ${({ minWidth }) => minWidth || "unset"};
 `;
 
 const Title = styled.span`
@@ -461,9 +462,12 @@ function App() {
   return (
     <Container>
       <Row>
-        <Title>Elements Title Pages</Title>
+        <Title>
+          Title Pages in French Printed Translations of the <i>Elements</i>,
+          1564–1700
+        </Title>
       </Row>
-      <Column>
+      <Column minWidth="min(820px, 100%)">
         <Row justifyStart>
           <div>
             <Radio
