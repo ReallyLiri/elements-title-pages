@@ -498,7 +498,7 @@ function App() {
         {mode === "images" && (
           <Radio
             name="Scans"
-            options={["All", "Require"]}
+            options={["All", "Available"]}
             value={requireImage}
             onChange={setRequireImage}
           />
