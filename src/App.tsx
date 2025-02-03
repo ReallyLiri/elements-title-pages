@@ -15,7 +15,7 @@ type Item = {
   author: string | null;
   imageUrl: string | null;
   title: string;
-  titleFormulation: string | null;
+  features: Partial<Record<Feature, string[]>>;
 };
 
 const Container = styled.div`
@@ -33,6 +33,7 @@ const Container = styled.div`
   .basic-multi-select {
     color: black;
     min-width: 12rem;
+    max-width: 40rem;
   }
 `;
 
@@ -42,6 +43,7 @@ const Row = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2rem;
+  width: 100%;
 `;
 
 const Column = styled.div`
@@ -67,6 +69,7 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
         complete: (result) => {
           setItems(
             (result.data as Record<string, unknown>[])
+              .filter((raw) => !!raw["TITLE: FORMULATION"])
               .map((raw) => ({
                 key: raw["key"] as string,
                 year: raw["year"] as string,
@@ -80,9 +83,18 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                 author: raw["author (normalized)"] as string | null,
                 imageUrl: raw["title page url"] as string | null,
                 title: raw["title"] as string,
-                titleFormulation: raw["TITLE: FORMULATION"] as string | null,
-              }))
-              .filter((item) => !!item.titleFormulation),
+                features: Object.keys(FeatureToColumnName).reduce(
+                  (acc, feature) => {
+                    acc[feature as Feature] = FeatureToColumnName[
+                      feature as Feature
+                    ]
+                      .filter((column) => !!raw[column])
+                      .map((column) => raw[column] as string);
+                    return acc;
+                  },
+                  {} as Partial<Record<Feature, string[]>>,
+                ),
+              })),
           );
         },
       });
@@ -100,7 +112,7 @@ const extract = (items: Item[], property: keyof Item) =>
           }
         });
       } else {
-        acc.push(item[property]);
+        acc.push(item[property] as string);
       }
     }
     return acc;
@@ -110,14 +122,19 @@ const MultiSelect = ({
   name,
   options,
   onChange,
+  defaultValues,
+  colors,
 }: {
   name: string;
   options: string[];
   onChange: (values: string[]) => void;
+  defaultValues?: string[];
+  colors?: Record<string, string>;
 }) => (
   <Select
     isMulti
     name={name}
+    defaultValue={defaultValues?.map((v) => ({ value: v, label: v }))}
     options={options.map((option) => ({
       value: option,
       label: option,
@@ -126,17 +143,29 @@ const MultiSelect = ({
     classNamePrefix="select"
     onChange={(selected) => onChange(selected.map((option) => option.value))}
     placeholder={`Select ${name}`}
+    styles={
+      colors
+        ? {
+            option: (styles, { data }) => {
+              console.error(data);
+              return {
+                ...styles,
+                backgroundColor: colors[data.value],
+              };
+            },
+            multiValue: (styles, { data }) => {
+              return {
+                ...styles,
+                backgroundColor: colors[data.value],
+              };
+            },
+          }
+        : undefined
+    }
   />
 );
 
 type Mode = "texts" | "images";
-
-type ItemProps = {
-  item: Item;
-  height: number;
-  width: number;
-  mode: Mode;
-};
 
 const Tile = css`
   border-radius: 1rem;
@@ -171,12 +200,43 @@ const ImageTile = styled.img`
   cursor: pointer;
 `;
 
-const ItemView = ({ item, height, width, mode }: ItemProps) => (
+type ItemProps = {
+  item: Item;
+  height: number;
+  width: number;
+  mode: Mode;
+  features: Feature[];
+};
+
+const highlightText = (
+  text: string,
+  features: Feature[],
+  mapping: Item["features"],
+): string => {
+  let highlighted = text;
+  features.forEach((feature) => {
+    mapping[feature]?.forEach((text) => {
+      highlighted = highlighted.replace(
+        text.trim(),
+        `<span style="background-color: ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;">${text}</span>`,
+      );
+    });
+  });
+  return highlighted;
+};
+
+const ItemView = ({ item, height, width, mode, features }: ItemProps) => (
   <Column style={{ height, width }}>
     <div>
       {item.year} {item.author}, {item.cities.join(", ")}
     </div>
-    {mode === "texts" && <TextTile>{item.title}</TextTile>}
+    {mode === "texts" && (
+      <TextTile
+        dangerouslySetInnerHTML={{
+          __html: highlightText(item.title, features, item.features),
+        }}
+      />
+    )}
     {mode === "images" &&
       (item.imageUrl ? (
         <ImageTile
@@ -218,15 +278,61 @@ const Radio = ({ name, options, value, onChange }: RadioProps) => (
   </Row>
 );
 
+type Feature =
+  | "Base content"
+  | "Content description"
+  | "Process"
+  | "Author"
+  | "Author description"
+  | "Euclid description"
+  | "Patron"
+  | "Edition information"
+  | "Additional content"
+  | "Privileges";
+
+const FeatureToColumnName: Record<Feature, string[]> = {
+  "Base content": ["TITLE: BASE CONTENT"],
+  "Content description": ["TITLE: CONTENT DESC", "TITLE: CONTENT DESC 2"],
+  Process: ["TITLE: PROCESS"],
+  Author: ["TITLE: AUTHOR NAME"],
+  "Author description": [
+    "TITLE: AUTHOR DESCRIPTION",
+    "TITLE: AUTHOR DESCRIPTION 2",
+  ],
+  "Euclid description": ["TITLE: EUCLID DESCRIPTION"],
+  Patron: ["TITLE: PATRON REF"],
+  "Edition information": ["TITLE: EDITION INFO"],
+  "Additional content": [
+    "TITLE: ADDITIONAL CONTENT",
+    "TITLE: ADDITIONAL CONTENT 2",
+  ],
+  Privileges: ["TITLE: PRIVILAGES"],
+};
+
+const FeatureToColor: Record<Feature, string> = {
+  "Base content": "#FADADD",
+  "Content description": "#AEC6CF",
+  Process: "#B5EAD7",
+  Author: "#909fd7",
+  "Author description": "#FFDAB9",
+  "Euclid description": "#FFFACD",
+  Patron: "#D4C5F9",
+  "Edition information": "#FFC1CC",
+  "Additional content": "#9783d2",
+  Privileges: "#D1E7E0",
+};
+
 function App() {
   const [items, setItems] = useState<Item[]>();
   const [mode, setMode] = useState<Mode>("texts");
   const [cities, setCities] = useState<string[]>([]);
   const [authors, setAuthors] = useState<string[]>([]);
-  const [highlights, setHighlights] = useState<boolean>(true);
   const [requireImage, setRequireImage] = useState<boolean>(false);
   const { width } = useWindowSize();
   const [tileColumns, setTileColumns] = useState(1);
+  const [features, setFeatures] = useState<Feature[]>(
+    Object.keys(FeatureToColumnName) as Feature[],
+  );
   const tileHeight = 400;
   const tileWidth = 400;
 
@@ -318,12 +424,16 @@ function App() {
         <MultiSelect name="Cities" options={allCities} onChange={setCities} />
       </Row>
       {mode === "texts" && (
-        <Radio
-          name="Highlights"
-          options={["Hide", "Show"]}
-          value={highlights}
-          onChange={setHighlights}
-        />
+        <Row>
+          <span>Features:</span>
+          <MultiSelect
+            name="Features"
+            defaultValues={features}
+            options={Object.keys(FeatureToColumnName)}
+            onChange={(f) => setFeatures(f as Feature[])}
+            colors={FeatureToColor}
+          />
+        </Row>
       )}
       {mode === "images" && (
         <Radio
@@ -334,17 +444,23 @@ function App() {
         />
       )}
       {itemsMatrix?.map((row, rowIndex) => (
-        <Row key={rowIndex}>
-          {(rowIndex % 2 === 0 ? row : row.reverse()).map((item, itemIndex) => (
-            <ItemView
-              key={itemIndex}
-              height={tileHeight}
-              width={tileWidth}
-              item={item}
-              mode={mode}
-            />
-          ))}
-        </Row>
+        <>
+          <Row key={rowIndex}>
+            {(rowIndex % 2 === 0 ? row : row.reverse()).map(
+              (item, itemIndex) => (
+                <ItemView
+                  key={itemIndex}
+                  height={tileHeight}
+                  width={tileWidth}
+                  item={item}
+                  mode={mode}
+                  features={features}
+                />
+              ),
+            )}
+          </Row>
+          <div style={{ height: 1, backgroundColor: "white", width: "80%" }} />
+        </>
       ))}
     </Container>
   );
