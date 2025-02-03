@@ -51,6 +51,7 @@ const Row = styled.div<{ justifyStart?: boolean }>`
   align-items: center;
   gap: 2rem;
   width: 100%;
+  flex-wrap: wrap;
 `;
 
 const Column = styled.div<{ minWidth?: string }>`
@@ -60,6 +61,7 @@ const Column = styled.div<{ minWidth?: string }>`
   align-items: center;
   gap: 1rem;
   min-width: ${({ minWidth }) => minWidth || "unset"};
+  max-width: 90vw;
 `;
 
 const Title = styled.span`
