@@ -1,5 +1,12 @@
 import styled from "@emotion/styled";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Papa from "papaparse";
 import Select from "react-select";
 import { useWindowSize } from "@uidotdev/usehooks";
@@ -322,6 +329,71 @@ const FeatureToColor: Record<Feature, string> = {
   Privileges: "#D1E7E0",
 };
 
+const HorizontalLine = ({ width }: { width: number }) => (
+  <div style={{ height: 1, backgroundColor: "white", width }} />
+);
+
+const VerticalLine = ({ height, state }: { height: number; state: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [render, setRender] = useState("");
+  const nextState = () => setRender(`${Math.random()}`);
+
+  useEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      nextState();
+    });
+    resizeObserver.observe(ref.current);
+
+    return () => resizeObserver.disconnect();
+  }, []);
+
+  useEffect(() => {
+    nextState();
+  }, [state]);
+
+  return (
+    <>
+      <div
+        ref={ref}
+        style={{
+          width: 1,
+          backgroundColor: "white",
+          height: height,
+        }}
+      />
+      {ref.current && (
+        <>
+          <div
+            key={render}
+            style={{
+              width: 1,
+              height: "2rem",
+              position: "absolute",
+              left: ref.current.offsetLeft,
+              top: ref.current.offsetTop + ref.current.offsetHeight,
+              backgroundColor: "white",
+            }}
+          />
+          <div
+            style={{
+              width: 1,
+              height: "2rem",
+              position: "absolute",
+              left: ref.current.offsetLeft,
+              top: `calc(${ref.current.offsetTop}px - 2rem)`,
+              backgroundColor: "white",
+            }}
+          />
+        </>
+      )}
+    </>
+  );
+};
+
 function App() {
   const [items, setItems] = useState<Item[]>();
   const [mode, setMode] = useState<Mode>("texts");
@@ -445,7 +517,10 @@ function App() {
       )}
       {itemsMatrix?.map((row, rowIndex) => (
         <>
-          <Row key={rowIndex}>
+          <Row key={`${rowIndex}_row`}>
+            {rowIndex % 2 === 1 && (
+              <VerticalLine height={tileHeight} state={mode} />
+            )}
             {(rowIndex % 2 === 0 ? row : row.reverse()).map(
               (item, itemIndex) => (
                 <ItemView
@@ -458,8 +533,14 @@ function App() {
                 />
               ),
             )}
+            {rowIndex % 2 === 0 && (
+              <VerticalLine height={tileHeight} state={mode} />
+            )}
           </Row>
-          <div style={{ height: 1, backgroundColor: "white", width: "80%" }} />
+          <HorizontalLine
+            key={`${rowIndex}_line`}
+            width={(tileWidth + 32) * tileColumns}
+          />
         </>
       ))}
     </Container>
