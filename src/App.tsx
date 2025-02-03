@@ -44,10 +44,10 @@ const Container = styled.div`
   }
 `;
 
-const Row = styled.div`
+const Row = styled.div<{ justifyStart?: boolean }>`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: ${({ justifyStart }) => (justifyStart ? "start" : "center")};
   align-items: center;
   gap: 2rem;
   width: 100%;
@@ -264,7 +264,7 @@ type RadioProps = {
 };
 
 const Radio = ({ name, options, value, onChange }: RadioProps) => (
-  <Row>
+  <Row justifyStart>
     <div>{name}:</div>
     <label>
       <input
@@ -463,58 +463,47 @@ function App() {
       <Row>
         <Title>Elements Title Pages</Title>
       </Row>
-      <Row>
-        <div>Mode:</div>
-        <Select
-          name="mode"
-          defaultValue={mode}
-          options={[
-            {
-              // @ts-expect-error ...
-              value: "texts",
-              label: "Texts",
-            },
-            {
-              // @ts-expect-error ...
-              value: "images",
-              label: "Scans",
-            },
-          ]}
-          className="basic-multi-select"
-          classNamePrefix="select"
-          onChange={(selected) =>
-            // @ts-expect-error ...
-            setMode(selected.value)
-          }
-        />
-        <div>Filters:</div>
-        <MultiSelect
-          name="Authors"
-          options={allAuthors}
-          onChange={setAuthors}
-        />
-        <MultiSelect name="Cities" options={allCities} onChange={setCities} />
-      </Row>
-      {mode === "texts" && (
-        <Row>
-          <span>Features:</span>
-          <MultiSelect
-            name="Features"
-            defaultValues={features}
-            options={Object.keys(FeatureToColumnName)}
-            onChange={(f) => setFeatures(f as Feature[])}
-            colors={FeatureToColor}
-          />
+      <Column>
+        <Row justifyStart>
+          <div>
+            <Radio
+              name="Mode"
+              options={["Texts", "Scans"]}
+              value={mode === "images"}
+              onChange={(b) => setMode(b ? "images" : "texts")}
+            />
+          </div>
         </Row>
-      )}
-      {mode === "images" && (
-        <Radio
-          name="Scans"
-          options={["All", "Require"]}
-          value={requireImage}
-          onChange={setRequireImage}
-        />
-      )}
+        <Row justifyStart>
+          <div>Filters:</div>
+          <MultiSelect
+            name="Authors"
+            options={allAuthors}
+            onChange={setAuthors}
+          />
+          <MultiSelect name="Cities" options={allCities} onChange={setCities} />
+        </Row>
+        {mode === "texts" && (
+          <Row justifyStart>
+            <span>Highlight Features:</span>
+            <MultiSelect
+              name="Features"
+              defaultValues={features}
+              options={Object.keys(FeatureToColumnName)}
+              onChange={(f) => setFeatures(f as Feature[])}
+              colors={FeatureToColor}
+            />
+          </Row>
+        )}
+        {mode === "images" && (
+          <Radio
+            name="Scans"
+            options={["All", "Require"]}
+            value={requireImage}
+            onChange={setRequireImage}
+          />
+        )}
+      </Column>
       {itemsMatrix?.map((row, rowIndex) => (
         <>
           <Row key={`${rowIndex}_row`}>
