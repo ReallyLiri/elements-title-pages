@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import Papa from "papaparse";
 import Select from "react-select";
-import { useWindowSize } from "@uidotdev/usehooks";
 import { css } from "@emotion/react";
 
 const CSV_PATH = "/docs/EiP.csv";
@@ -11,8 +10,8 @@ type Item = {
   key: string;
   year: string;
   cities: string[];
-  languages?: string[];
-  author: string | null;
+  languages: string[];
+  authors: string[];
   imageUrl: string | null;
   title: string;
   features: Partial<Record<Feature, string[]>>;
@@ -83,7 +82,9 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                   raw["language"] as string,
                   raw["language 2"] as string,
                 ].filter((city) => city) as string[],
-                author: raw["author (normalized)"] as string | null,
+                authors:
+                  (raw["author (normalized)"] as string | null)?.split(", ") ||
+                  [],
                 imageUrl: raw["title page url"] as string | null,
                 title: raw["title"] as string,
                 features: Object.keys(FeatureToColumnName).reduce(
@@ -97,7 +98,8 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                   },
                   {} as Partial<Record<Feature, string[]>>,
                 ),
-              })),
+              }))
+              .filter((item) => item.languages.includes("FRENCH")),
           );
         },
       });
@@ -106,20 +108,25 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
 };
 
 const extract = (items: Item[], property: keyof Item) =>
-  items.reduce((acc, item) => {
-    if (item[property]) {
-      if (Array.isArray(item[property])) {
-        item[property].forEach((value) => {
+  items
+    .reduce((acc, item) => {
+      if (item[property]) {
+        if (Array.isArray(item[property])) {
+          item[property].forEach((value) => {
+            if (!acc.includes(value)) {
+              acc.push(value);
+            }
+          });
+        } else {
+          const value = item[property] as string;
           if (!acc.includes(value)) {
             acc.push(value);
           }
-        });
-      } else {
-        acc.push(item[property] as string);
+        }
       }
-    }
-    return acc;
-  }, [] as string[]);
+      return acc;
+    }, [] as string[])
+    .sort();
 
 const MultiSelect = ({
   name,
@@ -231,7 +238,7 @@ const highlightText = (
 const ItemView = ({ item, height, width, mode, features }: ItemProps) => (
   <Column style={{ height, width }}>
     <div>
-      {item.year} {item.author}, {item.cities.join(", ")}
+      {item.year} {item.authors.join(" & ")}, {item.cities.join(", ")}
     </div>
     {mode === "texts" && (
       <TextTile
@@ -331,7 +338,6 @@ function App() {
   const [cities, setCities] = useState<string[]>([]);
   const [authors, setAuthors] = useState<string[]>([]);
   const [requireImage, setRequireImage] = useState<boolean>(false);
-  const { width } = useWindowSize();
   const [features, setFeatures] = useState<Feature[]>(
     Object.keys(FeatureToColumnName) as Feature[],
   );
@@ -344,7 +350,7 @@ function App() {
   );
 
   const allAuthors = useMemo(
-    () => (items ? extract(items, "author") : []),
+    () => (items ? extract(items, "authors") : []),
     [items],
   );
 
@@ -356,7 +362,10 @@ function App() {
         }
       }
       if (authors.length) {
-        if (item.author && !authors.includes(item.author)) {
+        if (
+          item.authors.length > 0 &&
+          !item.authors.some((a) => authors.includes(a))
+        ) {
           return false;
         }
       }
