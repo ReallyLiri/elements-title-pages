@@ -1,12 +1,5 @@
 import styled from "@emotion/styled";
-import {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import Papa from "papaparse";
 import Select from "react-select";
 import { useWindowSize } from "@uidotdev/usehooks";
@@ -332,71 +325,6 @@ const FeatureToColor: Record<Feature, string> = {
   Privileges: "#D1E7E0",
 };
 
-const HorizontalLine = ({ width }: { width: number }) => (
-  <div style={{ height: 1, backgroundColor: "white", width }} />
-);
-
-const VerticalLine = ({ height, state }: { height: number; state: string }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [render, setRender] = useState("");
-  const nextState = () => setRender(`${Math.random()}`);
-
-  useEffect(() => {
-    if (!ref.current) {
-      return;
-    }
-
-    const resizeObserver = new ResizeObserver(() => {
-      nextState();
-    });
-    resizeObserver.observe(ref.current);
-
-    return () => resizeObserver.disconnect();
-  }, []);
-
-  useEffect(() => {
-    nextState();
-  }, [state]);
-
-  return (
-    <>
-      <div
-        ref={ref}
-        style={{
-          width: 1,
-          backgroundColor: "white",
-          height: height,
-        }}
-      />
-      {ref.current && (
-        <>
-          <div
-            key={render}
-            style={{
-              width: 1,
-              height: "2rem",
-              position: "absolute",
-              left: ref.current.offsetLeft,
-              top: ref.current.offsetTop + ref.current.offsetHeight,
-              backgroundColor: "white",
-            }}
-          />
-          <div
-            style={{
-              width: 1,
-              height: "2rem",
-              position: "absolute",
-              left: ref.current.offsetLeft,
-              top: `calc(${ref.current.offsetTop}px - 2rem)`,
-              backgroundColor: "white",
-            }}
-          />
-        </>
-      )}
-    </>
-  );
-};
-
 function App() {
   const [items, setItems] = useState<Item[]>();
   const [mode, setMode] = useState<Mode>("texts");
@@ -404,7 +332,6 @@ function App() {
   const [authors, setAuthors] = useState<string[]>([]);
   const [requireImage, setRequireImage] = useState<boolean>(false);
   const { width } = useWindowSize();
-  const [tileColumns, setTileColumns] = useState(1);
   const [features, setFeatures] = useState<Feature[]>(
     Object.keys(FeatureToColumnName) as Feature[],
   );
@@ -443,23 +370,6 @@ function App() {
   }, [items, cities, authors, mode, requireImage]);
 
   useEffect(() => loadData(setItems), []);
-
-  useEffect(() => {
-    if (width) {
-      setTileColumns(Math.max(1, Math.floor(width / tileWidth)));
-    }
-  }, [width]);
-
-  const itemsMatrix = useMemo(() => {
-    return filteredItems?.reduce((acc, item, index) => {
-      const rowIndex = Math.floor(index / tileColumns);
-      if (!acc[rowIndex]) {
-        acc[rowIndex] = [];
-      }
-      acc[rowIndex].push(item);
-      return acc;
-    }, [] as Item[][]);
-  }, [filteredItems, tileColumns]);
 
   return (
     <Container>
@@ -510,34 +420,18 @@ function App() {
           />
         )}
       </Column>
-      {itemsMatrix?.map((row, rowIndex) => (
-        <>
-          <Row key={`${rowIndex}_row`}>
-            {rowIndex % 2 === 1 && (
-              <VerticalLine height={tileHeight} state={mode} />
-            )}
-            {(rowIndex % 2 === 0 ? row : row.reverse()).map(
-              (item, itemIndex) => (
-                <ItemView
-                  key={itemIndex}
-                  height={tileHeight}
-                  width={tileWidth}
-                  item={item}
-                  mode={mode}
-                  features={features}
-                />
-              ),
-            )}
-            {rowIndex % 2 === 0 && (
-              <VerticalLine height={tileHeight} state={mode} />
-            )}
-          </Row>
-          <HorizontalLine
-            key={`${rowIndex}_line`}
-            width={(tileWidth + 32) * tileColumns}
+      <Row>
+        {filteredItems?.map((item) => (
+          <ItemView
+            key={item.key}
+            height={tileHeight}
+            width={tileWidth}
+            item={item}
+            mode={mode}
+            features={features}
           />
-        </>
-      ))}
+        ))}
+      </Row>
     </Container>
   );
 }
