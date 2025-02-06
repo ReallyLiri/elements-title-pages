@@ -104,7 +104,11 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                   {} as Partial<Record<Feature, string[]>>,
                 ),
               }))
-              .filter((item) => item.languages.includes("FRENCH")),
+              .filter((item) => item.languages.includes("FRENCH"))
+              .sort(
+                (a, b) =>
+                  a.year.localeCompare(b.year) || a.key.localeCompare(b.key),
+              ),
           );
         },
       });
@@ -235,7 +239,7 @@ const highlightText = (
         feature === "Verbs"
           ? `border: 2px solid ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`
           : `background-color: ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`;
-      highlighted = highlighted.replace(
+      highlighted = highlighted.replaceAll(
         text.trim(),
         `<span style="${style}">${text}</span>`,
       );
@@ -300,7 +304,6 @@ const Radio = ({ name, options, value, onChange }: RadioProps) => (
 type Feature =
   | "Base content"
   | "Content description"
-  | "Process"
   | "Author"
   | "Author description"
   | "Euclid mentioned"
@@ -316,7 +319,6 @@ type Feature =
 const FeatureToColumnName: Record<Feature, string[]> = {
   "Base content": ["TITLE: BASE CONTENT"],
   "Content description": ["TITLE: CONTENT DESC", "TITLE: CONTENT DESC 2"],
-  Process: ["TITLE: PROCESS"],
   Author: ["TITLE: AUTHOR NAME"],
   "Author description": [
     "TITLE: AUTHOR DESCRIPTION",
@@ -337,6 +339,7 @@ const FeatureToColumnName: Record<Feature, string[]> = {
 };
 
 const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
+  "Euclid mentioned": true,
   "Other names": true,
   "From language": true,
   "To language": true,
@@ -346,7 +349,6 @@ const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
 const FeatureToColor: Record<Feature, string> = {
   "Base content": "#FADADD",
   "Content description": "#AEC6CF",
-  Process: "#B5EAD7",
   Author: "#909fd7",
   "Author description": "#FFDAB9",
   "Euclid mentioned": "#FFFACD",
@@ -407,8 +409,6 @@ function App() {
   }, [items, cities, authors, mode, requireImage]);
 
   useEffect(() => loadData(setItems), []);
-
-  console.error(filteredItems);
 
   return (
     <Container>
