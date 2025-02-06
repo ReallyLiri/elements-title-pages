@@ -93,7 +93,12 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                       feature as Feature
                     ]
                       .filter((column) => !!raw[column])
-                      .map((column) => raw[column] as string);
+                      .map((column) => raw[column] as string)
+                      .flatMap((text) =>
+                        FeaturesToSplit[feature as Feature]
+                          ? text.split(", ")
+                          : [text],
+                      );
                     return acc;
                   },
                   {} as Partial<Record<Feature, string[]>>,
@@ -226,9 +231,13 @@ const highlightText = (
   let highlighted = text;
   features.forEach((feature) => {
     mapping[feature]?.forEach((text) => {
+      const style =
+        feature === "Verbs"
+          ? `border: 2px solid ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`
+          : `background-color: ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`;
       highlighted = highlighted.replace(
         text.trim(),
-        `<span style="background-color: ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;">${text}</span>`,
+        `<span style="${style}">${text}</span>`,
       );
     });
   });
@@ -294,11 +303,15 @@ type Feature =
   | "Process"
   | "Author"
   | "Author description"
-  | "Euclid description"
+  | "Euclid mentioned"
   | "Patron"
   | "Edition information"
   | "Additional content"
-  | "Privileges";
+  | "Privileges"
+  | "Other names"
+  | "From language"
+  | "To language"
+  | "Verbs";
 
 const FeatureToColumnName: Record<Feature, string[]> = {
   "Base content": ["TITLE: BASE CONTENT"],
@@ -309,7 +322,7 @@ const FeatureToColumnName: Record<Feature, string[]> = {
     "TITLE: AUTHOR DESCRIPTION",
     "TITLE: AUTHOR DESCRIPTION 2",
   ],
-  "Euclid description": ["TITLE: EUCLID DESCRIPTION"],
+  "Euclid mentioned": ["EUCLID MENTIONED IN TITLE PAGE"],
   Patron: ["TITLE: PATRON REF"],
   "Edition information": ["TITLE: EDITION INFO"],
   "Additional content": [
@@ -317,6 +330,17 @@ const FeatureToColumnName: Record<Feature, string[]> = {
     "TITLE: ADDITIONAL CONTENT 2",
   ],
   Privileges: ["TITLE: PRIVILAGES"],
+  "Other names": ["OTHER NAMES"],
+  "From language": ["EXPLICITLY STATED: TRANSLATED FROM"],
+  "To language": ["EXPLICITLY STATED: TRANSLATED TO"],
+  Verbs: ["TITLE: VERBS"],
+};
+
+const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
+  "Other names": true,
+  "From language": true,
+  "To language": true,
+  Verbs: true,
 };
 
 const FeatureToColor: Record<Feature, string> = {
@@ -325,11 +349,15 @@ const FeatureToColor: Record<Feature, string> = {
   Process: "#B5EAD7",
   Author: "#909fd7",
   "Author description": "#FFDAB9",
-  "Euclid description": "#FFFACD",
+  "Euclid mentioned": "#FFFACD",
   Patron: "#D4C5F9",
   "Edition information": "#FFC1CC",
   "Additional content": "#9783d2",
   Privileges: "#D1E7E0",
+  "Other names": "#e567ac",
+  "From language": "#25b47e",
+  "To language": "#e59c67",
+  Verbs: "#954caf",
 };
 
 function App() {
@@ -379,6 +407,8 @@ function App() {
   }, [items, cities, authors, mode, requireImage]);
 
   useEffect(() => loadData(setItems), []);
+
+  console.error(filteredItems);
 
   return (
     <Container>
