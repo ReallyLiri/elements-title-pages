@@ -264,7 +264,14 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => (
       (item.imageUrl ? (
         <ImageTile
           src={item.imageUrl}
-          onClick={() => window.open(item.imageUrl!, "_blank")?.focus()}
+          onClick={() =>
+            window
+              .open(
+                item.imageUrl?.replace("i.imgur.com", "rimgo.catsarch.com"),
+                "_blank",
+              )
+              ?.focus()
+          }
         />
       ) : (
         <NoImageTile>Not Available</NoImageTile>
