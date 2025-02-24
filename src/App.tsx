@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import Papa from "papaparse";
 import Select from "react-select";
 import { css } from "@emotion/react";
+import { images } from "./images.ts";
 
 const CSV_PATH = "/docs/EiP.csv";
 
@@ -85,7 +86,7 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                 authors:
                   (raw["author (normalized)"] as string | null)?.split(", ") ||
                   [],
-                imageUrl: raw["title page url"] as string | null,
+                imageUrl: images[raw["key"] as string],
                 title: raw["title"] as string,
                 features: Object.keys(FeatureToColumnName).reduce(
                   (acc, feature) => {
