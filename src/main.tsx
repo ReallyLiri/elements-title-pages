@@ -11,6 +11,7 @@ createRoot(document.getElementById("root")!).render(
     <Tooltip
       id="features"
       style={{
+        zIndex: 2,
         backgroundColor: "white",
         color: "black",
         padding: "1rem",

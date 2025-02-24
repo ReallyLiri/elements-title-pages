@@ -228,7 +228,7 @@ const Tile = css`
   clip-path: inset(0 round 1rem);
 `;
 
-const TextTile = styled.div`
+const TextTile = styled.div<{ alignCenter: boolean }>`
   ${Tile};
   background-color: aliceblue;
   color: black;
@@ -237,6 +237,7 @@ const TextTile = styled.div`
   height: 90%;
   width: 90%;
   line-height: 1.8;
+  text-align: ${({ alignCenter }) => (alignCenter ? "center" : "start")};
 `;
 
 const NoImageTile = styled.div`
@@ -284,6 +285,10 @@ const highlightText = (
     });
   });
   highlighted = highlighted.replaceAll("\n", "<br/>");
+  highlighted = highlighted.replace(
+    /\[(.*?)]:/g,
+    "<span style='font-size: 0.8rem; opacity: .8'>[$1]:</span>",
+  );
   return highlighted;
 };
 
@@ -294,6 +299,7 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => (
     </div>
     {mode === "texts" && (
       <TextTile
+        alignCenter={!!item.imageUrl}
         dangerouslySetInnerHTML={{
           __html: highlightText(item.title, features, item.features),
         }}
