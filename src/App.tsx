@@ -200,6 +200,7 @@ const TextTile = styled.div`
   overflow: auto;
   height: 90%;
   width: 90%;
+  line-height: 1.8;
 `;
 
 const NoImageTile = styled.div`
@@ -246,6 +247,7 @@ const highlightText = (
       );
     });
   });
+  highlighted = highlighted.replaceAll("\n", "<br/>");
   return highlighted;
 };
 
@@ -310,63 +312,60 @@ const Radio = ({ name, options, value, onChange }: RadioProps) => (
 );
 
 type Feature =
-  | "Base content"
-  | "Content description"
-  | "Author"
-  | "Author description"
-  | "Euclid mentioned"
-  | "Patron"
-  | "Edition information"
-  | "Additional content"
-  | "Privileges"
-  | "Other names"
-  | "From language"
-  | "To language"
+  | "Base Content"
+  | "Base Content Description"
+  | "Adapter Attribution"
+  | "Adapter Description"
+  | "Patronage Dedication"
+  | "Edition Statement"
+  | "Supplementary Content"
+  | "Publishing Privileges"
+  | "Other Educational Authorities"
+  | "Explicit Language References"
   | "Verbs";
 
 const FeatureToColumnName: Record<Feature, string[]> = {
-  "Base content": ["TITLE: BASE CONTENT"],
-  "Content description": ["TITLE: CONTENT DESC", "TITLE: CONTENT DESC 2"],
-  Author: ["TITLE: AUTHOR NAME"],
-  "Author description": [
+  "Base Content": ["TITLE: BASE CONTENT"],
+  "Base Content Description": ["TITLE: CONTENT DESC", "TITLE: CONTENT DESC 2"],
+  "Adapter Attribution": ["TITLE: AUTHOR NAME"],
+  "Adapter Description": [
     "TITLE: AUTHOR DESCRIPTION",
     "TITLE: AUTHOR DESCRIPTION 2",
   ],
-  "Euclid mentioned": ["EUCLID MENTIONED IN TITLE PAGE"],
-  Patron: ["TITLE: PATRON REF"],
-  "Edition information": ["TITLE: EDITION INFO"],
-  "Additional content": [
+  // "Euclid mentioned": ["EUCLID MENTIONED IN TITLE PAGE"],
+  "Patronage Dedication": ["TITLE: PATRON REF"],
+  "Edition Statement": ["TITLE: EDITION INFO"],
+  "Supplementary Content": [
     "TITLE: ADDITIONAL CONTENT",
     "TITLE: ADDITIONAL CONTENT 2",
   ],
-  Privileges: ["TITLE: PRIVILEGES"],
-  "Other names": ["OTHER NAMES"],
-  "From language": ["EXPLICITLY STATED: TRANSLATED FROM"],
-  "To language": ["EXPLICITLY STATED: TRANSLATED TO"],
+  "Publishing Privileges": ["TITLE: PRIVILEGES"],
+  "Other Educational Authorities": ["OTHER NAMES"],
+  "Explicit Language References": [
+    "EXPLICITLY STATED: TRANSLATED FROM",
+    "EXPLICITLY STATED: TRANSLATED TO",
+  ],
   Verbs: ["TITLE: VERBS"],
 };
 
 const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
-  "Euclid mentioned": true,
-  "Other names": true,
-  "From language": true,
-  "To language": true,
+  "Other Educational Authorities": true,
+  "Explicit Language References": true,
   Verbs: true,
 };
 
 const FeatureToColor: Record<Feature, string> = {
-  "Base content": "#FADADD",
-  "Content description": "#AEC6CF",
-  Author: "#909fd7",
-  "Author description": "#FFDAB9",
-  "Euclid mentioned": "#FFFACD",
-  Patron: "#D4C5F9",
-  "Edition information": "#FFC1CC",
-  "Additional content": "#9783d2",
-  Privileges: "#D1E7E0",
-  "Other names": "#e567ac",
-  "From language": "#25b47e",
-  "To language": "#e59c67",
+  "Base Content": "#FADADD",
+  "Base Content Description": "#AEC6CF",
+  "Adapter Attribution": "#909fd7",
+  "Adapter Description": "#FFDAB9",
+  // "Euclid mentioned": "#FFFACD",
+  "Patronage Dedication": "#D4C5F9",
+  "Edition Statement": "#FFC1CC",
+  "Supplementary Content": "#9783d2",
+  "Publishing Privileges": "#D1E7E0",
+  "Other Educational Authorities": "#e567ac",
+  "Explicit Language References": "#e59c67",
   Verbs: "#954caf",
 };
 
@@ -448,7 +447,7 @@ function App() {
         </Row>
         {mode === "texts" && (
           <Row justifyStart>
-            <span>Highlight Features:</span>
+            <span>Highlight Segments:</span>
             <MultiSelect
               name="Features"
               defaultValues={features}
