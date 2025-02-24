@@ -138,26 +138,62 @@ const extract = (items: Item[], property: keyof Item) =>
     }, [] as string[])
     .sort();
 
+const authorDisplayName = (author: string) => {
+  const parts = author.split(" ");
+  return `${parts.slice(1).join(" ").trim()}, ${parts[0]}`;
+};
+
+const OptionLabel = ({
+  option,
+  tooltip,
+}: {
+  option: string;
+  tooltip: string;
+}) => (
+  <span data-tooltip-id="features" data-tooltip-content={tooltip}>
+    {option}
+  </span>
+);
+
 const MultiSelect = ({
   name,
   options,
   onChange,
   defaultValues,
   colors,
+  tooltips,
+  labelFn,
 }: {
   name: string;
   options: string[];
   onChange: (values: string[]) => void;
   defaultValues?: string[];
   colors?: Record<string, string>;
+  tooltips?: Record<string, string>;
+  labelFn?: (opt: string) => string;
 }) => (
   <Select
     isMulti
     name={name}
-    defaultValue={defaultValues?.map((v) => ({ value: v, label: v }))}
+    defaultValue={defaultValues?.map((v) => ({
+      value: v,
+      label: tooltips ? (
+        <OptionLabel option={v} tooltip={tooltips[v]} />
+      ) : labelFn ? (
+        labelFn(v)
+      ) : (
+        v
+      ),
+    }))}
     options={options.map((option) => ({
       value: option,
-      label: option,
+      label: tooltips ? (
+        <OptionLabel option={option} tooltip={tooltips[option]} />
+      ) : labelFn ? (
+        labelFn(option)
+      ) : (
+        option
+      ),
     }))}
     className="basic-multi-select"
     classNamePrefix="select"
@@ -332,7 +368,6 @@ const FeatureToColumnName: Record<Feature, string[]> = {
     "TITLE: AUTHOR DESCRIPTION",
     "TITLE: AUTHOR DESCRIPTION 2",
   ],
-  // "Euclid mentioned": ["EUCLID MENTIONED IN TITLE PAGE"],
   "Patronage Dedication": ["TITLE: PATRON REF"],
   "Edition Statement": ["TITLE: EDITION INFO"],
   "Supplementary Content": [
@@ -359,7 +394,6 @@ const FeatureToColor: Record<Feature, string> = {
   "Base Content Description": "#AEC6CF",
   "Adapter Attribution": "#909fd7",
   "Adapter Description": "#FFDAB9",
-  // "Euclid mentioned": "#FFFACD",
   "Patronage Dedication": "#D4C5F9",
   "Edition Statement": "#FFC1CC",
   "Supplementary Content": "#9783d2",
@@ -367,6 +401,29 @@ const FeatureToColor: Record<Feature, string> = {
   "Other Educational Authorities": "#e567ac",
   "Explicit Language References": "#e59c67",
   Verbs: "#954caf",
+};
+
+const FeatureToTooltip: Record<Feature, string> = {
+  "Base Content":
+    "The minimal designation of the book’s main content, typically appearing at the beginning of the title page, without elaboration.",
+  "Base Content Description":
+    "Additional elements extending beyond the base content, describing it or highlighting the book’s special features.",
+  "Adapter Attribution":
+    "The name of the contemporary adapter (author, editor, translator, commentator, etc.) as it appears on the title page.",
+  "Adapter Description":
+    "Any descriptors found alongside the adapter name, such as academic titles, ranks, or affiliations.",
+  "Patronage Dedication": "Mentions of patrons.",
+  "Edition Statement":
+    "Any information that is highlighted as relevant for this specific edition.",
+  "Supplementary Content": "Additional content included in the book.",
+  "Publishing Privileges":
+    "Mentions of royal privileges or legal permissions granted for printing.",
+  "Other Educational Authorities":
+    "Mentions of other scholars, either ancients, such as Theon of Alexandria, or contemporary, like Simon Stevin.",
+  "Explicit Language References":
+    "Statements identifying the source language (e.g., Latin or Greek) and/or the target language (in this case, French).",
+  Verbs:
+    "Action verbs such as traduit (translated), commenté (commented), augmenté (expanded) that describe the role the contemporary scholar played in bringing about the work.",
 };
 
 function App() {
@@ -387,7 +444,12 @@ function App() {
   );
 
   const allAuthors = useMemo(
-    () => (items ? extract(items, "authors") : []),
+    () =>
+      items
+        ? extract(items, "authors").sort((a, b) =>
+            authorDisplayName(a).localeCompare(authorDisplayName(b)),
+          )
+        : [],
     [items],
   );
 
@@ -442,6 +504,7 @@ function App() {
             name="Authors"
             options={allAuthors}
             onChange={setAuthors}
+            labelFn={authorDisplayName}
           />
           <MultiSelect name="Cities" options={allCities} onChange={setCities} />
         </Row>
@@ -454,6 +517,7 @@ function App() {
               options={Object.keys(FeatureToColumnName)}
               onChange={(f) => setFeatures(f as Feature[])}
               colors={FeatureToColor}
+              tooltips={FeatureToTooltip}
             />
           </Row>
         )}
