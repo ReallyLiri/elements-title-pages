@@ -21,6 +21,6 @@ body {
   height: 100vh;
   color: aliceblue;
   background-color: #282828ff;
-
+  overflow-x: hidden;
   overscroll-behavior: none;
 }

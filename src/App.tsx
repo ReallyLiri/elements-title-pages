@@ -37,13 +37,14 @@ const Container = styled.div`
   }
 `;
 
-const Row = styled.div<{ justifyStart?: boolean }>`
+const Row = styled.div<{ justifyStart?: boolean; gap?: number }>`
   display: flex;
   flex-direction: row;
   justify-content: ${({ justifyStart }) => (justifyStart ? "start" : "center")};
   align-items: center;
-  gap: 2rem;
+  gap: ${({ gap }) => (gap !== undefined ? gap : 2)}rem;
   width: 100%;
+  max-width: 96vw;
   flex-wrap: wrap;
 `;
 
@@ -57,9 +58,11 @@ const Column = styled.div<{ minWidth?: string }>`
   max-width: 90vw;
 `;
 
-const Title = styled.span`
-  font-size: 2rem;
-  font-weight: bold;
+const Text = styled.div<{ size: number; bold?: boolean }>`
+  font-family: "Frank Ruhl Libre", serif;
+  font-size: ${({ size }) => size}rem;
+  font-weight: ${({ bold }) => (bold ? "bold" : "normal")};
+  text-align: center;
 `;
 
 const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
@@ -488,10 +491,14 @@ function App() {
   return (
     <Container>
       <Row>
-        <Title>
-          Title Pages in French Printed Translations of the <i>Elements</i>,
-          1564–1700
-        </Title>
+        <Text bold size={1}>
+          <Text size={2.8}>TITLE PAGES</Text>
+          <Text size={1}>in French Printed Translations,</Text>
+          <Text size={1.6}>
+            of the <i>Elements</i>
+          </Text>
+          <Text size={1.6}>1564–1700</Text>
+        </Text>
       </Row>
       <Column minWidth="min(820px, 100%)">
         <Row justifyStart>
@@ -548,6 +555,11 @@ function App() {
           />
         ))}
       </Row>
+      <Text size={1}>
+        À la Croisée des Hyperliens, chez la scribe fatiguée et sa féline
+        passivement investie, MMXXV.
+      </Text>
+      <div />
     </Container>
   );
 }
