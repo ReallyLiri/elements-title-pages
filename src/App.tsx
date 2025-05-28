@@ -4,6 +4,7 @@ import Papa from "papaparse";
 import Select from "react-select";
 import { css } from "@emotion/react";
 import { images } from "./images.ts";
+import { startCase } from "lodash";
 
 const CSV_PATH = "/docs/EiP.csv";
 
@@ -75,7 +76,7 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
         complete: (result) => {
           setItems(
             (result.data as Record<string, unknown>[])
-              .filter((raw) => !!raw["TITLE: FORMULATION"])
+              //.filter((raw) => !!raw["TITLE: FORMULATION"])
               .map((raw) => ({
                 key: raw["key"] as string,
                 year: raw["year"] as string,
@@ -83,8 +84,8 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                   (city) => city,
                 ) as string[],
                 languages: [
-                  raw["language"] as string,
-                  raw["language 2"] as string,
+                  startCase((raw["language"] as string).toLowerCase()),
+                  startCase((raw["language 2"] as string).toLowerCase()),
                 ].filter((city) => city) as string[],
                 authors:
                   (raw["author (normalized)"] as string | null)?.split(", ") ||
@@ -108,7 +109,7 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                   {} as Partial<Record<Feature, string[]>>,
                 ),
               }))
-              .filter((item) => item.languages.includes("FRENCH"))
+              .filter((item) => !!item.key)
               .sort(
                 (a, b) =>
                   a.year.localeCompare(b.year) || a.key.localeCompare(b.key),
@@ -430,7 +431,7 @@ const FeatureToTooltip: Record<Feature, string> = {
   "Other Educational Authorities":
     "Mentions of other scholars, either ancients, such as Theon of Alexandria, or contemporary, like Simon Stevin.",
   "Explicit Language References":
-    "Statements identifying the source language (e.g., Latin or Greek) and/or the target language (in this case, French).",
+    "Statements identifying the source language (e.g., Latin or Greek) and/or the target language.",
   Verbs:
     "Action verbs such as traduit (translated), commenté (commented), augmenté (expanded) that describe the role the contemporary scholar played in bringing about the work.",
 };
@@ -440,6 +441,7 @@ function App() {
   const [mode, setMode] = useState<Mode>("texts");
   const [cities, setCities] = useState<string[]>([]);
   const [authors, setAuthors] = useState<string[]>([]);
+  const [languages, setLanguages] = useState<string[]>([]);
   const [requireImage, setRequireImage] = useState<boolean>(false);
   const [features, setFeatures] = useState<Feature[]>(
     Object.keys(FeatureToColumnName) as Feature[],
@@ -462,6 +464,14 @@ function App() {
     [items],
   );
 
+  const allLanguages = useMemo(
+    () =>
+      (items ? extract(items, "languages") : []).sort((a, b) =>
+        a.localeCompare(b, undefined, { sensitivity: "base" }),
+      ),
+    [items],
+  );
+
   const filteredItems = useMemo(() => {
     return items?.filter((item) => {
       if (cities.length) {
@@ -477,6 +487,14 @@ function App() {
           return false;
         }
       }
+      if (languages.length) {
+        if (
+          item.languages.length > 0 &&
+          !item.languages.some((l) => languages.includes(l))
+        ) {
+          return false;
+        }
+      }
       if (mode === "images" && requireImage) {
         if (!item.imageUrl) {
           return false;
@@ -484,7 +502,9 @@ function App() {
       }
       return true;
     });
-  }, [items, cities, authors, mode, requireImage]);
+  }, [items, cities, authors, languages, mode, requireImage]);
+
+  console.warn(filteredItems);
 
   useEffect(() => loadData(setItems), []);
 
@@ -493,7 +513,7 @@ function App() {
       <Row>
         <Text bold size={1}>
           <Text size={2.8}>TITLE PAGES</Text>
-          <Text size={1}>in French Printed Translations,</Text>
+          <Text size={1}>in Printed Translations,</Text>
           <Text size={1.6}>
             of the <i>Elements</i>
           </Text>
@@ -520,6 +540,11 @@ function App() {
             labelFn={authorDisplayName}
           />
           <MultiSelect name="Cities" options={allCities} onChange={setCities} />
+          <MultiSelect
+            name="Languages"
+            options={allLanguages}
+            onChange={setLanguages}
+          />
         </Row>
         {mode === "texts" && (
           <Row justifyStart>
