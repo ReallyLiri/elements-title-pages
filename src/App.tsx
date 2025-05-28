@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import Papa from "papaparse";
 import Select from "react-select";
 import { css } from "@emotion/react";
 import { images } from "./images.ts";
 import { startCase } from "lodash";
 import RangeSlider from "./RangeSlider";
+import useLocalStorageState from "use-local-storage-state";
 
 const CSV_PATH = "/docs/EiP.csv";
 
@@ -168,6 +169,7 @@ const MultiSelect = ({
   colors,
   tooltips,
   labelFn,
+  value,
 }: {
   name: string;
   options: string[];
@@ -176,10 +178,21 @@ const MultiSelect = ({
   colors?: Record<string, string>;
   tooltips?: Record<string, string>;
   labelFn?: (opt: string) => string;
+  value?: string[];
 }) => (
   <Select
     isMulti
     name={name}
+    value={value?.map((v) => ({
+      value: v,
+      label: tooltips ? (
+        <OptionLabel option={v} tooltip={tooltips[v]} />
+      ) : labelFn ? (
+        labelFn(v)
+      ) : (
+        v
+      ),
+    }))}
     defaultValue={defaultValues?.map((v) => ({
       value: v,
       label: tooltips ? (
@@ -438,16 +451,31 @@ const FeatureToTooltip: Record<Feature, string> = {
 };
 
 function App() {
-  const [items, setItems] = useState<Item[]>();
-  const [mode, setMode] = useState<Mode>("texts");
-  const [cities, setCities] = useState<string[]>([]);
-  const [authors, setAuthors] = useState<string[]>([]);
-  const [languages, setLanguages] = useState<string[]>([]);
-  const [requireImage, setRequireImage] = useState<boolean>(false);
-  const [yearRange, setYearRange] = useState<[number, number]>([1482, 1703]);
-  const [features, setFeatures] = useState<Feature[]>(
-    Object.keys(FeatureToColumnName) as Feature[],
-  );
+  const [items, setItems] = useLocalStorageState<Item[] | undefined>("items", {
+    defaultValue: undefined,
+    storageSync: false
+  });
+  const [mode, setMode] = useLocalStorageState<Mode>("mode", {
+    defaultValue: "texts"
+  });
+  const [cities, setCities] = useLocalStorageState<string[]>("cities", {
+    defaultValue: []
+  });
+  const [authors, setAuthors] = useLocalStorageState<string[]>("authors", {
+    defaultValue: []
+  });
+  const [languages, setLanguages] = useLocalStorageState<string[]>("languages", {
+    defaultValue: []
+  });
+  const [requireImage, setRequireImage] = useLocalStorageState<boolean>("requireImage", {
+    defaultValue: false
+  });
+  const [yearRange, setYearRange] = useLocalStorageState<[number, number]>("yearRange", {
+    defaultValue: [1482, 1703]
+  });
+  const [features, setFeatures] = useLocalStorageState<Feature[]>("features", {
+    defaultValue: Object.keys(FeatureToColumnName) as Feature[]
+  });
   const tileHeight = 400;
   const tileWidth = 400;
 
@@ -510,7 +538,11 @@ function App() {
     });
   }, [items, cities, authors, languages, mode, requireImage, yearRange]);
 
-  useEffect(() => loadData(setItems), []);
+  useEffect(() => {
+    if (!items) {
+      loadData(setItems);
+    }
+  }, [items, setItems]);
 
   return (
     <Container>
@@ -542,12 +574,19 @@ function App() {
             options={allAuthors}
             onChange={setAuthors}
             labelFn={authorDisplayName}
+            value={authors}
           />
-          <MultiSelect name="Cities" options={allCities} onChange={setCities} />
+          <MultiSelect 
+            name="Cities" 
+            options={allCities} 
+            onChange={setCities}
+            value={cities} 
+          />
           <MultiSelect
             name="Languages"
             options={allLanguages}
             onChange={setLanguages}
+            value={languages}
           />
         </Row>
         <Row justifyStart>
@@ -564,7 +603,7 @@ function App() {
             <span>Highlight Segments:</span>
             <MultiSelect
               name="Features"
-              defaultValues={features}
+              value={features}
               options={Object.keys(FeatureToColumnName)}
               onChange={(f) => setFeatures(f as Feature[])}
               colors={FeatureToColor}
