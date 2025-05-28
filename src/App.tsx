@@ -513,11 +513,11 @@ function App() {
       <Row>
         <Text bold size={1}>
           <Text size={2.8}>TITLE PAGES</Text>
-          <Text size={1}>in Printed Translations,</Text>
+          <Text size={1}>in Printed Translations, of</Text>
           <Text size={1.6}>
-            of the <i>Elements</i>
+            the <i>Elements</i>
           </Text>
-          <Text size={1.6}>1564–1700</Text>
+          <Text size={1.6}>1482–1703</Text>
         </Text>
       </Row>
       <Column minWidth="min(820px, 100%)">
