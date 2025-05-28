@@ -51,7 +51,7 @@ const Row = styled.div<{ justifyStart?: boolean; gap?: number }>`
   flex-wrap: wrap;
 `;
 
-const RestoreFeaturesButton = styled.button`
+const ResetButton = styled.button`
   background-color: #ddd;
   color: #282828ff;
   border: 1px solid #666;
@@ -63,6 +63,14 @@ const RestoreFeaturesButton = styled.button`
   &:hover {
     background-color: #ccc;
   }
+`;
+
+const ToggleButton = styled(ResetButton)<{ isOpen: boolean }>`
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
 `;
 
 const Column = styled.div<{ minWidth?: string; alignItems?: string }>`
@@ -512,6 +520,12 @@ function App() {
   const [features, setFeatures] = useLocalStorageState<Feature[]>("features", {
     defaultValue: Object.keys(FeatureToColumnName) as Feature[],
   });
+  const [controlsOpen, setControlsOpen] = useLocalStorageState<boolean>(
+    "controlsOpen",
+    {
+      defaultValue: true,
+    },
+  );
   const tileHeight = 400;
   const tileWidth = 400;
 
@@ -594,79 +608,98 @@ function App() {
       </Row>
       <Column minWidth="min(820px, 100%)">
         <Row justifyStart>
-          <div>
-            <Radio
-              name="Mode"
-              options={["Texts", "Scans"]}
-              value={mode === "images"}
-              onChange={(b) => setMode(b ? "images" : "texts")}
-            />
-          </div>
+          <ToggleButton
+            onClick={() => setControlsOpen(!controlsOpen)}
+            isOpen={controlsOpen}
+          >
+            <span>{controlsOpen ? "▲" : "▼"}</span>
+            {controlsOpen ? "Hide Controls" : "Show Controls"}
+            <span>{controlsOpen ? "▲" : "▼"}</span>
+          </ToggleButton>
         </Row>
-        <Row justifyStart>
-          <div>Filters:</div>
-          <MultiSelect
-            name="Authors"
-            options={allAuthors}
-            onChange={setAuthors}
-            labelFn={authorDisplayName}
-            value={authors}
-          />
-          <MultiSelect
-            name="Cities"
-            options={allCities}
-            onChange={setCities}
-            value={cities}
-          />
-          <MultiSelect
-            name="Languages"
-            options={allLanguages}
-            onChange={setLanguages}
-            value={languages}
-          />
-        </Row>
-        <Row justifyStart>
-          <RangeSlider
-            name="Year Range"
-            value={yearRange}
-            min={1482}
-            max={1703}
-            onChange={setYearRange}
-          />
-        </Row>
-        {mode === "texts" && (
-          <Row justifyStart>
-            <Column alignItems="end">
-              <span>Highlight Segments:</span>
-              <RestoreFeaturesButton
-                onClick={() =>
-                  setFeatures(Object.keys(FeatureToColumnName) as Feature[])
-                }
-              >
-                Reset
-              </RestoreFeaturesButton>
-            </Column>
-            <div
-              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-            >
+
+        {controlsOpen && (
+          <>
+            <Row justifyStart>
+              <div>
+                <Radio
+                  name="Mode"
+                  options={["Texts", "Scans"]}
+                  value={mode === "images"}
+                  onChange={(b) => setMode(b ? "images" : "texts")}
+                />
+              </div>
+            </Row>
+            <Row justifyStart>
+              <div>Filters:</div>
               <MultiSelect
-                name="Features"
-                value={features}
-                options={Object.keys(FeatureToColumnName)}
-                onChange={(f) => setFeatures(f as Feature[])}
-                colors={FeatureToColor}
-                tooltips={FeatureToTooltip}
+                name="Authors"
+                options={allAuthors}
+                onChange={setAuthors}
+                labelFn={authorDisplayName}
+                value={authors}
               />
-            </div>
-          </Row>
-        )}
-        {mode === "images" && (
-          <Radio
-            name="Scans"
-            options={["All", "Available"]}
-            value={requireImage}
-            onChange={setRequireImage}
-          />
+              <MultiSelect
+                name="Cities"
+                options={allCities}
+                onChange={setCities}
+                value={cities}
+              />
+              <MultiSelect
+                name="Languages"
+                options={allLanguages}
+                onChange={setLanguages}
+                value={languages}
+              />
+            </Row>
+            <Row justifyStart>
+              <RangeSlider
+                name="Year Range"
+                value={yearRange}
+                min={1482}
+                max={1703}
+                onChange={setYearRange}
+              />
+            </Row>
+            {mode === "texts" && (
+              <Row justifyStart>
+                <Column alignItems="end">
+                  <span>Highlight Segments:</span>
+                  <ResetButton
+                    onClick={() =>
+                      setFeatures(Object.keys(FeatureToColumnName) as Feature[])
+                    }
+                  >
+                    Reset
+                  </ResetButton>
+                </Column>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <MultiSelect
+                    name="Features"
+                    value={features}
+                    options={Object.keys(FeatureToColumnName)}
+                    onChange={(f) => setFeatures(f as Feature[])}
+                    colors={FeatureToColor}
+                    tooltips={FeatureToTooltip}
+                  />
+                </div>
+              </Row>
+            )}
+            {mode === "images" && (
+              <Radio
+                name="Scans"
+                options={["All", "Available"]}
+                value={requireImage}
+                onChange={setRequireImage}
+              />
+            )}
+          </>
         )}
       </Column>
       <Row>
