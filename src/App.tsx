@@ -51,11 +51,25 @@ const Row = styled.div<{ justifyStart?: boolean; gap?: number }>`
   flex-wrap: wrap;
 `;
 
-const Column = styled.div<{ minWidth?: string }>`
+const RestoreFeaturesButton = styled.button`
+  background-color: #ddd;
+  color: #282828ff;
+  border: 1px solid #666;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+
+  &:hover {
+    background-color: #ccc;
+  }
+`;
+
+const Column = styled.div<{ minWidth?: string; alignItems?: string }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: ${(props) => props.alignItems || "center"};
   gap: 1rem;
   min-width: ${({ minWidth }) => minWidth || "unset"};
   max-width: 90vw;
@@ -255,6 +269,20 @@ const TextTile = styled.div<{ alignCenter: boolean }>`
   width: 90%;
   line-height: 1.8;
   text-align: ${({ alignCenter }) => (alignCenter ? "center" : "start")};
+  ::-webkit-scrollbar-track {
+    background-color: aliceblue;
+  }
+  ::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #666;
+    border-radius: 0.5rem;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #666 aliceblue;
+  }
 `;
 
 const NoImageTile = styled.div`
@@ -370,7 +398,6 @@ const Radio = ({ name, options, value, onChange }: RadioProps) => (
   </Row>
 );
 
-
 type Feature =
   | "Base Content"
   | "Base Content Description"
@@ -453,28 +480,37 @@ const FeatureToTooltip: Record<Feature, string> = {
 function App() {
   const [items, setItems] = useLocalStorageState<Item[] | undefined>("items", {
     defaultValue: undefined,
-    storageSync: false
+    storageSync: false,
   });
   const [mode, setMode] = useLocalStorageState<Mode>("mode", {
-    defaultValue: "texts"
+    defaultValue: "texts",
   });
   const [cities, setCities] = useLocalStorageState<string[]>("cities", {
-    defaultValue: []
+    defaultValue: [],
   });
   const [authors, setAuthors] = useLocalStorageState<string[]>("authors", {
-    defaultValue: []
+    defaultValue: [],
   });
-  const [languages, setLanguages] = useLocalStorageState<string[]>("languages", {
-    defaultValue: []
-  });
-  const [requireImage, setRequireImage] = useLocalStorageState<boolean>("requireImage", {
-    defaultValue: false
-  });
-  const [yearRange, setYearRange] = useLocalStorageState<[number, number]>("yearRange", {
-    defaultValue: [1482, 1703]
-  });
+  const [languages, setLanguages] = useLocalStorageState<string[]>(
+    "languages",
+    {
+      defaultValue: [],
+    },
+  );
+  const [requireImage, setRequireImage] = useLocalStorageState<boolean>(
+    "requireImage",
+    {
+      defaultValue: false,
+    },
+  );
+  const [yearRange, setYearRange] = useLocalStorageState<[number, number]>(
+    "yearRange",
+    {
+      defaultValue: [1482, 1703],
+    },
+  );
   const [features, setFeatures] = useLocalStorageState<Feature[]>("features", {
-    defaultValue: Object.keys(FeatureToColumnName) as Feature[]
+    defaultValue: Object.keys(FeatureToColumnName) as Feature[],
   });
   const tileHeight = 400;
   const tileWidth = 400;
@@ -576,11 +612,11 @@ function App() {
             labelFn={authorDisplayName}
             value={authors}
           />
-          <MultiSelect 
-            name="Cities" 
-            options={allCities} 
+          <MultiSelect
+            name="Cities"
+            options={allCities}
             onChange={setCities}
-            value={cities} 
+            value={cities}
           />
           <MultiSelect
             name="Languages"
@@ -600,15 +636,28 @@ function App() {
         </Row>
         {mode === "texts" && (
           <Row justifyStart>
-            <span>Highlight Segments:</span>
-            <MultiSelect
-              name="Features"
-              value={features}
-              options={Object.keys(FeatureToColumnName)}
-              onChange={(f) => setFeatures(f as Feature[])}
-              colors={FeatureToColor}
-              tooltips={FeatureToTooltip}
-            />
+            <Column alignItems="end">
+              <span>Highlight Segments:</span>
+              <RestoreFeaturesButton
+                onClick={() =>
+                  setFeatures(Object.keys(FeatureToColumnName) as Feature[])
+                }
+              >
+                Reset
+              </RestoreFeaturesButton>
+            </Column>
+            <div
+              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            >
+              <MultiSelect
+                name="Features"
+                value={features}
+                options={Object.keys(FeatureToColumnName)}
+                onChange={(f) => setFeatures(f as Feature[])}
+                colors={FeatureToColor}
+                tooltips={FeatureToTooltip}
+              />
+            </div>
           </Row>
         )}
         {mode === "images" && (
