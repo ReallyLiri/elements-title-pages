@@ -36,4 +36,5 @@ export const images: Record<string, string> = {
   "Paris 1690": "https://i.imgur.com/V8v0TqH.jpeg",
   "Amsterdam 1697": "https://i.imgur.com/bFhM7xn.jpeg",
   "Paris 1697": "https://i.imgur.com/vxNfEVb.jpeg",
+  "Paris 1693": "https://i.imgur.com/TAwolqQ.png",
 };
