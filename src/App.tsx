@@ -52,16 +52,16 @@ const Row = styled.div<{ justifyStart?: boolean; gap?: number }>`
 `;
 
 const ResetButton = styled.button`
-  background-color: #ddd;
+  background-color: aliceblue;
   color: #282828ff;
-  border: 1px solid #666;
+  border: unset;
   border-radius: 0.25rem;
   padding: 0.25rem 0.5rem;
   cursor: pointer;
   font-size: 0.875rem;
 
   &:hover {
-    background-color: #ccc;
+    background-color: #e3ecf5ff;
   }
 `;
 
