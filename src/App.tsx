@@ -5,6 +5,7 @@ import Select from "react-select";
 import { css } from "@emotion/react";
 import { images } from "./images.ts";
 import { startCase } from "lodash";
+import RangeSlider from "./RangeSlider";
 
 const CSV_PATH = "/docs/EiP.csv";
 
@@ -356,6 +357,7 @@ const Radio = ({ name, options, value, onChange }: RadioProps) => (
   </Row>
 );
 
+
 type Feature =
   | "Base Content"
   | "Base Content Description"
@@ -442,6 +444,7 @@ function App() {
   const [authors, setAuthors] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
   const [requireImage, setRequireImage] = useState<boolean>(false);
+  const [yearRange, setYearRange] = useState<[number, number]>([1482, 1703]);
   const [features, setFeatures] = useState<Feature[]>(
     Object.keys(FeatureToColumnName) as Feature[],
   );
@@ -499,9 +502,13 @@ function App() {
           return false;
         }
       }
+      const year = parseInt(item.year);
+      if (!isNaN(year) && (year < yearRange[0] || year > yearRange[1])) {
+        return false;
+      }
       return true;
     });
-  }, [items, cities, authors, languages, mode, requireImage]);
+  }, [items, cities, authors, languages, mode, requireImage, yearRange]);
 
   useEffect(() => loadData(setItems), []);
 
@@ -541,6 +548,15 @@ function App() {
             name="Languages"
             options={allLanguages}
             onChange={setLanguages}
+          />
+        </Row>
+        <Row justifyStart>
+          <RangeSlider
+            name="Year Range"
+            value={yearRange}
+            min={1482}
+            max={1703}
+            onChange={setYearRange}
           />
         </Row>
         {mode === "texts" && (
@@ -586,4 +602,5 @@ function App() {
   );
 }
 
+export { Row };
 export default App;
