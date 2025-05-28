@@ -207,7 +207,6 @@ const MultiSelect = ({
       colors
         ? {
             option: (styles, { data }) => {
-              console.error(data);
               return {
                 ...styles,
                 backgroundColor: colors[data.value],
@@ -503,8 +502,6 @@ function App() {
       return true;
     });
   }, [items, cities, authors, languages, mode, requireImage]);
-
-  console.warn(filteredItems);
 
   useEffect(() => loadData(setItems), []);
 
