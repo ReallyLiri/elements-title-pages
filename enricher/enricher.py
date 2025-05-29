@@ -1,4 +1,5 @@
 from tools import read_csv, google_translate, write_csv, openai_query
+from tqdm import tqdm
 
 file_path = "../public/docs/EiP.csv"
 
@@ -7,9 +8,7 @@ entries, fieldnames = read_csv(file_path)
 _TRANSLATE_GOOGLE = False
 _TRANSLATE_OPENAI = True
 
-for entry in entries:
-    print(entry["key"] or entry["year"])
-
+for entry in tqdm(entries, desc="Processing entries"):
     if _TRANSLATE_GOOGLE and entry["language"] != "ENGLISH" and entry["title_EN"] == "":
         translations, languages = (
             google_translate([entry["title"], entry["colophon"], entry["imprint"]])
