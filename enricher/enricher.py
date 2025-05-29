@@ -6,7 +6,8 @@ file_path = "../public/docs/EiP.csv"
 entries, fieldnames = read_csv(file_path)
 
 _TRANSLATE_GOOGLE = False
-_TRANSLATE_OPENAI = True
+_TRANSLATE_OPENAI = False
+_FEATURES = True
 
 for entry in tqdm(entries, desc="Processing entries"):
     if _TRANSLATE_GOOGLE and entry["language"] != "ENGLISH" and entry["title_EN"] == "":
@@ -25,5 +26,7 @@ for entry in tqdm(entries, desc="Processing entries"):
                     max_tokens=None
                 )
                 entry[f"{key}_EN"] = translation
+    if _FEATURES and not entry["TITLE: BASE CONTENT"] == "":
+        pass
 
 write_csv(entries, file_path, fieldnames)
