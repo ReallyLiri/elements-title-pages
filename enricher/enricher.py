@@ -1,3 +1,4 @@
+import json
 import os
 
 from tools import read_csv, google_translate, write_csv, openai_query
@@ -8,8 +9,9 @@ file_path = "../public/docs/EiP.csv"
 entries, fieldnames = read_csv(file_path)
 
 _TRANSLATE_GOOGLE = False
-_TRANSLATE_OPENAI = True
+_TRANSLATE_OPENAI = False
 _TITLE_FEATURES = False
+_TITLE_FEATURES_MERGE = True
 
 for entry in tqdm(entries, desc="Processing entries"):
     if _TRANSLATE_GOOGLE and entry["language"] != "ENGLISH" and entry["title_EN"] == "":
@@ -30,8 +32,6 @@ for entry in tqdm(entries, desc="Processing entries"):
                 entry[f"{key}_EN"] = translation
 
     if _TITLE_FEATURES and entry["TITLE: BASE CONTENT"] == "":
-        if entry["books"] == "":
-            continue
         out_path = f"out/{entry["key"].replace("/", "_")}.json"
         if os.path.exists(out_path):
             continue
@@ -84,4 +84,34 @@ Definitions:
         with open(out_path, "w") as f:
             f.write(result)
 
-#write_csv(entries, file_path, fieldnames)
+    if _TITLE_FEATURES_MERGE:
+        out_path = f"out/{entry["key"].replace("/", "_")}.json"
+        if not os.path.exists(out_path):
+            continue
+        with open(out_path, "r") as f:
+            features = f.read()
+        try:
+            features_dict = json.loads(features)
+            feature_to_column = {
+                "baseContent": "TITLE: BASE CONTENT",
+                "baseContentDescription": "TITLE: CONTENT DESC",
+                "supplementaryContent": "TITLE: ADDITIONAL CONTENT",
+                "adapterAttribution": "TITLE: AUTHOR NAME",
+                "adapterDescription": "TITLE: AUTHOR DESCRIPTION",
+                "patronageDedication": "TITLE: PATRON REF",
+                "editionStatement": "TITLE: EDITION INFO",
+                "publishingPrivileges": "TITLE: PRIVILEGES",
+                "verbs": "TITLE: VERBS",
+                "explicitLanguageReferences": "EXPLICITLY STATED: TRANSLATED FROM",
+                "referencesToOtherEducationalAuthorities": "OTHER NAMES",
+            }
+            for key, value in features_dict.items():
+                column = feature_to_column.get(key)
+                if not column:
+                    continue
+                entry[key] = ", ".join(value) if isinstance(value, list) else value
+        except Exception as e:
+            print(f"Error processing features for {entry['key']}: {e}")
+            continue
+
+write_csv(entries, file_path, fieldnames)
