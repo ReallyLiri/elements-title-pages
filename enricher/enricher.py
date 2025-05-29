@@ -8,8 +8,8 @@ file_path = "../public/docs/EiP.csv"
 entries, fieldnames = read_csv(file_path)
 
 _TRANSLATE_GOOGLE = False
-_TRANSLATE_OPENAI = False
-_TITLE_FEATURES = True
+_TRANSLATE_OPENAI = True
+_TITLE_FEATURES = False
 
 for entry in tqdm(entries, desc="Processing entries"):
     if _TRANSLATE_GOOGLE and entry["language"] != "ENGLISH" and entry["title_EN"] == "":
@@ -18,7 +18,7 @@ for entry in tqdm(entries, desc="Processing entries"):
         )
         entry["title_EN"], entry["colophon_EN"], entry["imprint_EN"] = translations
 
-    if _TRANSLATE_OPENAI and entry["language"] != "ENGLISH" and entry["title_EN"] == "":
+    if _TRANSLATE_OPENAI and entry["language"] != "ENGLISH" and entry["books"] == "":
         for key in ["title", "colophon", "imprint"]:
             if entry[key] != "":
                 translation = openai_query(
