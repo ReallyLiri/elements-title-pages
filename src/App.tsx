@@ -1,5 +1,12 @@
 import styled from "@emotion/styled";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+} from "react";
 import Papa from "papaparse";
 import Select from "react-select";
 import { css } from "@emotion/react";
@@ -9,6 +16,12 @@ import RangeSlider from "./RangeSlider";
 import useLocalStorageState from "use-local-storage-state";
 
 const CSV_PATH = "/docs/EiP.csv";
+
+const TILE_HEIGHT = 400;
+const TILE_WIDTH = 400;
+
+const MIN_YEAR = 1482;
+const MAX_YEAR = 1703;
 
 type Item = {
   key: string;
@@ -324,6 +337,24 @@ const ExpandIcon = styled.div`
   @media (max-width: 600px) {
     display: none;
   }
+`;
+
+const ScrollToTopButton = styled(ResetButton)`
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 100;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
 `;
 
 const NoImageTile = styled.div`
@@ -664,7 +695,7 @@ function App() {
   const [yearRange, setYearRange] = useLocalStorageState<[number, number]>(
     "yearRange",
     {
-      defaultValue: [1482, 1703],
+      defaultValue: [MIN_YEAR, MAX_YEAR],
     },
   );
   const [features, setFeatures] = useLocalStorageState<Feature[]>("features", {
@@ -676,8 +707,24 @@ function App() {
       defaultValue: true,
     },
   );
-  const tileHeight = 400;
-  const tileWidth = 400;
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  const handleScroll = useCallback(() => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    setShowScrollTop(scrollTop > 200);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   const allCities = useMemo(
     () => (items ? extract(items, "cities") : []),
@@ -746,6 +793,11 @@ function App() {
 
   return (
     <Container>
+      {showScrollTop && (
+        <ScrollToTopButton onClick={scrollToTop} title="Scroll to top">
+          ↑
+        </ScrollToTopButton>
+      )}
       <Row>
         <Text bold size={1}>
           <Text size={2.8}>TITLE PAGES</Text>
@@ -753,10 +805,12 @@ function App() {
           <Text size={1.6}>
             the <i>Elements</i>
           </Text>
-          <Text size={1.6}>1482–1703</Text>
+          <Text size={1.6}>
+            {MIN_YEAR}–{MAX_YEAR}
+          </Text>
         </Text>
       </Row>
-      <Column minWidth="min(820px, 100%)">
+      <Column minWidth="min(820px, 90%)">
         <Row justifyStart>
           <ToggleButton
             onClick={() => setControlsOpen(!controlsOpen)}
@@ -806,8 +860,8 @@ function App() {
               <RangeSlider
                 name="Year Range"
                 value={yearRange}
-                min={1482}
-                max={1703}
+                min={MIN_YEAR}
+                max={MAX_YEAR}
                 onChange={setYearRange}
               />
             </Row>
@@ -856,8 +910,8 @@ function App() {
         {filteredItems?.map((item) => (
           <ItemView
             key={item.key}
-            height={tileHeight}
-            width={tileWidth}
+            height={TILE_HEIGHT}
+            width={TILE_WIDTH}
             item={item}
             mode={mode}
             features={features}
