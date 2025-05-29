@@ -9,10 +9,9 @@ file_path = "../public/docs/EiP.csv"
 entries, fieldnames = read_csv(file_path)
 
 _TRANSLATE_GOOGLE = False
-_TRANSLATE_OPENAI = False
-_TITLE_FEATURES = True
+_TRANSLATE_OPENAI = True
+_TITLE_FEATURES = False
 _TITLE_FEATURES_MERGE = False
-_TITLE_FEATURES_FORMULATE = False
 
 for i in tqdm(range(len(entries)), desc="Processing entries"):
     entry = entries[i]
@@ -28,7 +27,7 @@ for i in tqdm(range(len(entries)), desc="Processing entries"):
                 translation = openai_query(
                     "Translate this text to English",
                     entry[key],
-                    "Translate the text to English, preserving the original meaning and context. Do not add any additional information or context.",
+                    "Translate the text to English, preserving the original meaning and context. Do not add any additional information or context. Please preserve the original formatting, whitespace and punctuation as much as possible.",
                     max_tokens=None
                 )
                 entries[i][f"{key}_EN"] = translation

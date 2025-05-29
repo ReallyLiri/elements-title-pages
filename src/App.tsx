@@ -323,10 +323,10 @@ const NoImageTile = styled.div`
   align-items: center;
 `;
 
-const ImageTile = styled.img`
+const ImageTile = styled.img<{ large?: boolean }>`
   ${Tile};
-  max-height: 90%;
-  max-width: 90%;
+  max-height: ${({ large }) => (large ? "100%" : "90%")};
+  max-width: ${({ large }) => (large ? "100%" : "90%")};
   cursor: pointer;
 `;
 
@@ -383,7 +383,6 @@ const ModalTextColumn = styled.div`
   ${ScrollbarStyle};
   flex: 1;
   overflow-y: auto;
-  padding: 1rem;
   line-height: 1.8;
 `;
 
@@ -394,6 +393,12 @@ type ItemProps = {
   mode: Mode;
   features: Feature[];
 };
+
+const LanguagesInfo = styled.div`
+  font-size: 0.9rem;
+  color: lightgray;
+  text-align: center;
+`;
 
 const highlightText = (
   text: string,
@@ -421,6 +426,12 @@ const highlightText = (
   return highlighted;
 };
 
+function imageClicked(item: Item) {
+  return window
+    .open(item.imageUrl?.replace("i.imgur.com", "rimgo.catsarch.com"), "_blank")
+    ?.focus();
+}
+
 const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -429,67 +440,76 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
       <div>
         {item.year} {item.authors.join(" & ") || "s.n."},{" "}
         {item.cities.join(", ") || "s.l."}
+        <LanguagesInfo>{item.languages.join(" & ")}</LanguagesInfo>
       </div>
       {mode === "texts" && (
         <>
-          <TextTile alignCenter={!!item.imageUrl}>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: highlightText(item.title, features, item.features),
-              }}
-            />
-            <ExpandIcon title="Expand" onClick={() => setModalOpen(true)}>
-              ⤢
-            </ExpandIcon>
-          </TextTile>
-          {modalOpen && (
-            <Modal onClick={() => setModalOpen(false)}>
-              <ModalContent onClick={(e) => e.stopPropagation()}>
-                <ModalClose title="Close" onClick={() => setModalOpen(false)}>
-                  ✕
-                </ModalClose>
-                <ModalTextContainer>
-                  <ModalTextColumn>
-                    <ModalTitle>Original Text</ModalTitle>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: highlightText(
-                          item.title,
-                          features,
-                          item.features,
-                        ),
-                      }}
-                    />
-                  </ModalTextColumn>
-                  {item.titleEn && (
-                    <ModalTextColumn>
-                      <ModalTitle>English Translation</ModalTitle>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: highlightText(item.titleEn, [], {}),
-                        }}
-                      />
-                    </ModalTextColumn>
-                  )}
-                </ModalTextContainer>
-              </ModalContent>
-            </Modal>
+          {item.title === "?" ? (
+            <NoImageTile>No title page</NoImageTile>
+          ) : (
+            <>
+              <TextTile alignCenter={!!item.imageUrl}>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: highlightText(item.title, features, item.features),
+                  }}
+                />
+                <ExpandIcon title="Expand" onClick={() => setModalOpen(true)}>
+                  ⤢
+                </ExpandIcon>
+              </TextTile>
+              {modalOpen && (
+                <Modal onClick={() => setModalOpen(false)}>
+                  <ModalContent onClick={(e) => e.stopPropagation()}>
+                    <ModalClose
+                      title="Close"
+                      onClick={() => setModalOpen(false)}
+                    >
+                      ✕
+                    </ModalClose>
+                    <ModalTextContainer>
+                      {item.imageUrl && (
+                        <ModalTextColumn>
+                          <ImageTile
+                            large
+                            src={item.imageUrl}
+                            onClick={() => imageClicked(item)}
+                          />
+                        </ModalTextColumn>
+                      )}
+                      <ModalTextColumn>
+                        <ModalTitle>Original Text</ModalTitle>
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: highlightText(
+                              item.title,
+                              features,
+                              item.features,
+                            ),
+                          }}
+                        />
+                      </ModalTextColumn>
+                      {item.titleEn && (
+                        <ModalTextColumn>
+                          <ModalTitle>English Translation</ModalTitle>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: highlightText(item.titleEn, [], {}),
+                            }}
+                          />
+                        </ModalTextColumn>
+                      )}
+                    </ModalTextContainer>
+                  </ModalContent>
+                </Modal>
+              )}
+            </>
           )}
         </>
       )}
       {mode === "images" &&
         (item.imageUrl ? (
-          <ImageTile
-            src={item.imageUrl}
-            onClick={() =>
-              window
-                .open(
-                  item.imageUrl?.replace("i.imgur.com", "rimgo.catsarch.com"),
-                  "_blank",
-                )
-                ?.focus()
-            }
-          />
+          <ImageTile src={item.imageUrl} onClick={() => imageClicked(item)} />
         ) : (
           <NoImageTile>Not Available</NoImageTile>
         ))}
