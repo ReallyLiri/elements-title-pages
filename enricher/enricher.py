@@ -9,8 +9,8 @@ file_path = "../public/docs/EiP.csv"
 entries, fieldnames = read_csv(file_path)
 
 _TRANSLATE_GOOGLE = False
-_TRANSLATE_OPENAI = True
-_TITLE_FEATURES = False
+_TRANSLATE_OPENAI = False
+_TITLE_FEATURES = True
 _TITLE_FEATURES_MERGE = False
 
 for i in tqdm(range(len(entries)), desc="Processing entries"):
@@ -46,24 +46,25 @@ You will be given:
 - The transcribed text of a title page.
 - The language of the transcription.
 
-Your task is to extract specific paratextual features from the transcription and return them as a JSON object. Each field should contain the exact quoted text(s) from the input, with no modifications, rephrasing, or interpretation. Include the original whitespaces and punctuation as they appear in the transcription.
+Your task is to extract specific paratextual features from the transcription and return them as a JSON object.
+Each field should contain the exact quoted text(s) from the input, with no modifications, rephrasing, or interpretation. Include the original whitespaces and punctuation as they appear in the transcription.
+Some text may apply to more than one field, so you may return the same text portions in multiple fields if applicable.
 
 Return only a valid JSON. Do not include any other output.
 
 Output format:
 {
-  "baseContent": [...],
-  "baseContentDescription": [...],
-  "supplementaryContent": [...],
-  "adapterAttribution": [...],
-  "adapterDescription": [...],
-  "patronageDedication": [...],
-  "editionStatement": [...],
-  "publishingPrivileges": [...],
-  "verbs": [...],
-  "explicitLanguageReferences": [...],
-  "referencesToOtherEducationalAuthorities": [...],
-  "printInformation": [...]
+  "baseContent": "...", // a single quote or empty if not applicable
+  "baseContentDescription": "...", // a single quote or empty if not applicable
+  "supplementaryContent": "...", // a single quote or empty if not applicable
+  "adapterAttribution": "...", // a single quote or empty if not applicable
+  "adapterDescription": "...", // a single quote or empty if not applicable
+  "patronageDedication": "...", // a single quote or empty if not applicable
+  "editionStatement": "...", // a single quote or empty if not applicable
+  "publishingPrivileges": "...", // a single quote or empty if not applicable
+  "verbs": [...], // one or more quotes
+  "explicitLanguageReferences": [...], // one or more quotes
+  "referencesToOtherEducationalAuthorities": [...], // one or more quotes
 }
 
 Definitions:
@@ -78,7 +79,6 @@ Definitions:
 - verbs: Action verbs describing what the adapter did.
 - explicitLanguageReferences: Mentions of source and/or target languages.
 - referencesToOtherEducationalAuthorities: Mentions of ancient or contemporary scholars.
-- printInformation: City, year, printer name, or address, if mentioned.
 """,
             max_tokens=None
         )
