@@ -38,19 +38,30 @@ const Container = styled.div`
     color: black;
     min-width: 12rem;
     max-width: 40rem;
+    @media (max-width: 600px) {
+      width: 80vw;
+    }
   }
 `;
 
-const Row = styled.div<{ justifyStart?: boolean; gap?: number }>`
+const Row = styled.div<{
+  justifyStart?: boolean;
+  gap?: number;
+  rowGap?: number;
+  noWrap?: boolean;
+}>`
   display: flex;
   flex-direction: row;
   justify-content: ${({ justifyStart }) => (justifyStart ? "start" : "center")};
   align-items: center;
   gap: ${({ gap }) => (gap !== undefined ? gap : 2)}rem;
-  row-gap: 6rem;
+  ${({ rowGap }) => rowGap && `row-gap: ${rowGap}`};
   width: 100%;
   max-width: 96vw;
-  flex-wrap: wrap;
+  flex-wrap: ${({ noWrap }) => (noWrap ? "nowrap" : "wrap")};
+  @media (max-width: 600px) {
+    gap: ${({ gap }) => (gap !== undefined ? gap : 1)}rem;
+  }
 `;
 
 const ResetButton = styled.button`
@@ -103,7 +114,6 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
           setItems(
             (result.data as Record<string, unknown>[])
               .map((raw) => {
-                console.warn(raw);
                 return {
                   key: raw["key"] as string,
                   year: raw["year"] as string,
@@ -311,6 +321,9 @@ const ExpandIcon = styled.div`
   right: 0.5rem;
   cursor: pointer;
   font-size: 1.2rem;
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const NoImageTile = styled.div`
@@ -839,7 +852,7 @@ function App() {
           </>
         )}
       </Column>
-      <Row>
+      <Row rowGap={6}>
         {filteredItems?.map((item) => (
           <ItemView
             key={item.key}

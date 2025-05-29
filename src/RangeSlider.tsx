@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Row } from "./App";
+import { Row } from "./App.tsx";
 
 export type RangeSliderProps = {
   name: string;
@@ -79,7 +79,7 @@ export const RangeSlider = ({
   max,
   onChange,
 }: RangeSliderProps) => (
-  <Row justifyStart>
+  <Row justifyStart noWrap>
     <div>{name}:</div>
     <Value>{value[0]}</Value>
     <SliderContainer>
