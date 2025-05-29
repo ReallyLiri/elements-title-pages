@@ -100,7 +100,6 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
         complete: (result) => {
           setItems(
             (result.data as Record<string, unknown>[])
-              //.filter((raw) => !!raw["TITLE: FORMULATION"])
               .map((raw) => ({
                 key: raw["key"] as string,
                 year: raw["year"] as string,
@@ -348,7 +347,7 @@ const highlightText = (
 const ItemView = ({ item, height, width, mode, features }: ItemProps) => (
   <Column style={{ height, width }}>
     <div>
-      {item.year} {item.authors.join(" & ")}, {item.cities.join(", ")}
+      {item.year} {item.authors.join(" & ")}, {item.cities.join(", ") || "s.l."}
     </div>
     {mode === "texts" && (
       <TextTile

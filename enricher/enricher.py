@@ -10,8 +10,9 @@ entries, fieldnames = read_csv(file_path)
 
 _TRANSLATE_GOOGLE = False
 _TRANSLATE_OPENAI = False
-_TITLE_FEATURES = False
-_TITLE_FEATURES_MERGE = True
+_TITLE_FEATURES = True
+_TITLE_FEATURES_MERGE = False
+_TITLE_FEATURES_FORMULATE = False
 
 for i in tqdm(range(len(entries)), desc="Processing entries"):
     entry = entries[i]
@@ -38,7 +39,7 @@ for i in tqdm(range(len(entries)), desc="Processing entries"):
             continue
         result = openai_query(
             f"language: {entry['language']}{entry['language 2'] != "" and f' and {entry["language 2"]}' or ''}",
-            "",
+            entry["title"],
             """
 You are an AI agent designed to extract structured metadata from historical title pages of French translations of Euclid’s Elements.
 
