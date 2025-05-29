@@ -1,3 +1,5 @@
+import os
+
 from tools import read_csv, google_translate, write_csv, openai_query
 from tqdm import tqdm
 
@@ -29,6 +31,9 @@ for entry in tqdm(entries, desc="Processing entries"):
 
     if _TITLE_FEATURES and entry["TITLE: BASE CONTENT"] == "":
         if entry["books"] == "":
+            continue
+        out_path = f"out/{entry["key"].replace("/", "_")}.json"
+        if os.path.exists(out_path):
             continue
         result = openai_query(
             f"language: {entry['language']}{entry['language 2'] != "" and f' and {entry["language 2"]}' or ''}",
@@ -76,7 +81,7 @@ Definitions:
 """,
             max_tokens=None
         )
-        with open(f"out/{entry["key"]}.json", "w") as f:
+        with open(out_path, "w") as f:
             f.write(result)
 
 #write_csv(entries, file_path, fieldnames)
