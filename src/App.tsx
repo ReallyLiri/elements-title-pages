@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Dispatch, SetStateAction, useEffect, useMemo } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import Papa from "papaparse";
 import Select from "react-select";
 import { css } from "@emotion/react";
@@ -18,6 +18,7 @@ type Item = {
   authors: string[];
   imageUrl: string | null;
   title: string;
+  titleEn: string | null;
   features: Partial<Record<Feature, string[]>>;
 };
 
@@ -100,38 +101,44 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
         complete: (result) => {
           setItems(
             (result.data as Record<string, unknown>[])
-              .map((raw) => ({
-                key: raw["key"] as string,
-                year: raw["year"] as string,
-                cities: [raw["city"] as string, raw["city 2"] as string].filter(
-                  (city) => city,
-                ) as string[],
-                languages: [
-                  startCase((raw["language"] as string).toLowerCase()),
-                  startCase((raw["language 2"] as string).toLowerCase()),
-                ].filter((city) => city) as string[],
-                authors:
-                  (raw["author (normalized)"] as string | null)?.split(", ") ||
-                  [],
-                imageUrl: images[raw["key"] as string],
-                title: raw["title"] as string,
-                features: Object.keys(FeatureToColumnName).reduce(
-                  (acc, feature) => {
-                    acc[feature as Feature] = FeatureToColumnName[
-                      feature as Feature
-                    ]
-                      .filter((column) => !!raw[column])
-                      .map((column) => raw[column] as string)
-                      .flatMap((text) =>
-                        FeaturesToSplit[feature as Feature]
-                          ? text.split(", ")
-                          : [text],
-                      );
-                    return acc;
-                  },
-                  {} as Partial<Record<Feature, string[]>>,
-                ),
-              }))
+              .map((raw) => {
+                console.warn(raw);
+                return {
+                  key: raw["key"] as string,
+                  year: raw["year"] as string,
+                  cities: [
+                    raw["city"] as string,
+                    raw["city 2"] as string,
+                  ].filter((city) => city) as string[],
+                  languages: [
+                    startCase((raw["language"] as string).toLowerCase()),
+                    startCase((raw["language 2"] as string).toLowerCase()),
+                  ].filter((city) => city) as string[],
+                  authors:
+                    (raw["author (normalized)"] as string | null)?.split(
+                      ", ",
+                    ) || [],
+                  imageUrl: images[raw["key"] as string],
+                  title: raw["title"] as string,
+                  titleEn: raw["title_EN"] as string | null,
+                  features: Object.keys(FeatureToColumnName).reduce(
+                    (acc, feature) => {
+                      acc[feature as Feature] = FeatureToColumnName[
+                        feature as Feature
+                      ]
+                        .filter((column) => !!raw[column])
+                        .map((column) => raw[column] as string)
+                        .flatMap((text) =>
+                          FeaturesToSplit[feature as Feature]
+                            ? text.split(", ")
+                            : [text],
+                        );
+                      return acc;
+                    },
+                    {} as Partial<Record<Feature, string[]>>,
+                  ),
+                };
+              })
               .filter((item) => !!item.key)
               .sort(
                 (a, b) =>
@@ -266,18 +273,9 @@ const Tile = css`
   clip-path: inset(0 round 1rem);
 `;
 
-const TextTile = styled.div<{ alignCenter: boolean }>`
-  ${Tile};
-  background-color: aliceblue;
-  color: black;
-  padding: 1rem;
-  overflow: auto;
-  height: 90%;
-  width: 90%;
-  line-height: 1.8;
-  text-align: ${({ alignCenter }) => (alignCenter ? "center" : "start")};
+const ScrollbarStyle = css`
   ::-webkit-scrollbar-track {
-    background-color: aliceblue;
+    background-color: inherit;
   }
   ::-webkit-scrollbar {
     width: 0.5rem;
@@ -288,8 +286,30 @@ const TextTile = styled.div<{ alignCenter: boolean }>`
   }
   * {
     scrollbar-width: thin;
-    scrollbar-color: #666 aliceblue;
+    scrollbar-color: #666 inherit;
   }
+`;
+
+const TextTile = styled.div<{ alignCenter: boolean }>`
+  ${Tile};
+  ${ScrollbarStyle};
+  background-color: aliceblue;
+  color: black;
+  padding: 1rem;
+  overflow: auto;
+  height: 90%;
+  width: 90%;
+  line-height: 1.8;
+  text-align: ${({ alignCenter }) => (alignCenter ? "center" : "start")};
+  position: relative;
+`;
+
+const ExpandIcon = styled.div`
+  position: absolute;
+  top: -0.2rem;
+  right: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
 `;
 
 const NoImageTile = styled.div`
@@ -308,6 +328,63 @@ const ImageTile = styled.img`
   max-height: 90%;
   max-width: 90%;
   cursor: pointer;
+`;
+
+const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  background-color: aliceblue;
+  color: black;
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 80%;
+  max-width: 52rem;
+  max-height: 90%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`;
+
+const ModalClose = styled.div`
+  position: absolute;
+  top: 0.5rem;
+  right: 0.8rem;
+  font-size: 1rem;
+  cursor: pointer;
+`;
+
+const ModalTitle = styled.div`
+  color: darkgray;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+`;
+
+const ModalTextContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  overflow: auto;
+  max-height: calc(90vh - 6rem);
+`;
+
+const ModalTextColumn = styled.div`
+  ${ScrollbarStyle};
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  line-height: 1.8;
 `;
 
 type ItemProps = {
@@ -344,37 +421,81 @@ const highlightText = (
   return highlighted;
 };
 
-const ItemView = ({ item, height, width, mode, features }: ItemProps) => (
-  <Column style={{ height, width }}>
-    <div>
-      {item.year} {item.authors.join(" & ")}, {item.cities.join(", ") || "s.l."}
-    </div>
-    {mode === "texts" && (
-      <TextTile
-        alignCenter={!!item.imageUrl}
-        dangerouslySetInnerHTML={{
-          __html: highlightText(item.title, features, item.features),
-        }}
-      />
-    )}
-    {mode === "images" &&
-      (item.imageUrl ? (
-        <ImageTile
-          src={item.imageUrl}
-          onClick={() =>
-            window
-              .open(
-                item.imageUrl?.replace("i.imgur.com", "rimgo.catsarch.com"),
-                "_blank",
-              )
-              ?.focus()
-          }
-        />
-      ) : (
-        <NoImageTile>Not Available</NoImageTile>
-      ))}
-  </Column>
-);
+const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  return (
+    <Column style={{ height, width }}>
+      <div>
+        {item.year} {item.authors.join(" & ") || "s.n."},{" "}
+        {item.cities.join(", ") || "s.l."}
+      </div>
+      {mode === "texts" && (
+        <>
+          <TextTile alignCenter={!!item.imageUrl}>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: highlightText(item.title, features, item.features),
+              }}
+            />
+            <ExpandIcon title="Expand" onClick={() => setModalOpen(true)}>
+              ⤢
+            </ExpandIcon>
+          </TextTile>
+          {modalOpen && (
+            <Modal onClick={() => setModalOpen(false)}>
+              <ModalContent onClick={(e) => e.stopPropagation()}>
+                <ModalClose title="Close" onClick={() => setModalOpen(false)}>
+                  ✕
+                </ModalClose>
+                <ModalTextContainer>
+                  <ModalTextColumn>
+                    <ModalTitle>Original Text</ModalTitle>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: highlightText(
+                          item.title,
+                          features,
+                          item.features,
+                        ),
+                      }}
+                    />
+                  </ModalTextColumn>
+                  {item.titleEn && (
+                    <ModalTextColumn>
+                      <ModalTitle>English Translation</ModalTitle>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: highlightText(item.titleEn, [], {}),
+                        }}
+                      />
+                    </ModalTextColumn>
+                  )}
+                </ModalTextContainer>
+              </ModalContent>
+            </Modal>
+          )}
+        </>
+      )}
+      {mode === "images" &&
+        (item.imageUrl ? (
+          <ImageTile
+            src={item.imageUrl}
+            onClick={() =>
+              window
+                .open(
+                  item.imageUrl?.replace("i.imgur.com", "rimgo.catsarch.com"),
+                  "_blank",
+                )
+                ?.focus()
+            }
+          />
+        ) : (
+          <NoImageTile>Not Available</NoImageTile>
+        ))}
+    </Column>
+  );
+};
 
 type RadioProps = {
   name: string;
@@ -485,10 +606,7 @@ const FeatureToTooltip: Record<Feature, string> = {
 };
 
 function App() {
-  const [items, setItems] = useLocalStorageState<Item[] | undefined>("items", {
-    defaultValue: undefined,
-    storageSync: false,
-  });
+  const [items, setItems] = useState<Item[] | undefined>();
   const [mode, setMode] = useLocalStorageState<Mode>("mode", {
     defaultValue: "texts",
   });
