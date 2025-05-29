@@ -34,7 +34,7 @@ for i in tqdm(range(len(entries)), desc="Processing entries"):
 
     if _TITLE_FEATURES and entry["TITLE: BASE CONTENT"] == "":
         out_path = f"out/{entry["key"].replace("/", "_")}.json"
-        if os.path.exists(out_path):
+        if not os.path.exists(out_path):
             continue
         result = openai_query(
             f"language: {entry['language']}{entry['language 2'] != "" and f' and {entry["language 2"]}' or ''}",
@@ -55,10 +55,14 @@ Return only a valid JSON. Do not include any other output.
 Output format:
 {
   "baseContent": "...", // a single quote or empty if not applicable
+  "baseContent": "...", // a single quote or empty if not applicable
   "baseContentDescription": "...", // a single quote or empty if not applicable
+  "baseContentDescription2": "...", // a single quote or empty if not applicable
   "supplementaryContent": "...", // a single quote or empty if not applicable
+  "supplementaryContent2": "...", // a single quote or empty if not applicable
   "adapterAttribution": "...", // a single quote or empty if not applicable
   "adapterDescription": "...", // a single quote or empty if not applicable
+  "adapterDescription2": "...", // a single quote or empty if not applicable
   "patronageDedication": "...", // a single quote or empty if not applicable
   "editionStatement": "...", // a single quote or empty if not applicable
   "publishingPrivileges": "...", // a single quote or empty if not applicable
@@ -70,9 +74,12 @@ Output format:
 Definitions:
 - baseContent: Minimal title or identity of the main work.
 - baseContentDescription: Any elaboration on the base content.
+- baseContentDescription2: Any elaboration on the base content (an additional quote if applicable).
 - supplementaryContent: Additions beyond the main text.
+- supplementaryContent2: Additions beyond the main text. (an additional quote if applicable).
 - adapterAttribution: Name(s) of author, translator, or commentator.
 - adapterDescription: Titles, credentials, or affiliations of the adapter.
+- adapterDescription2: Titles, credentials, or affiliations of the adapter. (an additional quote if applicable).
 - patronageDedication: Any mentions of patrons or dedications.
 - editionStatement: Claims regarding edition, corrections, revisions.
 - publishingPrivileges: Mentions of legal/royal privilege or permission.
@@ -96,9 +103,12 @@ Definitions:
             feature_to_column = {
                 "baseContent": "TITLE: BASE CONTENT",
                 "baseContentDescription": "TITLE: CONTENT DESC",
+                "baseContentDescription2": "TITLE: CONTENT DESC 2",
                 "supplementaryContent": "TITLE: ADDITIONAL CONTENT",
+                "supplementaryContent2": "TITLE: ADDITIONAL CONTENT 2",
                 "adapterAttribution": "TITLE: AUTHOR NAME",
                 "adapterDescription": "TITLE: AUTHOR DESCRIPTION",
+                "adapterDescription2": "TITLE: AUTHOR DESCRIPTION 2",
                 "patronageDedication": "TITLE: PATRON REF",
                 "editionStatement": "TITLE: EDITION INFO",
                 "publishingPrivileges": "TITLE: PRIVILEGES",
