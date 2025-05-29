@@ -14,6 +14,7 @@ import { images } from "./images.ts";
 import { startCase } from "lodash";
 import RangeSlider from "./RangeSlider";
 import useLocalStorageState from "use-local-storage-state";
+import { uniq } from "lodash";
 
 const CSV_PATH = "/docs/EiP.csv";
 
@@ -154,7 +155,7 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                         .map((column) => raw[column] as string)
                         .flatMap((text) =>
                           FeaturesToSplit[feature as Feature]
-                            ? text.split(", ")
+                            ? uniq(text.split(", "))
                             : [text],
                         );
                       return acc;
@@ -391,6 +392,7 @@ const Modal = styled.div`
 const ModalContent = styled.div<{ hasImage: boolean }>`
   background-color: aliceblue;
   min-height: 24rem;
+  min-width: 32rem;
   max-width: ${({ hasImage }) => (hasImage ? "90vw" : "60vw")};
   color: black;
   border-radius: 1rem;
