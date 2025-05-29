@@ -47,6 +47,7 @@ const Row = styled.div<{ justifyStart?: boolean; gap?: number }>`
   justify-content: ${({ justifyStart }) => (justifyStart ? "start" : "center")};
   align-items: center;
   gap: ${({ gap }) => (gap !== undefined ? gap : 2)}rem;
+  row-gap: 6rem;
   width: 100%;
   max-width: 96vw;
   flex-wrap: wrap;
@@ -77,7 +78,7 @@ const ToggleButton = styled(ResetButton)<{ isOpen: boolean }>`
 const Column = styled.div<{ minWidth?: string; alignItems?: string }>`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: ${(props) => props.alignItems || "center"};
   gap: 1rem;
   min-width: ${({ minWidth }) => minWidth || "unset"};
@@ -348,8 +349,7 @@ const ModalContent = styled.div`
   color: black;
   border-radius: 1rem;
   padding: 2rem;
-  width: 80%;
-  max-width: 52rem;
+  max-width: 80%;
   max-height: 90%;
   overflow: auto;
   display: flex;
