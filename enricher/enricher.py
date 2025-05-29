@@ -9,9 +9,9 @@ file_path = "../public/docs/EiP.csv"
 entries, fieldnames = read_csv(file_path)
 
 _TRANSLATE_GOOGLE = False
-_TRANSLATE_OPENAI = False
+_TRANSLATE_OPENAI = True
 _TITLE_FEATURES = False
-_TITLE_FEATURES_MERGE = True
+_TITLE_FEATURES_MERGE = False
 
 for i in tqdm(range(len(entries)), desc="Processing entries"):
     entry = entries[i]
@@ -21,13 +21,13 @@ for i in tqdm(range(len(entries)), desc="Processing entries"):
         )
         entries[i]["title_EN"], entries[i]["colophon_EN"], entries[i]["imprint_EN"] = translations
 
-    if _TRANSLATE_OPENAI and entry["language"] != "ENGLISH" and entry["books"] == "":
+    if _TRANSLATE_OPENAI and entry["language"] != "ENGLISH":
         for key in ["title", "colophon", "imprint"]:
             if entry[key] != "":
                 translation = openai_query(
                     "Translate this text to English",
                     entry[key],
-                    "Translate the text to English, preserving the original meaning and context. Do not add any additional information or context. Please preserve the original formatting, whitespace and punctuation as much as possible.",
+                    "Translate the text to English, preserving the original meaning and context. Do not add any additional information or context. Please preserve the original formatting, whitespace, line breaks (even at the middle of a sentence) and punctuation as much as possible.",
                     max_tokens=None
                 )
                 entries[i][f"{key}_EN"] = translation
