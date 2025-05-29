@@ -10,8 +10,8 @@ entries, fieldnames = read_csv(file_path)
 
 _TRANSLATE_GOOGLE = False
 _TRANSLATE_OPENAI = False
-_TITLE_FEATURES = True
-_TITLE_FEATURES_MERGE = False
+_TITLE_FEATURES = False
+_TITLE_FEATURES_MERGE = True
 
 for i in tqdm(range(len(entries)), desc="Processing entries"):
     entry = entries[i]
@@ -32,10 +32,10 @@ for i in tqdm(range(len(entries)), desc="Processing entries"):
                 )
                 entries[i][f"{key}_EN"] = translation
 
-    if _TITLE_FEATURES and entry["TITLE: BASE CONTENT"] == "":
+    if _TITLE_FEATURES:
         out_path = f"out/{entry["key"].replace("/", "_")}.json"
-        if not os.path.exists(out_path):
-            continue
+        # if os.path.exists(out_path):
+        #    continue
         result = openai_query(
             f"language: {entry['language']}{entry['language 2'] != "" and f' and {entry["language 2"]}' or ''}",
             entry["title"],
@@ -97,7 +97,7 @@ Definitions:
         if not os.path.exists(out_path):
             continue
         with open(out_path, "r") as f:
-            features = f.read()
+            features = f.read().replace("```json", "").replace("```", "").strip()
         try:
             features_dict = json.loads(features)
             feature_to_column = {
@@ -120,7 +120,7 @@ Definitions:
                 column = feature_to_column.get(key)
                 if not column:
                     continue
-                entries[i][column] = ", ".join(value) if isinstance(value, list) else value
+                entries[i][column] = ", ".join([v.replace('\"', "").strip() for v in value]) if isinstance(value, list) else value.replace('\"', "").strip()
         except Exception as e:
             print(f"Error processing features for {entry['key']}: {e}")
             continue

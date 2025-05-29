@@ -46,7 +46,7 @@ def openai_query(question, text, instructions, max_tokens=50, creativity=0):
         return ""
     try:
         response = openai_client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-4o",
             messages=[
                 {"role": "user", "content": question},
                 {"role": "user", "content": text},

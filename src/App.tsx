@@ -388,13 +388,13 @@ const Modal = styled.div`
   z-index: 1000;
 `;
 
-const ModalContent = styled.div`
+const ModalContent = styled.div<{ hasImage: boolean }>`
   background-color: aliceblue;
+  min-height: 24rem;
+  max-width: ${({ hasImage }) => (hasImage ? "90vw" : "60vw")};
   color: black;
   border-radius: 1rem;
   padding: 2rem;
-  max-width: 80%;
-  max-height: 90%;
   overflow: auto;
   display: flex;
   flex-direction: column;
@@ -423,10 +423,10 @@ const ModalTextContainer = styled.div`
   max-height: calc(90vh - 6rem);
 `;
 
-const ModalTextColumn = styled.div`
+const ModalTextColumn = styled.div<{ isImage?: boolean }>`
   ${ScrollbarStyle};
   flex: 1;
-  overflow-y: auto;
+  overflow-y: ${({ isImage }) => (isImage ? "hidden" : "auto")};
   line-height: 1.8;
 `;
 
@@ -504,7 +504,10 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
               </TextTile>
               {modalOpen && (
                 <Modal onClick={() => setModalOpen(false)}>
-                  <ModalContent onClick={(e) => e.stopPropagation()}>
+                  <ModalContent
+                    onClick={(e) => e.stopPropagation()}
+                    hasImage={!!item.imageUrl}
+                  >
                     <ModalClose
                       title="Close"
                       onClick={() => setModalOpen(false)}
@@ -513,7 +516,7 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
                     </ModalClose>
                     <ModalTextContainer>
                       {item.imageUrl && (
-                        <ModalTextColumn>
+                        <ModalTextColumn isImage>
                           <ImageTile
                             large
                             src={item.imageUrl}
