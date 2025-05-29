@@ -13,12 +13,13 @@ _TRANSLATE_OPENAI = False
 _TITLE_FEATURES = False
 _TITLE_FEATURES_MERGE = True
 
-for entry in tqdm(entries, desc="Processing entries"):
+for i in tqdm(range(len(entries)), desc="Processing entries"):
+    entry = entries[i]
     if _TRANSLATE_GOOGLE and entry["language"] != "ENGLISH" and entry["title_EN"] == "":
         translations, languages = (
             google_translate([entry["title"], entry["colophon"], entry["imprint"]])
         )
-        entry["title_EN"], entry["colophon_EN"], entry["imprint_EN"] = translations
+        entries[i]["title_EN"], entries[i]["colophon_EN"], entries[i]["imprint_EN"] = translations
 
     if _TRANSLATE_OPENAI and entry["language"] != "ENGLISH" and entry["books"] == "":
         for key in ["title", "colophon", "imprint"]:
@@ -29,7 +30,7 @@ for entry in tqdm(entries, desc="Processing entries"):
                     "Translate the text to English, preserving the original meaning and context. Do not add any additional information or context.",
                     max_tokens=None
                 )
-                entry[f"{key}_EN"] = translation
+                entries[i][f"{key}_EN"] = translation
 
     if _TITLE_FEATURES and entry["TITLE: BASE CONTENT"] == "":
         out_path = f"out/{entry["key"].replace("/", "_")}.json"
@@ -109,7 +110,7 @@ Definitions:
                 column = feature_to_column.get(key)
                 if not column:
                     continue
-                entry[key] = ", ".join(value) if isinstance(value, list) else value
+                entries[i][column] = ", ".join(value) if isinstance(value, list) else value
         except Exception as e:
             print(f"Error processing features for {entry['key']}: {e}")
             continue
