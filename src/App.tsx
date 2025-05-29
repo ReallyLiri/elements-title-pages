@@ -417,6 +417,12 @@ const ModalTitle = styled.div`
   margin-bottom: 0.5rem;
 `;
 
+const ModalMainTitle = styled(Row)`
+  font-size: 1.4rem;
+  gap: 1.2rem;
+  margin-bottom: 0.5rem;
+`;
+
 const ModalTextContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -516,6 +522,12 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
                     >
                       ✕
                     </ModalClose>
+                    <ModalMainTitle>
+                      <span>{item.year}</span>
+                      <span>{item.authors.join(" & ") || "s.n."}</span>
+                      <span>{item.cities.join(", ") || "s.l."}</span>
+                      <span>{item.languages.join(" & ")}</span>
+                    </ModalMainTitle>
                     <ModalTextContainer>
                       {item.imageUrl && (
                         <ModalTextColumn isImage>
