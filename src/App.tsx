@@ -34,6 +34,7 @@ type Item = {
   title: string;
   titleEn: string | null;
   features: Partial<Record<Feature, string[]>>;
+  type: "elements" | "secondary";
 };
 
 const Container = styled.div`
@@ -146,6 +147,9 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                   imageUrl: images[raw["key"] as string],
                   title: raw["title"] as string,
                   titleEn: raw["title_EN"] as string | null,
+                  type: startCase(
+                    (raw["type"] as string).toLowerCase(),
+                  ) as Item["type"],
                   features: Object.keys(FeatureToColumnName).reduce(
                     (acc, feature) => {
                       acc[feature as Feature] = FeatureToColumnName[
@@ -703,6 +707,9 @@ function App() {
       defaultValue: [],
     },
   );
+  const [types, setTypes] = useLocalStorageState<string[]>("types", {
+    defaultValue: [],
+  });
   const [requireImage, setRequireImage] = useLocalStorageState<boolean>(
     "requireImage",
     {
@@ -766,6 +773,11 @@ function App() {
     [items],
   );
 
+  const allTypes = useMemo(
+    () => (items ? extract(items, "type") : []),
+    [items],
+  );
+
   const filteredItems = useMemo(() => {
     return items?.filter((item) => {
       if (cities.length) {
@@ -789,6 +801,11 @@ function App() {
           return false;
         }
       }
+      if (types.length) {
+        if (!types.includes(item.type)) {
+          return false;
+        }
+      }
       if (mode === "images" && requireImage) {
         if (!item.imageUrl) {
           return false;
@@ -800,7 +817,7 @@ function App() {
       }
       return true;
     });
-  }, [items, cities, authors, languages, mode, requireImage, yearRange]);
+  }, [items, cities, authors, languages, types, mode, requireImage, yearRange]);
 
   useEffect(() => {
     if (!items) {
@@ -871,6 +888,12 @@ function App() {
                 options={allLanguages}
                 onChange={setLanguages}
                 value={languages}
+              />
+              <MultiSelect
+                name="Types"
+                options={allTypes}
+                onChange={setTypes}
+                value={types}
               />
             </Row>
             <Row justifyStart>
