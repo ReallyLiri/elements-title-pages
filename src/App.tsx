@@ -2,19 +2,17 @@ import styled from "@emotion/styled";
 import {
   Dispatch,
   SetStateAction,
+  useCallback,
   useEffect,
   useMemo,
   useState,
-  useCallback,
 } from "react";
 import Papa from "papaparse";
 import Select from "react-select";
 import { css } from "@emotion/react";
-import { images } from "./images.ts";
-import { startCase } from "lodash";
+import { startCase, uniq } from "lodash";
 import RangeSlider from "./RangeSlider";
 import useLocalStorageState from "use-local-storage-state";
-import { uniq } from "lodash";
 
 const CSV_PATH = "/docs/EiP.csv";
 
@@ -150,7 +148,7 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                     (raw["author (normalized)"] as string | null)?.split(
                       ", ",
                     ) || [],
-                  imageUrl: images[raw["key"] as string],
+                  imageUrl: raw["tp_url"] as string | null,
                   title: raw["title"] as string,
                   titleEn: raw["title_EN"] as string | null,
                   type: ItemTypes[raw["type"] as keyof typeof ItemTypes],
@@ -876,7 +874,17 @@ function App() {
       }
       return true;
     });
-  }, [items, cities, authors, languages, types, formats, mode, requireImage, yearRange]);
+  }, [
+    items,
+    cities,
+    authors,
+    languages,
+    types,
+    formats,
+    mode,
+    requireImage,
+    yearRange,
+  ]);
 
   useEffect(() => {
     if (!items) {

@@ -13,6 +13,9 @@ _TRANSLATE_OPENAI = False
 _TITLE_FEATURES = False
 _TITLE_FEATURES_MERGE = True
 
+if not os.path.exists("out"):
+    os.makedirs("out")
+
 for i in tqdm(range(len(entries)), desc="Processing entries"):
     entry = entries[i]
 
