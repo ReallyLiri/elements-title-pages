@@ -28,7 +28,7 @@ for entry in entries:
             parts = value.split(", ")
             for part in parts:
                 if part and part not in title:
-                    print(f">>> {key}: {field} value '{part}' not found in title")
+                    print(f">>> {key}: {field} value not found in title")
         else:
             if value not in title:
-                print(f">>> {key}: {field} value '{value}' not found in title")
+                print(f">>> {key}: {field} value not found in title")
