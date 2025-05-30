@@ -1,4 +1,5 @@
 from tools import read_csv
+from collections import defaultdict
 
 file_path = "../public/docs/EiP.csv"
 entries, fieldnames = read_csv(file_path)
@@ -8,6 +9,8 @@ split_fields = [
     "OTHER NAMES", "EXPLICITLY STATED: TRANSLATED FROM",
     "EXPLICITLY STATED: TRANSLATED TO"
 ]
+
+problems = defaultdict(set)
 
 for entry in entries:
     title = entry.get("title", "").strip()
@@ -28,7 +31,10 @@ for entry in entries:
             parts = value.split(", ")
             for part in parts:
                 if part and part not in title:
-                    print(f">>> {key}: {field} value not found in title")
+                    problems[key].add(field)
         else:
             if value not in title:
-                print(f">>> {key}: {field} value not found in title")
+                problems[key].add(field)
+
+for key, fields in problems.items():
+    print(f">>> {key}: Problematic fields: {', '.join(sorted(fields))}")
