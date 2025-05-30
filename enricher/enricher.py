@@ -11,12 +11,7 @@ entries, fieldnames = read_csv(file_path)
 _TRANSLATE_GOOGLE = False
 _TRANSLATE_OPENAI = False
 _TITLE_FEATURES = False
-_TITLE_FEATURES_MERGE = False
-
-FEATURES = [
-    'TITLE: BASE CONTENT', 'TITLE: CONTENT DESC', 'TITLE: CONTENT DESC 2', 'TITLE: ADDITIONAL CONTENT', 'TITLE: ADDITIONAL CONTENT 2', 'TITLE: AUTHOR NAME', 'TITLE: AUTHOR DESCRIPTION',
-    'TITLE: AUTHOR DESCRIPTION 2', 'TITLE: PATRON REF', 'TITLE: EDITION INFO', 'TITLE: PRIVILEGES', 'TITLE: VERBS', 'EXPLICITLY STATED: TRANSLATED FROM', 'OTHER NAMES'
-]
+_TITLE_FEATURES_MERGE = True
 
 for i in tqdm(range(len(entries)), desc="Processing entries"):
     entry = entries[i]
@@ -38,10 +33,10 @@ for i in tqdm(range(len(entries)), desc="Processing entries"):
                 )
                 entries[i][f"{key}_EN"] = translation
 
-    if _TITLE_FEATURES:
+    if _TITLE_FEATURES and entry["tagger"] != "mia":
+        if len(entry["title"]) < 20:
+            continue
         out_path = f"out/{entry["key"].replace("/", "_")}.json"
-        # if os.path.exists(out_path):
-        #    continue
         result = openai_query(
             f"language: {entry['language']}{entry['language 2'] != "" and f' and {entry["language 2"]}' or ''}",
             entry["title"],
@@ -61,7 +56,6 @@ Return only a valid JSON. Do not include any other output.
 Output format:
 {
   "baseContent": "...", // a single quote or empty if not applicable
-  "baseContent": "...", // a single quote or empty if not applicable
   "baseContentDescription": "...", // a single quote or empty if not applicable
   "baseContentDescription2": "...", // a single quote or empty if not applicable
   "supplementaryContent": "...", // a single quote or empty if not applicable
@@ -72,9 +66,12 @@ Output format:
   "patronageDedication": "...", // a single quote or empty if not applicable
   "editionStatement": "...", // a single quote or empty if not applicable
   "publishingPrivileges": "...", // a single quote or empty if not applicable
-  "verbs": [...], // one or more quotes
-  "explicitLanguageReferences": [...], // one or more quotes
-  "referencesToOtherEducationalAuthorities": [...], // one or more quotes
+  "verbs": [...], // zero or more quotes
+  "explicitLanguageReferences": [...], // zero or more quotes
+  "referencesToOtherEducationalAuthorities": [...], // zero or more quotes
+  "euclidMentions": [...], // zero or more quotes
+  "euclidDescription": "...", // a single quote or empty if not applicable
+  "euclidDescription2": "...", // a single quote or empty if not applicable
 }
 
 Definitions:
@@ -92,6 +89,75 @@ Definitions:
 - verbs: Action verbs describing what the adapter did.
 - explicitLanguageReferences: Mentions of source and/or target languages.
 - referencesToOtherEducationalAuthorities: Mentions of ancient or contemporary scholars.
+- euclidMentions: Explicit mentions of Euclid by name (only quote the name, without any additional context).
+- euclidDescription: Description of Euclid or his work. Only quote the description, without any additional context or names.
+- euclidDescription2: Description of Euclid or his work. (an additional quote if applicable).
+
+For example, for this title in French:
+
+```
+ LES SIX 
+PREMIERS LIVRES 
+DES ELEMENTS D’EV-
+CLIDE, TRADVICTS ET 
+COMMENTEZ PAR PIERRE 
+Forcadel de Bezies, Lecteur ordi-
+naire du Roy és Mathema-
+tiques en l’vniuersité 
+de Paris.
+```   
+
+These features would be extracted:
+```
+{
+  "baseContent": "LES SIX \nPREMIERS LIVRES \nDES ELEMENTS D’EV-\nCLIDE",
+  "baseContentDescription": "TRADVICTS ET \nCOMMENTEZ",
+  "baseContentDescription2": "",
+  "supplementaryContent": "",
+  "supplementaryContent2": "",
+  "adapterAttribution": "PIERRE \nForcadel de Bezies",
+  "adapterDescription": "Lecteur ordi-\nnaire du Roy és Mathema-\ntiques en l’vniuersité \nde Paris",
+  "adapterDescription2": "",
+  "patronageDedication": "",
+  "editionStatement": "",
+  "publishingPrivileges": "",
+  "verbs": ["TRADVICTS", "COMMENTEZ"],
+  "explicitLanguageReferences": [],
+  "referencesToOtherEducationalAuthorities": [],
+  "euclidMentions": ["D’EVCLIDE"],
+  "euclidDescription": "",
+  "euclidDescription2": ""
+}
+```
+
+And for example, for this title in Latin:
+
+```
+EUCLIDIS DATA succinctè demonstrata: Unà cum Emendation-ibus quibusdam & Additionibus ad Elementa EUCLIDIS nuper edita. Operâ Mri. IS. BARROVV, CANTABRIGIENSIS Coll. Trin. Soc. 
+```
+
+These features would be extracted:
+```
+{
+  "baseContent": "EUCLIDIS DATA",
+  "baseContentDescription": "succinctè demonstrata",
+  "baseContentDescription2": "",
+  "supplementaryContent": "Unà cum Emendation-ibus quibusdam & Additionibus ad Elementa EUCLIDIS nuper edita",
+  "supplementaryContent2": "",
+  "adapterAttribution": "IS. BARROVV",
+  "adapterDescription": "Mri.",
+  "adapterDescription2": "CANTABRIGIENSIS Coll. Trin. Soc.",
+  "patronageDedication": "",
+  "editionStatement": "",
+  "publishingPrivileges": "",
+  "verbs": ["demonstrata"],
+  "explicitLanguageReferences": [],
+  "referencesToOtherEducationalAuthorities": [],
+  "euclidMentions": ["EUCLIDIS"],
+  "euclidDescription": "",
+  "euclidDescription2": ""
+}
+```   
 """,
             max_tokens=None
         )
@@ -102,6 +168,9 @@ Definitions:
         out_path = f"out/{entry["key"].replace("/", "_")}.json"
         if not os.path.exists(out_path):
             continue
+        if entry["tagger"] == "mia":
+            continue
+        entry["tagger"] = "ai"
         with open(out_path, "r") as f:
             features = f.read().replace("```json", "").replace("```", "").strip()
         try:
@@ -121,6 +190,9 @@ Definitions:
                 "verbs": "TITLE: VERBS",
                 "explicitLanguageReferences": "EXPLICITLY STATED: TRANSLATED FROM",
                 "referencesToOtherEducationalAuthorities": "OTHER NAMES",
+                "euclidMentions": "EUCLID MENTIONED IN TITLE PAGE",
+                "euclidDescription": "TITLE: EUCLID DESCRIPTION",
+                "euclidDescription2": "TITLE: EUCLID DESCRIPTION 2",
             }
             for key, value in features_dict.items():
                 column = feature_to_column.get(key)
