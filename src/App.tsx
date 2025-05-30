@@ -24,6 +24,11 @@ const TILE_WIDTH = 400;
 const MIN_YEAR = 1482;
 const MAX_YEAR = 1703;
 
+const ItemTypes = {
+  elements: "Elements",
+  secondary: "Complementary",
+};
+
 type Item = {
   key: string;
   year: string;
@@ -34,7 +39,7 @@ type Item = {
   title: string;
   titleEn: string | null;
   features: Partial<Record<Feature, string[]>>;
-  type: "elements" | "secondary";
+  type: string;
 };
 
 const Container = styled.div`
@@ -147,9 +152,7 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                   imageUrl: images[raw["key"] as string],
                   title: raw["title"] as string,
                   titleEn: raw["title_EN"] as string | null,
-                  type: startCase(
-                    (raw["type"] as string).toLowerCase(),
-                  ) as Item["type"],
+                  type: ItemTypes[raw["type"] as keyof typeof ItemTypes],
                   features: Object.keys(FeatureToColumnName).reduce(
                     (acc, feature) => {
                       acc[feature as Feature] = FeatureToColumnName[
@@ -344,6 +347,25 @@ const ExpandIcon = styled.div`
   }
 `;
 
+const ImageExpandIcon = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  z-index: 10;
+  background-color: rgba(240, 248, 255, 0.7);
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
 const ScrollToTopButton = styled(ResetButton)`
   position: fixed;
   bottom: 1rem;
@@ -514,70 +536,69 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
                   ⤢
                 </ExpandIcon>
               </TextTile>
-              {modalOpen && (
-                <Modal onClick={() => setModalOpen(false)}>
-                  <ModalContent
-                    onClick={(e) => e.stopPropagation()}
-                    hasImage={!!item.imageUrl}
-                  >
-                    <ModalClose
-                      title="Close"
-                      onClick={() => setModalOpen(false)}
-                    >
-                      ✕
-                    </ModalClose>
-                    <ModalMainTitle>
-                      <span>{item.year}</span>
-                      <span>{item.authors.join(" & ") || "s.n."}</span>
-                      <span>{item.cities.join(", ") || "s.l."}</span>
-                      <span>{item.languages.join(" & ")}</span>
-                    </ModalMainTitle>
-                    <ModalTextContainer>
-                      {item.imageUrl && (
-                        <ModalTextColumn isImage>
-                          <ImageTile
-                            large
-                            src={item.imageUrl}
-                            onClick={() => imageClicked(item)}
-                          />
-                        </ModalTextColumn>
-                      )}
-                      <ModalTextColumn>
-                        <ModalTitle>Original Text</ModalTitle>
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: highlightText(
-                              item.title,
-                              features,
-                              item.features,
-                            ),
-                          }}
-                        />
-                      </ModalTextColumn>
-                      {item.titleEn && (
-                        <ModalTextColumn>
-                          <ModalTitle>English Translation</ModalTitle>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: highlightText(item.titleEn, [], {}),
-                            }}
-                          />
-                        </ModalTextColumn>
-                      )}
-                    </ModalTextContainer>
-                  </ModalContent>
-                </Modal>
-              )}
             </>
           )}
         </>
       )}
       {mode === "images" &&
         (item.imageUrl ? (
-          <ImageTile src={item.imageUrl} onClick={() => imageClicked(item)} />
+          <>
+            <ExpandIcon title="Expand" onClick={() => setModalOpen(true)}>
+              ⤢
+            </ExpandIcon>
+            <ImageTile src={item.imageUrl} onClick={() => imageClicked(item)} />
+          </>
         ) : (
           <NoImageTile>Not Available</NoImageTile>
         ))}
+
+      {modalOpen && (
+        <Modal onClick={() => setModalOpen(false)}>
+          <ModalContent
+            onClick={(e) => e.stopPropagation()}
+            hasImage={!!item.imageUrl}
+          >
+            <ModalClose title="Close" onClick={() => setModalOpen(false)}>
+              ✕
+            </ModalClose>
+            <ModalMainTitle>
+              <span>{item.year}</span>
+              <span>{item.authors.join(" & ") || "s.n."}</span>
+              <span>{item.cities.join(", ") || "s.l."}</span>
+              <span>{item.languages.join(" & ")}</span>
+            </ModalMainTitle>
+            <ModalTextContainer>
+              {item.imageUrl && (
+                <ModalTextColumn isImage>
+                  <ImageTile
+                    large
+                    src={item.imageUrl}
+                    onClick={() => imageClicked(item)}
+                  />
+                </ModalTextColumn>
+              )}
+              <ModalTextColumn>
+                <ModalTitle>Original Text</ModalTitle>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: highlightText(item.title, features, item.features),
+                  }}
+                />
+              </ModalTextColumn>
+              {item.titleEn && (
+                <ModalTextColumn>
+                  <ModalTitle>English Translation</ModalTitle>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: highlightText(item.titleEn, [], {}),
+                    }}
+                  />
+                </ModalTextColumn>
+              )}
+            </ModalTextContainer>
+          </ModalContent>
+        </Modal>
+      )}
     </Column>
   );
 };
@@ -708,7 +729,7 @@ function App() {
     },
   );
   const [types, setTypes] = useLocalStorageState<string[]>("types", {
-    defaultValue: [],
+    defaultValue: ["Elements"],
   });
   const [requireImage, setRequireImage] = useLocalStorageState<boolean>(
     "requireImage",
