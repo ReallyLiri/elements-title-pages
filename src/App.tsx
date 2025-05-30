@@ -309,13 +309,16 @@ const ScrollbarStyle = css`
   ::-webkit-scrollbar-track {
     background-color: inherit;
   }
+
   ::-webkit-scrollbar {
     width: 0.5rem;
   }
+
   ::-webkit-scrollbar-thumb {
     background-color: #666;
     border-radius: 0.5rem;
   }
+
   * {
     scrollbar-width: thin;
     scrollbar-color: #666 inherit;
@@ -663,6 +666,7 @@ type Feature =
   | "Publishing Privileges"
   | "Other Educational Authorities"
   | "Explicit Language References"
+  | "Euclid Description"
   | "Verbs";
 
 const FeatureToColumnName: Record<Feature, string[]> = {
@@ -688,6 +692,10 @@ const FeatureToColumnName: Record<Feature, string[]> = {
     "EXPLICITLY STATED: TRANSLATED FROM",
     "EXPLICITLY STATED: TRANSLATED TO",
   ],
+  "Euclid Description": [
+    "TITLE: EUCLID DESCRIPTION",
+    "TITLE: EUCLID DESCRIPTION 2",
+  ],
   Verbs: ["TITLE: VERBS"],
 };
 
@@ -708,6 +716,7 @@ const FeatureToColor: Record<Feature, string> = {
   "Publishing Privileges": "#D1E7E0",
   "Other Educational Authorities": "#e567ac",
   "Explicit Language References": "#e59c67",
+  "Euclid Description": "#b0e57c",
   Verbs: "#954caf",
 };
 
@@ -728,6 +737,8 @@ const FeatureToTooltip: Record<Feature, string> = {
     "Mentions of royal privileges or legal permissions granted for printing.",
   "Other Educational Authorities":
     "Mentions of other scholars, either ancients, such as Theon of Alexandria, or contemporary, like Simon Stevin.",
+  "Euclid Description":
+    "Statements describing the work as a translation of Euclid’s Elements, or as a commentary on it, or as an edition of it.",
   "Explicit Language References":
     "Statements identifying the source language (e.g., Latin or Greek) and/or the target language.",
   Verbs:
