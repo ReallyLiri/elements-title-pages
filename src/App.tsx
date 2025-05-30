@@ -667,7 +667,8 @@ type Feature =
   | "Other Educational Authorities"
   | "Explicit Language References"
   | "Euclid Description"
-  | "Verbs";
+  | "Verbs"
+  | "Recipients";
 
 const FeatureToColumnName: Record<Feature, string[]> = {
   "Base Content": ["TITLE: BASE CONTENT"],
@@ -697,6 +698,7 @@ const FeatureToColumnName: Record<Feature, string[]> = {
     "TITLE: EUCLID DESCRIPTION 2",
   ],
   Verbs: ["TITLE: VERBS"],
+  "Recipients": ["TITLE: EXPLICIT RECIPIENT"],
 };
 
 const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
@@ -718,6 +720,7 @@ const FeatureToColor: Record<Feature, string> = {
   "Explicit Language References": "#e59c67",
   "Euclid Description": "#b0e57c",
   Verbs: "#954caf",
+  "Recipients": "#f0b7a4",
 };
 
 const FeatureToTooltip: Record<Feature, string> = {
@@ -743,6 +746,7 @@ const FeatureToTooltip: Record<Feature, string> = {
     "Statements identifying the source language (e.g., Latin or Greek) and/or the target language.",
   Verbs:
     "Action verbs such as traduit (translated), commenté (commented), augmenté (expanded) that describe the role the contemporary scholar played in bringing about the work.",
+  "Recipients": "Explicit mentions of the work's recipients.",
 };
 
 function App() {
