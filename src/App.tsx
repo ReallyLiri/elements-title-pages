@@ -670,7 +670,7 @@ type Feature =
 const FeatureToColumnName: Record<Feature, string[]> = {
   "Base Content": ["TITLE: BASE CONTENT"],
   "Base Content Description": ["TITLE: CONTENT DESC", "TITLE: CONTENT DESC 2"],
-  "Adapter Attribution": ["TITLE: AUTHOR NAME"],
+  "Adapter Attribution": ["TITLE: AUTHOR NAME", "TITLE: AUTHOR NAME 2"],
   "Adapter Description": [
     "TITLE: AUTHOR DESCRIPTION",
     "TITLE: AUTHOR DESCRIPTION 2",
