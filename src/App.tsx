@@ -677,7 +677,7 @@ const FeatureToColumnName: Record<Feature, string[]> = {
     "TITLE: ADDITIONAL CONTENT 2",
   ],
   "Publishing Privileges": ["TITLE: PRIVILEGES"],
-  "Other Educational Authorities": ["OTHER NAMES"],
+  "Other Educational Authorities": ["OTHER NAMES", "EUCLID MENTIONED IN TITLE PAGE"],
   "Explicit Language References": [
     "EXPLICITLY STATED: TRANSLATED FROM",
     "EXPLICITLY STATED: TRANSLATED TO",
