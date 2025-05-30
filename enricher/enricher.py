@@ -9,12 +9,18 @@ file_path = "../public/docs/EiP.csv"
 entries, fieldnames = read_csv(file_path)
 
 _TRANSLATE_GOOGLE = False
-_TRANSLATE_OPENAI = True
+_TRANSLATE_OPENAI = False
 _TITLE_FEATURES = False
 _TITLE_FEATURES_MERGE = False
 
+FEATURES = [
+    'TITLE: BASE CONTENT', 'TITLE: CONTENT DESC', 'TITLE: CONTENT DESC 2', 'TITLE: ADDITIONAL CONTENT', 'TITLE: ADDITIONAL CONTENT 2', 'TITLE: AUTHOR NAME', 'TITLE: AUTHOR DESCRIPTION',
+    'TITLE: AUTHOR DESCRIPTION 2', 'TITLE: PATRON REF', 'TITLE: EDITION INFO', 'TITLE: PRIVILEGES', 'TITLE: VERBS', 'EXPLICITLY STATED: TRANSLATED FROM', 'OTHER NAMES'
+]
+
 for i in tqdm(range(len(entries)), desc="Processing entries"):
     entry = entries[i]
+
     if _TRANSLATE_GOOGLE and entry["language"] != "ENGLISH" and entry["title_EN"] == "":
         translations, languages = (
             google_translate([entry["title"], entry["colophon"], entry["imprint"]])
