@@ -221,5 +221,4 @@ export const images: Record<string, string> = {
   "Paris 1507": "https://i.imgur.com/Vm5XuIj.png",
   "Venice 1505": "https://i.imgur.com/Osjjp2a.png",
   "Venice 1498a": "https://i.imgur.com/p2M4jJU.png",
-  "Venice 1482": "https://i.imgur.com/Mz13dwR.png",
 };

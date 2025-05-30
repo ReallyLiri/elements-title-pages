@@ -349,18 +349,20 @@ const ExpandIcon = styled.div`
 
 const ImageExpandIcon = styled.div`
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0.5rem;
+  right: 0.5rem;
   cursor: pointer;
   font-size: 1.2rem;
   z-index: 10;
-  background-color: rgba(240, 248, 255, 0.7);
+  background-color: aliceblue;
+  color: black;
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   @media (max-width: 600px) {
     display: none;
   }
@@ -542,12 +544,27 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
       )}
       {mode === "images" &&
         (item.imageUrl ? (
-          <>
-            <ExpandIcon title="Expand" onClick={() => setModalOpen(true)}>
-              ⤢
-            </ExpandIcon>
+          <div
+            style={{
+              position: "relative",
+              maxHeight: "100%",
+              maxWidth: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "start",
+            }}
+          >
             <ImageTile src={item.imageUrl} onClick={() => imageClicked(item)} />
-          </>
+            <ImageExpandIcon
+              title="Expand"
+              onClick={(e) => {
+                e.stopPropagation();
+                setModalOpen(true);
+              }}
+            >
+              ⤢
+            </ImageExpandIcon>
+          </div>
         ) : (
           <NoImageTile>Not Available</NoImageTile>
         ))}
