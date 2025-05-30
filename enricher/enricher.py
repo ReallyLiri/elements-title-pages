@@ -10,8 +10,8 @@ entries, fieldnames = read_csv(file_path)
 
 _TRANSLATE_GOOGLE = False
 _TRANSLATE_OPENAI = False
-_TITLE_FEATURES = False
-_TITLE_FEATURES_MERGE = True
+_TITLE_FEATURES = True
+_TITLE_FEATURES_MERGE = False
 
 if not os.path.exists("out"):
     os.makedirs("out")
