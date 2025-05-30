@@ -25,7 +25,7 @@ for i in tqdm(range(len(entries)), desc="Processing entries"):
         )
         entries[i]["title_EN"], entries[i]["colophon_EN"], entries[i]["imprint_EN"] = translations
 
-    if _TRANSLATE_OPENAI and entry["language"] != "ENGLISH":
+    if _TRANSLATE_OPENAI and entry["language"] != "ENGLISH" and entry["title_EN"] == "":
         for key in ["title", "colophon", "imprint"]:
             if entry[key] != "":
                 translation = openai_query(
@@ -36,7 +36,7 @@ for i in tqdm(range(len(entries)), desc="Processing entries"):
                 )
                 entries[i][f"{key}_EN"] = translation
 
-    if _TITLE_FEATURES and entry["tagger"] != "mia":
+    if _TITLE_FEATURES and entry["tagger"] == "":
         if len(entry["title"]) < 20:
             continue
         out_path = f"out/{entry["key"].replace("/", "_")}.json"
@@ -51,7 +51,7 @@ You will be given:
 - The language of the transcription.
 
 Your task is to extract specific paratextual features from the transcription and return them as a JSON object.
-Each field should contain the exact quoted text(s) from the input, with no modifications, rephrasing, or interpretation. Include the original whitespaces and punctuation as they appear in the transcription.
+Each field should contain the exact quoted text(s) from the input, with no modifications, rephrasing, or interpretation. Include the original whitespaces, line breaks and punctuation as they appear in the transcription.
 Some text may apply to more than one field, so you may return the same text portions in multiple fields if applicable.
 
 Return only a valid JSON. Do not include any other output.
@@ -127,7 +127,7 @@ These features would be extracted:
   "verbs": ["TRADVICTS", "COMMENTEZ"],
   "explicitLanguageReferences": [],
   "referencesToOtherEducationalAuthorities": [],
-  "euclidMentions": ["D’EVCLIDE"],
+  "euclidMentions": ["D’EV\nCLIDE"],
   "euclidDescription": "",
   "euclidDescription2": ""
 }
