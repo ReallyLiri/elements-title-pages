@@ -40,6 +40,7 @@ type Item = {
   titleEn: string | null;
   features: Partial<Record<Feature, string[]>>;
   type: string;
+  format: string | null;
 };
 
 const Container = styled.div`
@@ -153,6 +154,7 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                   title: raw["title"] as string,
                   titleEn: raw["title_EN"] as string | null,
                   type: ItemTypes[raw["type"] as keyof typeof ItemTypes],
+                  format: raw["format"] as string | null,
                   features: Object.keys(FeatureToColumnName).reduce(
                     (acc, feature) => {
                       acc[feature as Feature] = FeatureToColumnName[
@@ -754,6 +756,9 @@ function App() {
   const [types, setTypes] = useLocalStorageState<string[]>("types", {
     defaultValue: ["Elements"],
   });
+  const [formats, setFormats] = useLocalStorageState<string[]>("formats", {
+    defaultValue: [],
+  });
   const [requireImage, setRequireImage] = useLocalStorageState<boolean>(
     "requireImage",
     {
@@ -822,6 +827,11 @@ function App() {
     [items],
   );
 
+  const allFormats = useMemo(
+    () => (items ? extract(items, "format").filter(Boolean) : []),
+    [items],
+  );
+
   const filteredItems = useMemo(() => {
     return items?.filter((item) => {
       if (cities.length) {
@@ -850,6 +860,11 @@ function App() {
           return false;
         }
       }
+      if (formats.length) {
+        if (!item.format || !formats.includes(item.format)) {
+          return false;
+        }
+      }
       if (mode === "images" && requireImage) {
         if (!item.imageUrl) {
           return false;
@@ -861,7 +876,7 @@ function App() {
       }
       return true;
     });
-  }, [items, cities, authors, languages, types, mode, requireImage, yearRange]);
+  }, [items, cities, authors, languages, types, formats, mode, requireImage, yearRange]);
 
   useEffect(() => {
     if (!items) {
@@ -938,6 +953,12 @@ function App() {
                 options={allTypes}
                 onChange={setTypes}
                 value={types}
+              />
+              <MultiSelect
+                name="Formats"
+                options={allFormats}
+                onChange={setFormats}
+                value={formats}
               />
             </Row>
             <Row justifyStart>
