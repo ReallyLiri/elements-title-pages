@@ -397,7 +397,16 @@ const NoImageTile = styled.div`
   align-items: center;
 `;
 
-const ImageTile = styled.img<{ large?: boolean }>`
+const ImageTile = styled.div`
+  position: relative;
+  max-height: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+`;
+
+const StyledImage = styled.img<{ large?: boolean }>`
   ${Tile};
   max-height: ${({ large }) => (large ? "100%" : "90%")};
   max-width: ${({ large }) => (large ? "100%" : "90%")};
@@ -544,17 +553,11 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
       )}
       {mode === "images" &&
         (item.imageUrl ? (
-          <div
-            style={{
-              position: "relative",
-              maxHeight: "100%",
-              maxWidth: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "start",
-            }}
-          >
-            <ImageTile src={item.imageUrl} onClick={() => imageClicked(item)} />
+          <ImageTile>
+            <StyledImage
+              src={item.imageUrl}
+              onClick={() => imageClicked(item)}
+            />
             <ImageExpandIcon
               title="Expand"
               onClick={(e) => {
@@ -564,7 +567,7 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
             >
               ⤢
             </ImageExpandIcon>
-          </div>
+          </ImageTile>
         ) : (
           <NoImageTile>Not Available</NoImageTile>
         ))}
@@ -587,7 +590,7 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
             <ModalTextContainer>
               {item.imageUrl && (
                 <ModalTextColumn isImage>
-                  <ImageTile
+                  <StyledImage
                     large
                     src={item.imageUrl}
                     onClick={() => imageClicked(item)}
@@ -677,7 +680,10 @@ const FeatureToColumnName: Record<Feature, string[]> = {
     "TITLE: ADDITIONAL CONTENT 2",
   ],
   "Publishing Privileges": ["TITLE: PRIVILEGES"],
-  "Other Educational Authorities": ["OTHER NAMES", "EUCLID MENTIONED IN TITLE PAGE"],
+  "Other Educational Authorities": [
+    "OTHER NAMES",
+    "EUCLID MENTIONED IN TITLE PAGE",
+  ],
   "Explicit Language References": [
     "EXPLICITLY STATED: TRANSLATED FROM",
     "EXPLICITLY STATED: TRANSLATED TO",
