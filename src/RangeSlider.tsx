@@ -79,6 +79,7 @@ export const RangeSlider = ({
   max,
   onChange,
 }: RangeSliderProps) => (
+  // todo (liri): please add a manual input field for the range values (it's too hard to be precise with the slider)
   <Row justifyStart noWrap>
     <div>{name}:</div>
     <Value>{value[0]}</Value>

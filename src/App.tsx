@@ -700,7 +700,7 @@ const FeatureToColumnName: Record<Feature, string[]> = {
     "TITLE: EUCLID DESCRIPTION 2",
   ],
   Verbs: ["TITLE: VERBS"],
-  "Recipients": ["TITLE: EXPLICIT RECIPIENT"],
+  "Recipients": ["TITLE: EXPLICIT RECIPIENT", "TITLE: EXPLICIT RECIPIENT 2"],
   // TODO (liri): please add this logic -
   //  if 'TITLE: ELEMENTS DESIGNATION' is empty && type == 'elements', then use TITLE: BASE CONTENT
   //  if 'TITLE: ELEMENTS DESIGNATION' is 'none' (case insensitive) && type == 'elements', then keep it empty
