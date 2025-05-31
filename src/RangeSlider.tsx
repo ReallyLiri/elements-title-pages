@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Row } from "./App.tsx";
+import React from "react";
 
 export type RangeSliderProps = {
   name: string;
@@ -64,8 +65,24 @@ const MinInput = styled(SliderInput)``;
 
 const MaxInput = styled(SliderInput)``;
 
-const Value = styled.div`
+const ValueInput = styled.input`
   margin: 0 0.5rem;
+  width: 4rem;
+  height: 2rem;
+  text-align: center;
+  border: 1px solid #666;
+  border-radius: 4px;
+  padding: 2px 4px;
+  
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  &[type=number] {
+    -moz-appearance: textfield;
+  }
 `;
 
 export const RangeSlider = ({
@@ -74,46 +91,85 @@ export const RangeSlider = ({
   min,
   max,
   onChange,
-}: RangeSliderProps) => (
-  // todo (liri): please add a manual input field for the range values (it's too hard to be precise with the slider)
-  <Row justifyStart noWrap>
-    <div>{name}:</div>
-    <Value>{value[0]}</Value>
-    <SliderContainer>
-      <SliderTrack />
-      <SliderRange
-        left={value[0]}
-        width={value[1] - value[0]}
+}: RangeSliderProps) => {
+  const [minInputValue, setMinInputValue] = React.useState(value[0].toString());
+  const [maxInputValue, setMaxInputValue] = React.useState(value[1].toString());
+  
+  React.useEffect(() => {
+    setMinInputValue(value[0].toString());
+    setMaxInputValue(value[1].toString());
+  }, [value]);
+  
+  return (
+    <Row justifyStart noWrap>
+      <div>{name}:</div>
+      <ValueInput
+        type="number"
         min={min}
-        max={max}
-      />
-      <MinInput
-        type="range"
-        min={min}
-        max={max}
-        value={value[0]}
-        onChange={(e) => {
-          const newMin = parseInt(e.target.value);
-          if (newMin <= value[1]) {
-            onChange([newMin, value[1]]);
+        max={value[1]}
+        value={minInputValue}
+        onChange={(e) => setMinInputValue(e.target.value)}
+        onBlur={() => {
+          const newMin = parseInt(minInputValue);
+          if (!isNaN(newMin)) {
+            const clampedMin = Math.max(min, Math.min(newMin, value[1]));
+            onChange([clampedMin, value[1]]);
+          } else {
+            setMinInputValue(value[0].toString());
           }
         }}
       />
-      <MaxInput
-        type="range"
-        min={min}
+      <SliderContainer>
+        <SliderTrack />
+        <SliderRange
+          left={value[0]}
+          width={value[1] - value[0]}
+          min={min}
+          max={max}
+        />
+        <MinInput
+          type="range"
+          min={min}
+          max={max}
+          value={value[0]}
+          onChange={(e) => {
+            const newMin = parseInt(e.target.value);
+            if (newMin <= value[1]) {
+              onChange([newMin, value[1]]);
+            }
+          }}
+        />
+        <MaxInput
+          type="range"
+          min={min}
+          max={max}
+          value={value[1]}
+          onChange={(e) => {
+            const newMax = parseInt(e.target.value);
+            if (newMax >= value[0]) {
+              onChange([value[0], newMax]);
+            }
+          }}
+        />
+      </SliderContainer>
+      <ValueInput
+        type="number"
+        min={value[0]}
         max={max}
-        value={value[1]}
-        onChange={(e) => {
-          const newMax = parseInt(e.target.value);
-          if (newMax >= value[0]) {
-            onChange([value[0], newMax]);
+        value={maxInputValue}
+        onChange={(e) => setMaxInputValue(e.target.value)}
+        onBlur={() => {
+          const newMax = parseInt(maxInputValue);
+          if (!isNaN(newMax)) {
+            const clampedMax = Math.min(max, Math.max(newMax, value[0]));
+            onChange([value[0], clampedMax]);
+          } else {
+            setMaxInputValue(value[1].toString());
           }
         }}
       />
-    </SliderContainer>
-    <Value>{value[1]}</Value>
-  </Row>
-);
+    </Row>
+  );
+};
 
 export default RangeSlider;
