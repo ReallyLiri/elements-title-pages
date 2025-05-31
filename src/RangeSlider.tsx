@@ -60,13 +60,9 @@ const SliderInput = styled.input`
   }
 `;
 
-const MinInput = styled(SliderInput)`
-  z-index: 5;
-`;
+const MinInput = styled(SliderInput)``;
 
-const MaxInput = styled(SliderInput)`
-  z-index: 4;
-`;
+const MaxInput = styled(SliderInput)``;
 
 const Value = styled.div`
   margin: 0 0.5rem;

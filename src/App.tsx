@@ -165,6 +165,16 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                             ? uniq(text.split(", "))
                             : [text],
                         );
+                      if (feature === "Elements Designation") {
+                        acc[feature as Feature] =
+                          !raw["TITLE: ELEMENTS DESIGNATION"] &&
+                          raw["type"] === "elements"
+                            ? [raw["TITLE: BASE CONTENT"] as string]
+                            : raw["TITLE: ELEMENTS DESIGNATION"] === "none" &&
+                                raw["type"] === "elements"
+                              ? []
+                              : acc[feature as Feature];
+                      }
                       return acc;
                     },
                     {} as Partial<Record<Feature, string[]>>,
@@ -498,18 +508,24 @@ const highlightText = (
   mapping: Item["features"],
 ): string => {
   let highlighted = text;
-  features.forEach((feature) => {
-    mapping[feature]?.forEach((text) => {
-      const style =
-        feature === "Verbs"
-          ? `border: 2px solid ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`
-          : `background-color: ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`;
-      highlighted = highlighted.replaceAll(
-        text.trim(),
-        `<span style="${style}">${text}</span>`,
-      );
+  features
+    .sort((a, b) => {
+      const orderA = Object.keys(FeatureToColumnName).indexOf(a);
+      const orderB = Object.keys(FeatureToColumnName).indexOf(b);
+      return orderA - orderB;
+    })
+    .forEach((feature) => {
+      mapping[feature]?.forEach((text) => {
+        const style =
+          feature === "Verbs"
+            ? `border: 2px solid ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`
+            : `background-color: ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`;
+        highlighted = highlighted.replaceAll(
+          text.trim(),
+          `<span style="${style}">${text}</span>`,
+        );
+      });
     });
-  });
   highlighted = highlighted.replaceAll("\n", "<br/>");
   highlighted = highlighted.replace(
     /\[(.*?)]:/g,
@@ -668,11 +684,11 @@ type Feature =
   | "Explicit Language References"
   | "Euclid Description"
   | "Verbs"
-  // todo (liri): please add the logic for the new attributes for the AI tagger;
   | "Recipients"
   | "Elements Designation";
 
 const FeatureToColumnName: Record<Feature, string[]> = {
+  "Elements Designation": ["TITLE: ELEMENTS DESIGNATION"],
   "Base Content": ["TITLE: BASE CONTENT"],
   "Base Content Description": ["TITLE: CONTENT DESC", "TITLE: CONTENT DESC 2"],
   "Adapter Attribution": ["TITLE: AUTHOR NAME", "TITLE: AUTHOR NAME 2"],
@@ -700,11 +716,7 @@ const FeatureToColumnName: Record<Feature, string[]> = {
     "TITLE: EUCLID DESCRIPTION 2",
   ],
   Verbs: ["TITLE: VERBS"],
-  "Recipients": ["TITLE: EXPLICIT RECIPIENT", "TITLE: EXPLICIT RECIPIENT 2"],
-  // TODO (liri): please add this logic -
-  //  if 'TITLE: ELEMENTS DESIGNATION' is empty && type == 'elements', then use TITLE: BASE CONTENT
-  //  if 'TITLE: ELEMENTS DESIGNATION' is 'none' (case insensitive) && type == 'elements', then keep it empty
-  "Elements Designation": ["TITLE: ELEMENTS DESIGNATION"]
+  Recipients: ["TITLE: EXPLICIT RECIPIENT", "TITLE: EXPLICIT RECIPIENT 2"],
 };
 
 const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
@@ -714,7 +726,6 @@ const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
 };
 
 const FeatureToColor: Record<Feature, string> = {
-  // todo (liri): please fix the colors to be more readable for the new features
   "Base Content": "#FADADD",
   "Base Content Description": "#AEC6CF",
   "Adapter Attribution": "#909fd7",
@@ -727,8 +738,8 @@ const FeatureToColor: Record<Feature, string> = {
   "Explicit Language References": "#e59c67",
   "Euclid Description": "#b0e57c",
   Verbs: "#954caf",
-  "Recipients": "#f0b7a4",
-  "Elements Designation": "#b30de3",
+  Recipients: "#F7E779",
+  "Elements Designation": "#A3D5C3",
 };
 
 const FeatureToTooltip: Record<Feature, string> = {
@@ -754,8 +765,9 @@ const FeatureToTooltip: Record<Feature, string> = {
     "Statements identifying the source language (e.g., Latin or Greek) and/or the target language.",
   Verbs:
     "Action verbs such as traduit (translated), commenté (commented), augmenté (expanded) that describe the role the contemporary scholar played in bringing about the work.",
-  "Recipients": "Explicit mentions of the work's recipients.",
-  "Elements Designation": "The designation of the Elements, such as 'Elements of Geometry' or 'Euclid’s Elements', as it appears on the title page.",
+  Recipients: "Explicit mentions of the work's recipients.",
+  "Elements Designation":
+    "The designation of the Elements, such as 'Elements of Geometry' or 'Euclid’s Elements', as it appears on the title page.",
 };
 
 function App() {
