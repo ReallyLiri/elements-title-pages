@@ -668,7 +668,9 @@ type Feature =
   | "Explicit Language References"
   | "Euclid Description"
   | "Verbs"
-  | "Recipients";
+  // todo (liri): please add the logic for the new attributes for the AI tagger;
+  | "Recipients"
+  | "Elements Designation";
 
 const FeatureToColumnName: Record<Feature, string[]> = {
   "Base Content": ["TITLE: BASE CONTENT"],
@@ -699,6 +701,10 @@ const FeatureToColumnName: Record<Feature, string[]> = {
   ],
   Verbs: ["TITLE: VERBS"],
   "Recipients": ["TITLE: EXPLICIT RECIPIENT"],
+  // TODO (liri): please add this logic -
+  //  if 'TITLE: ELEMENTS DESIGNATION' is empty && type == 'elements', then use TITLE: BASE CONTENT
+  //  if 'TITLE: ELEMENTS DESIGNATION' is 'none' (case insensitive) && type == 'elements', then keep it empty
+  "Elements Designation": ["TITLE: ELEMENTS DESIGNATION"]
 };
 
 const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
@@ -708,6 +714,7 @@ const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
 };
 
 const FeatureToColor: Record<Feature, string> = {
+  // todo (liri): please fix the colors to be more readable for the new features
   "Base Content": "#FADADD",
   "Base Content Description": "#AEC6CF",
   "Adapter Attribution": "#909fd7",
@@ -721,6 +728,7 @@ const FeatureToColor: Record<Feature, string> = {
   "Euclid Description": "#b0e57c",
   Verbs: "#954caf",
   "Recipients": "#f0b7a4",
+  "Elements Designation": "#b30de3",
 };
 
 const FeatureToTooltip: Record<Feature, string> = {
@@ -747,6 +755,7 @@ const FeatureToTooltip: Record<Feature, string> = {
   Verbs:
     "Action verbs such as traduit (translated), commenté (commented), augmenté (expanded) that describe the role the contemporary scholar played in bringing about the work.",
   "Recipients": "Explicit mentions of the work's recipients.",
+  "Elements Designation": "The designation of the Elements, such as 'Elements of Geometry' or 'Euclid’s Elements', as it appears on the title page.",
 };
 
 function App() {
