@@ -681,7 +681,7 @@ const FeatureToColumnName: Record<Feature, string[]> = {
     "TITLE: AUTHOR DESCRIPTION 2",
   ],
   "Patronage Dedication": ["TITLE: PATRON REF"],
-  "Edition Statement": ["TITLE: EDITION INFO"],
+  "Edition Statement": ["TITLE: EDITION INFO", "TITLE: EDITION INFO 2"],
   "Supplementary Content": [
     "TITLE: ADDITIONAL CONTENT",
     "TITLE: ADDITIONAL CONTENT 2",
