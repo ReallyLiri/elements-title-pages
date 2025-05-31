@@ -509,11 +509,7 @@ const highlightText = (
 ): string => {
   let highlighted = text;
   features
-    .sort((a, b) => {
-      const orderA = Object.keys(FeatureToColumnName).indexOf(a);
-      const orderB = Object.keys(FeatureToColumnName).indexOf(b);
-      return orderA - orderB;
-    })
+    .sort((a, b) => mapping[a]?.length || 0 - (mapping[b]?.length || 0))
     .forEach((feature) => {
       mapping[feature]?.forEach((text) => {
         const style =
@@ -729,7 +725,8 @@ const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
 
 // todo: Lir fyi
 const FeaturesNotSelectedByDefault: Feature[] = [
-  "Greek designation", "Elements Designation"
+  "Greek designation",
+  "Elements Designation",
 ];
 
 const FeatureToColor: Record<Feature, string> = {
@@ -776,8 +773,7 @@ const FeatureToTooltip: Record<Feature, string> = {
   Recipients: "Explicit mentions of the work's recipients.",
   "Elements Designation":
     "The designation of the Elements, such as 'Elements of Geometry' or 'Euclid’s Elements', as it appears on the title page.",
-  "Greek designation":
-  "Greek designation of the book in non-Greek books.",
+  "Greek designation": "Greek designation of the book in non-Greek books.",
 };
 
 function App() {
@@ -1031,12 +1027,14 @@ function App() {
                   <ResetButton
                     onClick={() =>
                       // filter out features not selected by default
-                      setFeatures(Object.keys(FeatureToColumnName).filter(
-                        (f) =>
-                          !FeaturesNotSelectedByDefault.includes(
-                            f as Feature,
-                          ),
-                      ) as Feature[])
+                      setFeatures(
+                        Object.keys(FeatureToColumnName).filter(
+                          (f) =>
+                            !FeaturesNotSelectedByDefault.includes(
+                              f as Feature,
+                            ),
+                        ) as Feature[],
+                      )
                     }
                   >
                     Reset
