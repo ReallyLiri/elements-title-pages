@@ -685,7 +685,8 @@ type Feature =
   | "Euclid Description"
   | "Verbs"
   | "Recipients"
-  | "Elements Designation";
+  | "Elements Designation"
+  | "Greek designation";
 
 const FeatureToColumnName: Record<Feature, string[]> = {
   "Elements Designation": ["TITLE: ELEMENTS DESIGNATION"],
@@ -717,6 +718,7 @@ const FeatureToColumnName: Record<Feature, string[]> = {
   ],
   Verbs: ["TITLE: VERBS"],
   Recipients: ["TITLE: EXPLICIT RECIPIENT", "TITLE: EXPLICIT RECIPIENT 2"],
+  "Greek designation": ["TITLE: GREEK IN NON GREEK BOOKS"],
 };
 
 const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
@@ -724,6 +726,11 @@ const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
   "Explicit Language References": true,
   Verbs: true,
 };
+
+// todo: Lir fyi
+const FeaturesNotSelectedByDefault: Feature[] = [
+  "Greek designation", "Elements Designation"
+];
 
 const FeatureToColor: Record<Feature, string> = {
   "Base Content": "#FADADD",
@@ -740,6 +747,7 @@ const FeatureToColor: Record<Feature, string> = {
   Verbs: "#954caf",
   Recipients: "#F7E779",
   "Elements Designation": "#A3D5C3",
+  "Greek designation": "#F0B2A1",
 };
 
 const FeatureToTooltip: Record<Feature, string> = {
@@ -768,6 +776,8 @@ const FeatureToTooltip: Record<Feature, string> = {
   Recipients: "Explicit mentions of the work's recipients.",
   "Elements Designation":
     "The designation of the Elements, such as 'Elements of Geometry' or 'Euclid’s Elements', as it appears on the title page.",
+  "Greek designation":
+  "Greek designation of the book in non-Greek books.",
 };
 
 function App() {
@@ -1020,7 +1030,13 @@ function App() {
                   <span>Highlight Segments:</span>
                   <ResetButton
                     onClick={() =>
-                      setFeatures(Object.keys(FeatureToColumnName) as Feature[])
+                      // filter out features not selected by default
+                      setFeatures(Object.keys(FeatureToColumnName).filter(
+                        (f) =>
+                          !FeaturesNotSelectedByDefault.includes(
+                            f as Feature,
+                          ),
+                      ) as Feature[])
                     }
                   >
                     Reset
