@@ -514,7 +514,7 @@ function collectRanges(
     const matches = mapping[feature] ?? [];
     matches
       .sort((a, b) => b.length - a.length)
-      .forEach((match) => {
+      .forEach(match => {
         const escaped = match.trim();
         if (!escaped) return;
         let startIndex = 0;
@@ -528,62 +528,48 @@ function collectRanges(
         }
       });
   }
-
-  const sorted = [...ranges].sort((a, b) => {
+  return ranges.sort((a, b) => {
     if (a.start !== b.start) return a.start - b.start;
     return b.end - a.end;
   });
-
-  const merged: Range[] = [];
-  for (const range of sorted) {
-    const last = merged.at(-1);
-    if (
-      last &&
-      last.feature === range.feature &&
-      last.end >= range.start - 1 // merge if overlapping or adjacent
-    ) {
-      last.end = Math.max(last.end, range.end);
-    } else {
-      merged.push({ ...range });
-    }
-  }
-  return merged;
 }
 
-function segmentTextByCharacter(text: string, ranges: Range[]) {
+function segmentText(text: string, ranges: Range[]) {
+  if (ranges.length === 0) return [{ text, features: [] }];
+
   const segments: { text: string; features: string[] }[] = [];
-
-  const featureMap: string[][] = Array.from({ length: text.length }, () => []);
-
-  for (const range of ranges) {
-    for (let i = range.start; i < range.end; i++) {
-      featureMap[i].push(range.feature);
-    }
-  }
-
   let i = 0;
+
   while (i < text.length) {
-    const currentFeatures = featureMap[i];
-    let j = i + 1;
-    while (
-      j < text.length &&
-      JSON.stringify(featureMap[j]) === JSON.stringify(currentFeatures)
-    ) {
-      j++;
-    }
-    const currText = text.slice(i, j);
-    if (currText.trim() !== "") {
+    const currentRanges = ranges.filter((r) => r.start <= i && r.end > i);
+    
+    if (currentRanges.length === 0) {
+      const nextRangeStart = ranges.find(r => r.start > i)?.start ?? text.length;
       segments.push({
-        text: text.slice(i, j),
-        features: currentFeatures,
+        text: text.slice(i, nextRangeStart),
+        features: [],
       });
+      i = nextRangeStart;
+      continue;
     }
-    i = j;
+    
+    const longestRange = currentRanges.reduce(
+      (longest, range) => range.end > longest.end ? range : longest,
+      currentRanges[0]
+    );
+    
+    const rangesWithSameEnd = currentRanges.filter(r => r.end === longestRange.end);
+    
+    segments.push({
+      text: text.slice(i, longestRange.end),
+      features: rangesWithSameEnd.map((r) => r.feature),
+    });
+    
+    i = longestRange.end;
   }
 
   return segments;
 }
-
 const HighlightedText = ({
   text,
   features,
@@ -593,14 +579,8 @@ const HighlightedText = ({
   features: Feature[];
   mapping: Item["features"];
 }) => {
-  const ranges = collectRanges(
-    text,
-    features.sort(
-      (a, b) => (mapping[a]?.length || 0) - (mapping[b]?.length || 0),
-    ),
-    mapping,
-  );
-  const segments = segmentTextByCharacter(text, ranges);
+  const ranges = collectRanges(text, features, mapping);
+  const segments = segmentText(text, ranges);
 
   return (
     <div
@@ -624,21 +604,14 @@ const HighlightedText = ({
                 position: "absolute",
                 inset: 0,
                 pointerEvents: "none",
+                zIndex: j,
                 borderRadius: "8px",
+                padding: "2px",
                 ...(feature === "Verbs"
                   ? {
-                      zIndex: 100,
                       border: `2px solid ${FeatureToColor[feature]}`,
-                      width: `calc(100% + 4px)`,
-                      height: `calc(100% + 4px)`,
-                      transform: `translate(-4px, -4px)`,
                     }
                   : {
-                      zIndex: j,
-                      padding: 2,
-                      transform: `translate(-${(seg.features.length - 1 - j) * 2}px, -${(seg.features.length - 1 - j) * 2}px)`,
-                      height: `calc(100% + ${(seg.features.length - 1 - j) * 4}px)`,
-                      width: `calc(100% + ${(seg.features.length - 1 - j) * 4}px)`,
                       backgroundColor: FeatureToColor[feature as Feature],
                     }),
               }}
@@ -657,6 +630,34 @@ const HighlightedText = ({
       ))}
     </div>
   );
+};
+
+const highlightText = (
+  text: string,
+  features: Feature[],
+  mapping: Item["features"],
+): string => {
+  let highlighted = text;
+  features
+    .sort((a, b) => mapping[a]?.length || 0 - (mapping[b]?.length || 0))
+    .forEach((feature) => {
+      mapping[feature]?.forEach((text) => {
+        const style =
+          feature === "Verbs"
+            ? `border: 2px solid ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`
+            : `background-color: ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`;
+        highlighted = highlighted.replaceAll(
+          text.trim(),
+          `<span style="${style}">${text}</span>`,
+        );
+      });
+    });
+  highlighted = highlighted.replaceAll("\n", "<br/>");
+  highlighted = highlighted.replace(
+    /\[(.*?)]:/g,
+    "<span style='font-size: 0.8rem; opacity: .8'>[$1]:</span>",
+  );
+  return highlighted;
 };
 
 function imageClicked(item: Item) {
@@ -743,19 +744,19 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
               )}
               <ModalTextColumn>
                 <ModalTitle>Original Text</ModalTitle>
-                <HighlightedText
-                  text={item.title}
-                  features={features}
-                  mapping={item.features}
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: highlightText(item.title, features, item.features),
+                  }}
                 />
               </ModalTextColumn>
               {item.titleEn && (
                 <ModalTextColumn>
                   <ModalTitle>English Translation</ModalTitle>
-                  <HighlightedText
-                    text={item.titleEn}
-                    features={[]}
-                    mapping={{}}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: highlightText(item.titleEn, [], {}),
+                    }}
                   />
                 </ModalTextColumn>
               )}
