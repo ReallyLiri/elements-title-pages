@@ -22,6 +22,8 @@ problems = defaultdict(set)
 
 for entry in entries:
     title = entry.get("title", "").strip()
+    if title == "?" or title == "":
+        continue
     key = entry.get("key", "")
 
     if not title or not key:
