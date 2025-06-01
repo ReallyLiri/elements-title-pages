@@ -17,7 +17,8 @@ split_fields = [
 
 
 def normalize(s):
-    return re.sub(r"\s+|-", "", s).lower()
+    s = s.lower()
+    return re.sub(r"\s+|-", "", s)
 
 
 problems = defaultdict(set)
@@ -53,10 +54,10 @@ for entry in all_entries:
         if field in split_fields:
             parts = value.split(", ")
             for part in parts:
-                if part and normalize(part) not in norm_title:
+                if part and normalize(part) not in norm_title and not any(normalize(part) in normalize(word) for word in title.split()):
                     problems[key].add(field)
         else:
-            if normalize(value) not in norm_title:
+            if normalize(value) not in norm_title and not any(normalize(value) in normalize(word) for word in title.split()):
                 problems[key].add(field)
 
 for key, fields in problems.items():
