@@ -502,136 +502,6 @@ const LanguagesInfo = styled.div`
   text-align: center;
 `;
 
-type Range = { start: number; end: number; feature: Feature };
-
-function collectRanges(
-  text: string,
-  features: Feature[],
-  mapping: Item["features"],
-): Range[] {
-  const ranges: Range[] = [];
-  for (const feature of features) {
-    const matches = mapping[feature] ?? [];
-    matches
-      .sort((a, b) => b.length - a.length)
-      .forEach(match => {
-        const escaped = match.trim();
-        if (!escaped) return;
-        let startIndex = 0;
-        while ((startIndex = text.indexOf(escaped, startIndex)) !== -1) {
-          ranges.push({
-            start: startIndex,
-            end: startIndex + escaped.length,
-            feature,
-          });
-          startIndex += escaped.length;
-        }
-      });
-  }
-  return ranges.sort((a, b) => {
-    if (a.start !== b.start) return a.start - b.start;
-    return b.end - a.end;
-  });
-}
-
-function segmentText(text: string, ranges: Range[]) {
-  if (ranges.length === 0) return [{ text, features: [] }];
-
-  const segments: { text: string; features: string[] }[] = [];
-  let i = 0;
-
-  while (i < text.length) {
-    const currentRanges = ranges.filter((r) => r.start <= i && r.end > i);
-    
-    if (currentRanges.length === 0) {
-      const nextRangeStart = ranges.find(r => r.start > i)?.start ?? text.length;
-      segments.push({
-        text: text.slice(i, nextRangeStart),
-        features: [],
-      });
-      i = nextRangeStart;
-      continue;
-    }
-    
-    const longestRange = currentRanges.reduce(
-      (longest, range) => range.end > longest.end ? range : longest,
-      currentRanges[0]
-    );
-    
-    const rangesWithSameEnd = currentRanges.filter(r => r.end === longestRange.end);
-    
-    segments.push({
-      text: text.slice(i, longestRange.end),
-      features: rangesWithSameEnd.map((r) => r.feature),
-    });
-    
-    i = longestRange.end;
-  }
-
-  return segments;
-}
-const HighlightedText = ({
-  text,
-  features,
-  mapping,
-}: {
-  text: string;
-  features: Feature[];
-  mapping: Item["features"];
-}) => {
-  const ranges = collectRanges(text, features, mapping);
-  const segments = segmentText(text, ranges);
-
-  return (
-    <div
-      style={{
-        position: "relative",
-        whiteSpace: "pre-wrap",
-      }}
-    >
-      {segments.map((seg, i) => (
-        <span
-          key={i}
-          style={{
-            position: "relative",
-            display: "inline-block",
-          }}
-        >
-          {seg.features.map((feature, j) => (
-            <div
-              key={j}
-              style={{
-                position: "absolute",
-                inset: 0,
-                pointerEvents: "none",
-                zIndex: j,
-                borderRadius: "8px",
-                padding: "2px",
-                ...(feature === "Verbs"
-                  ? {
-                      border: `2px solid ${FeatureToColor[feature]}`,
-                    }
-                  : {
-                      backgroundColor: FeatureToColor[feature as Feature],
-                    }),
-              }}
-            />
-          ))}
-          <span
-            style={{
-              position: "relative",
-              zIndex: seg.features.length,
-              padding: "2px",
-            }}
-          >
-            {seg.text}
-          </span>
-        </span>
-      ))}
-    </div>
-  );
-};
-
 const highlightText = (
   text: string,
   features: Feature[],
@@ -683,10 +553,10 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
           ) : (
             <>
               <TextTile alignCenter={!!item.imageUrl}>
-                <HighlightedText
-                  text={item.title}
-                  features={features}
-                  mapping={item.features}
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: highlightText(item.title, features, item.features),
+                  }}
                 />
                 <ExpandIcon title="Expand" onClick={() => setModalOpen(true)}>
                   ⤢
