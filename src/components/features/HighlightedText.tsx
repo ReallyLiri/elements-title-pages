@@ -51,7 +51,9 @@ const highlightLayers = (
 
   features.forEach((feature, featureIndex) => {
     const phrases = mapping[feature];
-    if (!phrases?.length) return;
+    if (!phrases || phrases.length <= 2) {
+      return;
+    }
 
     let layer = text;
 
@@ -125,78 +127,86 @@ function escapeRegExpLoose(str: string): string {
   return str.replace(/([.*+?^${}()|[\]\\])/g, "\\$1");
 }
 
-const HighlightedText = memo(({ text, features, mapping }: HighlightedTextProps) => {
-  const [isReady, setIsReady] = useState(false);
-  const [processedLayers, setProcessedLayers] = useState<string[]>([]);
-  const [processedText, setProcessedText] = useState("");
+const HighlightedText = memo(
+  ({ text, features, mapping }: HighlightedTextProps) => {
+    const [isReady, setIsReady] = useState(false);
+    const [processedLayers, setProcessedLayers] = useState<string[]>([]);
+    const [processedText, setProcessedText] = useState("");
 
-  const computeHighlights = useMemo(() => {
-    return new Promise<{layers: string[], processedText: string}>((resolve) => {
-      setTimeout(() => {
-        const formattedText = text.replace(
-          /\[(.*?)]:/g,
-          "<span style='font-size: 0.8rem; opacity: .8'>[$1]:</span>",
-        );
-        
-        const sortedFeatures = features.sort(
-          (a, b) => (mapping[a]?.length || 0) - (mapping[b]?.length || 0),
-        );
-        
-        const layers = highlightLayers(formattedText, sortedFeatures, mapping);
-        resolve({layers, processedText: formattedText});
-      }, 0);
-    });
-  }, [text, features, mapping]);
+    const computeHighlights = useMemo(() => {
+      return new Promise<{ layers: string[]; processedText: string }>(
+        (resolve) => {
+          setTimeout(() => {
+            const formattedText = text.replace(
+              /\[(.*?)]:/g,
+              "<span style='font-size: 0.8rem; opacity: .8'>[$1]:</span>",
+            );
 
-  useEffect(() => {
-    setIsReady(false);
-    let isMounted = true;
-    
-    computeHighlights.then(({layers, processedText}) => {
-      if (isMounted) {
-        setProcessedLayers(layers);
-        setProcessedText(processedText);
-        setIsReady(true);
-      }
-    });
+            const sortedFeatures = features.sort(
+              (a, b) => (mapping[a]?.length || 0) - (mapping[b]?.length || 0),
+            );
 
-    return () => {
-      isMounted = false;
-    };
-  }, [computeHighlights]);
+            const layers = highlightLayers(
+              formattedText,
+              sortedFeatures,
+              mapping,
+            );
+            resolve({ layers, processedText: formattedText });
+          }, 0);
+        },
+      );
+    }, [text, features, mapping]);
 
-  if (!isReady) {
+    useEffect(() => {
+      setIsReady(false);
+      let isMounted = true;
+
+      computeHighlights.then(({ layers, processedText }) => {
+        if (isMounted) {
+          setProcessedLayers(layers);
+          setProcessedText(processedText);
+          setIsReady(true);
+        }
+      });
+
+      return () => {
+        isMounted = false;
+      };
+    }, [computeHighlights]);
+
+    if (!isReady) {
+      return (
+        <div style={{ position: "relative", whiteSpace: "pre-wrap" }}>
+          <div
+            style={{ position: "relative" }}
+            dangerouslySetInnerHTML={{ __html: text }}
+          />
+        </div>
+      );
+    }
+
     return (
       <div style={{ position: "relative", whiteSpace: "pre-wrap" }}>
+        {processedLayers.map((layer, i) => (
+          <div
+            key={i}
+            style={{
+              color: "transparent",
+              position: "absolute",
+              inset: 0,
+              pointerEvents: "none",
+              zIndex: i,
+            }}
+            dangerouslySetInnerHTML={{ __html: layer }}
+          />
+        ))}
         <div
-          style={{ position: "relative" }}
-          dangerouslySetInnerHTML={{ __html: text }}
+          style={{ position: "relative", zIndex: processedLayers.length }}
+          dangerouslySetInnerHTML={{ __html: processedText }}
         />
       </div>
     );
-  }
-
-  return (
-    <div style={{ position: "relative", whiteSpace: "pre-wrap" }}>
-      {processedLayers.map((layer, i) => (
-        <div
-          key={i}
-          style={{
-            color: "transparent",
-            position: "absolute",
-            inset: 0,
-            pointerEvents: "none",
-            zIndex: i,
-          }}
-          dangerouslySetInnerHTML={{ __html: layer }}
-        />
-      ))}
-      <div
-        style={{ position: "relative", zIndex: processedLayers.length }}
-        dangerouslySetInnerHTML={{ __html: processedText }}
-      />
-    </div>
-  );
-});
+  },
+);
 
 export default HighlightedText;
