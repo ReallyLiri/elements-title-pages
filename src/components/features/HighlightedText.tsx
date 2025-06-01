@@ -68,8 +68,10 @@ const highlightLayers = (
         const regex = new RegExp(pattern, "giu");
 
         layer = layer.replace(regex, (match) => {
-          const shadowSize =
-            2 + calculateIntersections(feature, featureIndex, allPositions) * 2;
+          const shadowSize = Math.min(
+            6,
+            2 + calculateIntersections(feature, featureIndex, allPositions) * 2,
+          );
 
           const style =
             feature === "Verbs"
