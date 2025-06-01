@@ -49,4 +49,15 @@ for entry in entries:
                 problems[key].add(field)
 
 for key, fields in problems.items():
-    print(f">>> {key}: Problematic fields: {', '.join(sorted(fields))}")
+    title = next((entry.get("title", "") for entry in entries if entry.get("key", "") == key), "")
+    print(f">>> {key}: Problematic fields:")
+    for field in sorted(fields):
+        entry_value = next((entry.get(field, "") for entry in entries if entry.get("key", "") == key), "")
+        if field in split_fields:
+            norm_title = normalize(title)
+            parts = entry_value.split(", ")
+            problematic_parts = [part for part in parts if part and normalize(part) not in norm_title]
+            problematic_value = ", ".join(problematic_parts)
+            print(f"    {field}: \"{problematic_value.replace('\n', '\\n')}\"")
+        else:
+            print(f"    {field}: \"{entry_value.replace('\n', '\\n')}\"")
