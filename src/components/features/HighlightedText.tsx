@@ -1,6 +1,7 @@
 import { Feature, Item } from "../../types";
 import { FeatureToColor } from "../../constants";
 import { trimEnd } from "lodash";
+import { useEffect, useState, useMemo, memo } from "react";
 
 type HighlightedTextProps = {
   text: string;
@@ -120,22 +121,64 @@ function calculateIntersections(
   return intersections;
 }
 
-const HighlightedText = ({ text, features, mapping }: HighlightedTextProps) => {
-  text = text.replace(
-    /\[(.*?)]:/g,
-    "<span style='font-size: 0.8rem; opacity: .8'>[$1]:</span>",
-  );
-  const layers = highlightLayers(
-    text,
-    features.sort(
-      (a, b) => (mapping[a]?.length || 0) - (mapping[b]?.length || 0),
-    ),
-    mapping,
-  );
+function escapeRegExpLoose(str: string): string {
+  return str.replace(/([.*+?^${}()|[\]\\])/g, "\\$1");
+}
+
+const HighlightedText = memo(({ text, features, mapping }: HighlightedTextProps) => {
+  const [isReady, setIsReady] = useState(false);
+  const [processedLayers, setProcessedLayers] = useState<string[]>([]);
+  const [processedText, setProcessedText] = useState("");
+
+  const computeHighlights = useMemo(() => {
+    return new Promise<{layers: string[], processedText: string}>((resolve) => {
+      setTimeout(() => {
+        const formattedText = text.replace(
+          /\[(.*?)]:/g,
+          "<span style='font-size: 0.8rem; opacity: .8'>[$1]:</span>",
+        );
+        
+        const sortedFeatures = features.sort(
+          (a, b) => (mapping[a]?.length || 0) - (mapping[b]?.length || 0),
+        );
+        
+        const layers = highlightLayers(formattedText, sortedFeatures, mapping);
+        resolve({layers, processedText: formattedText});
+      }, 0);
+    });
+  }, [text, features, mapping]);
+
+  useEffect(() => {
+    setIsReady(false);
+    let isMounted = true;
+    
+    computeHighlights.then(({layers, processedText}) => {
+      if (isMounted) {
+        setProcessedLayers(layers);
+        setProcessedText(processedText);
+        setIsReady(true);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [computeHighlights]);
+
+  if (!isReady) {
+    return (
+      <div style={{ position: "relative", whiteSpace: "pre-wrap" }}>
+        <div
+          style={{ position: "relative" }}
+          dangerouslySetInnerHTML={{ __html: text }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div style={{ position: "relative", whiteSpace: "pre-wrap" }}>
-      {layers.map((layer, i) => (
+      {processedLayers.map((layer, i) => (
         <div
           key={i}
           style={{
@@ -149,15 +192,11 @@ const HighlightedText = ({ text, features, mapping }: HighlightedTextProps) => {
         />
       ))}
       <div
-        style={{ position: "relative", zIndex: layers.length }}
-        dangerouslySetInnerHTML={{ __html: text }}
+        style={{ position: "relative", zIndex: processedLayers.length }}
+        dangerouslySetInnerHTML={{ __html: processedText }}
       />
     </div>
   );
-};
-
-function escapeRegExpLoose(str: string): string {
-  return str.replace(/([.*+?^${}()|[\]\\])/g, "\\$1");
-}
+});
 
 export default HighlightedText;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo, lazy, Suspense } from "react";
 import { ItemProps } from "../../types";
 import {
   Column,
@@ -11,10 +11,11 @@ import {
   TextTile,
 } from "../common.ts";
 import { imageClicked } from "../../utils/dataUtils";
-import HighlightedText from "./HighlightedText";
 import ItemModal from "../modal/ItemModal";
 
-const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
+const HighlightedText = lazy(() => import("./HighlightedText"));
+
+const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -31,11 +32,13 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
           ) : (
             <>
               <TextTile alignCenter={!!item.imageUrl}>
-                <HighlightedText
-                  text={item.title}
-                  features={features}
-                  mapping={item.features}
-                />
+                <Suspense fallback={<div>{item.title}</div>}>
+                  <HighlightedText
+                    text={item.title}
+                    features={features}
+                    mapping={item.features}
+                  />
+                </Suspense>
                 <ExpandIcon title="Expand" onClick={() => setModalOpen(true)}>
                   ⤢
                 </ExpandIcon>
@@ -74,6 +77,6 @@ const ItemView = ({ item, height, width, mode, features }: ItemProps) => {
       )}
     </Column>
   );
-};
+});
 
 export default ItemView;
