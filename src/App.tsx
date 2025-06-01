@@ -676,11 +676,12 @@ type Feature =
   | "Edition Statement"
   | "Supplementary Content"
   | "Publishing Privileges"
+  | "Euclid References"
   | "Other Educational Authorities"
   | "Explicit Language References"
   | "Euclid Description"
   | "Verbs"
-  | "Recipients"
+  | "Intended Audience"
   | "Elements Designation"
   | "Greek designation";
 
@@ -700,9 +701,11 @@ const FeatureToColumnName: Record<Feature, string[]> = {
     "ADDITIONAL CONTENT 2",
   ],
   "Publishing Privileges": ["PRIVILEGES"],
+  "Euclid References": [
+    "EUCLID REF",
+  ],
   "Other Educational Authorities": [
     "OTHER NAMES",
-    "EUCLID REF",
   ],
   "Explicit Language References": [
     "EXPLICITLY STATED: TRANSLATED FROM",
@@ -713,11 +716,12 @@ const FeatureToColumnName: Record<Feature, string[]> = {
     "EUCLID DESCRIPTION 2",
   ],
   Verbs: ["VERBS"],
-  Recipients: ["EXPLICIT RECIPIENT", "EXPLICIT RECIPIENT 2"],
+  "Intended Audience": ["EXPLICIT RECIPIENT", "EXPLICIT RECIPIENT 2"],
   "Greek designation": ["GREEK IN NON GREEK BOOKS"],
 };
 
 const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
+  "Euclid References": true,
   "Other Educational Authorities": true,
   "Explicit Language References": true,
   Verbs: true,
@@ -740,11 +744,12 @@ const FeatureToColor: Record<Feature, string> = {
   "Edition Statement": "#FFC1CC",
   "Supplementary Content": "#9783d2",
   "Publishing Privileges": "#D1E7E0",
+  "Euclid References": "#F0E68C",
   "Other Educational Authorities": "#e567ac",
   "Explicit Language References": "#e59c67",
   "Euclid Description": "#b0e57c",
   Verbs: "#954caf",
-  Recipients: "#F7E779",
+  "Intended Audience": "#F7E779",
   "Elements Designation": "#A3D5C3",
   "Greek designation": "#F0B2A1",
 };
@@ -764,15 +769,17 @@ const FeatureToTooltip: Record<Feature, string> = {
   "Supplementary Content": "Additional content included in the book.",
   "Publishing Privileges":
     "Mentions of royal privileges or legal permissions granted for printing.",
+  "Euclid References":
+    "Euclid's name as it appears on the title page.",
   "Other Educational Authorities":
     "Mentions of other scholars, either ancients, such as Theon of Alexandria, or contemporary, like Simon Stevin.",
   "Euclid Description":
-    "Statements describing the work as a translation of Euclid’s Elements, or as a commentary on it, or as an edition of it.",
+    "Any descriptors found alongside the Euclid's name, such as mentioning him being a mathematician.",
   "Explicit Language References":
-    "Statements identifying the source language (e.g., Latin or Greek) and/or the target language.",
+    "Mentions of the source language (e.g., Latin or Greek) and/or the target language.",
   Verbs:
     "Action verbs such as traduit (translated), commenté (commented), augmenté (expanded) that describe the role the contemporary scholar played in bringing about the work.",
-  Recipients: "Explicit mentions of the work's recipients.",
+  "Intended Audience": "Explicit mentions of the work's intended recipients or audience.",
   "Elements Designation":
     "The designation of the Elements, such as 'Elements of Geometry' or 'Euclid’s Elements', as it appears on the title page.",
   "Greek designation": "Greek designation of the book in non-Greek books.",
