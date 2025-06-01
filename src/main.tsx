@@ -10,12 +10,15 @@ createRoot(document.getElementById("root")!).render(
     <App />
     <Tooltip
       id="features"
+      delayHide={200}
+      clickable
       style={{
         zIndex: 2,
         backgroundColor: "white",
         color: "black",
         padding: "1rem",
         fontSize: "1.2rem",
+        maxWidth: 600,
       }}
     />
   </StrictMode>,
