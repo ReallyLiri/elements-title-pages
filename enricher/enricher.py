@@ -16,6 +16,14 @@ _TITLE_FEATURES_MERGE = True
 if not os.path.exists("out"):
     os.makedirs("out")
 
+
+def strip_surrounding_quotes(s: str) -> str:
+    s = s.strip().replace("', '", ", ")
+    if (s.startswith('"') and s.endswith('"')) or (s.startswith("'") and s.endswith("'")):
+        return s[1:-1].strip()
+    return s
+
+
 for i in tqdm(range(len(entries)), desc="Processing entries"):
     entry = entries[i]
 
@@ -136,7 +144,10 @@ Definitions:
                 column = feature_to_column.get(key)
                 if not column:
                     continue
-                entries[i][column] = ", ".join([v.replace('\"', "").strip() for v in value]) if isinstance(value, list) else value.replace('\"', "").strip()
+                entries[i][column] = (
+                    ", ".join([strip_surrounding_quotes(v) for v in value])
+                    if isinstance(value, list)
+                    else strip_surrounding_quotes(value))
         except Exception as e:
             print(f"Error processing features for {entry['key']}: {e}")
             continue
