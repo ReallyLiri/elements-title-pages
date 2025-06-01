@@ -1,26 +1,5 @@
 import { Feature, Item } from "../../types";
-import {
-  collectRanges,
-  segmentTextByCharacter,
-} from "../../utils/highlightUtils";
 import { FeatureToColor } from "../../constants";
-import styled from "@emotion/styled";
-
-const Container = styled.div`
-  position: relative;
-  white-space: pre-wrap;
-`;
-
-const TextWrapper = styled.span`
-  position: relative;
-  display: inline-block;
-`;
-
-const Text = styled.span<{ zIndex: number }>`
-  position: relative;
-  z-index: ${(props) => props.zIndex};
-  padding: 2px;
-`;
 
 type HighlightedTextProps = {
   text: string;
@@ -28,109 +7,73 @@ type HighlightedTextProps = {
   mapping: Item["features"];
 };
 
-export const HighlightedText = ({
-  text,
-  features,
-  mapping,
-}: HighlightedTextProps) => {
-  const ranges = collectRanges(
-    text,
-    features.sort(
-      (a, b) => (mapping[a]?.length || 0) - (mapping[b]?.length || 0),
-    ),
-    mapping,
-  );
-  const segments = segmentTextByCharacter(text, ranges);
-
-  return (
-    <Container>
-      {segments.map((seg, i) => (
-        <TextWrapper key={i}>
-          {seg.features.map((feature, j) => (
-            <div
-              key={j}
-              style={{
-                position: "absolute",
-                inset: 0,
-                pointerEvents: "none",
-                borderRadius: "8px",
-                ...(feature === "Verbs"
-                  ? {
-                      zIndex: 100,
-                      border: `2px solid ${FeatureToColor[feature]}`,
-                      width: `calc(100% + 4px)`,
-                      height: `calc(100% + 4px)`,
-                      transform: `translate(-4px, -4px)`,
-                    }
-                  : {
-                      zIndex: j,
-                      padding: 2,
-                      transform: `translate(-${(seg.features.length - 1 - j) * 2}px, -${(seg.features.length - 1 - j) * 2}px)`,
-                      height: `calc(100% + ${(seg.features.length - 1 - j) * 4}px)`,
-                      width: `calc(100% + ${(seg.features.length - 1 - j) * 4}px)`,
-                      backgroundColor: FeatureToColor[feature as Feature],
-                    }),
-              }}
-            />
-          ))}
-          <Text zIndex={seg.features.length}>{seg.text}</Text>
-        </TextWrapper>
-      ))}
-    </Container>
-  );
-};
-
-const highlightTextV1 = (
+const highlightLayers = (
   text: string,
   features: Feature[],
   mapping: Item["features"],
-): string => {
-  let highlighted = text;
+): string[] => {
+  const layers: string[] = [];
 
-  features
-    .sort((a, b) => (mapping[b]?.length || 0) - (mapping[a]?.length || 0))
-    .forEach((feature) => {
-      mapping[feature]?.forEach((phrase) => {
-        const style =
-          feature === "Verbs"
-            ? `border: 2px solid ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`
-            : `background-color: ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`;
+  features.forEach((feature) => {
+    const phrases = mapping[feature];
+    if (!phrases?.length) return;
 
-        const normalized = phrase.replace(/\s+/g, "");
-        const pattern = normalized
-          .split("")
-          .map((char) => escapeRegExpLoose(char) + "(?:\\s+|\\n)*")
-          .join("");
-        const regex = new RegExp(pattern, "giu");
+    let layer = text;
 
-        highlighted = highlighted.replace(regex, (match) => {
-          return `<span style="${style}">${match}</span>`;
-        });
-      });
+    phrases.forEach((phrase) => {
+      const style =
+        feature === "Verbs"
+          ? `outline: 2px solid ${FeatureToColor[feature]}; outline-offset: 2px; border-radius: 8px;`
+          : `background-color: ${FeatureToColor[feature]}; box-shadow: 0 0 0 4px ${FeatureToColor[feature]}; border-radius: 8px;`;
+
+      const normalized = phrase.replace(/\s+/g, "");
+      const pattern = normalized
+        .split("")
+        .map((char) => escapeRegExpLoose(char) + "(?:\\s+|\\n)*")
+        .join("");
+      const regex = new RegExp(pattern, "giu");
+
+      layer = layer.replace(
+        regex,
+        (match) => `<span style="${style}">${match}</span>`,
+      );
     });
 
-  highlighted = highlighted.replaceAll("\n", "<br/>");
-  highlighted = highlighted.replace(
-    /\[(.*?)]:/g,
-    "<span style='font-size: 0.8rem; opacity: .8'>[$1]:</span>",
+    layer = layer.replaceAll("\n", "<br/>");
+    layers.push(layer);
+  });
+
+  return layers;
+};
+
+const HighlightedText = ({ text, features, mapping }: HighlightedTextProps) => {
+  const layers = highlightLayers(text, features, mapping);
+
+  return (
+    <div style={{ position: "relative", whiteSpace: "pre-wrap" }}>
+      {layers.map((layer, i) => (
+        <div
+          key={i}
+          style={{
+            color: "transparent",
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            zIndex: i,
+          }}
+          dangerouslySetInnerHTML={{ __html: layer }}
+        />
+      ))}
+      <div
+        style={{ position: "relative", zIndex: layers.length }}
+        dangerouslySetInnerHTML={{ __html: text }}
+      />
+    </div>
   );
-  return highlighted;
 };
 
 function escapeRegExpLoose(str: string): string {
   return str.replace(/([.*+?^${}()|[\]\\])/g, "\\$1");
 }
 
-const HighlightedTextV1 = ({
-  text,
-  features,
-  mapping,
-}: HighlightedTextProps) => (
-  <div
-    dangerouslySetInnerHTML={{
-      __html: highlightTextV1(text, features, mapping),
-    }}
-  />
-);
-
-export default HighlightedTextV1;
+export default HighlightedText;
