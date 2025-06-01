@@ -3,8 +3,8 @@ from collections import defaultdict
 import re
 
 file_paths = [
-    "../public/docs/EiP.csv",
-    #"../public/docs/EiP-secondary.csv"
+    #"../public/docs/EiP.csv",
+    "../public/docs/EiP-secondary.csv"
 ]
 
 split_fields = [

@@ -118,6 +118,10 @@ function calculateIntersections(
 }
 
 const HighlightedText = ({ text, features, mapping }: HighlightedTextProps) => {
+  text = text.replace(
+    /\[(.*?)]:/g,
+    "<span style='font-size: 0.8rem; opacity: .8'>[$1]:</span>",
+  );
   const layers = highlightLayers(
     text,
     features.sort(
