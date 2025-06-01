@@ -28,7 +28,11 @@ type HighlightedTextProps = {
   mapping: Item["features"];
 };
 
-const HighlightedText = ({ text, features, mapping }: HighlightedTextProps) => {
+export const HighlightedText = ({
+  text,
+  features,
+  mapping,
+}: HighlightedTextProps) => {
   const ranges = collectRanges(
     text,
     features.sort(
@@ -76,4 +80,44 @@ const HighlightedText = ({ text, features, mapping }: HighlightedTextProps) => {
   );
 };
 
-export default HighlightedText;
+const highlightTextV1 = (
+  text: string,
+  features: Feature[],
+  mapping: Item["features"],
+): string => {
+  let highlighted = text;
+  features
+    .sort((a, b) => mapping[a]?.length || 0 - (mapping[b]?.length || 0))
+    .forEach((feature) => {
+      mapping[feature]?.forEach((text) => {
+        const style =
+          feature === "Verbs"
+            ? `border: 2px solid ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`
+            : `background-color: ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`;
+        highlighted = highlighted.replaceAll(
+          text.trim(),
+          `<span style="${style}">${text}</span>`,
+        );
+      });
+    });
+  highlighted = highlighted.replaceAll("\n", "<br/>");
+  highlighted = highlighted.replace(
+    /\[(.*?)]:/g,
+    "<span style='font-size: 0.8rem; opacity: .8'>[$1]:</span>",
+  );
+  return highlighted;
+};
+
+const HighlightedTextV1 = ({
+  text,
+  features,
+  mapping,
+}: HighlightedTextProps) => (
+  <div
+    dangerouslySetInnerHTML={{
+      __html: highlightTextV1(text, features, mapping),
+    }}
+  />
+);
+
+export default HighlightedTextV1;
