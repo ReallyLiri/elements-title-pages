@@ -1,5 +1,6 @@
 import { Feature, Item } from "../../types";
 import { FeatureToColor } from "../../constants";
+import { trimEnd } from "lodash";
 
 type HighlightedTextProps = {
   text: string;
@@ -53,26 +54,28 @@ const highlightLayers = (
 
     let layer = text;
 
-    phrases.forEach((phrase) => {
-      const normalized = phrase.replace(/\s+|-/g, "");
-      const pattern = normalized
-        .split("")
-        .map((char) => escapeRegExpLoose(char) + "(?:\\s+|\\n|-)*")
-        .join("");
-      const regex = new RegExp(pattern, "giu");
+    phrases
+      .map((phrase) => trimEnd(phrase.trim(), ",."))
+      .forEach((phrase) => {
+        const normalized = phrase.replace(/\s+|-/g, "");
+        const pattern = normalized
+          .split("")
+          .map((char) => escapeRegExpLoose(char) + "(?:\\s+|\\n|-)*")
+          .join("");
+        const regex = new RegExp(pattern, "giu");
 
-      layer = layer.replace(regex, (match) => {
-        const shadowSize =
-          2 + calculateIntersections(feature, featureIndex, allPositions) * 2;
+        layer = layer.replace(regex, (match) => {
+          const shadowSize =
+            2 + calculateIntersections(feature, featureIndex, allPositions) * 2;
 
-        const style =
-          feature === "Verbs"
-            ? `outline: 2px solid ${FeatureToColor[feature]}; outline-offset: 1px; border-radius: 8px;`
-            : `background-color: ${FeatureToColor[feature]}; box-shadow: 0 0 0 ${shadowSize}px ${FeatureToColor[feature]}; border-radius: 8px;`;
+          const style =
+            feature === "Verbs"
+              ? `outline: 2px solid ${FeatureToColor[feature]}; outline-offset: 1px; border-radius: 8px;`
+              : `background-color: ${FeatureToColor[feature]}; box-shadow: 0 0 0 ${shadowSize}px ${FeatureToColor[feature]}; border-radius: 8px;`;
 
-        return `<span style="${style}">${match}</span>`;
+          return `<span style="${style}">${match}</span>`;
+        });
       });
-    });
 
     layer = layer.replaceAll("\n", "<br/>");
     layers.push(layer);
