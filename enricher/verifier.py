@@ -2,7 +2,10 @@ from tools import read_csv
 from collections import defaultdict
 import re
 
-file_paths = ["../public/docs/EiP.csv", "../public/docs/EiP-secondary.csv"]
+file_paths = [
+    #"../public/docs/EiP.csv",
+    "../public/docs/EiP-secondary.csv"
+]
 
 split_fields = [
     "EUCLID REF",
@@ -14,7 +17,7 @@ split_fields = [
 
 
 def normalize(s):
-    return re.sub(r"\s+", "", s).lower()
+    return re.sub(r"\s+|-", "", s).lower()
 
 
 problems = defaultdict(set)
@@ -58,11 +61,14 @@ for entry in all_entries:
 
 for key, fields in problems.items():
     title = next((entry.get("title", "") for entry in all_entries if entry.get("key", "") == key), "")
-    print(f">>> {key}: Problematic fields:")
+    norm_title = normalize(title)
+    print(f">>> {key}:")
+    print("  Title: ")
+    print(f"    {title.replace('\n', '\\n')}")
+    print("  Problematic fields:")
     for field in sorted(fields):
         entry_value = next((entry.get(field, "") for entry in all_entries if entry.get("key", "") == key), "")
         if field in split_fields:
-            norm_title = normalize(title)
             parts = entry_value.split(", ")
             problematic_parts = [part for part in parts if part and normalize(part) not in norm_title]
             problematic_value = ", ".join(problematic_parts)

@@ -25,10 +25,10 @@ const highlightLayers = (
     if (!phrases?.length) return;
 
     phrases.forEach((phrase) => {
-      const normalized = phrase.replace(/\s+/g, "");
+      const normalized = phrase.replace(/\s+|-/g, "");
       const pattern = normalized
         .split("")
-        .map((char) => escapeRegExpLoose(char) + "(?:\\s+|\\n)*")
+        .map((char) => escapeRegExpLoose(char) + "(?:\\s+|\\n|-)*")
         .join("");
 
       const regex = new RegExp(pattern, "giu");
@@ -54,10 +54,10 @@ const highlightLayers = (
     let layer = text;
 
     phrases.forEach((phrase) => {
-      const normalized = phrase.replace(/\s+/g, "");
+      const normalized = phrase.replace(/\s+|-/g, "");
       const pattern = normalized
         .split("")
-        .map((char) => escapeRegExpLoose(char) + "(?:\\s+|\\n)*")
+        .map((char) => escapeRegExpLoose(char) + "(?:\\s+|\\n|-)*")
         .join("");
       const regex = new RegExp(pattern, "giu");
 
