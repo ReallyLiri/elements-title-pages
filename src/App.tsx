@@ -167,10 +167,10 @@ const loadData = (setItems: Dispatch<SetStateAction<Item[] | undefined>>) => {
                         );
                       if (feature === "Elements Designation") {
                         acc[feature as Feature] =
-                          !raw["TITLE: ELEMENTS DESIGNATION"] &&
+                          !raw["ELEMENTS DESIGNATION"] &&
                           raw["type"] === "elements"
-                            ? [raw["TITLE: BASE CONTENT"] as string]
-                            : raw["TITLE: ELEMENTS DESIGNATION"] === "none" &&
+                            ? [raw["BASE CONTENT"] as string]
+                            : raw["ELEMENTS DESIGNATION"] === "none" &&
                                 raw["type"] === "elements"
                               ? []
                               : acc[feature as Feature];
@@ -685,36 +685,36 @@ type Feature =
   | "Greek designation";
 
 const FeatureToColumnName: Record<Feature, string[]> = {
-  "Elements Designation": ["TITLE: ELEMENTS DESIGNATION"],
-  "Base Content": ["TITLE: BASE CONTENT"],
-  "Base Content Description": ["TITLE: CONTENT DESC", "TITLE: CONTENT DESC 2"],
-  "Adapter Attribution": ["TITLE: AUTHOR NAME", "TITLE: AUTHOR NAME 2"],
+  "Elements Designation": ["ELEMENTS DESIGNATION"],
+  "Base Content": ["BASE CONTENT"],
+  "Base Content Description": ["CONTENT DESC", "CONTENT DESC 2"],
+  "Adapter Attribution": ["AUTHOR NAME", "AUTHOR NAME 2"],
   "Adapter Description": [
-    "TITLE: AUTHOR DESCRIPTION",
-    "TITLE: AUTHOR DESCRIPTION 2",
+    "AUTHOR DESCRIPTION",
+    "AUTHOR DESCRIPTION 2",
   ],
-  "Patronage Dedication": ["TITLE: PATRON REF"],
-  "Edition Statement": ["TITLE: EDITION INFO", "TITLE: EDITION INFO 2"],
+  "Patronage Dedication": ["PATRON REF"],
+  "Edition Statement": ["EDITION INFO", "EDITION INFO 2"],
   "Supplementary Content": [
-    "TITLE: ADDITIONAL CONTENT",
-    "TITLE: ADDITIONAL CONTENT 2",
+    "ADDITIONAL CONTENT",
+    "ADDITIONAL CONTENT 2",
   ],
-  "Publishing Privileges": ["TITLE: PRIVILEGES"],
+  "Publishing Privileges": ["PRIVILEGES"],
   "Other Educational Authorities": [
     "OTHER NAMES",
-    "EUCLID MENTIONED IN TITLE PAGE",
+    "EUCLID REF",
   ],
   "Explicit Language References": [
     "EXPLICITLY STATED: TRANSLATED FROM",
     "EXPLICITLY STATED: TRANSLATED TO",
   ],
   "Euclid Description": [
-    "TITLE: EUCLID DESCRIPTION",
-    "TITLE: EUCLID DESCRIPTION 2",
+    "EUCLID DESCRIPTION",
+    "EUCLID DESCRIPTION 2",
   ],
-  Verbs: ["TITLE: VERBS"],
-  Recipients: ["TITLE: EXPLICIT RECIPIENT", "TITLE: EXPLICIT RECIPIENT 2"],
-  "Greek designation": ["TITLE: GREEK IN NON GREEK BOOKS"],
+  Verbs: ["VERBS"],
+  Recipients: ["EXPLICIT RECIPIENT", "EXPLICIT RECIPIENT 2"],
+  "Greek designation": ["GREEK IN NON GREEK BOOKS"],
 };
 
 const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
@@ -727,6 +727,8 @@ const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
 const FeaturesNotSelectedByDefault: Feature[] = [
   "Greek designation",
   "Elements Designation",
+  "Base Content Description",
+  "Supplementary Content",
 ];
 
 const FeatureToColor: Record<Feature, string> = {
