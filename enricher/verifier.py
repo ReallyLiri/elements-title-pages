@@ -2,8 +2,7 @@ from tools import read_csv
 from collections import defaultdict
 import re
 
-file_path = "../public/docs/EiP.csv"
-entries, fieldnames = read_csv(file_path)
+file_paths = ["../public/docs/EiP.csv", "../public/docs/EiP-secondary.csv"]
 
 split_fields = [
     "EUCLID REF",
@@ -19,8 +18,17 @@ def normalize(s):
 
 
 problems = defaultdict(set)
+all_entries = []
+all_fieldnames = set()
 
-for entry in entries:
+for file_path in file_paths:
+    entries, fieldnames = read_csv(file_path)
+    all_entries.extend(entries)
+    all_fieldnames.update(fieldnames)
+
+all_fieldnames = list(all_fieldnames)
+
+for entry in all_entries:
     title = entry.get("title", "").strip()
     if title == "?" or title == "":
         continue
@@ -31,7 +39,7 @@ for entry in entries:
 
     norm_title = normalize(title)
 
-    for field in fieldnames:
+    for field in all_fieldnames:
         if not field.isupper():
             continue
 
@@ -49,10 +57,10 @@ for entry in entries:
                 problems[key].add(field)
 
 for key, fields in problems.items():
-    title = next((entry.get("title", "") for entry in entries if entry.get("key", "") == key), "")
+    title = next((entry.get("title", "") for entry in all_entries if entry.get("key", "") == key), "")
     print(f">>> {key}: Problematic fields:")
     for field in sorted(fields):
-        entry_value = next((entry.get(field, "") for entry in entries if entry.get("key", "") == key), "")
+        entry_value = next((entry.get(field, "") for entry in all_entries if entry.get("key", "") == key), "")
         if field in split_fields:
             norm_title = normalize(title)
             parts = entry_value.split(", ")

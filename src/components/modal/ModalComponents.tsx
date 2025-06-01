@@ -56,9 +56,17 @@ export const ModalTextContainer = styled.div`
   max-height: calc(90vh - 6rem);
 `;
 
-export const ModalTextColumn = styled.div<{ isImage?: boolean }>`
+export const TextColumnsContainer = styled.div`
   ${ScrollbarStyle};
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  overflow-y: auto;
   flex: 1;
-  overflow-y: ${({ isImage }) => (isImage ? "hidden" : "auto")};
+`;
+
+export const ModalTextColumn = styled.div<{ isImage?: boolean; isTextContent?: boolean }>`
+  flex: 1;
+  overflow-y: ${({ isImage }) => (isImage ? "hidden" : "visible")};
   line-height: 1.8;
 `;

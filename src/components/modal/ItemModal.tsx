@@ -8,6 +8,7 @@ import {
   ModalTextColumn,
   ModalTextContainer,
   ModalTitle,
+  TextColumnsContainer,
 } from "./ModalComponents";
 import HighlightedText from "../features/HighlightedText";
 import { imageClicked } from "../../utils/dataUtils";
@@ -44,20 +45,22 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
               />
             </ModalTextColumn>
           )}
-          <ModalTextColumn>
-            <ModalTitle>Original Text</ModalTitle>
-            <HighlightedText
-              text={item.title}
-              features={features}
-              mapping={item.features}
-            />
-          </ModalTextColumn>
-          {item.titleEn && (
-            <ModalTextColumn>
-              <ModalTitle>English Translation</ModalTitle>
-              <HighlightedText text={item.titleEn} features={[]} mapping={{}} />
+          <TextColumnsContainer>
+            <ModalTextColumn isTextContent>
+              <ModalTitle>Original Text</ModalTitle>
+              <HighlightedText
+                text={item.title}
+                features={features}
+                mapping={item.features}
+              />
             </ModalTextColumn>
-          )}
+            {item.titleEn && (
+              <ModalTextColumn isTextContent>
+                <ModalTitle>English Translation</ModalTitle>
+                <HighlightedText text={item.titleEn} features={[]} mapping={{}} />
+              </ModalTextColumn>
+            )}
+          </TextColumnsContainer>
         </ModalTextContainer>
       </ModalContent>
     </Modal>
