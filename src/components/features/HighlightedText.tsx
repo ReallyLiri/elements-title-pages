@@ -70,7 +70,7 @@ const highlightLayers = (
 
           const style =
             feature === "Verbs"
-              ? `outline: 2px solid ${FeatureToColor[feature]}; outline-offset: 1px; border-radius: 8px;`
+              ? `outline: 2px solid ${FeatureToColor[feature]}; outline-offset: 2px; border-radius: 8px;`
               : `background-color: ${FeatureToColor[feature]}; box-shadow: 0 0 0 ${shadowSize}px ${FeatureToColor[feature]}; border-radius: 8px;`;
 
           return `<span style="${style}">${match}</span>`;
