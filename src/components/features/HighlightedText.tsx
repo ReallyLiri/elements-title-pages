@@ -7,25 +7,18 @@ type HighlightedTextProps = {
   mapping: Item["features"];
 };
 
-const highlightLayers = (
+function escapeRegExpLoose(str: string): string {
+  return str.replace(/([.*+?^${}()|[\]\\])/g, "\\$1");
+}
+
+function buildSpans(
   text: string,
-  features: Feature[],
-  mapping: Item["features"],
-): string[] => {
-  const layers: string[] = [];
+  mapping: Record<string, string[]>,
+): string[][] {
+  const spans: string[][] = Array.from({ length: text.length }, () => []);
 
-  features.forEach((feature) => {
-    const phrases = mapping[feature];
-    if (!phrases?.length) return;
-
-    let layer = text;
-
+  Object.entries(mapping).forEach(([feature, phrases]) => {
     phrases.forEach((phrase) => {
-      const style =
-        feature === "Verbs"
-          ? `outline: 2px solid ${FeatureToColor[feature]}; outline-offset: 2px; border-radius: 8px;`
-          : `background-color: ${FeatureToColor[feature]}; box-shadow: 0 0 0 4px ${FeatureToColor[feature]}; border-radius: 8px;`;
-
       const normalized = phrase.replace(/\s+/g, "");
       const pattern = normalized
         .split("")
@@ -33,47 +26,115 @@ const highlightLayers = (
         .join("");
       const regex = new RegExp(pattern, "giu");
 
-      layer = layer.replace(
-        regex,
-        (match) => `<span style="${style}">${match}</span>`,
-      );
+      let match;
+      while ((match = regex.exec(text)) !== null) {
+        for (let i = match.index; i < match.index + match[0].length; i++) {
+          if (i < spans.length) spans[i].push(feature);
+        }
+      }
     });
-
-    layer = layer.replaceAll("\n", "<br/>");
-    layers.push(layer);
   });
 
-  return layers;
-};
+  return spans;
+}
+
+function segmentByFeatures(
+  text: string,
+  spans: string[][],
+): { text: string; features: string[] }[] {
+  const segments: { text: string; features: string[] }[] = [];
+
+  let i = 0;
+  while (i < text.length) {
+    const currentFeatures = spans[i];
+    let j = i + 1;
+    while (
+      j < text.length &&
+      JSON.stringify(spans[j]) === JSON.stringify(currentFeatures)
+    ) {
+      j++;
+    }
+
+    segments.push({
+      text: text.slice(i, j),
+      features: currentFeatures,
+    });
+
+    i = j;
+  }
+
+  return segments;
+}
 
 const HighlightedText = ({ text, features, mapping }: HighlightedTextProps) => {
-  const layers = highlightLayers(text, features, mapping);
+  const spans = buildSpans(text, mapping);
+  const segments = segmentByFeatures(text, spans);
+
+  const featureLayers = features.filter((f) => f !== "Verbs");
 
   return (
     <div style={{ position: "relative", whiteSpace: "pre-wrap" }}>
-      {layers.map((layer, i) => (
+      {featureLayers.map((feature, z) => (
         <div
-          key={i}
+          key={feature}
           style={{
-            color: "transparent",
             position: "absolute",
             inset: 0,
             pointerEvents: "none",
-            zIndex: i,
+            color: "transparent",
+            zIndex: z,
           }}
-          dangerouslySetInnerHTML={{ __html: layer }}
-        />
+        >
+          {segments.map((seg, i) => {
+            if (!seg.features.includes(feature)) {
+              return <span key={i}>{seg.text}</span>;
+            }
+
+            const overlap = seg.features.filter((f) => f !== feature).length;
+            const shadowSize = 4 + overlap * 2;
+
+            const style = {
+              backgroundColor: FeatureToColor[feature],
+              boxShadow: overlap
+                ? `0 0 0 ${shadowSize}px ${FeatureToColor[feature]}`
+                : undefined,
+              borderRadius: 8,
+              display: "inline-block",
+              padding: "0 2px",
+            };
+
+            return (
+              <span key={i} style={style}>
+                {seg.text}
+              </span>
+            );
+          })}
+        </div>
       ))}
-      <div
-        style={{ position: "relative", zIndex: layers.length }}
-        dangerouslySetInnerHTML={{ __html: text }}
-      />
+
+      <div style={{ position: "relative", zIndex: features.length }}>
+        {segments.map((seg, i) => {
+          if (!seg.features.includes("Verbs")) {
+            return <span key={i}>{seg.text}</span>;
+          }
+
+          const style = {
+            outline: `2px solid ${FeatureToColor["Verbs"]}`,
+            outlineOffset: 2,
+            borderRadius: 8,
+            display: "inline-block",
+            padding: "0 2px",
+          };
+
+          return (
+            <span key={i} style={style}>
+              {seg.text}
+            </span>
+          );
+        })}
+      </div>
     </div>
   );
 };
-
-function escapeRegExpLoose(str: string): string {
-  return str.replace(/([.*+?^${}()|[\]\\])/g, "\\$1");
-}
 
 export default HighlightedText;
