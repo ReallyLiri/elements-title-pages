@@ -1,0 +1,64 @@
+import styled from "@emotion/styled";
+import { Row, ScrollbarStyle } from "../common.ts";
+
+export const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const ModalContent = styled.div<{ hasImage: boolean }>`
+  background-color: aliceblue;
+  min-height: 24rem;
+  min-width: 32rem;
+  max-width: ${({ hasImage }) => (hasImage ? "90vw" : "60vw")};
+  color: black;
+  border-radius: 1rem;
+  padding: 2rem;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`;
+
+export const ModalClose = styled.div`
+  position: absolute;
+  top: 0.5rem;
+  right: 0.8rem;
+  font-size: 1rem;
+  cursor: pointer;
+`;
+
+export const ModalTitle = styled.div`
+  color: darkgray;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+`;
+
+export const ModalMainTitle = styled(Row)`
+  font-size: 1.4rem;
+  gap: 1.2rem;
+  margin-bottom: 0.5rem;
+`;
+
+export const ModalTextContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  overflow: auto;
+  max-height: calc(90vh - 6rem);
+`;
+
+export const ModalTextColumn = styled.div<{ isImage?: boolean }>`
+  ${ScrollbarStyle};
+  flex: 1;
+  overflow-y: ${({ isImage }) => (isImage ? "hidden" : "auto")};
+  line-height: 1.8;
+`;
