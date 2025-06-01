@@ -50,8 +50,8 @@ const highlightLayers = (
   });
 
   features.forEach((feature, featureIndex) => {
-    const phrases = mapping[feature];
-    if (!phrases || phrases.length <= 2) {
+    const phrases = mapping[feature]?.filter((f) => f.trim().length >= 2);
+    if (!phrases) {
       return;
     }
 
