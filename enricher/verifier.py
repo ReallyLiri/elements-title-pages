@@ -1,14 +1,22 @@
 from tools import read_csv
 from collections import defaultdict
+import re
 
 file_path = "../public/docs/EiP.csv"
 entries, fieldnames = read_csv(file_path)
 
 split_fields = [
-    "EUCLID MENTIONED IN TITLE PAGE", "TITLE: VERBS",
-    "OTHER NAMES", "EXPLICITLY STATED: TRANSLATED FROM",
+    "EUCLID REF",
+    "VERBS",
+    "OTHER NAMES",
+    "EXPLICITLY STATED: TRANSLATED FROM",
     "EXPLICITLY STATED: TRANSLATED TO"
 ]
+
+
+def normalize(s):
+    return re.sub(r"\s+", "", s).lower()
+
 
 problems = defaultdict(set)
 
@@ -18,6 +26,8 @@ for entry in entries:
 
     if not title or not key:
         continue
+
+    norm_title = normalize(title)
 
     for field in fieldnames:
         if not field.isupper():
@@ -30,10 +40,10 @@ for entry in entries:
         if field in split_fields:
             parts = value.split(", ")
             for part in parts:
-                if part and part not in title:
+                if part and normalize(part) not in norm_title:
                     problems[key].add(field)
         else:
-            if value not in title:
+            if normalize(value) not in norm_title:
                 problems[key].add(field)
 
 for key, fields in problems.items():

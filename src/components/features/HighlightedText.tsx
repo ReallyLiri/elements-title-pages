@@ -86,20 +86,29 @@ const highlightTextV1 = (
   mapping: Item["features"],
 ): string => {
   let highlighted = text;
+
   features
-    .sort((a, b) => mapping[a]?.length || 0 - (mapping[b]?.length || 0))
+    .sort((a, b) => (mapping[b]?.length || 0) - (mapping[a]?.length || 0))
     .forEach((feature) => {
-      mapping[feature]?.forEach((text) => {
+      mapping[feature]?.forEach((phrase) => {
         const style =
           feature === "Verbs"
             ? `border: 2px solid ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`
             : `background-color: ${FeatureToColor[feature]}; padding: 2px; border-radius: 8px;`;
-        highlighted = highlighted.replaceAll(
-          text.trim(),
-          `<span style="${style}">${text}</span>`,
-        );
+
+        const normalized = phrase.replace(/\s+/g, "");
+        const pattern = normalized
+          .split("")
+          .map((char) => escapeRegExpLoose(char) + "(?:\\s+|\\n)*")
+          .join("");
+        const regex = new RegExp(pattern, "giu");
+
+        highlighted = highlighted.replace(regex, (match) => {
+          return `<span style="${style}">${match}</span>`;
+        });
       });
     });
+
   highlighted = highlighted.replaceAll("\n", "<br/>");
   highlighted = highlighted.replace(
     /\[(.*?)]:/g,
@@ -107,6 +116,10 @@ const highlightTextV1 = (
   );
   return highlighted;
 };
+
+function escapeRegExpLoose(str: string): string {
+  return str.replace(/([.*+?^${}()|[\]\\])/g, "\\$1");
+}
 
 const HighlightedTextV1 = ({
   text,
