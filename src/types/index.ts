@@ -16,7 +16,8 @@ export type Feature =
   | "Verbs"
   | "Intended Audience"
   | "Elements Designation"
-  | "Greek designation";
+  | "Greek designation"
+  | "Institutions";
 
 export type Item = {
   key: string;
