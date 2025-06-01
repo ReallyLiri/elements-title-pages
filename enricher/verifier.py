@@ -3,7 +3,7 @@ from collections import defaultdict
 import re
 
 file_paths = [
-    #"../public/docs/EiP.csv",
+    "../public/docs/EiP.csv",
     "../public/docs/EiP-secondary.csv"
 ]
 
@@ -48,7 +48,7 @@ for entry in all_entries:
             continue
 
         value = entry.get(field, "").strip()
-        if not value:
+        if not value or value == "none":
             continue
 
         if field in split_fields:
