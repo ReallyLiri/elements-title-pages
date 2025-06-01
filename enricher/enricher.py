@@ -36,7 +36,7 @@ for i in tqdm(range(len(entries)), desc="Processing entries"):
                 )
                 entries[i][f"{key}_EN"] = translation
 
-    if _TITLE_FEATURES and entry["tagger"] == "":
+    if _TITLE_FEATURES and entry["tagger"] != "mia":
         if len(entry["title"]) < 20:
             continue
         out_path = f"out/{entry["key"].replace("/", "_")}.json"
@@ -59,10 +59,6 @@ Return only a valid JSON. Do not include any other output.
 Output format:
 {
   "baseContent": "...", // a single quote or empty if not applicable
-  "baseContentDescription": "...", // a single quote or empty if not applicable
-  "baseContentDescription2": "...", // a single quote or empty if not applicable
-  "supplementaryContent": "...", // a single quote or empty if not applicable
-  "supplementaryContent2": "...", // a single quote or empty if not applicable
   "adapterAttribution": "...", // a single quote or empty if not applicable
   "adapterDescription": "...", // a single quote or empty if not applicable
   "adapterDescription2": "...", // a single quote or empty if not applicable
@@ -75,91 +71,30 @@ Output format:
   "euclidMentions": [...], // zero or more quotes
   "euclidDescription": "...", // a single quote or empty if not applicable
   "euclidDescription2": "...", // a single quote or empty if not applicable
+  "intendedAudience": "...", // a single quote or empty if not applicable
+  "intendedAudience2": "...", // a single quote or empty if not applicable
+  "elementsDesignation": "...", // a single quote or empty if not applicable
+  "greekDesignation": "..." // a single quote or empty if not applicable
 }
 
 Definitions:
-- baseContent: Minimal title or identity of the main work.
-- baseContentDescription: Any elaboration on the base content.
-- baseContentDescription2: Any elaboration on the base content (an additional quote if applicable).
-- supplementaryContent: Additions beyond the main text.
-- supplementaryContent2: Additions beyond the main text. (an additional quote if applicable).
-- adapterAttribution: Name(s) of author, translator, or commentator.
-- adapterDescription: Titles, credentials, or affiliations of the adapter.
-- adapterDescription2: Titles, credentials, or affiliations of the adapter. (an additional quote if applicable).
-- patronageDedication: Any mentions of patrons or dedications.
-- editionStatement: Claims regarding edition, corrections, revisions.
-- publishingPrivileges: Mentions of legal/royal privilege or permission.
-- verbs: Action verbs describing what the adapter did.
-- explicitLanguageReferences: Mentions of source and/or target languages.
-- referencesToOtherEducationalAuthorities: Mentions of ancient or contemporary scholars.
-- euclidMentions: Explicit mentions of Euclid by name (only quote the name, without any additional context).
-- euclidDescription: Description of Euclid or his work. Only quote the description, without any additional context or names.
-- euclidDescription2: Description of Euclid or his work. (an additional quote if applicable).
-
-For example, for this title in French:
-
-```
- LES SIX 
-PREMIERS LIVRES 
-DES ELEMENTS D’EV-
-CLIDE, TRADVICTS ET 
-COMMENTEZ PAR PIERRE 
-Forcadel de Bezies, Lecteur ordi-
-naire du Roy és Mathema-
-tiques en l’vniuersité 
-de Paris.
-```   
-
-These features would be extracted:
-```
-{
-  "baseContent": "LES SIX \nPREMIERS LIVRES \nDES ELEMENTS D’EV-\nCLIDE",
-  "baseContentDescription": "TRADVICTS ET \nCOMMENTEZ",
-  "baseContentDescription2": "",
-  "supplementaryContent": "",
-  "supplementaryContent2": "",
-  "adapterAttribution": "PIERRE \nForcadel de Bezies",
-  "adapterDescription": "Lecteur ordi-\nnaire du Roy és Mathema-\ntiques en l’vniuersité \nde Paris",
-  "adapterDescription2": "",
-  "patronageDedication": "",
-  "editionStatement": "",
-  "publishingPrivileges": "",
-  "verbs": ["TRADVICTS", "COMMENTEZ"],
-  "explicitLanguageReferences": [],
-  "referencesToOtherEducationalAuthorities": [],
-  "euclidMentions": ["D’EV\nCLIDE"],
-  "euclidDescription": "",
-  "euclidDescription2": ""
-}
-```
-
-And for example, for this title in Latin:
-
-```
-EUCLIDIS DATA succinctè demonstrata: Unà cum Emendation-ibus quibusdam & Additionibus ad Elementa EUCLIDIS nuper edita. Operâ Mri. IS. BARROVV, CANTABRIGIENSIS Coll. Trin. Soc. 
-```
-
-These features would be extracted:
-```
-{
-  "baseContent": "EUCLIDIS DATA",
-  "baseContentDescription": "succinctè demonstrata",
-  "baseContentDescription2": "",
-  "supplementaryContent": "Unà cum Emendation-ibus quibusdam & Additionibus ad Elementa EUCLIDIS nuper edita",
-  "supplementaryContent2": "",
-  "adapterAttribution": "IS. BARROVV",
-  "adapterDescription": "Mri.",
-  "adapterDescription2": "CANTABRIGIENSIS Coll. Trin. Soc.",
-  "patronageDedication": "",
-  "editionStatement": "",
-  "publishingPrivileges": "",
-  "verbs": ["demonstrata"],
-  "explicitLanguageReferences": [],
-  "referencesToOtherEducationalAuthorities": [],
-  "euclidMentions": ["EUCLIDIS"],
-  "euclidDescription": "",
-  "euclidDescription2": ""
-}
+- baseContent: The minimal designation of the book’s main content, typically appearing at the beginning of the title page, without elaboration.
+- adapterAttribution: The name of the contemporary adapter (author, editor, translator, commentator, etc.) as it appears on the title page.
+- adapterDescription: Any descriptors found alongside the adapter name, such as academic titles, ranks, or affiliations.
+- adapterDescription2: Any descriptors found alongside the adapter name, such as academic titles, ranks, or affiliations. (an additional quote if applicable).
+- patronageDedication: Mentions of patrons or dedication.
+- editionStatement: Any information that is highlighted as relevant for this specific edition such as claims regarding the corrections and revisions introduced in it.
+- publishingPrivileges: Mentions of royal privileges or legal permissions granted for printing.
+- verbs: Action verbs such as traduit (translated), commenté (commented), augmenté (expanded) that describe the role the contemporary scholar played in bringing about the work.
+- explicitLanguageReferences: Mentions of the source language (e.g., Latin or Greek) and/or the target language.
+- referencesToOtherEducationalAuthorities: Mentions of other scholars, either ancients, such as Theon of Alexandria, or contemporary, like Simon Stevin.
+- euclidMentions: Euclid's name as it appears on the title page.
+- euclidDescription: Any descriptors found alongside Euclid’s name, such as mentioning him being a mathematician.
+- euclidDescription2: Any descriptors found alongside Euclid’s name, such as mentioning him being a mathematician. (an additional quote if applicable).
+- intendedAudience: Explicit mentions of the work's intended recipients or audience.
+- intendedAudience2: Explicit mentions of the work's intended recipients or audience. (an additional quote if applicable).
+- elementsDesignation: The designation of the Elements, such as 'Elements of Geometry' or 'Euclid’s Elements', as it appears on the title page.
+- greekDesignation: Greek designation of the book in non-Greek books.
 ```   
 """,
             max_tokens=None
@@ -179,23 +114,23 @@ These features would be extracted:
         try:
             features_dict = json.loads(features)
             feature_to_column = {
-                "baseContent": "TITLE: BASE CONTENT",
-                "baseContentDescription": "TITLE: CONTENT DESC",
-                "baseContentDescription2": "TITLE: CONTENT DESC 2",
-                "supplementaryContent": "TITLE: ADDITIONAL CONTENT",
-                "supplementaryContent2": "TITLE: ADDITIONAL CONTENT 2",
-                "adapterAttribution": "TITLE: AUTHOR NAME",
-                "adapterDescription": "TITLE: AUTHOR DESCRIPTION",
-                "adapterDescription2": "TITLE: AUTHOR DESCRIPTION 2",
-                "patronageDedication": "TITLE: PATRON REF",
-                "editionStatement": "TITLE: EDITION INFO",
-                "publishingPrivileges": "TITLE: PRIVILEGES",
-                "verbs": "TITLE: VERBS",
+                "baseContent": "BASE CONTENT",
+                "adapterAttribution": "AUTHOR NAME",
+                "adapterDescription": "AUTHOR DESCRIPTION",
+                "adapterDescription2": "AUTHOR DESCRIPTION 2",
+                "patronageDedication": "PATRON REF",
+                "editionStatement": "EDITION INFO",
+                "publishingPrivileges": "PRIVILEGES",
+                "verbs": "VERBS",
                 "explicitLanguageReferences": "EXPLICITLY STATED: TRANSLATED FROM",
                 "referencesToOtherEducationalAuthorities": "OTHER NAMES",
-                "euclidMentions": "EUCLID MENTIONED IN TITLE PAGE",
-                "euclidDescription": "TITLE: EUCLID DESCRIPTION",
-                "euclidDescription2": "TITLE: EUCLID DESCRIPTION 2",
+                "euclidMentions": "EUCLID REF",
+                "euclidDescription": "EUCLID DESCRIPTION",
+                "euclidDescription2": "EUCLID DESCRIPTION 2",
+                "intendedAudience": "EXPLICIT RECIPIENT",
+                "intendedAudience2": "EXPLICIT RECIPIENT 2",
+                "elementsDesignation": "ELEMENTS DESIGNATION",
+                "greekDesignation": "GREEK DESIGNATION",
             }
             for key, value in features_dict.items():
                 column = feature_to_column.get(key)
