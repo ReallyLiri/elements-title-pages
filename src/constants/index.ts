@@ -1,6 +1,7 @@
 import { Feature } from "../types";
 
-export const CSV_PATH = "/docs/EiP.csv";
+export const CSV_PATH_ELEMENTS = "/docs/EiP.csv";
+export const CSV_PATH_SECONDARY = "/docs/EiP-secondary.csv";
 
 export const TILE_HEIGHT = 400;
 export const TILE_WIDTH = 400;

@@ -6,79 +6,93 @@ import {
   FeatureToColumnName,
   FeaturesToSplit,
   ItemTypes,
-  CSV_PATH,
+  CSV_PATH_ELEMENTS,
+  CSV_PATH_SECONDARY,
 } from "../constants";
 import { Feature } from "../types";
 
 export const loadData = (
   setItems: Dispatch<SetStateAction<Item[] | undefined>>,
 ) => {
-  fetch(CSV_PATH)
-    .then((response) => response.text())
-    .then((csvText) => {
-      Papa.parse(csvText, {
-        header: true,
-        skipEmptyLines: true,
-        complete: (result) => {
-          setItems(
-            (result.data as Record<string, unknown>[])
-              .map((raw) => {
-                return {
-                  key: raw["key"] as string,
-                  year: raw["year"] as string,
-                  cities: [
-                    raw["city"] as string,
-                    raw["city 2"] as string,
-                  ].filter((city) => city) as string[],
-                  languages: [
-                    startCase((raw["language"] as string).toLowerCase()),
-                    startCase((raw["language 2"] as string).toLowerCase()),
-                  ].filter((city) => city) as string[],
-                  authors:
-                    (raw["author (normalized)"] as string | null)?.split(
-                      ", ",
-                    ) || [],
-                  imageUrl: raw["tp_url"] as string | null,
-                  title: raw["title"] as string,
-                  titleEn: raw["title_EN"] as string | null,
-                  type: ItemTypes[raw["type"] as keyof typeof ItemTypes],
-                  format: raw["format"] as string | null,
-                  features: Object.keys(FeatureToColumnName).reduce(
-                    (acc, feature) => {
-                      acc[feature as Feature] = FeatureToColumnName[
-                        feature as Feature
-                      ]
-                        .filter((column) => !!raw[column])
-                        .map((column) => raw[column] as string)
-                        .flatMap((text) =>
-                          FeaturesToSplit[feature as Feature]
-                            ? uniq(text.split(", "))
-                            : [text],
-                        );
-                      if (feature === "Elements Designation") {
-                        acc[feature as Feature] =
-                          !raw["ELEMENTS DESIGNATION"] &&
-                          raw["type"] === "elements"
-                            ? [raw["BASE CONTENT"] as string]
-                            : raw["ELEMENTS DESIGNATION"] === "none" &&
-                                raw["type"] === "elements"
-                              ? []
-                              : acc[feature as Feature];
-                      }
-                      return acc;
-                    },
-                    {} as Partial<Record<Feature, string[]>>,
-                  ),
-                };
-              })
-              .filter((item) => !!item.key)
-              .sort(
-                (a, b) =>
-                  a.year.localeCompare(b.year) || a.key.localeCompare(b.key),
-              ),
-          );
-        },
-      });
+  Promise.all([
+    fetch(CSV_PATH_ELEMENTS).then((response) => response.text()),
+    fetch(CSV_PATH_SECONDARY).then((response) => response.text()),
+  ])
+    .then(([elementsText, secondaryText]) => {
+      const processData = (csvText: string, type: keyof typeof ItemTypes) => {
+        return new Promise<Item[]>((resolve) => {
+          Papa.parse(csvText, {
+            header: true,
+            skipEmptyLines: true,
+            complete: (result) => {
+              const items = (result.data as Record<string, unknown>[])
+                .map((raw) => {
+                  return {
+                    key: raw["key"] as string,
+                    year: raw["year"] as string,
+                    cities: [
+                      raw["city"] as string,
+                      raw["city 2"] as string,
+                    ].filter((city) => city) as string[],
+                    languages: [
+                      startCase((raw["language"] as string).toLowerCase()),
+                      startCase((raw["language 2"] as string).toLowerCase()),
+                    ].filter((city) => city) as string[],
+                    authors:
+                      (raw["author (normalized)"] as string | null)?.split(
+                        ", ",
+                      ) || [],
+                    imageUrl: raw["tp_url"] as string | null,
+                    title: raw["title"] as string,
+                    titleEn: raw["title_EN"] as string | null,
+                    type: ItemTypes[type],
+                    format: raw["format"] as string | null,
+                    features: Object.keys(FeatureToColumnName).reduce(
+                      (acc, feature) => {
+                        acc[feature as Feature] = FeatureToColumnName[
+                          feature as Feature
+                        ]
+                          .filter((column) => !!raw[column])
+                          .map((column) => raw[column] as string)
+                          .flatMap((text) =>
+                            FeaturesToSplit[feature as Feature]
+                              ? uniq(text.split(", "))
+                              : [text],
+                          );
+                        if (feature === "Elements Designation") {
+                          acc[feature as Feature] =
+                            !raw["ELEMENTS DESIGNATION"] && type === "elements"
+                              ? [raw["BASE CONTENT"] as string]
+                              : raw["ELEMENTS DESIGNATION"] === "none" &&
+                                  type === "elements"
+                                ? []
+                                : acc[feature as Feature];
+                        }
+                        return acc;
+                      },
+                      {} as Partial<Record<Feature, string[]>>,
+                    ),
+                  };
+                })
+                .filter((item) => !!item.key);
+              resolve(items);
+            },
+          });
+        });
+      };
+
+      return Promise.all([
+        processData(elementsText, "elements"),
+        processData(secondaryText, "secondary"),
+      ]);
+    })
+    .then(([elementsItems, secondaryItems]) => {
+      const allItems = [...elementsItems, ...secondaryItems];
+      setItems(
+        allItems.sort(
+          (a, b) => a.year.localeCompare(b.year) || a.key.localeCompare(b.key),
+        ),
+      );
     })
     .catch((error) => console.error("Error reading CSV:", error));
 };
