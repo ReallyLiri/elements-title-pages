@@ -1,5 +1,4 @@
 import { Feature, Item, Range } from "../types";
-import { FeatureToColor } from "../constants";
 
 export function collectRanges(
   text: string,
