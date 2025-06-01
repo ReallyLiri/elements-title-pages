@@ -129,6 +129,9 @@ function escapeRegExpLoose(str: string): string {
   return str.replace(/([.*+?^${}()|[\]\\])/g, "\\$1");
 }
 
+const getTotalLength = (arr?: string[]) =>
+  arr?.reduce((sum, str) => sum + str.length, 0) || 0;
+
 const HighlightedText = memo(
   ({ text, features, mapping }: HighlightedTextProps) => {
     const [isReady, setIsReady] = useState(false);
@@ -144,9 +147,11 @@ const HighlightedText = memo(
               "<span style='font-size: 0.8rem; opacity: .8'>[$1]:</span>",
             );
 
-            const sortedFeatures = features.sort(
-              (a, b) => (mapping[a]?.length || 0) - (mapping[b]?.length || 0),
-            );
+            const sortedFeatures = features.sort((a, b) => {
+              if (a === "Verbs") return 1;
+              if (b === "Verbs") return -1;
+              return getTotalLength(mapping[b]) - getTotalLength(mapping[a]);
+            });
 
             const layers = highlightLayers(
               formattedText,

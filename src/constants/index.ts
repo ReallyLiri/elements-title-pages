@@ -34,7 +34,7 @@ export const FeatureToColumnName: Record<Feature, string[]> = {
   Verbs: ["VERBS"],
   "Intended Audience": ["EXPLICIT RECIPIENT", "EXPLICIT RECIPIENT 2"],
   "Greek designation": ["GREEK IN NON GREEK BOOKS"],
-  "Institutions": ["INSTITUTIONS"]
+  Institutions: ["INSTITUTIONS"],
 };
 
 export const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
@@ -65,10 +65,10 @@ export const FeatureToColor: Record<Feature, string> = {
   "Explicit Language References": "#e59c67",
   "Euclid Description": "#b0e57c",
   Verbs: "#954caf",
-  "Intended Audience": "#F7E779",
+  "Intended Audience": "#E4A0D8",
   "Elements Designation": "#A3D5C3",
   "Greek designation": "#F0B2A1",
-  "Institutions": "#B0C4DE",
+  Institutions: "#B0C4DE",
 };
 
 export const FeatureToTooltip: Record<Feature, string> = {
@@ -100,6 +100,6 @@ export const FeatureToTooltip: Record<Feature, string> = {
   "Elements Designation":
     "The designation of the Elements, such as 'Elements of Geometry' or 'Euclid’s Elements', as it appears on the title page.",
   "Greek designation": "Greek designation of the book in non-Greek books.",
-  "Institutions":
+  Institutions:
     "Mentions of institutions, such as societies or universities, associated with the book.",
 };
