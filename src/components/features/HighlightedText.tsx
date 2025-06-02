@@ -58,7 +58,9 @@ const highlightLayers = (
     let layer = text;
 
     phrases
-      .map((phrase) => trimEnd(phrase.trim(), ",."))
+      .map((phrase) =>
+        phrase.length <= 3 ? phrase : trimEnd(phrase.trim(), ",."),
+      )
       .forEach((phrase) => {
         const normalized = phrase.replace(/\s+|-/g, "");
         const pattern = normalized
