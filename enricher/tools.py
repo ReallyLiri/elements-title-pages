@@ -64,7 +64,7 @@ def openai_query(question, text, instructions, max_tokens=50, creativity=0):
         print("!!! Error querying OpenAI", e)
 
 def read_csv(fpath):
-    with open(fpath, mode="r", newline="", encoding="utf-8") as f:
+    with open(fpath, mode="r", newline="", encoding="utf-8", errors='ignore') as f:
         reader = csv.DictReader(f)
         entries = list(reader)
         return entries, reader.fieldnames
