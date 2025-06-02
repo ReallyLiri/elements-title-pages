@@ -122,6 +122,9 @@ export const extract = (items: Item[], property: keyof Item) =>
 
 export const authorDisplayName = (author: string) => {
   const parts = author.split(" ");
+  if (parts.length == 1) {
+    return author;
+  }
   return `${parts.slice(1).join(" ").trim()}, ${parts[0]}`;
 };
 

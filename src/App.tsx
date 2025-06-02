@@ -1,4 +1,4 @@
-import {isEmpty} from "lodash";
+import { isEmpty } from "lodash";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import { Feature, Item, Mode } from "./types";
@@ -104,9 +104,11 @@ function App() {
   const allAuthors = useMemo(
     () =>
       items
-        ? extract(items, "authors").sort((a, b) =>
-            authorDisplayName(a).localeCompare(authorDisplayName(b)),
-          )
+        ? extract(items, "authors")
+            .filter((a) => a.length >= 1)
+            .sort((a, b) =>
+              authorDisplayName(a).localeCompare(authorDisplayName(b)),
+            )
         : [],
     [items],
   );
