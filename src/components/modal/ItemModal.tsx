@@ -53,11 +53,27 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
                 features={features}
                 mapping={item.features}
               />
+              {item.imprint && (
+                <>
+                  <hr style={{opacity: 0.3}} />
+                  <HighlightedText
+                    text={item.imprint}
+                    features={features}
+                    mapping={item.features}
+                  />
+                </>
+              )}
             </ModalTextColumn>
-            {item.titleEn && (
+            {(item.titleEn || item.imprintEn) && (
               <ModalTextColumn isTextContent>
                 <ModalTitle>English Translation</ModalTitle>
-                <HighlightedText text={item.titleEn} features={[]} mapping={{}} />
+                <HighlightedText text={item.titleEn || ""} features={[]} mapping={{}} />
+                {item.imprintEn && (
+                  <>
+                    {item.imprint && <hr style={{opacity: 0.3}} />}
+                    <HighlightedText text={item.imprintEn} features={[]} mapping={{}} />
+                  </>
+                )}
               </ModalTextColumn>
             )}
           </TextColumnsContainer>

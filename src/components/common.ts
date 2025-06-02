@@ -127,6 +127,7 @@ export const ExpandIcon = styled.div`
   right: 0.5rem;
   cursor: pointer;
   font-size: 1.2rem;
+  z-index: 100;
   @media (max-width: 600px) {
     display: none;
   }
