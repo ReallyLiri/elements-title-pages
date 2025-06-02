@@ -16,6 +16,7 @@ _TITLE_FEATURES_MERGE = True
 
 # _TITLE_FEATURES_FILTER = lambda curr_entry: curr_entry["key"].strip() in ["Venice 1505", "Paris 1536", "Basel 1546", "Rotterdam 1681"]
 _TITLE_FEATURES_FILTER = lambda curr_entry: True
+_TITLE_PAGE_PART = TitlePagePart.TITLE_PAGE
 _FEATURES = [
     BOUND_WITH,
     ENRICHED_WITH
@@ -37,22 +38,27 @@ instructions = prompt(_FEATURES)
 if _TITLE_FEATURES:
     print(f"Using prompt:\n{instructions}\n")
 
-if _TITLE_FEATURES_MERGE or _TITLE_FEATURES:
-    if len(_FEATURES) == 0:
-        raise ValueError("No features specified for title processing.")
-    processing_count = len([e for e in entries if _TITLE_FEATURES_FILTER(e)])
-    print(f"Processing {processing_count} entries with features: {[f.name for f in _FEATURES]}")
+if len(_FEATURES) == 0:
+    raise ValueError("No features specified for title processing.")
+
+title_page_part = _FEATURES[0].title_page_part
+for f in _FEATURES:
+    if f.title_page_part != title_page_part:
+        raise ValueError("All features must have the same title page part.")
+
+processing_count = len([e for e in entries if _TITLE_FEATURES_FILTER(e)])
+print(f"Processing {processing_count} entries with features: {[f.name for f in _FEATURES]}")
 
 for i in tqdm(range(len(entries)), desc="Processing entries"):
     entry = entries[i]
 
     if _TITLE_FEATURES and _TITLE_FEATURES_FILTER(entry):
-        if len(entry["title"]) < 20:
+        if len(entry[title_page_part.name]) < 20:
             continue
         out_path = f'out/{entry["key"].replace("/", "_")}.json'
         result = openai_query(
             f"language: {entry['language']}{' and ' + entry['language 2'] if entry['language 2'] != '' else ''}",
-            entry["title"],
+            entry[title_page_part.name],
             instructions,
             max_tokens=None
         )

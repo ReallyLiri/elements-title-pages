@@ -19,7 +19,14 @@ export type Feature =
   | "Greek designation"
   | "Institutions"
   | "Bound With"
-  | "Enriched With";
+  | "Enriched With"
+  | "Imprint Date"
+  | "Imprint Publisher"
+  | "Imprint Place"
+  | "Imprint Privileges"
+  | "Imprint Dedication"
+  | "Imprint Author Name"
+  | "Imprint Author Description";
 
 export type Item = {
   key: string;

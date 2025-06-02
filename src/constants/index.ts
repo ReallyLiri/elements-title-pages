@@ -36,7 +36,14 @@ export const FeatureToColumnName: Record<Feature, string[]> = {
   "Greek designation": ["GREEK IN NON GREEK BOOKS"],
   Institutions: ["INSTITUTIONS"],
   "Bound With": ["BOUND WITH"],
-  "Enriched With": ["ENRICHED WITH"]
+  "Enriched With": ["ENRICHED WITH"],
+  "Imprint Date": ["IMPRINT DATE"],
+  "Imprint Publisher": ["IMPRINT PUBLISHER"],
+  "Imprint Place": ["IMPRINT PLACE"],
+  "Imprint Privileges": ["IMPRINT PRIVILEGES"],
+  "Imprint Dedication": ["IMPRINT DEDICATION"],
+  "Imprint Author Name": ["IMPRINT AUTHOR NAME"],
+  "Imprint Author Description": ["IMPRINT AUTHOR DESCRIPTION"],
 };
 
 export const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
@@ -77,6 +84,13 @@ export const FeatureToColor: Record<Feature, string> = {
   Institutions: "#B0C4DE",
   "Bound With": "#FFB6C1",
   "Enriched With": "#D3D3D3",
+  "Imprint Date": "#FFDEAD",
+  "Imprint Publisher": "#ADD8E6",
+  "Imprint Place": "#E6E6FA",
+  "Imprint Privileges": "#D1E7E0",
+  "Imprint Dedication": "#D4C5F9",
+  "Imprint Author Name": "#909fd7",
+  "Imprint Author Description": "#FFDAB9",
 };
 
 export const FeatureToTooltip: Record<Feature, string> = {
@@ -113,4 +127,18 @@ export const FeatureToTooltip: Record<Feature, string> = {
   "Bound With":
     "TBC",
   "Enriched With": "TBC",
+  "Imprint Date":
+    "The date of publication as it appears on the title page, typically in the form of a year.",
+  "Imprint Publisher":
+    "The name of the publisher or printer as it appears on the title page.",
+  "Imprint Place":
+    "The place of publication as it appears on the title page, typically a city.",
+  "Imprint Privileges":
+    "Mentions of royal privileges or legal permissions granted for printing, such as 'by royal permission' or 'with the approval of the censor'.",
+  "Imprint Dedication":
+    "Mentions of dedications to patrons or other individuals, typically found on the title page or in the preface.",
+  "Imprint Author Name":
+    "The name of the author as it appears on the title page, typically in the form of 'by [Author Name]'.",
+  "Imprint Author Description":
+    "Any descriptors found alongside the author name, such as academic titles, ranks, or affiliations.",
 };

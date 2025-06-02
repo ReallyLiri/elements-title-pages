@@ -1,14 +1,17 @@
 from enum import Enum
 
+from enricher.tpparts import TitlePagePart
+
 
 class Feature:
-    def __init__(self, name: str, description: str, is_list: bool = False):
+    def __init__(self, name: str, description: str, is_list: bool = False, title_page_part : TitlePagePart = TitlePagePart.TITLE_PAGE):
         self.name = name
         self.description = description
         self.is_list = is_list
+        self.title_page_part = title_page_part
 
     def __repr__(self):
-        return f"Feature(name={self.name}, description={self.description}, is_list={self.is_list})"
+        return f"Feature(name={self.name}, description={self.description}, is_list={self.is_list}), title_page_part={self.title_page_part})"
 
 BASE_CONTENT = Feature(
     "BASE CONTENT",
@@ -107,8 +110,53 @@ ENRICHED_WITH = Feature(
     "Try to also break down the enrichment into its components, such as 'explanations', 'examples', 'diagrams', etc. ",
     is_list=True
 )
+IMPRINT_DATE = Feature(
+    "IMPRINT DATE",
+    "Mentions of the date, usually in the form of a year, when the book was printed or published.",
+    title_page_part=TitlePagePart.IMPRINT
+)
+IMPRINT_PUBLISHER = Feature(
+    "IMPRINT PUBLISHER",
+    "Mentions of the publisher or printer, such as the name of the printing house or the person responsible for the publication."
+    "Try to include the minimal unit of the publisher's name. For example, instead of marking 'Apud Vincentium Accoltum', mark 'Vincentium Accoltum', "
+    "and instead of marking 'Chez GVILLAVME AVVRAY, au haut de la ruë sainct Iean de Beauuais, au Bellerophon couronné', mark 'GVILLAVME AVVRAY'.",
+    title_page_part=TitlePagePart.IMPRINT,
+    is_list=True
+)
+IMPRINT_CITY = Feature(
+    "IMPRINT PLACE",
+    "Mentions of the city or town where the book was printed or published. "
+    "Do not include full addresses, just the city or town name. "
+    "For example, instead of marking 'A Paris, chez GVILLAVME AVVRAY, au haut de la ruë sainct Iean de Beauuais, au Bellerophon couronné', mark 'Paris'.",
+    title_page_part=TitlePagePart.IMPRINT,
+    is_list=True
+)
+IMPRINT_PRIVILEGES = Feature(
+    "IMPRINT PRIVILEGES",
+    "Mentions of royal privileges or legal permissions granted for printing.",
+    title_page_part=TitlePagePart.IMPRINT,
+    is_list=True
+)
+IMPRINT_DEDICATION = Feature(
+    "IMPRINT DEDICATION",
+    "Mentions of patrons or dedications.",
+    title_page_part=TitlePagePart.IMPRINT,
+    is_list=True
+)
+IMPRINT_ADAPTER_ATTRIBUTION = Feature(
+    "IMPRINT AUTHOR NAME",
+    "The name of the contemporary adapter (author, editor, translator, commentator, etc.) as it appears on the title page. "
+    "Do not include any descriptors, just the name itself. "
+    "Do not include the printer or publisher's name, just the adapter's name, if exists.",
+)
+IMPRINT_ADAPTER_DESCRIPTION = Feature(
+    "IMPRINT AUTHOR DESCRIPTION",
+    "Any descriptors found alongside the adapter name, such as academic titles, ranks, or affiliations. "
+    "Do not include the printer or publisher's name, just the adapter's description, if exists.",
+    is_list=True
+)
 
-def prompt(features : list[Feature]) -> str:
+def prompt(features : list[Feature], title_page_part : TitlePagePart = TitlePagePart.TITLE_PAGE) -> str:
     output_formats = []
     definitions = []
     for feature in features:
@@ -120,10 +168,10 @@ def prompt(features : list[Feature]) -> str:
     output_format = ",\n".join(output_formats)
     definitions_str = "\n".join(definitions)
     return """
-You are an AI agent designed to extract structured metadata from historical title pages of French translations of Euclid’s Elements.
+You are an AI agent designed to extract structured metadata from historical title pages of translations of Euclid’s Elements.
 
 You will be given:
-- The transcribed text of a title page.
+- The transcribed text of a """ + "title page's imprint" if title_page_part == TitlePagePart.IMPRINT  else "title page" + """".
 - The language of the transcription.
 
 Your task is to extract specific paratextual features from the transcription and return them as a JSON object.
