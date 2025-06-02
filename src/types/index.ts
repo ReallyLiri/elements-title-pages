@@ -29,15 +29,11 @@ export type Item = {
   imageUrl: string | null;
   title: string;
   titleEn: string | null;
+  imprint: string | null;
+  imprintEn: string | null;
   features: Partial<Record<Feature, string[]>>;
   type: string;
   format: string | null;
-};
-
-export type Range = {
-  start: number;
-  end: number;
-  feature: Feature;
 };
 
 export type RadioProps = {

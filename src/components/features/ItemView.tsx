@@ -32,12 +32,22 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
           ) : (
             <>
               <TextTile alignCenter={!!item.imageUrl}>
-                <Suspense fallback={<div>{item.title}</div>}>
+                <Suspense fallback={<div>{item.title}{item.imprint && <><hr style={{opacity: 0.3}} />{item.imprint}</>}</div>}>
                   <HighlightedText
                     text={item.title}
                     features={features}
                     mapping={item.features}
                   />
+                  {item.imprint && (
+                    <>
+                      <hr style={{opacity: 0.3}} />
+                      <HighlightedText
+                        text={item.imprint}
+                        features={features}
+                        mapping={item.features}
+                      />
+                    </>
+                  )}
                 </Suspense>
                 <ExpandIcon title="Expand" onClick={() => setModalOpen(true)}>
                   ⤢
