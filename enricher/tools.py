@@ -75,3 +75,9 @@ def write_csv(entries, fpath, fieldnames):
         writer.writeheader()
         for row in entries:
             writer.writerow(row)
+
+def strip_surrounding_quotes(s: str) -> str:
+    s = s.strip().replace("', '", ", ")
+    if (s.startswith('"') and s.endswith('"')) or (s.startswith("'") and s.endswith("'")):
+        return s[1:-1].strip()
+    return s

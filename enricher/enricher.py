@@ -2,7 +2,7 @@ import json
 import os
 
 from features import *
-from tools import read_csv, google_translate, write_csv, openai_query
+from tools import read_csv, write_csv, openai_query, strip_surrounding_quotes
 from tqdm import tqdm
 import time
 
@@ -11,12 +11,10 @@ file_path = "../public/docs/EiP.csv"
 entries, fieldnames = read_csv(file_path)
 
 _DELETE_OLD_OUTPUT = True
-_TRANSLATE_GOOGLE = False
-_TRANSLATE_OPENAI = False
 _TITLE_FEATURES = True
 _TITLE_FEATURES_MERGE = True
 
-_TITLE_FEATURES_FILTER = lambda curr_entry: curr_entry["key"] == "Rome 1574"
+_TITLE_FEATURES_FILTER = lambda curr_entry: curr_entry["INSTITUTIONS"].strip() == ""
 _FEATURES = [
     INSTITUTIONS
 ]
@@ -29,13 +27,6 @@ if _TITLE_FEATURES and _DELETE_OLD_OUTPUT:
 
 if not os.path.exists("out"):
     os.makedirs("out")
-
-
-def strip_surrounding_quotes(s: str) -> str:
-    s = s.strip().replace("', '", ", ")
-    if (s.startswith('"') and s.endswith('"')) or (s.startswith("'") and s.endswith("'")):
-        return s[1:-1].strip()
-    return s
 
 run_id = time.strftime("%d_%H-%M")
 print(f"Run ID: {run_id}")
@@ -51,23 +42,6 @@ if _TITLE_FEATURES_MERGE or _TITLE_FEATURES:
 
 for i in tqdm(range(len(entries)), desc="Processing entries"):
     entry = entries[i]
-
-    if _TRANSLATE_GOOGLE and entry["language"] != "ENGLISH" and entry["title_EN"] == "":
-        translations, languages = (
-            google_translate([entry["title"], entry["colophon"], entry["imprint"]])
-        )
-        entries[i]["title_EN"], entries[i]["colophon_EN"], entries[i]["imprint_EN"] = translations
-
-    if _TRANSLATE_OPENAI and entry["language"] != "ENGLISH" and entry["title_EN"] == "":
-        for key in ["title", "colophon", "imprint"]:
-            if entry[key] != "":
-                translation = openai_query(
-                    "Translate this text to English",
-                    entry[key],
-                    "Translate the text to English, preserving the original meaning and context. Do not add any additional information or context. Please preserve the original formatting, whitespace, line breaks (even at the middle of a sentence) and punctuation as much as possible.",
-                    max_tokens=None
-                )
-                entries[i][f"{key}_EN"] = translation
 
     if _TITLE_FEATURES and _TITLE_FEATURES_FILTER(entry):
         if len(entry["title"]) < 20:

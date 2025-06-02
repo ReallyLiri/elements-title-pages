@@ -1,3 +1,4 @@
+import {isEmpty} from "lodash";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import { Feature, Item, Mode } from "./types";
@@ -49,6 +50,12 @@ function App() {
   const [formats, setFormats] = useLocalStorageState<string[]>("formats", {
     defaultValue: [],
   });
+  const [featuresFilter, setFeaturesFilter] = useLocalStorageState<Feature[]>(
+    "featuresFilter",
+    {
+      defaultValue: Object.keys(FeatureToColumnName) as Feature[],
+    },
+  );
   const [requireImage, setRequireImage] = useLocalStorageState<boolean>(
     "requireImage",
     {
@@ -155,6 +162,14 @@ function App() {
           return false;
         }
       }
+      if (featuresFilter.length) {
+        const hasFeature = featuresFilter.some(
+          (f) => !isEmpty(item.features[f]),
+        );
+        if (!hasFeature) {
+          return false;
+        }
+      }
       if (mode === "images" && requireImage) {
         if (!item.imageUrl) {
           return false;
@@ -173,6 +188,7 @@ function App() {
     languages,
     types,
     formats,
+    featuresFilter,
     mode,
     requireImage,
     yearRange,
@@ -259,6 +275,12 @@ function App() {
                 options={allFormats}
                 onChange={setFormats}
                 value={formats}
+              />
+              <MultiSelect
+                name="Has Features"
+                options={Object.keys(FeatureToColumnName)}
+                onChange={(f) => setFeaturesFilter(f as Feature[])}
+                value={featuresFilter}
               />
             </Row>
             <Row justifyStart>
