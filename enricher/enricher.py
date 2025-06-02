@@ -5,6 +5,7 @@ from features import *
 from tools import read_csv, write_csv, openai_query, strip_surrounding_quotes
 from tqdm import tqdm
 import time
+from tpparts import TitlePagePart
 
 file_path = "../public/docs/EiP.csv"
 
@@ -14,12 +15,17 @@ _DELETE_OLD_OUTPUT = True
 _TITLE_FEATURES = True
 _TITLE_FEATURES_MERGE = True
 
-# _TITLE_FEATURES_FILTER = lambda curr_entry: curr_entry["key"].strip() in ["Venice 1505", "Paris 1536", "Basel 1546", "Rotterdam 1681"]
+# _TITLE_FEATURES_FILTER = lambda curr_entry: curr_entry["key"].strip() in ["Strasbourg 1559", "Paris 1558a", "Rome 1594"]
 _TITLE_FEATURES_FILTER = lambda curr_entry: True
 _TITLE_PAGE_PART = TitlePagePart.TITLE_PAGE
 _FEATURES = [
-    BOUND_WITH,
-    ENRICHED_WITH
+    IMPRINT_DATE,
+    IMPRINT_PUBLISHER,
+    IMPRINT_CITY,
+    IMPRINT_PRIVILEGES,
+    IMPRINT_DEDICATION,
+    IMPRINT_ADAPTER_ATTRIBUTION,
+    IMPRINT_ADAPTER_DESCRIPTION
 ]
 
 if _TITLE_FEATURES and _DELETE_OLD_OUTPUT:
@@ -44,7 +50,7 @@ if len(_FEATURES) == 0:
 title_page_part = _FEATURES[0].title_page_part
 for f in _FEATURES:
     if f.title_page_part != title_page_part:
-        raise ValueError("All features must have the same title page part.")
+        raise ValueError(f"All features must have the same title page part. Found {f.title_page_part} for feature {f.name}, expected {title_page_part}.")
 
 processing_count = len([e for e in entries if _TITLE_FEATURES_FILTER(e)])
 print(f"Processing {processing_count} entries with features: {[f.name for f in _FEATURES]}")
@@ -53,12 +59,12 @@ for i in tqdm(range(len(entries)), desc="Processing entries"):
     entry = entries[i]
 
     if _TITLE_FEATURES and _TITLE_FEATURES_FILTER(entry):
-        if len(entry[title_page_part.name]) < 20:
+        if len(entry[str(title_page_part.value)]) < 10:
             continue
         out_path = f'out/{entry["key"].replace("/", "_")}.json'
         result = openai_query(
             f"language: {entry['language']}{' and ' + entry['language 2'] if entry['language 2'] != '' else ''}",
-            entry[title_page_part.name],
+            entry[str(title_page_part.value)],
             instructions,
             max_tokens=None
         )

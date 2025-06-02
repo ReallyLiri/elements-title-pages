@@ -1,6 +1,4 @@
-from enum import Enum
-
-from enricher.tpparts import TitlePagePart
+from tpparts import TitlePagePart
 
 
 class Feature:
@@ -148,12 +146,14 @@ IMPRINT_ADAPTER_ATTRIBUTION = Feature(
     "The name of the contemporary adapter (author, editor, translator, commentator, etc.) as it appears on the title page. "
     "Do not include any descriptors, just the name itself. "
     "Do not include the printer or publisher's name, just the adapter's name, if exists.",
+    title_page_part=TitlePagePart.IMPRINT,
 )
 IMPRINT_ADAPTER_DESCRIPTION = Feature(
     "IMPRINT AUTHOR DESCRIPTION",
     "Any descriptors found alongside the adapter name, such as academic titles, ranks, or affiliations. "
     "Do not include the printer or publisher's name, just the adapter's description, if exists.",
-    is_list=True
+    is_list=True,
+    title_page_part=TitlePagePart.IMPRINT,
 )
 
 def prompt(features : list[Feature], title_page_part : TitlePagePart = TitlePagePart.TITLE_PAGE) -> str:
