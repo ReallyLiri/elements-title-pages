@@ -42,7 +42,8 @@ export const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
   "Other Educational Authorities": true,
   "Explicit Language References": true,
   Verbs: true,
-  Institutions: true
+  Institutions: true,
+  "Elements Designation": true,
 };
 
 export const FeaturesNotSelectedByDefault: Feature[] = [
