@@ -94,7 +94,17 @@ INSTITUTIONS = Feature(
 BOUND_WITH = Feature(
     "BOUND WITH",
     "Mentions of other works that are included in the work, in addition to Euclid's Elements, such as 'Optics', 'Data', theorems by Archimedes. "
-    "Mentions of additions ingrained in the core text and written by the adapter/translator of the text, such as examples or explanations, should not be included here.",
+    "Mentions of additions ingrained in the core text and written by the adapter/translator of the text, such as examples or explanations, should not be included here. "
+    "Try to mark the minimal unit of the bound work. For example, instead of marking 'cum expositione Theonis.', mark 'expositione Theonis' as the bound work. "
+    "Try to also break down the bound works into their components. For example, instead of marking 'Phaenomena, Optics, and Catoptrics', mark 'Phaenomena', 'Optics', and 'Catoptrics' as the bound works.",
+    is_list=True
+)
+ENRICHED_WITH = Feature(
+    "ENRICHED WITH",
+    "Mentions of additional content that is not part of the core text, such as illustrations, diagrams, explanations, expositions, examples or other supplementary material that enriches the text and makes it more understandable, accurate, or useful. "
+    "Mentions of other distinct works that are included in the book, in addition to Euclid's Elements, such as 'Optics', 'Data', theorems by Archimedes, should not be included here."
+    "Try to mark the minimal unit of enrichment. For example, instead of marking 'To which are added some utilities', mark 'utilities' as the enriched content. "
+    "Try to also break down the enrichment into its components, such as 'explanations', 'examples', 'diagrams', etc. ",
     is_list=True
 )
 

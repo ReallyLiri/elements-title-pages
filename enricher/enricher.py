@@ -17,7 +17,8 @@ _TITLE_FEATURES_MERGE = True
 # _TITLE_FEATURES_FILTER = lambda curr_entry: curr_entry["key"].strip() in ["Venice 1505", "Paris 1536", "Basel 1546", "Rotterdam 1681"]
 _TITLE_FEATURES_FILTER = lambda curr_entry: True
 _FEATURES = [
-    BOUND_WITH
+    BOUND_WITH,
+    ENRICHED_WITH
 ]
 
 if _TITLE_FEATURES and _DELETE_OLD_OUTPUT:

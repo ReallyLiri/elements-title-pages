@@ -18,7 +18,8 @@ export type Feature =
   | "Elements Designation"
   | "Greek designation"
   | "Institutions"
-  | "Bound With";
+  | "Bound With"
+  | "Enriched With";
 
 export type Item = {
   key: string;
