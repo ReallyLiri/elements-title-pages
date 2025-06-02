@@ -35,6 +35,7 @@ export const FeatureToColumnName: Record<Feature, string[]> = {
   "Intended Audience": ["EXPLICIT RECIPIENT", "EXPLICIT RECIPIENT 2"],
   "Greek designation": ["GREEK IN NON GREEK BOOKS"],
   Institutions: ["INSTITUTIONS"],
+  "Bound With": ["BOUND WITH"],
 };
 
 export const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
@@ -44,6 +45,7 @@ export const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
   Verbs: true,
   Institutions: true,
   "Elements Designation": true,
+  "Bound With": true,
 };
 
 export const FeaturesNotSelectedByDefault: Feature[] = [
@@ -71,6 +73,7 @@ export const FeatureToColor: Record<Feature, string> = {
   "Elements Designation": "#A3D5C3",
   "Greek designation": "#F0B2A1",
   Institutions: "#B0C4DE",
+  "Bound With": "#FFB6C1",
 };
 
 export const FeatureToTooltip: Record<Feature, string> = {
@@ -104,4 +107,6 @@ export const FeatureToTooltip: Record<Feature, string> = {
   "Greek designation": "Greek designation of the book in non-Greek books.",
   Institutions:
     "Mentions of institutions, such as societies or universities, associated with the book.",
+  "Bound With":
+    "TBC",
 };

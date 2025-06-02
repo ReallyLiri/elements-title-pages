@@ -14,9 +14,10 @@ _DELETE_OLD_OUTPUT = True
 _TITLE_FEATURES = True
 _TITLE_FEATURES_MERGE = True
 
-_TITLE_FEATURES_FILTER = lambda curr_entry: curr_entry["INSTITUTIONS"].strip() == ""
+# _TITLE_FEATURES_FILTER = lambda curr_entry: curr_entry["key"].strip() in ["Venice 1505", "Paris 1536", "Basel 1546", "Rotterdam 1681"]
+_TITLE_FEATURES_FILTER = lambda curr_entry: True
 _FEATURES = [
-    INSTITUTIONS
+    BOUND_WITH
 ]
 
 if _TITLE_FEATURES and _DELETE_OLD_OUTPUT:
@@ -38,7 +39,8 @@ if _TITLE_FEATURES:
 if _TITLE_FEATURES_MERGE or _TITLE_FEATURES:
     if len(_FEATURES) == 0:
         raise ValueError("No features specified for title processing.")
-    print(f"Processing {len([e for e in entries if _TITLE_FEATURES_FILTER(e)])} entries with features: {[f.name for f in _FEATURES]}")
+    processing_count = len([e for e in entries if _TITLE_FEATURES_FILTER(e)])
+    print(f"Processing {processing_count} entries with features: {[f.name for f in _FEATURES]}")
 
 for i in tqdm(range(len(entries)), desc="Processing entries"):
     entry = entries[i]

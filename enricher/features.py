@@ -91,6 +91,12 @@ INSTITUTIONS = Feature(
     "Mentions of institutions, such as societies or universities, associated with the book.",
     is_list=True
 )
+BOUND_WITH = Feature(
+    "BOUND WITH",
+    "Mentions of other works that are included in the work, in addition to Euclid's Elements, such as 'Optics', 'Data', theorems by Archimedes. "
+    "Mentions of additions ingrained in the core text and written by the adapter/translator of the text, such as examples or explanations, should not be included here.",
+    is_list=True
+)
 
 def prompt(features : list[Feature]) -> str:
     output_formats = []
