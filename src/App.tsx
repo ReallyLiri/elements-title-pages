@@ -50,12 +50,6 @@ function App() {
   const [formats, setFormats] = useLocalStorageState<string[]>("formats", {
     defaultValue: [],
   });
-  const [featuresFilter, setFeaturesFilter] = useLocalStorageState<Feature[]>(
-    "featuresFilter",
-    {
-      defaultValue: Object.keys(FeatureToColumnName) as Feature[],
-    },
-  );
   const [requireImage, setRequireImage] = useLocalStorageState<boolean>(
     "requireImage",
     {
@@ -71,10 +65,15 @@ function App() {
   const [features, setFeatures] = useLocalStorageState<Feature[]>("features", {
     defaultValue: Object.keys(FeatureToColumnName) as Feature[],
   });
+  const [requiredFeatures, setRequiredFeatures] = useLocalStorageState<
+    Feature[]
+  >("requiredFeatures", {
+    defaultValue: [] as Feature[],
+  });
   const [controlsOpen, setControlsOpen] = useLocalStorageState<boolean>(
     "controlsOpen",
     {
-      defaultValue: true,
+      defaultValue: false,
     },
   );
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -164,10 +163,12 @@ function App() {
           return false;
         }
       }
-      if (featuresFilter.length) {
-        const hasFeature = featuresFilter.some(
-          (f) => !isEmpty(item.features[f]),
-        );
+      if (requiredFeatures.length) {
+        const hasFeature =
+          item.title !== "?" &&
+          requiredFeatures.every(
+            (f) => !isEmpty(item.features[f]?.filter(Boolean)),
+          );
         if (!hasFeature) {
           return false;
         }
@@ -190,7 +191,7 @@ function App() {
     languages,
     types,
     formats,
-    featuresFilter,
+    requiredFeatures,
     mode,
     requireImage,
     yearRange,
@@ -278,12 +279,6 @@ function App() {
                 onChange={setFormats}
                 value={formats}
               />
-              <MultiSelect
-                name="Has Features"
-                options={Object.keys(FeatureToColumnName)}
-                onChange={(f) => setFeaturesFilter(f as Feature[])}
-                value={featuresFilter}
-              />
             </Row>
             <Row justifyStart>
               <RangeSlider
@@ -295,7 +290,7 @@ function App() {
               />
             </Row>
             {mode === "texts" && (
-              <Row justifyStart>
+              <Row justifyStart noWrap>
                 <Column alignItems="end">
                   <span>Highlight Segments:</span>
                   <ResetButton
@@ -327,6 +322,20 @@ function App() {
                     onChange={(f) => setFeatures(f as Feature[])}
                     colors={FeatureToColor}
                     tooltips={FeatureToTooltip}
+                  />
+                </div>
+                <Column alignItems="end">
+                  <span>Required Features:</span>
+                  <ResetButton onClick={() => setRequiredFeatures([])}>
+                    Reset
+                  </ResetButton>
+                </Column>
+                <div>
+                  <MultiSelect
+                    name="Required features"
+                    options={Object.keys(FeatureToColumnName)}
+                    onChange={(f) => setRequiredFeatures(f as Feature[])}
+                    value={requiredFeatures}
                   />
                 </div>
               </Row>

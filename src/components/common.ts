@@ -39,6 +39,7 @@ export const Row = styled.div<{
   max-width: 96vw;
   flex-wrap: ${({ noWrap }) => (noWrap ? "nowrap" : "wrap")};
   @media (max-width: 600px) {
+    flex-wrap: wrap;
     gap: ${({ gap }) => (gap !== undefined ? gap : 1)}rem;
   }
 `;
