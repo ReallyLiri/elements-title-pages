@@ -21,7 +21,7 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
   return (
     <Column style={{ height, width }}>
       <div>
-        {item.year} {item.authors.join(" & ") || "s.n."},{" "}
+        {item.year || "s.d."} {item.authors.join(" & ") || "s.n."},{" "}
         {item.cities.join(", ") || "s.l."}
         <LanguagesInfo>{item.languages.join(" & ")}</LanguagesInfo>
       </div>

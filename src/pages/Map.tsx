@@ -1,13 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Point } from "react-simple-maps";
 import styled from "@emotion/styled";
-import {
-  FLOATING_CITY,
-  loadCitiesAsync,
-  loadDataAsync,
-  Translation,
-} from "../utils/data";
-import { groupBy, isArray, isEmpty, isNil } from "lodash";
+import { isArray, isEmpty, isNil } from "lodash";
 import { CityMarkers } from "../components/map/Markers";
 import { MapControls } from "../components/map/MapControls";
 import { useElementSize } from "../utils/useElementSize";
@@ -40,6 +34,8 @@ import { CityDetails } from "../components/map/CityDetails";
 import { RecordDetails } from "../components/map/RecordDetails";
 import { COLLAPSE_FILTER_BUTTON_ID } from "../components/map/Tour";
 import { useTour } from "@reactour/tour";
+import { FLOATING_CITY, Item } from "../types";
+import { loadCitiesAsync, loadEditionsData } from "../utils/dataUtils.ts";
 
 const Wrapper = styled.div`
   display: flex;
@@ -129,25 +125,26 @@ const Pane = styled.div<{
 `;
 
 const filterRecord = (
-  t: Translation,
+  t: Item,
   range: [number, number],
   filters: Record<string, FilterValue[] | undefined>,
   filtersInclude: Record<string, boolean>,
   maxYear: number,
 ): boolean => {
+  const year = t.year ? parseInt(t.year.split("/")[0]) : null;
   if (
     range[0] > 0 &&
     range[1] > 0 &&
-    ((t.year && t.year! < range[0]) || t.year! > range[1])
+    ((year && year < range[0]) || (year && year > range[1]))
   ) {
     return false;
   }
   if (!t.year && range[1] < maxYear) {
     return false;
   }
-  const fields = Object.keys(filters) as (keyof Translation)[];
+  const fields = Object.keys(filters) as (keyof Item)[];
   return fields.every((field) => {
-    if (field === "year" && t.city === FLOATING_CITY) {
+    if (field === "year" && t.cities.includes(FLOATING_CITY)) {
       return false;
     }
     const filterValues = filters[field]?.map((v) => v.value);
@@ -195,7 +192,7 @@ const bookSizeCompare = (a: string, b: string): number => {
 
 const Map = () => {
   const { height } = useWindowSize();
-  const [data, setData] = useState<Translation[]>([]);
+  const [data, setData] = useState<Item[]>([]);
   const [cities, setCities] = useState<Record<string, Point>>({});
   const [zoom, setZoom] = useLocalStorage<number>("zoom", 1);
   const {
@@ -205,28 +202,28 @@ const Map = () => {
     refresh: refreshSize,
   } = useElementSize();
   const [position, setPosition] = useLocalStorage<Point>(
-    "position",
+    "map-position",
     DEFAULT_POSITION,
   );
   const [selectedCity, setSelectedCity] = useLocalStorage<string | undefined>(
-    "selected-city",
+    "map-selected-city",
     undefined,
   );
-  const [selectedRecordId, setSelectedRecordId] = useLocalStorage<
+  const [selectedRecordKey, setSelectedRecordId] = useLocalStorage<
     string | undefined
-  >("selected-record", undefined);
+  >("map-selected-record", undefined);
   const [filterOpen, setFilterOpen] = useLocalStorage<boolean>(
-    "filters-open",
+    "map-filters-open",
     true,
   );
   const [range, setRange] = useState<[number, number]>([0, 0]);
   const [filters, setFilters] = useLocalStorage<
     Record<string, FilterValue[] | undefined>
-  >("filters", {});
+  >("map-filters", {});
   const [filtersInclude, setFiltersInclude] = useLocalStorage<
     Record<string, boolean>
-  >("filter-include", {});
-  const [toured, setToured] = useLocalStorage<boolean>("toured", false);
+  >("map-filter-include", {});
+  const [toured, setToured] = useLocalStorage<boolean>("map-toured", false);
   const { setIsOpen: setTourOpen } = useTour();
 
   useEffect(() => {
@@ -237,16 +234,18 @@ const Map = () => {
   }, [setTourOpen, setToured, toured]);
 
   useEffect(() => {
-    loadDataAsync().then(setData);
+    loadEditionsData(setData);
     loadCitiesAsync().then(setCities);
   }, []);
 
   const [minYear, maxYear] = useMemo(() => {
-    const years = data.filter((t) => !!t.year).map((t) => t.year!);
+    const years = data
+      .filter((t) => !!t.year)
+      .map((t) => parseInt(t.year!.split("/")[0]));
     return [Math.min(...years), Math.max(...years)];
   }, [data]);
 
-  const filteredTranslations = useMemo(
+  const filteredItems = useMemo(
     () =>
       data.filter((t) =>
         filterRecord(t, range, filters, filtersInclude, maxYear),
@@ -254,22 +253,30 @@ const Map = () => {
     [data, range, filters, filtersInclude],
   );
 
-  const translationByCity: Record<string, Translation[]> = useMemo(
-    () => groupBy(filteredTranslations, (t) => t.city),
-    [filteredTranslations],
-  );
+  const itemsByCity: Record<string, Item[]> = useMemo(() => {
+    const res = {} as Record<string, Item[]>;
+    filteredItems.forEach((item) => {
+      item.cities.forEach((city) => {
+        if (!res[city]) {
+          res[city] = [];
+        }
+        res[city].push(item);
+      });
+    });
+    return res;
+  }, [filteredItems]);
 
   const selectedRecord = useMemo(
     () =>
-      selectedRecordId
-        ? data.filter((d) => d.id === selectedRecordId)[0]
+      selectedRecordKey
+        ? data.filter((d) => d.key === selectedRecordKey)[0]
         : undefined,
-    [data, selectedRecordId],
+    [data, selectedRecordKey],
   );
 
   useEffect(() => {
     refreshSize();
-  }, [refreshSize, selectedCity, selectedRecordId, filterOpen]);
+  }, [refreshSize, selectedCity, selectedRecordKey, filterOpen]);
 
   return (
     <Wrapper>
@@ -286,12 +293,18 @@ const Map = () => {
           <FiltersGroup
             data={data}
             fields={{
-              city: {},
+              city: {
+                isArray: true,
+              },
               class: { displayName: "Wardhaugh Class" },
-              language: {},
-              translator: {},
-              booksExpanded: { displayName: "Elements Books", isArray: true },
-              bookSize: {
+              language: {
+                isArray: true,
+              },
+              author: {
+                isArray: true,
+              },
+              elementsBooks: { displayName: "Elements Books", isArray: true },
+              format: {
                 displayName: "Edition Format",
                 customCompareFn: bookSizeCompare,
               },
@@ -329,7 +342,7 @@ const Map = () => {
             markers={
               <CityMarkers
                 cities={cities}
-                data={translationByCity}
+                data={itemsByCity}
                 selectedCity={selectedCity}
                 setSelectedCity={setSelectedCity}
               />
@@ -355,7 +368,7 @@ const Map = () => {
         </ControlsRow>
         <HeatLegend
           offsetRight={mapX + mapWidth}
-          total={filteredTranslations?.length || 0}
+          total={filteredItems?.length || 0}
         />
       </MapSection>
       {!isEmpty(selectedCity) && (
@@ -369,9 +382,9 @@ const Map = () => {
           </CollapseFiltersButton>
           <CityDetails
             city={selectedCity!}
-            data={translationByCity[selectedCity!]}
-            selectedRecordId={selectedRecordId}
-            setSelectedRecordId={setSelectedRecordId}
+            data={itemsByCity[selectedCity!]}
+            selectedRecordId={selectedRecordKey}
+            setSelectedRecordKey={setSelectedRecordId}
           />
         </Pane>
       )}

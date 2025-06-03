@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import { css } from "@emotion/react";
 
 export const SEA_COLOR = "#465966";
 export const LAND_COLOR = "#c7b1ae";

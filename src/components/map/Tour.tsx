@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { SEA_COLOR } from "../data/colors";
 import { Link } from "./Link";
+import { SEA_COLOR } from "../../utils/colors.ts";
 
 export const COLLAPSE_FILTER_BUTTON_ID = "collapse-filter-btn";
 export const FILTER_INDEXED_ID = "filter-";

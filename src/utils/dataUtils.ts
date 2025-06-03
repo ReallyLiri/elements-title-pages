@@ -43,6 +43,9 @@ const parseBooks = (
       .map((p) => p.trim().replace(/[–-]/g, "-")); // normalize dash
 
     for (const part of parts) {
+      if (part === "?") {
+        continue;
+      }
       const rangeMatch = part.match(/^(\d+)-(\d+)$/);
       const singleMatch = part.match(/^(\d+)$/);
 
@@ -64,7 +67,7 @@ const parseBooks = (
 };
 
 export const loadEditionsData = (
-  setItems: Dispatch<SetStateAction<Item[] | undefined>>,
+  setItems: Dispatch<SetStateAction<Item[]>>,
 ) => {
   Promise.all([
     fetch(CSV_PATH_ELEMENTS).then((response) => response.text()),

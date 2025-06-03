@@ -32,50 +32,53 @@ import RangeSlider from "../components/tps/filters/RangeSlider";
 import ItemView from "../components/tps/features/ItemView";
 
 function TitlePage() {
-  const [items, setItems] = useState<Item[] | undefined>();
-  const [mode, setMode] = useLocalStorageState<Mode>("mode", {
+  const [items, setItems] = useState<Item[]>([]);
+  const [mode, setMode] = useLocalStorageState<Mode>("tp-mode", {
     defaultValue: "texts",
   });
-  const [cities, setCities] = useLocalStorageState<string[]>("cities", {
+  const [cities, setCities] = useLocalStorageState<string[]>("tp-cities", {
     defaultValue: [],
   });
-  const [authors, setAuthors] = useLocalStorageState<string[]>("authors", {
+  const [authors, setAuthors] = useLocalStorageState<string[]>("tp-authors", {
     defaultValue: [],
   });
   const [languages, setLanguages] = useLocalStorageState<string[]>(
-    "languages",
+    "tp-languages",
     {
       defaultValue: [],
     },
   );
-  const [types, setTypes] = useLocalStorageState<string[]>("types", {
+  const [types, setTypes] = useLocalStorageState<string[]>("tp-types", {
     defaultValue: ["Elements"],
   });
-  const [formats, setFormats] = useLocalStorageState<string[]>("formats", {
+  const [formats, setFormats] = useLocalStorageState<string[]>("tp-formats", {
     defaultValue: [],
   });
   const [requireImage, setRequireImage] = useLocalStorageState<boolean>(
-    "requireImage",
+    "tp-requireImage",
     {
       defaultValue: false,
     },
   );
   const [yearRange, setYearRange] = useLocalStorageState<[number, number]>(
-    "yearRange",
+    "tp-yearRange",
     {
       defaultValue: [MIN_YEAR, MAX_YEAR],
     },
   );
-  const [features, setFeatures] = useLocalStorageState<Feature[]>("features", {
-    defaultValue: Object.keys(FeatureToColumnName) as Feature[],
-  });
+  const [features, setFeatures] = useLocalStorageState<Feature[]>(
+    "tp-features",
+    {
+      defaultValue: Object.keys(FeatureToColumnName) as Feature[],
+    },
+  );
   const [requiredFeatures, setRequiredFeatures] = useLocalStorageState<
     Feature[]
-  >("requiredFeatures", {
+  >("tp-requiredFeatures", {
     defaultValue: [] as Feature[],
   });
   const [controlsOpen, setControlsOpen] = useLocalStorageState<boolean>(
-    "controlsOpen",
+    "tp-controlsOpen",
     {
       defaultValue: false,
     },
@@ -130,7 +133,10 @@ function TitlePage() {
   );
 
   const allFormats = useMemo(
-    () => (items ? extract(items, "format").filter(Boolean) : []),
+    () =>
+      (items ? extract(items, "format").filter(Boolean) : []).sort((a, b) =>
+        a.toLowerCase().localeCompare(b.toLowerCase()),
+      ),
     [items],
   );
 
@@ -202,7 +208,7 @@ function TitlePage() {
   ]);
 
   useEffect(() => {
-    if (!items) {
+    if (items.length === 0) {
       loadEditionsData(setItems);
     }
   }, [items, setItems]);

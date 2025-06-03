@@ -1,16 +1,16 @@
-import { FLOATING_CITY, Translation } from "../data/data";
 import { sortBy } from "lodash";
 import { useMemo } from "react";
 import styled from "@emotion/styled";
-import { PANE_COLOR, TRANSPARENT_BLACK } from "../utils/colors";
+import { PANE_COLOR, TRANSPARENT_BLACK } from "../../utils/colors";
 import { ReactComponent as TopDeco } from "./svg/deco3.svg";
 import { ReactComponent as BottomDeco } from "./svg/deco2.svg";
+import { FLOATING_CITY, Item } from "../../types";
 
 type CityDetailsProps = {
   city: string;
-  data: Translation[];
+  data: Item[];
   selectedRecordId: string | undefined;
-  setSelectedRecordId: (selected: string) => void;
+  setSelectedRecordKey: (selected: string) => void;
 };
 
 const Title = styled.div`
@@ -42,6 +42,7 @@ const RowTitle = styled.div`
   width: fit-content;
   border-radius: 0.5rem;
   padding: 0.5rem;
+
   &:hover {
     background-color: ${TRANSPARENT_BLACK};
     color: ${PANE_COLOR};
@@ -66,7 +67,7 @@ export const CityName = (city: string) =>
 export const CityDetails = ({
   city,
   data,
-  setSelectedRecordId,
+  setSelectedRecordKey,
 }: CityDetailsProps) => {
   const sortedData = useMemo(() => sortBy(data, "year"), [data]);
   return (
@@ -74,18 +75,20 @@ export const CityDetails = ({
       <Title className="gothic">{CityName(city)}</Title>
       <StyledTopDeco height={64} />
       <Subtitle>{data?.length || 0} records</Subtitle>
-      {sortedData.map((translation) => (
+      {sortedData.map((item) => (
         <>
-          <div key={translation.id}>
+          <div key={item.key}>
             <Separator />
-            <RowTitle onClick={() => setSelectedRecordId(translation.id)}>
+            <RowTitle onClick={() => setSelectedRecordKey(item.key)}>
               <div className="gothic" title="Year">
-                {translation.year || translation.rawCity || "Unknown"}
+                {item.year || item.year || "Unknown"}
               </div>
-              <div title="Translator">
-                <span className="gothic">{translation.translator[0]}</span>
-                {translation.translator.substring(1)}
-              </div>
+              {item.authors.map((author) => (
+                <div title="Author" key={author}>
+                  <span className="gothic">{author[0]}</span>
+                  {author.substring(1)}
+                </div>
+              ))}
             </RowTitle>
           </div>
         </>

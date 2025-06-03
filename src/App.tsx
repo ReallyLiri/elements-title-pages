@@ -9,6 +9,8 @@ import Home from "./pages/Home";
 import TitlePage from "./pages/TitlePage";
 import Layout from "./components/layout/Layout";
 import { TourProvider } from "@reactour/tour";
+import { tourSteps } from "./components/map/Tour.tsx";
+import { PANE_COLOR_ALT } from "./utils/colors.ts";
 
 function App() {
   const router = createBrowserRouter(
