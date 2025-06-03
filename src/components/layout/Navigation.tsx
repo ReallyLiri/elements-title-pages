@@ -55,6 +55,9 @@ function Navigation() {
           <NavItem active={location.pathname === "/tps"}>
             <Link to="/tps">Title Pages</Link>
           </NavItem>
+          <NavItem active={location.pathname === "/map"}>
+            <Link to="/map">Timeline</Link>
+          </NavItem>
         </NavItems>
       </Row>
     </NavContainer>

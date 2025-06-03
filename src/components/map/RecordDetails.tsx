@@ -1,11 +1,11 @@
-import { Translation } from "../data/data";
 import styled from "@emotion/styled";
-import { TRANSPARENT_WHITE } from "../data/colors";
+import { TRANSPARENT_WHITE } from "../../utils/colors";
 import { ReactComponent as Deco } from "../svg/deco1.svg";
 import { isEmpty } from "lodash";
+import { Item, Range } from "../../types";
 
 type RecordDetailsProps = {
-  data: Translation;
+  data: Item;
 };
 
 const Wrapper = styled.div`
@@ -31,28 +31,15 @@ const BottomDeco = styled(Deco)`
   margin-top: 1rem;
 `;
 
-const formatBooks = (books: number[]) => {
-  const result: string[] = [];
-  let start = books[0];
-  let end = books[0];
-  for (let i = 1; i < books.length; i++) {
-    if (books[i] === end + 1) {
-      end = books[i];
-    } else {
-      if (start === end) {
-        result.push(start.toString());
-      } else {
-        result.push(`${start}-${end}`);
+const formatBooks = (books: Range[]) => {
+  return books
+    .map((book) => {
+      if (book.start === book.end) {
+        return book.start.toString();
       }
-      start = end = books[i];
-    }
-  }
-  if (start === end) {
-    result.push(start.toString());
-  } else {
-    result.push(`${start}-${end}`);
-  }
-  return result;
+      return `${book.start}-${book.end}`;
+    })
+    .join(", ");
 };
 
 const Row = ({
@@ -76,17 +63,17 @@ export const RecordDetails = ({ data }: RecordDetailsProps) => {
   return (
     <Wrapper>
       <TopDeco />
-      <Row title="Year" value={data.rawYear} />
-      <Row title="Language" value={data.language} />
-      <Row title="Translator" value={data.translator} />
-      <Row title="City" value={data.rawCity} />
-      <Row title="Wardhaugh Class" value={data.class} />
+      <Row title="Year" value={data.year} />
+      <Row title="Language" value={data.languages.join(", ")} />
+      <Row title="Translator" value={data.authors.join(", ")} />
+      <Row title="City" value={data.cities.join(", ")} />
+      {data.class && <Row title="Wardhaugh Class" value={data.class} />}
       <Row
         title="Elements Books"
-        value={formatBooks(data.booksExpanded).join(", ")}
+        value={formatBooks(data.elementsBooks)}
         disableHover
       />
-      {data.bookSize && <Row title="Edition Format" value={data.bookSize} />}
+      {data.format && <Row title="Edition Format" value={data.format} />}
       {data.volumesCount && (
         <Row title="Number of Volumes" value={data.volumesCount.toString()} />
       )}

@@ -1,18 +1,18 @@
-import { FLOATING_CITY, Translation } from "../data/data";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { isNil, startCase, uniq } from "lodash";
 import { Filter, FilterValue } from "./Filter";
 import { FILTER_INDEXED_ID } from "./Tour";
+import { FLOATING_CITY, Item } from "../../types";
 
 type FilterConfig = {
   isArray?: boolean;
   displayName?: string;
-  customCompareFn?: (a: any, b: any) => number;
+  customCompareFn?: (a: unknown, b: unknown) => number;
 };
 
 type FiltersGroupProps = {
-  data: Translation[];
-  fields: Partial<Record<keyof Translation, FilterConfig>>;
+  data: Item[];
+  fields: Partial<Record<keyof Item, FilterConfig>>;
   filters: Record<string, FilterValue[] | undefined>;
   setFilters: React.Dispatch<
     React.SetStateAction<Record<string, FilterValue[] | undefined>>
@@ -33,7 +33,7 @@ export const FiltersGroup = ({
   filtersInclude,
   setFiltersInclude,
 }: FiltersGroupProps) => {
-  const keys = Object.keys(fields).map((field) => field as keyof Translation);
+  const keys = Object.keys(fields).map((field) => field as keyof Item);
   const optionsByFilter = useMemo(() => {
     const byFilter: Record<string, FilterValue[]> = {};
     keys.forEach((field) => {
@@ -41,8 +41,11 @@ export const FiltersGroup = ({
       if (config.isArray) {
         byFilter[field] = uniq(
           data
-            .flatMap((t) => t[field] as any[])
-            .sort(config.customCompareFn || ((a, b) => a - b))
+            .flatMap((t) => t[field] as (string | number)[])
+            .sort(
+              config.customCompareFn ||
+                ((a, b) => (a as number) - (b as number)),
+            )
             .map((n) => n.toString()),
         ).map(toOption);
       } else {

@@ -6,11 +6,10 @@ import {
   MARKER_5,
   SEA_COLOR,
   TRANSPARENT_WHITE,
-} from "../data/colors";
+} from "../../utils/colors";
 import { uniq } from "lodash";
-import { Translation } from "../data/data";
-import React from "react";
 import styled from "@emotion/styled";
+import { Item } from "../../types";
 
 export const TOP_N = 5;
 
@@ -31,7 +30,7 @@ export const getHeatColor = (value: number, topN: number[]): string => {
   return COLORS_HEAT_MAP[TOP_N - 1];
 };
 
-export const getTopLengths = (data: Record<string, Translation[]>) =>
+export const getTopLengths = (data: Record<string, Item[]>) =>
   uniq(Object.values(data).map((arr) => arr.length))
     .sort((a, b) => b - a)
     .slice(0, TOP_N);

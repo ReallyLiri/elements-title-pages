@@ -24,3 +24,16 @@ body {
   overflow-x: hidden;
   overscroll-behavior: none;
 }
+
+@font-face {
+  font-family: 'Gothic';
+  src: url('/public/font/Chomsky.otf') format('otf'),
+  url('/public/font/Chomsky.woff') format('woff'),
+  url('/public/font/Chomsky.woff2') format('woff2');
+}
+
+.gothic {
+  font-family: Gothic, system-ui, sans-serif;
+  font-size: 1.75rem;
+  font-weight: 100;
+}

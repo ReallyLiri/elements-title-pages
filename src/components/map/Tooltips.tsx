@@ -1,5 +1,4 @@
 import { Tooltip } from "react-tooltip";
-import React from "react";
 import styled from "@emotion/styled";
 
 export const TOOLTIP_RESET = "reset";

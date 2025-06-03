@@ -4,19 +4,19 @@ import {
   PANE_COLOR,
   SEA_COLOR,
   TRANSPARENT_WHITE,
-} from "../data/colors";
+} from "../../utils/colors";
 import styled from "@emotion/styled";
-import { Translation } from "../data/data";
 import { MdQuestionMark } from "react-icons/md";
 import { ReactElement } from "react";
 import { Link } from "./Link";
 import { Tooltip } from "react-tooltip";
+import { Item } from "../../types";
 
 export type FilterValue = { label: string; value: string };
 
 type FilterProps = {
   id: string;
-  field: keyof Translation;
+  field: keyof Item;
   label: string;
   include: boolean;
   setInclude: (include: boolean) => void;
@@ -71,7 +71,7 @@ const HelpTip = ({ children }: { children: ReactElement }) => {
   );
 };
 
-const OptionalHelpTip = ({ field }: { field: keyof Translation }) => {
+const OptionalHelpTip = ({ field }: { field: keyof Item }) => {
   if (field === "class") {
     return (
       <HelpTip>

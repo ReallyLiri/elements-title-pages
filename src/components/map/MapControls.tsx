@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import {
   MdMyLocation,
   MdQuestionMark,
@@ -6,7 +6,6 @@ import {
   MdZoomOutMap,
 } from "react-icons/md";
 import styled from "@emotion/styled";
-import { ButtonStyle } from "../data/colors";
 import {
   TOOLTIP_HELP,
   TOOLTIP_RESET,
@@ -14,6 +13,7 @@ import {
   TOOLTIP_ZOOMOUT,
 } from "./Tooltips";
 import { ZOOM_CONTROLS_ID } from "./Tour";
+import { ButtonStyle } from "../../utils/colors.ts";
 
 type ZoomControlsProps = {
   className?: string;

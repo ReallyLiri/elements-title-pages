@@ -11,6 +11,7 @@ import Layout from "./components/layout/Layout";
 import { TourProvider } from "@reactour/tour";
 import { tourSteps } from "./components/map/Tour.tsx";
 import { PANE_COLOR_ALT } from "./utils/colors.ts";
+import Map from "./pages/Map.tsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -32,7 +33,7 @@ function App() {
                 }),
               }}
             >
-              <App />
+              <Map />
             </TourProvider>
           }
         />

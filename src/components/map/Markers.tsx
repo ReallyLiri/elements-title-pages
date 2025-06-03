@@ -1,22 +1,22 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Marker, Point } from "react-simple-maps";
-import { Translation } from "../data/data";
 import {
   MARKER_1,
   MARKER_5,
   MARKER_STROKE,
   MARKER_STROKE_HL,
   SEA_COLOR,
-} from "../data/colors";
+} from "../../utils/colors";
 import styled from "@emotion/styled";
 import { getHeatColor, getTopLengths } from "./HeatMap";
 import { CityName } from "./CityDetails";
 import { CITY_MARKER_ID } from "./Tour";
 import { TOOLTIP_MARKER_ARROW } from "./Tooltips";
+import { Item } from "../../types";
 
 type CityMarkersProps = {
   cities: Record<string, Point>;
-  data: Record<string, Translation[]>;
+  data: Record<string, Item[]>;
   selectedCity: string | undefined;
   setSelectedCity: React.Dispatch<React.SetStateAction<string | undefined>>;
 };

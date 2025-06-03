@@ -7,7 +7,7 @@ import {
   RANGE_FILL,
   SEA_COLOR,
   TRANSPARENT_WHITE,
-} from "../data/colors";
+} from "../../utils/colors";
 import { TOOLTIP_TIMELINE_BUTTON } from "./Tooltips";
 import { useLocalStorage } from "usehooks-ts";
 import { TIMELINE_PLAY_ID } from "./Tour";
