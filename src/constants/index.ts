@@ -2,12 +2,13 @@ import { Feature } from "../types";
 
 export const CSV_PATH_ELEMENTS = "/docs/EiP.csv";
 export const CSV_PATH_SECONDARY = "/docs/EiP-secondary.csv";
+export const CSV_PATH_CITIES = "/docs/cities.csv";
 
 export const TILE_HEIGHT = 400;
 export const TILE_WIDTH = 400;
 
 export const MIN_YEAR = 1482;
-export const MAX_YEAR = 1703;
+export const MAX_YEAR = 1705;
 
 export const ItemTypes = {
   elements: "Elements",

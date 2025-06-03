@@ -1,17 +1,69 @@
-import { Item } from "../types";
+import { City, Feature, FLOATING_CITY_ENTRY, Item, Range } from "../types";
 import { startCase, uniq } from "lodash";
 import Papa from "papaparse";
 import { Dispatch, SetStateAction } from "react";
 import {
-  FeatureToColumnName,
-  FeaturesToSplit,
-  ItemTypes,
+  CSV_PATH_CITIES,
   CSV_PATH_ELEMENTS,
   CSV_PATH_SECONDARY,
+  FeaturesToSplit,
+  FeatureToColumnName,
+  ItemTypes,
 } from "../constants";
-import { Feature } from "../types";
+import { Point } from "react-simple-maps";
+import { groupByMap } from "./util.ts";
 
-export const loadData = (
+const parseBooks = (
+  booksRaw: string | null,
+): {
+  elementsBooks: Range[];
+  additionalContent: string[];
+} => {
+  if (!booksRaw) {
+    return { elementsBooks: [], additionalContent: [] };
+  }
+
+  const elementsBooks: Range[] = [];
+  const additionalContent: string[] = [];
+
+  const entries = booksRaw
+    .split(";")
+    .map((e) => e.trim())
+    .filter((e) => e && !/enunciations/i.test(e));
+
+  for (const entry of entries) {
+    const match = entry.match(/^"?Elements\s+(.+?)"?$/i);
+    if (!match) {
+      additionalContent.push(entry);
+      continue;
+    }
+
+    const parts = match[1]
+      .split(",")
+      .map((p) => p.trim().replace(/[–-]/g, "-")); // normalize dash
+
+    for (const part of parts) {
+      const rangeMatch = part.match(/^(\d+)-(\d+)$/);
+      const singleMatch = part.match(/^(\d+)$/);
+
+      if (rangeMatch) {
+        elementsBooks.push({
+          start: parseInt(rangeMatch[1], 10),
+          end: parseInt(rangeMatch[2], 10),
+        });
+      } else if (singleMatch) {
+        const num = parseInt(singleMatch[1], 10);
+        elementsBooks.push({ start: num, end: num });
+      } else {
+        console.error(`Unrecognized book format: ${part}`);
+      }
+    }
+  }
+
+  return { elementsBooks, additionalContent };
+};
+
+export const loadEditionsData = (
   setItems: Dispatch<SetStateAction<Item[] | undefined>>,
 ) => {
   Promise.all([
@@ -47,8 +99,14 @@ export const loadData = (
                     titleEn: raw["title_EN"] as string | null,
                     imprint: raw["imprint"] as string | null,
                     imprintEn: raw["imprint_EN"] as string | null,
+                    scanUrl: raw["scan_url"] as string | null,
                     type: ItemTypes[type],
                     format: raw["format"] as string | null,
+                    ...parseBooks(raw["books"] as string | null),
+                    volumesCount: raw["volumes_count"]
+                      ? parseInt(raw["volumes_count"] as string)
+                      : null,
+                    class: raw["wClass"] as string | null,
                     features: Object.keys(FeatureToColumnName).reduce(
                       (acc, feature) => {
                         acc[feature as Feature] = FeatureToColumnName[
@@ -119,6 +177,18 @@ export const extract = (items: Item[], property: keyof Item) =>
       return acc;
     }, [] as string[])
     .sort();
+
+export const loadCitiesAsync = async (): Promise<Record<string, Point>> => {
+  const response = await fetch(CSV_PATH_CITIES);
+  const data = await response.text();
+  const cities = Papa.parse<City>(data.trim(), { header: true }).data;
+  cities.push(FLOATING_CITY_ENTRY);
+  return groupByMap(
+    cities,
+    (city) => city.city,
+    (city) => [city.lon, city.lat],
+  );
+};
 
 export const authorDisplayName = (author: string) => {
   const parts = author.split(" ");

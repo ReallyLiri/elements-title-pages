@@ -1,5 +1,5 @@
-import { Feature, Item } from "../../types";
-import { FeatureToColor } from "../../constants";
+import { Feature, Item } from "../../../types";
+import { FeatureToColor } from "../../../constants";
 import { trimEnd } from "lodash";
 import { useEffect, useState, useMemo, memo } from "react";
 

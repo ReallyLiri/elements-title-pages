@@ -1,5 +1,5 @@
-import { RadioProps } from "../../types";
-import { Row } from "../common.ts";
+import { RadioProps } from "../../../types";
+import { Row } from "../../common.ts";
 
 const Radio = ({ name, options, value, onChange }: RadioProps) => (
   <Row justifyStart>

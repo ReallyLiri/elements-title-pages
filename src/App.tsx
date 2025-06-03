@@ -8,6 +8,7 @@ import {
 import Home from "./pages/Home";
 import TitlePage from "./pages/TitlePage";
 import Layout from "./components/layout/Layout";
+import { TourProvider } from "@reactour/tour";
 
 function App() {
   const router = createBrowserRouter(
@@ -15,8 +16,26 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/tps" element={<TitlePage />} />
+        <Route
+          path="/map"
+          element={
+            <TourProvider
+              steps={tourSteps}
+              styles={{
+                maskArea: (base) => ({ ...base, rx: 8 }),
+                popover: (base) => ({
+                  ...base,
+                  "--reactour-accent": PANE_COLOR_ALT,
+                  borderRadius: "0.5rem",
+                }),
+              }}
+            >
+              <App />
+            </TourProvider>
+          }
+        />
         <Route path="*" element={<Navigate replace to="/" />} />
-      </Route>
+      </Route>,
     ),
   );
 

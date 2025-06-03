@@ -1,5 +1,5 @@
-import { Feature, Item } from "../../types";
-import { StyledImage } from "../common.ts";
+import { Feature, Item } from "../../../types";
+import { StyledImage } from "../../common.ts";
 import {
   Modal,
   ModalClose,
@@ -9,9 +9,9 @@ import {
   ModalTextContainer,
   ModalTitle,
   TextColumnsContainer,
-} from "./ModalComponents";
-import HighlightedText from "../features/HighlightedText";
-import { imageClicked } from "../../utils/dataUtils";
+} from "./ModalComponents.tsx";
+import HighlightedText from "../features/HighlightedText.tsx";
+import { imageClicked } from "../../../utils/dataUtils.ts";
 
 type ItemModalProps = {
   item: Item;
@@ -55,7 +55,7 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
               />
               {item.imprint && (
                 <>
-                  <hr style={{opacity: 0.3}} />
+                  <hr style={{ opacity: 0.3 }} />
                   <HighlightedText
                     text={item.imprint}
                     features={features}
@@ -67,11 +67,19 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
             {(item.titleEn || item.imprintEn) && (
               <ModalTextColumn isTextContent>
                 <ModalTitle>English Translation</ModalTitle>
-                <HighlightedText text={item.titleEn || ""} features={[]} mapping={{}} />
+                <HighlightedText
+                  text={item.titleEn || ""}
+                  features={[]}
+                  mapping={{}}
+                />
                 {item.imprintEn && (
                   <>
-                    {item.imprint && <hr style={{opacity: 0.3}} />}
-                    <HighlightedText text={item.imprintEn} features={[]} mapping={{}} />
+                    {item.imprint && <hr style={{ opacity: 0.3 }} />}
+                    <HighlightedText
+                      text={item.imprintEn}
+                      features={[]}
+                      mapping={{}}
+                    />
                   </>
                 )}
               </ModalTextColumn>

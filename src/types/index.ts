@@ -28,6 +28,11 @@ export type Feature =
   | "Imprint Author Name"
   | "Imprint Author Description";
 
+export type Range = {
+  start: number;
+  end: number;
+};
+
 export type Item = {
   key: string;
   year: string;
@@ -39,9 +44,14 @@ export type Item = {
   titleEn: string | null;
   imprint: string | null;
   imprintEn: string | null;
+  scanUrl: string | null;
   features: Partial<Record<Feature, string[]>>;
   type: string;
   format: string | null;
+  elementsBooks: Range[];
+  additionalContent: string[];
+  volumesCount: number | null;
+  class: string | null;
 };
 
 export type RadioProps = {
@@ -57,4 +67,17 @@ export type ItemProps = {
   width: number;
   mode: Mode;
   features: Feature[];
+};
+
+export type City = {
+  city: string;
+  lon: number;
+  lat: number;
+};
+
+export const FLOATING_CITY = "-";
+export const FLOATING_CITY_ENTRY: City = {
+  city: FLOATING_CITY,
+  lon: -16,
+  lat: 42,
 };

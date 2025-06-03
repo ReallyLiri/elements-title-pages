@@ -21,11 +21,15 @@ import {
   TILE_HEIGHT,
   TILE_WIDTH,
 } from "../constants";
-import { authorDisplayName, extract, loadData } from "../utils/dataUtils";
-import MultiSelect from "../components/filters/MultiSelect";
-import Radio from "../components/filters/Radio";
-import RangeSlider from "../components/filters/RangeSlider";
-import ItemView from "../components/features/ItemView";
+import {
+  authorDisplayName,
+  extract,
+  loadEditionsData,
+} from "../utils/dataUtils";
+import MultiSelect from "../components/tps/filters/MultiSelect";
+import Radio from "../components/tps/filters/Radio";
+import RangeSlider from "../components/tps/filters/RangeSlider";
+import ItemView from "../components/tps/features/ItemView";
 
 function TitlePage() {
   const [items, setItems] = useState<Item[] | undefined>();
@@ -178,7 +182,7 @@ function TitlePage() {
           return false;
         }
       }
-      const year = parseInt(item.year);
+      const year = parseInt(item.year.split("/")[0]);
       if (!isNaN(year) && (year < yearRange[0] || year > yearRange[1])) {
         return false;
       }
@@ -199,7 +203,7 @@ function TitlePage() {
 
   useEffect(() => {
     if (!items) {
-      loadData(setItems);
+      loadEditionsData(setItems);
     }
   }, [items, setItems]);
 

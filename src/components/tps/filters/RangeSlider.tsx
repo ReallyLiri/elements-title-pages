@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Row } from "../common.ts";
+import { Row } from "../../common.ts";
 import { useEffect, useState } from "react";
 
 export type RangeSliderProps = {

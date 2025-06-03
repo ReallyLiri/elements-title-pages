@@ -1,5 +1,5 @@
 import { useState, memo, lazy, Suspense } from "react";
-import { ItemProps } from "../../types";
+import { ItemProps } from "../../../types";
 import {
   Column,
   ExpandIcon,
@@ -9,11 +9,11 @@ import {
   NoImageTile,
   StyledImage,
   TextTile,
-} from "../common.ts";
-import { imageClicked } from "../../utils/dataUtils";
-import ItemModal from "../modal/ItemModal";
+} from "../../common.ts";
+import { imageClicked } from "../../../utils/dataUtils.ts";
+import ItemModal from "../modal/ItemModal.tsx";
 
-const HighlightedText = lazy(() => import("./HighlightedText"));
+const HighlightedText = lazy(() => import("./HighlightedText.tsx"));
 
 const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -32,7 +32,19 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
           ) : (
             <>
               <TextTile alignCenter={!!item.imageUrl}>
-                <Suspense fallback={<div>{item.title}{item.imprint && <><hr style={{opacity: 0.3}} />{item.imprint}</>}</div>}>
+                <Suspense
+                  fallback={
+                    <div>
+                      {item.title}
+                      {item.imprint && (
+                        <>
+                          <hr style={{ opacity: 0.3 }} />
+                          {item.imprint}
+                        </>
+                      )}
+                    </div>
+                  }
+                >
                   <HighlightedText
                     text={item.title}
                     features={features}
@@ -40,7 +52,7 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
                   />
                   {item.imprint && (
                     <>
-                      <hr style={{opacity: 0.3}} />
+                      <hr style={{ opacity: 0.3 }} />
                       <HighlightedText
                         text={item.imprint}
                         features={features}

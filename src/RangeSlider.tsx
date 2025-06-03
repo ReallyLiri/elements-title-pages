@@ -1,2 +1,2 @@
-import RangeSlider from "./components/filters/RangeSlider";
+import RangeSlider from "./components/tps/filters/RangeSlider";
 export default RangeSlider;
