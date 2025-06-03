@@ -42,6 +42,7 @@ export const FiltersGroup = ({
         byFilter[field] = uniq(
           data
             .flatMap((t) => t[field] as (string | number)[])
+            .filter(Boolean)
             .sort(
               config.customCompareFn ||
                 ((a, b) => (a as number) - (b as number)),

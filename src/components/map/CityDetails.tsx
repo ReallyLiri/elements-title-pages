@@ -2,8 +2,8 @@ import { sortBy } from "lodash";
 import { useMemo } from "react";
 import styled from "@emotion/styled";
 import { PANE_COLOR, TRANSPARENT_BLACK } from "../../utils/colors";
-import { ReactComponent as TopDeco } from "./svg/deco3.svg";
-import { ReactComponent as BottomDeco } from "./svg/deco2.svg";
+import TopDeco from "./svg/deco3.svg?react";
+import BottomDeco from "./svg/deco2.svg?react";
 import { FLOATING_CITY, Item } from "../../types";
 
 type CityDetailsProps = {

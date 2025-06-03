@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { TRANSPARENT_WHITE } from "../../utils/colors";
-import { ReactComponent as Deco } from "../svg/deco1.svg";
+import Deco from "./svg/deco1.svg?react";
 import { isEmpty } from "lodash";
 import { Item, Range } from "../../types";
 
