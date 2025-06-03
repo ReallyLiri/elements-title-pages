@@ -15,7 +15,11 @@ split_fields = [
     "EXPLICITLY STATED: TRANSLATED TO",
     "ELEMENTS DESIGNATION",
     "INSTITUTIONS",
-    "BOUND WITH"
+    "BOUND WITH",
+    "ENRICHED WITH",
+    "IMPRINT PUBLISHER",
+    "IMPRINT PRIVILEGES",
+    "IMPRINT PLACE",
 ]
 
 
@@ -45,6 +49,8 @@ for entry in all_entries:
         continue
 
     norm_title = normalize(title)
+    imprint = entry.get("imprint", "").strip() if entry.get("imprint") else ""
+    norm_imprint = normalize(imprint)
 
     for field in all_fieldnames:
         if not field.isupper():
@@ -57,18 +63,22 @@ for entry in all_entries:
         if field in split_fields:
             parts = value.split(", ")
             for part in parts:
-                if part and normalize(part) not in norm_title and not any(normalize(part) in normalize(word) for word in title.split()):
+                if part and normalize(part) not in norm_title and not any(normalize(part) in normalize(word) for word in title.split()) and normalize(part) not in norm_imprint and not any(normalize(part) in normalize(word) for word in imprint.split()):
                     problems[key].add(field)
         else:
-            if normalize(value) not in norm_title and not any(normalize(value) in normalize(word) for word in title.split()):
+            if normalize(value) not in norm_title and not any(normalize(value) in normalize(word) for word in title.split()) and normalize(value) not in norm_imprint and not any(normalize(value) in normalize(word) for word in imprint.split()):
                 problems[key].add(field)
 
 for key, fields in problems.items():
     title = next((entry.get("title", "") for entry in all_entries if entry.get("key", "") == key), "")
     norm_title = normalize(title)
+    imprint = next((entry.get("imprint", "") for entry in all_entries if entry.get("key", "") == key), "")
     print(f">>> {key}:")
     print("  Title: ")
     print(f"    {title.replace('\n', '\\n')}")
+    if imprint:
+        print("  Imprint: ")
+        print(f"    {imprint.replace('\n', '\\n')}")
     print("  Problematic fields:")
     for field in sorted(fields):
         entry_value = next((entry.get(field, "") for entry in all_entries if entry.get("key", "") == key), "")

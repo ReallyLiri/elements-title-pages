@@ -54,7 +54,10 @@ export const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
   Institutions: true,
   "Elements Designation": true,
   "Bound With": true,
-  "Enriched With": true
+  "Enriched With": true,
+  "Imprint Publisher": true,
+  "Imprint Privileges": true,
+  "Imprint Place": true,
 };
 
 export const FeaturesNotSelectedByDefault: Feature[] = [
@@ -124,8 +127,7 @@ export const FeatureToTooltip: Record<Feature, string> = {
   "Greek designation": "Greek designation of the book in non-Greek books.",
   Institutions:
     "Mentions of institutions, such as societies or universities, associated with the book.",
-  "Bound With":
-    "TBC",
+  "Bound With": "TBC",
   "Enriched With": "TBC",
   "Imprint Date":
     "The date of publication as it appears on the title page, typically in the form of a year.",
