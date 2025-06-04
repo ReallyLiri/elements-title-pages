@@ -102,7 +102,9 @@ const CollapseFiltersButton = styled.div`
   background-color: ${TRANSPARENT_WHITE};
   color: ${SEA_COLOR};
   align-self: start;
-  margin-bottom: 2px;
+  svg {
+    margin-bottom: 2px;
+  }
 `;
 
 const MdDoubleArrowFlipped = styled(MdDoubleArrow)`
