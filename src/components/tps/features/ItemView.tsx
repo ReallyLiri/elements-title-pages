@@ -28,7 +28,14 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
       {mode === "texts" && (
         <>
           {item.title === "?" ? (
-            <NoImageTile>No title page</NoImageTile>
+            <>
+              <NoImageTile>
+                No title page
+                <ExpandIcon title="Expand" onClick={() => setModalOpen(true)}>
+                  ⤢
+                </ExpandIcon>
+              </NoImageTile>
+            </>
           ) : (
             <>
               <TextTile alignCenter={!!item.imageUrl}>
@@ -87,7 +94,12 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
             </ImageExpandIcon>
           </ImageTile>
         ) : (
-          <NoImageTile>Not Available</NoImageTile>
+          <NoImageTile>
+            Not Available
+            <ExpandIcon title="Expand" onClick={() => setModalOpen(true)}>
+              ⤢
+            </ExpandIcon>
+          </NoImageTile>
         ))}
 
       {modalOpen && (

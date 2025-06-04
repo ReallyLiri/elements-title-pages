@@ -27,6 +27,7 @@ export const ModalContent = styled.div<{ hasImage: boolean }>`
   display: flex;
   flex-direction: column;
   position: relative;
+  justify-content: center;
 `;
 
 export const ModalClose = styled.div`

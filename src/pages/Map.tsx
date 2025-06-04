@@ -39,6 +39,7 @@ import { loadCitiesAsync, loadEditionsData } from "../utils/dataUtils.ts";
 import { NAVBAR_HEIGHT } from "../components/layout/Navigation.tsx";
 
 const Wrapper = styled.div`
+  position: fixed;
   display: flex;
   flex-direction: row;
   height: calc(100vh - ${NAVBAR_HEIGHT}px);

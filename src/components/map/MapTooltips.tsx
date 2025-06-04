@@ -26,7 +26,7 @@ export const MapTooltips = () => (
     <Tooltip id={TOOLTIP_CLOSE_CITY_DETAILS} />
     <Tooltip id={TOOLTIP_CLOSE_RECORD_DETAILS} />
     <Tooltip id={TOOLTIP_FILTERS_HIDE} />
-    <Tooltip id={TOOLTIP_FILTERS_SHOW} offset={32} />
+    <Tooltip id={TOOLTIP_FILTERS_SHOW} />
     <Tooltip id={TOOLTIP_TIMELINE_BUTTON} />
     <Tooltip id={TOOLTIP_HELP} />
     <Tooltip id={TOOLTIP_SCAN} />
