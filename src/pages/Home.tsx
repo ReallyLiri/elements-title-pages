@@ -12,8 +12,11 @@ import {
 } from "../utils/colors.ts";
 
 const StyledContainer = styled(Container)`
-  margin-top: 2rem;
-  height: calc(100vh - ${NAVBAR_HEIGHT}px - 4rem);
+  margin: 0;
+  padding-top: 2rem;
+  height: calc(100vh - ${NAVBAR_HEIGHT}px - 2rem);
+  position: relative;
+  z-index: 1;
 `;
 
 const Title = styled.div`
@@ -26,6 +29,14 @@ const StyledImage = styled.img`
   max-height: 30vh;
   object-fit: contain;
   border-radius: 8px;
+`;
+
+const Greek = styled(Row)`
+  width: fit-content;
+  color: ${SEA_COLOR};
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
 `;
 
 function Home() {
@@ -77,14 +88,14 @@ function Home() {
           </Row>
         </div>
       </Row>
-      <Row column gap={0.5} style={{ color: SEA_COLOR }}>
+      <Greek column gap={0.5}>
         <Text size={1.2}>Ἐπίγραμμα παλαιόν.</Text>
         <Text size={1.2}>Σχήματα πέντε Πλάτωνος, ὁ Πυθαγόρας σοφὸς εὗρε.</Text>
         <Text size={1.2}>
           Πυθαγόρας σοφὸς εὗρε, Πλάτων δ’ ἀρίδηλ’ ἐδίδαξεν,
         </Text>
         <Text size={1.2}>Εὐκλείδης ἐπὶ τοῖσι κλέος σοφιηκαλλὲς ἔτευξεν.</Text>
-      </Row>
+      </Greek>
     </StyledContainer>
   );
 }
