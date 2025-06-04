@@ -1,12 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MdPause, MdPlayArrow } from "react-icons/md";
 import styled from "@emotion/styled";
-import {
-  ButtonStyle,
-  RANGE_FILL,
-  SEA_COLOR,
-  TRANSPARENT_WHITE,
-} from "../../utils/colors";
+import { ButtonStyle, RANGE_FILL } from "../../utils/colors";
 import { TOOLTIP_TIMELINE_BUTTON } from "./Tooltips";
 import { useLocalStorage } from "usehooks-ts";
 import { TIMELINE_PLAY_ID } from "./Tour";

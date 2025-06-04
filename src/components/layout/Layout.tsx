@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Navigation, { NAVBAR_HEIGHT } from "./Navigation";
+import Navigation from "./Navigation";
 import styled from "@emotion/styled";
 
 const LayoutContainer = styled.div`
