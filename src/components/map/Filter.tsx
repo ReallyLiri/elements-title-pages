@@ -40,6 +40,9 @@ const HelpTipButton = styled.div`
   height: 0.5rem;
   width: 0.5rem;
   font-size: 0.8rem;
+  svg {
+    margin-bottom: 2px;
+  }
 `;
 
 const StyledQuestionMark = styled(MdQuestionMark)`

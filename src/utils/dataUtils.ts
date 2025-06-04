@@ -17,13 +17,19 @@ const parseBooks = (
   booksRaw: string | null,
 ): {
   elementsBooks: Range[];
+  elementsBooksExpanded: number[];
   additionalContent: string[];
 } => {
   if (!booksRaw) {
-    return { elementsBooks: [], additionalContent: [] };
+    return {
+      elementsBooks: [],
+      elementsBooksExpanded: [],
+      additionalContent: [],
+    };
   }
 
   const elementsBooks: Range[] = [];
+  const elementsBooksExpanded: number[] = [];
   const additionalContent: string[] = [];
 
   const entries = booksRaw
@@ -54,16 +60,24 @@ const parseBooks = (
           start: parseInt(rangeMatch[1], 10),
           end: parseInt(rangeMatch[2], 10),
         });
+        for (
+          let i = parseInt(rangeMatch[1], 10);
+          i <= parseInt(rangeMatch[2], 10);
+          i++
+        ) {
+          elementsBooksExpanded.push(i);
+        }
       } else if (singleMatch) {
         const num = parseInt(singleMatch[1], 10);
         elementsBooks.push({ start: num, end: num });
+        elementsBooksExpanded.push(num);
       } else {
         console.error(`Unrecognized book format: ${part}`);
       }
     }
   }
 
-  return { elementsBooks, additionalContent };
+  return { elementsBooks, elementsBooksExpanded, additionalContent };
 };
 
 export const loadEditionsData = (

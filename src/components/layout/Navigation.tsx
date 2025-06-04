@@ -2,10 +2,13 @@ import { Link, useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Row } from "../common";
 
+export const NAVBAR_HEIGHT = 60;
+
 const NavContainer = styled.nav`
   display: flex;
   width: 100vw;
   padding: 1rem;
+  height: calc(${NAVBAR_HEIGHT}px - 2rem);
   background-color: black;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   justify-content: center;

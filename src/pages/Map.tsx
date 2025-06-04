@@ -36,16 +36,19 @@ import { COLLAPSE_FILTER_BUTTON_ID } from "../components/map/Tour";
 import { useTour } from "@reactour/tour";
 import { FLOATING_CITY, Item } from "../types";
 import { loadCitiesAsync, loadEditionsData } from "../utils/dataUtils.ts";
+import { NAVBAR_HEIGHT } from "../components/layout/Navigation.tsx";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  height: 100%;
+  height: calc(100vh - ${NAVBAR_HEIGHT}px);
   width: 100%;
+  color: black;
+  overflow: hidden;
 `;
 
 const MapWrapper = styled.div`
-  height: 100%;
+  height: calc(100vh - ${NAVBAR_HEIGHT}px);
   width: 100%;
 
   svg {
@@ -99,6 +102,7 @@ const CollapseFiltersButton = styled.div`
   background-color: ${TRANSPARENT_WHITE};
   color: ${SEA_COLOR};
   align-self: start;
+  margin-bottom: 2px;
 `;
 
 const MdDoubleArrowFlipped = styled(MdDoubleArrow)`
@@ -113,7 +117,7 @@ const Pane = styled.div<{
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  height: calc(100vh - 2rem);
+  height: calc(100vh - 6rem + 4px);
   width: ${({ widthPercentage }) => widthPercentage || 20}%;
   min-width: 256px;
   overflow-x: auto;
@@ -164,7 +168,7 @@ const filterRecord = (
   });
 };
 
-const bookSizeCompare = (a: string, b: string): number => {
+const formatCompare = (a: string, b: string): number => {
   const order = [
     "folio",
     "folio in 8s",
@@ -293,26 +297,33 @@ const Map = () => {
           <FiltersGroup
             data={data}
             fields={{
-              city: {
+              cities: {
                 isArray: true,
               },
               class: { displayName: "Wardhaugh Class" },
-              language: {
+              languages: {
                 isArray: true,
               },
-              author: {
+              authors: {
                 isArray: true,
               },
-              elementsBooks: { displayName: "Elements Books", isArray: true },
+              elementsBooksExpanded: {
+                displayName: "Elements Books",
+                isArray: true,
+              },
               format: {
                 displayName: "Edition Format",
-                customCompareFn: bookSizeCompare,
+                customCompareFn: formatCompare as (
+                  a: unknown,
+                  b: unknown,
+                ) => number,
               },
               volumesCount: { displayName: "Number of Volumes" },
               additionalContent: {
                 displayName: "Additional Content",
                 isArray: true,
-                customCompareFn: (a, b) => a.localeCompare(b),
+                customCompareFn: (a, b) =>
+                  (a as string).localeCompare(b as string),
               },
             }}
             filters={filters}
