@@ -194,6 +194,7 @@ export const loadCitiesAsync = async (): Promise<Record<string, Point>> => {
 };
 
 export const authorDisplayName = (author: string) => {
+  author = author.replace("(?)", "").replace("?", "").trim();
   const parts = author.split(" ");
   if (parts.length == 1) {
     return author;
