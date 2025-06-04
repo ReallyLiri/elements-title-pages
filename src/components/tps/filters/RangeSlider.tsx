@@ -3,7 +3,7 @@ import { Row } from "../../common.ts";
 import { useEffect, useState } from "react";
 
 export type RangeSliderProps = {
-  name: string;
+  name?: string;
   value: [number, number];
   min: number;
   max: number;
@@ -59,6 +59,10 @@ const SliderInput = styled.input`
     cursor: pointer;
     pointer-events: auto;
   }
+
+  &::-webkit-slider-thumb:active {
+    transform: scale(1.5);
+  }
 `;
 
 const MinInput = styled(SliderInput)``;
@@ -101,8 +105,8 @@ export const RangeSlider = ({
   }, [value]);
 
   return (
-    <Row justifyStart noWrap>
-      <div>{name}:</div>
+    <Row justifyStart noWrap id="range-slider">
+      {name && <div>{name}:</div>}
       <ValueInput
         type="number"
         min={min}
@@ -120,7 +124,7 @@ export const RangeSlider = ({
         }}
       />
       <SliderContainer>
-        <SliderTrack />
+        <SliderTrack id="range-slider-track" />
         <SliderRange
           left={value[0]}
           width={value[1] - value[0]}

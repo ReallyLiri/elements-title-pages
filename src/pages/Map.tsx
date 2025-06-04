@@ -238,7 +238,7 @@ const Map = () => {
   }, [setTourOpen, setToured, toured]);
 
   useEffect(() => {
-    loadEditionsData(setData);
+    loadEditionsData(setData, true);
     loadCitiesAsync().then(setCities);
   }, []);
 

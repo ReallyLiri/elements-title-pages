@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import RangeSlider from "react-range-slider-input";
 import { MdPause, MdPlayArrow } from "react-icons/md";
 import styled from "@emotion/styled";
 import {
@@ -11,6 +10,7 @@ import {
 import { TOOLTIP_TIMELINE_BUTTON } from "./Tooltips";
 import { useLocalStorage } from "usehooks-ts";
 import { TIMELINE_PLAY_ID } from "./Tour";
+import RangeSlider from "../../RangeSlider.tsx";
 
 type TimelineProps = {
   minYear: number;
@@ -26,7 +26,8 @@ const PlayButton = styled.div`
 `;
 
 const StyledRangeSlider = styled(RangeSlider)`
-  width: 60%;
+  width: 100%;
+  height: 0.5rem;
 `;
 
 const RangeWrapper = styled.div`
@@ -38,34 +39,15 @@ const RangeWrapper = styled.div`
   align-items: center;
 
   #range-slider {
-    background: ${TRANSPARENT_WHITE};
+    #range-slider-track {
+      background: ${RANGE_FILL};
+    }
+    input {
+      &::-webkit-slider-thumb {
+        border: 0.125rem solid ${RANGE_FILL};
+      }
+    }
   }
-
-  #range-slider .range-slider__range {
-    background: ${RANGE_FILL};
-    transition: height 0.3s;
-  }
-
-  #range-slider .range-slider__thumb {
-    background: ${RANGE_FILL};
-    transition: transform 0.3s;
-  }
-
-  #range-slider .range-slider__thumb[data-active] {
-    transform: translate(-50%, -50%) scale(1.25);
-  }
-
-  #range-slider .range-slider__range[data-active] {
-    height: 16px;
-  }
-`;
-
-const YearLabel = styled.div`
-  background-color: ${TRANSPARENT_WHITE};
-  padding: 0.5rem;
-  border-radius: 4px;
-  cursor: default;
-  color: ${SEA_COLOR};
 `;
 
 const PLAY_STEP_YEARS = 10;
@@ -116,17 +98,14 @@ export const Timeline = ({ minYear, maxYear, rangeChanged }: TimelineProps) => {
         {isPlay ? <MdPause /> : <MdPlayArrow />}
       </PlayButton>
       <RangeWrapper>
-        <YearLabel>{value[0]}</YearLabel>
         {value[0] > 0 && value[1] > 0 && (
           <StyledRangeSlider
-            id="range-slider"
             min={minYear}
             max={maxYear}
             value={value}
-            onInput={(range: [number, number]) => setValue(range)}
+            onChange={(range: [number, number]) => setValue(range)}
           />
         )}
-        <YearLabel>{value[1]}</YearLabel>
       </RangeWrapper>
     </>
   );

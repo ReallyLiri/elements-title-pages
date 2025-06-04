@@ -31,7 +31,7 @@ const StyledCircle = styled.circle<{ selected: boolean; hovered: boolean }>`
 const StyledText = styled.text`
   stroke: ${MARKER_5};
   fill: ${MARKER_1};
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   stroke-width: 4px;
   font-weight: bold;
   paint-order: stroke;

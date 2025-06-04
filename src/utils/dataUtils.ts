@@ -1,4 +1,11 @@
-import { City, Feature, FLOATING_CITY_ENTRY, Item, Range } from "../types";
+import {
+  City,
+  Feature,
+  FLOATING_CITY,
+  FLOATING_CITY_ENTRY,
+  Item,
+  Range,
+} from "../types";
 import { startCase, uniq } from "lodash";
 import Papa from "papaparse";
 import { Dispatch, SetStateAction } from "react";
@@ -80,8 +87,12 @@ const parseBooks = (
   return { elementsBooks, elementsBooksExpanded, additionalContent };
 };
 
+const ifEmpty = <T>(arr: T[], defaultValue: T[]): T[] =>
+  arr.length === 0 ? defaultValue : arr;
+
 export const loadEditionsData = (
   setItems: Dispatch<SetStateAction<Item[]>>,
+  setFloatingCity = false,
 ) => {
   Promise.all([
     fetch(CSV_PATH_ELEMENTS).then((response) => response.text()),
@@ -99,14 +110,16 @@ export const loadEditionsData = (
                   return {
                     key: raw["key"] as string,
                     year: raw["year"] as string,
-                    cities: [
-                      raw["city"] as string,
-                      raw["city 2"] as string,
-                    ].filter((city) => city) as string[],
+                    cities: ifEmpty(
+                      [raw["city"] as string, raw["city 2"] as string].filter(
+                        Boolean,
+                      ) as string[],
+                      setFloatingCity ? [FLOATING_CITY] : [],
+                    ),
                     languages: [
                       startCase((raw["language"] as string).toLowerCase()),
                       startCase((raw["language 2"] as string).toLowerCase()),
-                    ].filter((city) => city) as string[],
+                    ].filter(Boolean) as string[],
                     authors:
                       (raw["author (normalized)"] as string | null)?.split(
                         ", ",
