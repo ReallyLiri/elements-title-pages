@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { NAVBAR_HEIGHT } from "../components/layout/Navigation.tsx";
 import {
   LAND_COLOR,
-  MARKER_3,
   MARKER_4,
   MARKER_5,
   PANE_COLOR,
