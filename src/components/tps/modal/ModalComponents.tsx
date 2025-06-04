@@ -75,4 +75,5 @@ export const ModalTextColumn = styled.div<{
   flex: 1;
   overflow-y: ${({ isImage }) => (isImage ? "hidden" : "visible")};
   line-height: 1.8;
+  padding: 0 0.5rem;
 `;

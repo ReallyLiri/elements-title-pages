@@ -28,14 +28,16 @@ export const Row = styled.div<{
   gap?: number;
   rowGap?: number;
   noWrap?: boolean;
+  column?: boolean;
+  width?: string;
 }>`
   display: flex;
-  flex-direction: row;
+  flex-direction: ${({ column }) => (column ? "column" : "row")};
   justify-content: ${({ justifyStart }) => (justifyStart ? "start" : "center")};
   align-items: center;
   gap: ${({ gap }) => (gap !== undefined ? gap : 2)}rem;
   ${({ rowGap }) => rowGap && `row-gap: ${rowGap}`};
-  width: 100%;
+  width: ${({ width }) => (width ? width : "100%")};
   max-width: 96vw;
   flex-wrap: ${({ noWrap }) => (noWrap ? "nowrap" : "wrap")};
   @media (max-width: 600px) {
@@ -76,11 +78,16 @@ export const Column = styled.div<{ minWidth?: string; alignItems?: string }>`
   max-width: 90vw;
 `;
 
-export const Text = styled.div<{ size: number; bold?: boolean }>`
+export const Text = styled.div<{
+  size: number;
+  bold?: boolean;
+  color?: string;
+}>`
   font-family: "Frank Ruhl Libre", serif;
   font-size: ${({ size }) => size}rem;
   font-weight: ${({ bold }) => (bold ? "bold" : "normal")};
   text-align: center;
+  color: ${({ color }) => color || "unset"};
 `;
 
 export const Tile = css`
