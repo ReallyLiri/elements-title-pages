@@ -11,6 +11,7 @@ export const TOOLTIP_FILTERS_SHOW = "filters-show";
 export const TOOLTIP_TIMELINE_BUTTON = "timeline-button";
 export const TOOLTIP_HELP = "help";
 export const TOOLTIP_MARKER_ARROW = "marker-arrow";
+export const TOOLTIP_SCAN = "view-scan";
 
 const LimitedWidthDiv = styled.div`
   max-width: 256px;
@@ -28,6 +29,7 @@ export const MapTooltips = () => (
     <Tooltip id={TOOLTIP_FILTERS_SHOW} offset={32} />
     <Tooltip id={TOOLTIP_TIMELINE_BUTTON} />
     <Tooltip id={TOOLTIP_HELP} />
+    <Tooltip id={TOOLTIP_SCAN} />
     <Tooltip anchorSelect={`#${TOOLTIP_MARKER_ARROW}`} offset={-14}>
       <LimitedWidthDiv>
         Marker placement is for representation purposes and does not reflect the

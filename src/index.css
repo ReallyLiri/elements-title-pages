@@ -1,39 +1,43 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
 
-  color-scheme: light dark;
+    color-scheme: light dark;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  color: aliceblue;
-  background-color: #282828ff;
-  overflow-x: hidden;
-  overscroll-behavior: none;
+    margin: 0;
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    color: aliceblue;
+    background-color: #282828ff;
+    overflow-x: hidden;
+    overscroll-behavior: none;
 }
 
 @font-face {
-  font-family: 'Gothic';
-  src: url('/public/font/Chomsky.otf') format('otf'),
-  url('/public/font/Chomsky.woff') format('woff'),
-  url('/public/font/Chomsky.woff2') format('woff2');
+    font-family: 'Gothic';
+    src: url('/public/font/Chomsky.otf') format('otf'),
+    url('/public/font/Chomsky.woff') format('woff'),
+    url('/public/font/Chomsky.woff2') format('woff2');
 }
 
 .gothic {
-  font-family: Gothic, system-ui, sans-serif;
-  font-size: 1.75rem;
-  font-weight: 100;
+    font-family: Gothic, system-ui, sans-serif;
+    font-size: 1.75rem;
+    font-weight: 100;
+}
+
+.react-tooltip {
+    z-index: 2000;
 }

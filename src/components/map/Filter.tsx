@@ -52,19 +52,25 @@ const StyledQuestionMark = styled(MdQuestionMark)`
 const HelpFloatingTip = styled.div`
   height: fit-content;
   width: fit-content;
-  padding: 1rem;
-  z-index: 100;
-
+  padding: 0.5rem;
   a {
     color: ${PANE_COLOR};
   }
 `;
 
-const HelpTip = ({ children }: { children: ReactElement }) => {
-  const HELP_TIP_ID = "help-tip";
+export const HelpTip = ({
+  children,
+  id,
+  className,
+}: {
+  className?: string;
+  id?: string;
+  children: ReactElement;
+}) => {
+  const HELP_TIP_ID = id || "help-tip";
   return (
     <>
-      <HelpTipButton id={HELP_TIP_ID}>
+      <HelpTipButton id={HELP_TIP_ID} className={className}>
         <StyledQuestionMark />
       </HelpTipButton>
       <Tooltip anchorSelect={`#${HELP_TIP_ID}`} clickable>

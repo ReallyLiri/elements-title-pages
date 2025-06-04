@@ -17,6 +17,7 @@ export const Modal = styled.div`
 export const ModalContent = styled.div<{ hasImage: boolean }>`
   background-color: aliceblue;
   min-height: 24rem;
+  max-height: 60vh;
   min-width: 32rem;
   max-width: ${({ hasImage }) => (hasImage ? "90vw" : "60vw")};
   color: black;
@@ -42,10 +43,11 @@ export const ModalTitle = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-export const ModalMainTitle = styled(Row)`
-  font-size: 1.4rem;
-  gap: 1.2rem;
+export const ModalTitleRow = styled(Row)`
+  font-size: 1.2rem;
+  gap: 1rem;
   margin-bottom: 0.5rem;
+  justify-content: start;
 `;
 
 export const ModalTextContainer = styled.div`
@@ -62,7 +64,7 @@ export const TextColumnsContainer = styled.div`
   flex-direction: row;
   gap: 2rem;
   overflow-y: auto;
-  flex: 1;
+  flex: 2;
 `;
 
 export const ModalTextColumn = styled.div<{
