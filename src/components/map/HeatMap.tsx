@@ -21,7 +21,7 @@ if (COLORS_HEAT_MAP.length !== TOP_N) {
   throw Error("hit map is outdated");
 }
 
-export const getHeatColor = (value: number, topN: number[]): string => {
+export const getHeatColor = (value: number): string => {
   for (let i = 0; i < TOP_N - 1; i++) {
     if (value >= RANGES[i]) {
       return COLORS_HEAT_MAP[i];
@@ -38,7 +38,7 @@ export const getTopLengths = (data: Record<string, Item[]>) =>
 const Legend = styled.div<{ offsetRight: number }>`
   position: absolute;
   left: calc(${({ offsetRight }) => offsetRight}px - 11rem);
-  bottom: 5rem;
+  bottom: 1.6rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;

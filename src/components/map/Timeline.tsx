@@ -20,6 +20,9 @@ type TimelineProps = {
 
 const PlayButton = styled.div`
   ${ButtonStyle};
+  svg {
+    margin-bottom: 2px;
+  }
 `;
 
 const StyledRangeSlider = styled(RangeSlider)`

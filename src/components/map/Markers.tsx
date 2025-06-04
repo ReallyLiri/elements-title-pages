@@ -89,7 +89,7 @@ export const CityMarkers = ({
   const topLengths = useMemo(() => getTopLengths(data), [data]);
 
   const getFillColor = useCallback(
-    (value: number) => getHeatColor(value, topLengths),
+    (value: number) => getHeatColor(value),
     [topLengths],
   );
 

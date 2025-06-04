@@ -32,6 +32,9 @@ const StyledDiv = styled.div`
   div {
     ${ButtonStyle};
   }
+  svg {
+    margin-bottom: 2px;
+  }
 `;
 
 export const MapControls = ({
