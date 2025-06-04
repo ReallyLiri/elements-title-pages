@@ -17,7 +17,7 @@ const LimitedWidthDiv = styled.div`
   text-align: justify;
 `;
 
-export const Tooltips = () => (
+export const MapTooltips = () => (
   <>
     <Tooltip id={TOOLTIP_RESET} />
     <Tooltip id={TOOLTIP_ZOOMIN} />

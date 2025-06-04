@@ -11,7 +11,7 @@ import {
   TOOLTIP_RESET,
   TOOLTIP_ZOOMIN,
   TOOLTIP_ZOOMOUT,
-} from "./Tooltips";
+} from "./MapTooltips.tsx";
 import { ZOOM_CONTROLS_ID } from "./Tour";
 import { ButtonStyle } from "../../utils/colors.ts";
 

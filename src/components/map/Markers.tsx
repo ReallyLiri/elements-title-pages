@@ -11,7 +11,7 @@ import styled from "@emotion/styled";
 import { getHeatColor, getTopLengths } from "./HeatMap";
 import { CityName } from "./CityDetails";
 import { CITY_MARKER_ID } from "./Tour";
-import { TOOLTIP_MARKER_ARROW } from "./Tooltips";
+import { TOOLTIP_MARKER_ARROW } from "./MapTooltips.tsx";
 import { Item } from "../../types";
 
 type CityMarkersProps = {

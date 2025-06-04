@@ -20,7 +20,7 @@ import {
   TOOLTIP_CLOSE_RECORD_DETAILS,
   TOOLTIP_FILTERS_HIDE,
   TOOLTIP_FILTERS_SHOW,
-} from "../components/map/Tooltips";
+} from "../components/map/MapTooltips.tsx";
 import {
   CitiesMap,
   DEFAULT_POSITION,

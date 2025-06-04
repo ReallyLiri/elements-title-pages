@@ -4,6 +4,7 @@ import "./index.css";
 import "react-tooltip/dist/react-tooltip.css";
 import App from "./App.tsx";
 import { Tooltip } from "react-tooltip";
+import { MapTooltips } from "./components/map/MapTooltips.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -21,5 +22,6 @@ createRoot(document.getElementById("root")!).render(
         maxWidth: 600,
       }}
     />
+    <MapTooltips />
   </StrictMode>,
 );

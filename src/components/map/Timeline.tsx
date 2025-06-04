@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { MdPause, MdPlayArrow } from "react-icons/md";
 import styled from "@emotion/styled";
 import { ButtonStyle, RANGE_FILL } from "../../utils/colors";
-import { TOOLTIP_TIMELINE_BUTTON } from "./Tooltips";
+import { TOOLTIP_TIMELINE_BUTTON } from "./MapTooltips.tsx";
 import { useLocalStorage } from "usehooks-ts";
 import { TIMELINE_PLAY_ID } from "./Tour";
 import RangeSlider from "../../RangeSlider.tsx";
@@ -34,6 +34,7 @@ const RangeWrapper = styled.div`
   align-items: center;
 
   #range-slider {
+    gap: 0.5rem;
     #range-slider-track {
       background: ${RANGE_FILL};
     }
@@ -50,7 +51,7 @@ const PLAY_STEP_SEC = 1;
 
 export const Timeline = ({ minYear, maxYear, rangeChanged }: TimelineProps) => {
   const [value, setValue] = useLocalStorage<[number, number]>(
-    "timeline",
+    "map-timeline",
     [0, 0],
   );
   const [isPlay, setPlay] = useState<boolean>(false);
