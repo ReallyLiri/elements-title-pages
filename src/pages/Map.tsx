@@ -31,7 +31,7 @@ import { HeatLegend } from "../components/map/HeatMap";
 import { FiltersGroup } from "../components/map/FiltersGroup";
 import { FilterValue } from "../components/map/Filter";
 import { CityDetails } from "../components/map/CityDetails";
-import { RecordDetails } from "../components/map/RecordDetails";
+import ItemModal from "../components/tps/modal/ItemModal.tsx";
 import { COLLAPSE_FILTER_BUTTON_ID } from "../components/map/Tour";
 import { useTour } from "@reactour/tour";
 import { FLOATING_CITY, Item } from "../types";
@@ -403,16 +403,11 @@ const Map = () => {
         </Pane>
       )}
       {!isEmpty(selectedRecord) && (
-        <Pane borderRight={false} widthPercentage={20}>
-          <CollapseFiltersButton
-            onClick={() => setSelectedRecordId(undefined)}
-            data-tooltip-id={TOOLTIP_CLOSE_RECORD_DETAILS}
-            data-tooltip-content="Close"
-          >
-            <MdClose />
-          </CollapseFiltersButton>
-          <RecordDetails data={selectedRecord} />
-        </Pane>
+        <ItemModal 
+          item={selectedRecord} 
+          features={[]} 
+          onClose={() => setSelectedRecordId(undefined)} 
+        />
       )}
     </Wrapper>
   );

@@ -38,7 +38,7 @@ export const getTopLengths = (data: Record<string, Item[]>) =>
 const Legend = styled.div<{ offsetRight: number }>`
   position: absolute;
   left: calc(${({ offsetRight }) => offsetRight}px - 11rem);
-  bottom: 1.6rem;
+  bottom: 4.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
