@@ -1,4 +1,4 @@
-import { useState, memo, lazy, Suspense } from "react";
+import { useState, memo, lazy, Suspense, useRef, useEffect } from "react";
 import { ItemProps } from "../../../types";
 import {
   Column,
@@ -17,9 +17,31 @@ const HighlightedText = lazy(() => import("./HighlightedText.tsx"));
 
 const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const itemRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (itemRef.current) {
+      observer.observe(itemRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
-    <Column style={{ height, width }}>
+    <Column style={{ height, width }} ref={itemRef}>
       <div>
         {item.year || "s.d."} {item.authors.join(" & ") || "s.n."},{" "}
         {item.cities.join(", ") || "s.l."}
@@ -39,35 +61,47 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
           ) : (
             <>
               <TextTile alignCenter={!!item.imageUrl}>
-                <Suspense
-                  fallback={
-                    <div>
-                      {item.title}
-                      {item.imprint && (
-                        <>
-                          <hr style={{ opacity: 0.3 }} />
-                          {item.imprint}
-                        </>
-                      )}
-                    </div>
-                  }
-                >
-                  <HighlightedText
-                    text={item.title}
-                    features={features}
-                    mapping={item.features}
-                  />
-                  {item.imprint && (
-                    <>
-                      <hr style={{ opacity: 0.3 }} />
-                      <HighlightedText
-                        text={item.imprint}
-                        features={features}
-                        mapping={item.features}
-                      />
-                    </>
-                  )}
-                </Suspense>
+                {!isVisible ? (
+                  <div>
+                    {item.title}
+                    {item.imprint && (
+                      <>
+                        <hr style={{ opacity: 0.3 }} />
+                        {item.imprint}
+                      </>
+                    )}
+                  </div>
+                ) : (
+                  <Suspense
+                    fallback={
+                      <div>
+                        {item.title}
+                        {item.imprint && (
+                          <>
+                            <hr style={{ opacity: 0.3 }} />
+                            {item.imprint}
+                          </>
+                        )}
+                      </div>
+                    }
+                  >
+                    <HighlightedText
+                      text={item.title}
+                      features={features}
+                      mapping={item.features}
+                    />
+                    {item.imprint && (
+                      <>
+                        <hr style={{ opacity: 0.3 }} />
+                        <HighlightedText
+                          text={item.imprint}
+                          features={features}
+                          mapping={item.features}
+                        />
+                      </>
+                    )}
+                  </Suspense>
+                )}
                 <ExpandIcon title="Expand" onClick={() => setModalOpen(true)}>
                   ⤢
                 </ExpandIcon>

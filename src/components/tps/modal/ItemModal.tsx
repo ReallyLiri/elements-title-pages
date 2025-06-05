@@ -10,7 +10,9 @@ import {
   ModalTitleRow,
   TextColumnsContainer,
 } from "./ModalComponents.tsx";
-import HighlightedText from "../features/HighlightedText.tsx";
+import { lazy, Suspense } from "react";
+
+const HighlightedText = lazy(() => import("../features/HighlightedText.tsx"));
 import { imageClicked } from "../../../utils/dataUtils.ts";
 import styled from "@emotion/styled";
 import { HelpTip } from "../../map/Filter.tsx";
@@ -153,19 +155,23 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
                     marginTop="2px"
                   />
                 </ModalTitle>
-                <HighlightedText
-                  text={item.title}
-                  features={features}
-                  mapping={item.features}
-                />
+                <Suspense fallback={<div>{item.title}</div>}>
+                  <HighlightedText
+                    text={item.title}
+                    features={features}
+                    mapping={item.features}
+                  />
+                </Suspense>
                 {item.imprint && (
                   <>
                     <hr style={{ opacity: 0.3 }} />
-                    <HighlightedText
-                      text={item.imprint}
-                      features={features}
-                      mapping={item.features}
-                    />
+                    <Suspense fallback={<div>{item.imprint}</div>}>
+                      <HighlightedText
+                        text={item.imprint}
+                        features={features}
+                        mapping={item.features}
+                      />
+                    </Suspense>
                   </>
                 )}
               </ModalTextColumn>
@@ -178,19 +184,23 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
                       marginTop="2px"
                     />
                   </ModalTitle>
-                  <HighlightedText
-                    text={item.titleEn || ""}
-                    features={[]}
-                    mapping={{}}
-                  />
+                  <Suspense fallback={<div>{item.titleEn || ""}</div>}>
+                    <HighlightedText
+                      text={item.titleEn || ""}
+                      features={[]}
+                      mapping={{}}
+                    />
+                  </Suspense>
                   {item.imprintEn && (
                     <>
                       {item.imprint && <hr style={{ opacity: 0.3 }} />}
-                      <HighlightedText
-                        text={item.imprintEn}
-                        features={[]}
-                        mapping={{}}
-                      />
+                      <Suspense fallback={<div>{item.imprintEn}</div>}>
+                        <HighlightedText
+                          text={item.imprintEn}
+                          features={[]}
+                          mapping={{}}
+                        />
+                      </Suspense>
                     </>
                   )}
                 </ModalTextColumn>
