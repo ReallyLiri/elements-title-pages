@@ -12,7 +12,22 @@ import { GiHolySymbol } from "react-icons/gi";
 import { FaMapMarked } from "react-icons/fa";
 
 import { GrCatalog } from "react-icons/gr";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { NAVBAR_HEIGHT } from "../components/layout/Navigation.tsx";
+
+const ParallaxBackground = styled.div`
+  position: fixed;
+  top: calc(${NAVBAR_HEIGHT}px + 12rem);
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  background-image: url("/scan.png");
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  z-index: -1;
+  transform: translateY(0);
+`;
 
 const StyledContainer = styled(Container)`
   padding-top: 2rem;
@@ -86,25 +101,45 @@ const Card = ({
 
 function Home() {
   const navigate = useNavigate();
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScrollHeight = document.body.scrollHeight - window.innerHeight;
+      const currentScroll = window.scrollY;
+      const scrollPercentage = currentScroll / totalScrollHeight;
+
+      const imageHeight = window.innerWidth * 2; // Estimate image height based on aspect ratio
+      const translateValue =
+        (imageHeight - window.innerHeight) * scrollPercentage;
+
+      setScrollY(translateValue);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <StyledContainer>
-      <Row column gap={1}>
-        <Title className="gothic">Euclid's Elements</Title>
-        <Text size={3} color={MARKER_5}>
-          A COMPENDIUM
-        </Text>
-        <Text size={1.5} color={MARKER_4}>
-          by Mia Joskowicz
-        </Text>
-      </Row>
-      <Card
-        title="Ov the Evclid"
-        icon={<FaDraftingCompass />}
-        color={PANE_COLOR}
-        imageSrc="/public/frontpiece.png"
-        imageOnLeft={true}
-        text={`
+    <>
+      <ParallaxBackground style={{ transform: `translateY(-${scrollY}px)` }} />
+      <StyledContainer>
+        <Row column gap={1}>
+          <Title className="gothic">Euclid's Elements</Title>
+          <Text size={3} color={MARKER_5}>
+            A COMPENDIUM
+          </Text>
+          <Text size={1.5} color={MARKER_4}>
+            by Mia Joskowicz
+          </Text>
+        </Row>
+        <Card
+          title="Ov the Evclid"
+          icon={<FaDraftingCompass />}
+          color={PANE_COLOR}
+          imageSrc="/public/frontpiece.png"
+          imageOnLeft={true}
+          text={`
        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
           facilisis et mauris nec tincidunt. Orci varius natoque penatibus et
           magnis dis parturient montes, nascetur ridiculus mus. Donec mollis,
@@ -116,15 +151,15 @@ function Home() {
           ligula. Praesent ex augue, dapibus at faucibus a, feugiat a sapien.
           Donec et dolor urna. Ut luctus placerat finibus.
         `}
-      />
-      <Card
-        title="Editions Catalogue"
-        onClick={() => navigate(CATALOGUE_ROUTE)}
-        icon={<GrCatalog />}
-        color={MARKER_5}
-        imageSrc="https://i.imgur.com/MO2gGL6.jpeg"
-        imageOnLeft={false}
-        text={`
+        />
+        <Card
+          title="Editions Catalogue"
+          onClick={() => navigate(CATALOGUE_ROUTE)}
+          icon={<GrCatalog />}
+          color={MARKER_5}
+          imageSrc="https://i.imgur.com/MO2gGL6.jpeg"
+          imageOnLeft={false}
+          text={`
        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
           facilisis et mauris nec tincidunt. Orci varius natoque penatibus et
           magnis dis parturient montes, nascetur ridiculus mus. Donec mollis,
@@ -136,15 +171,15 @@ function Home() {
           ligula. Praesent ex augue, dapibus at faucibus a, feugiat a sapien.
           Donec et dolor urna. Ut luctus placerat finibus.
         `}
-      />
-      <Card
-        title="Title Pages Research"
-        onClick={() => navigate(TITLE_PAGES_ROUTE)}
-        icon={<GiHolySymbol />}
-        color={PANE_COLOR}
-        imageSrc="https://i.imgur.com/MO2gGL6.jpeg"
-        imageOnLeft={true}
-        text={`
+        />
+        <Card
+          title="Title Pages Research"
+          onClick={() => navigate(TITLE_PAGES_ROUTE)}
+          icon={<GiHolySymbol />}
+          color={PANE_COLOR}
+          imageSrc="https://i.imgur.com/MO2gGL6.jpeg"
+          imageOnLeft={true}
+          text={`
        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
           facilisis et mauris nec tincidunt. Orci varius natoque penatibus et
           magnis dis parturient montes, nascetur ridiculus mus. Donec mollis,
@@ -156,15 +191,15 @@ function Home() {
           ligula. Praesent ex augue, dapibus at faucibus a, feugiat a sapien.
           Donec et dolor urna. Ut luctus placerat finibus.
         `}
-      />
-      <Card
-        title="Timeline and Map"
-        onClick={() => navigate(MAP_ROUTE)}
-        icon={<FaMapMarked />}
-        color={MARKER_5}
-        imageSrc="/public/map.png"
-        imageOnLeft={false}
-        text={`
+        />
+        <Card
+          title="Timeline and Map"
+          onClick={() => navigate(MAP_ROUTE)}
+          icon={<FaMapMarked />}
+          color={MARKER_5}
+          imageSrc="/public/map.png"
+          imageOnLeft={false}
+          text={`
        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
           facilisis et mauris nec tincidunt. Orci varius natoque penatibus et
           magnis dis parturient montes, nascetur ridiculus mus. Donec mollis,
@@ -176,16 +211,19 @@ function Home() {
           ligula. Praesent ex augue, dapibus at faucibus a, feugiat a sapien.
           Donec et dolor urna. Ut luctus placerat finibus.
         `}
-      />
-      <Greek column gap={0.5}>
-        <Text size={1.2}>Ἐπίγραμμα παλαιόν.</Text>
-        <Text size={1.2}>Σχήματα πέντε Πλάτωνος, ὁ Πυθαγόρας σοφὸς εὗρε.</Text>
-        <Text size={1.2}>
-          Πυθαγόρας σοφὸς εὗρε, Πλάτων δ’ ἀρίδηλ’ ἐδίδαξεν,
-        </Text>
-        <Text size={1.2}>Εὐκλείδης ἐπὶ τοῖσι κλέος σοφιηκαλλὲς ἔτευξεν.</Text>
-      </Greek>
-    </StyledContainer>
+        />
+        <Greek column gap={0.5}>
+          <Text size={1.2}>Ἐπίγραμμα παλαιόν.</Text>
+          <Text size={1.2}>
+            Σχήματα πέντε Πλάτωνος, ὁ Πυθαγόρας σοφὸς εὗρε.
+          </Text>
+          <Text size={1.2}>
+            Πυθαγόρας σοφὸς εὗρε, Πλάτων δ’ ἀρίδηλ’ ἐδίδαξεν,
+          </Text>
+          <Text size={1.2}>Εὐκλείδης ἐπὶ τοῖσι κλέος σοφιηκαλλὲς ἔτευξεν.</Text>
+        </Greek>
+      </StyledContainer>
+    </>
   );
 }
 

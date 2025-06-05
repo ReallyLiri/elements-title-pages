@@ -129,7 +129,8 @@ export const loadEditionsData = (
                     titleEn: raw["title_EN"] as string | null,
                     imprint: raw["imprint"] as string | null,
                     imprintEn: raw["imprint_EN"] as string | null,
-                    scanUrl: raw["scan_url"] as string | null,
+                    scanUrl:
+                      (raw["scan_url"] as string | null)?.split(";")[0] || null,
                     type: ItemTypes[type],
                     format: raw["format"] as string | null,
                     ...parseBooks(raw["books"] as string | null),
