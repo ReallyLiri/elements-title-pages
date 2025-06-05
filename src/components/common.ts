@@ -82,12 +82,18 @@ export const Text = styled.div<{
   size: number;
   bold?: boolean;
   color?: string;
+  clickable?: boolean;
 }>`
   font-family: "Frank Ruhl Libre", serif;
   font-size: ${({ size }) => size}rem;
   font-weight: ${({ bold }) => (bold ? "bold" : "normal")};
   text-align: center;
   color: ${({ color }) => color || "unset"};
+  ${({ clickable }) =>
+    clickable &&
+    css`
+      cursor: pointer;
+    `}
 `;
 
 export const Tile = css`

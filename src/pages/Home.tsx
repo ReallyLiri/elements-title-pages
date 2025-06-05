@@ -1,22 +1,28 @@
 import styled from "@emotion/styled";
 import { Container, Row, Text } from "../components/common";
 import { useNavigate } from "react-router-dom";
-import { NAVBAR_HEIGHT } from "../components/layout/Navigation.tsx";
+import { MARKER_4, MARKER_5, PANE_COLOR, SEA_COLOR } from "../utils/colors.ts";
 import {
-  LAND_COLOR,
-  MARKER_4,
-  MARKER_5,
-  PANE_COLOR,
-  SEA_COLOR,
-} from "../utils/colors.ts";
-import { MAP_ROUTE, TITLE_PAGES_ROUTE } from "../components/layout/routes.ts";
+  CATALOGUE_ROUTE,
+  MAP_ROUTE,
+  TITLE_PAGES_ROUTE,
+} from "../components/layout/routes.ts";
+import { FaDraftingCompass } from "react-icons/fa";
+import { GiHolySymbol } from "react-icons/gi";
+import { FaMapMarked } from "react-icons/fa";
+
+import { GrCatalog } from "react-icons/gr";
+import { ReactNode } from "react";
 
 const StyledContainer = styled(Container)`
-  margin: 0;
   padding-top: 2rem;
-  height: calc(100vh - ${NAVBAR_HEIGHT}px - 2rem);
-  position: relative;
   z-index: 1;
+  padding-bottom: 2rem;
+  max-width: 60vw;
+  margin: auto;
+  @media (max-width: 600px) {
+    max-width: 96vw;
+  }
 `;
 
 const Title = styled.div`
@@ -26,18 +32,57 @@ const Title = styled.div`
 
 const StyledImage = styled.img`
   max-width: 30vw;
-  max-height: 30vh;
+  max-height: 60vh;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 0.5rem;
 `;
 
 const Greek = styled(Row)`
   width: fit-content;
   color: ${SEA_COLOR};
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 0.5rem;
-  border-radius: 0.5rem;
+  margin-top: 4rem;
 `;
+
+const Card = ({
+  title,
+  icon,
+  color,
+  text,
+  imageSrc,
+  imageOnLeft,
+  onClick,
+}: {
+  title: string;
+  icon: ReactNode;
+  onClick?: () => void;
+  color?: string;
+  imageSrc: string;
+  imageOnLeft: boolean;
+  text: string;
+}) => {
+  return (
+    <Row noWrap>
+      {imageOnLeft && <StyledImage src={imageSrc} alt={title} />}
+      <Row column>
+        <Text color={color} size={1.5} onClick={onClick} clickable={!!onClick}>
+          {title}
+        </Text>
+        <Text size={1.5} color={color} onClick={onClick} clickable={!!onClick}>
+          {icon}
+        </Text>
+        <div>
+          {text
+            .trim()
+            .split("\n")
+            .map((line, i) => (
+              <div key={i}>{line}</div>
+            ))}
+        </div>
+      </Row>
+      {!imageOnLeft && <StyledImage src={imageSrc} alt={title} />}
+    </Row>
+  );
+};
 
 function Home() {
   const navigate = useNavigate();
@@ -53,41 +98,85 @@ function Home() {
           by Mia Joskowicz
         </Text>
       </Row>
-      <Row gap={2} style={{ justifyContent: "center" }}>
-        <div
-          onClick={() => navigate(TITLE_PAGES_ROUTE)}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            cursor: "pointer",
-          }}
-        >
-          <Row column gap={0.5} width="40vw">
-            <StyledImage
-              src="https://i.imgur.com/MO2gGL6.jpeg"
-              alt="Title Pages View"
-            />
-            <Text color={PANE_COLOR} size={1.5}>
-              Title Pages
-            </Text>
-          </Row>
-        </div>
-        <div
-          onClick={() => navigate(MAP_ROUTE)}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            cursor: "pointer",
-          }}
-        >
-          <Row column gap={0.5} width="40vw">
-            <StyledImage src="/map.png" alt="Timeline View" />
-            <Text size={1.5} color={LAND_COLOR}>
-              Timeline
-            </Text>
-          </Row>
-        </div>
-      </Row>
+      <Card
+        title="Ov the Evclid"
+        icon={<FaDraftingCompass />}
+        color={PANE_COLOR}
+        imageSrc="/public/frontpiece.png"
+        imageOnLeft={true}
+        text={`
+       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+          facilisis et mauris nec tincidunt. Orci varius natoque penatibus et
+          magnis dis parturient montes, nascetur ridiculus mus. Donec mollis,
+          sapien quis elementum condimentum, magna urna vulputate erat, sit amet
+          accumsan magna urna non magna. Nulla pharetra magna odio, auctor
+          bibendum nunc lacinia viverra. Donec ut ultrices enim. Ut mi sem,
+          luctus et metus ut, consequat sollicitudin arcu. Morbi feugiat
+          vestibulum quam, sit amet vehicula odio placerat at. Cras vel nunc
+          ligula. Praesent ex augue, dapibus at faucibus a, feugiat a sapien.
+          Donec et dolor urna. Ut luctus placerat finibus.
+        `}
+      />
+      <Card
+        title="Editions Catalogue"
+        onClick={() => navigate(CATALOGUE_ROUTE)}
+        icon={<GrCatalog />}
+        color={MARKER_5}
+        imageSrc="https://i.imgur.com/MO2gGL6.jpeg"
+        imageOnLeft={false}
+        text={`
+       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+          facilisis et mauris nec tincidunt. Orci varius natoque penatibus et
+          magnis dis parturient montes, nascetur ridiculus mus. Donec mollis,
+          sapien quis elementum condimentum, magna urna vulputate erat, sit amet
+          accumsan magna urna non magna. Nulla pharetra magna odio, auctor
+          bibendum nunc lacinia viverra. Donec ut ultrices enim. Ut mi sem,
+          luctus et metus ut, consequat sollicitudin arcu. Morbi feugiat
+          vestibulum quam, sit amet vehicula odio placerat at. Cras vel nunc
+          ligula. Praesent ex augue, dapibus at faucibus a, feugiat a sapien.
+          Donec et dolor urna. Ut luctus placerat finibus.
+        `}
+      />
+      <Card
+        title="Title Pages Research"
+        onClick={() => navigate(TITLE_PAGES_ROUTE)}
+        icon={<GiHolySymbol />}
+        color={PANE_COLOR}
+        imageSrc="https://i.imgur.com/MO2gGL6.jpeg"
+        imageOnLeft={true}
+        text={`
+       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+          facilisis et mauris nec tincidunt. Orci varius natoque penatibus et
+          magnis dis parturient montes, nascetur ridiculus mus. Donec mollis,
+          sapien quis elementum condimentum, magna urna vulputate erat, sit amet
+          accumsan magna urna non magna. Nulla pharetra magna odio, auctor
+          bibendum nunc lacinia viverra. Donec ut ultrices enim. Ut mi sem,
+          luctus et metus ut, consequat sollicitudin arcu. Morbi feugiat
+          vestibulum quam, sit amet vehicula odio placerat at. Cras vel nunc
+          ligula. Praesent ex augue, dapibus at faucibus a, feugiat a sapien.
+          Donec et dolor urna. Ut luctus placerat finibus.
+        `}
+      />
+      <Card
+        title="Timeline and Map"
+        onClick={() => navigate(MAP_ROUTE)}
+        icon={<FaMapMarked />}
+        color={MARKER_5}
+        imageSrc="/public/map.png"
+        imageOnLeft={false}
+        text={`
+       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+          facilisis et mauris nec tincidunt. Orci varius natoque penatibus et
+          magnis dis parturient montes, nascetur ridiculus mus. Donec mollis,
+          sapien quis elementum condimentum, magna urna vulputate erat, sit amet
+          accumsan magna urna non magna. Nulla pharetra magna odio, auctor
+          bibendum nunc lacinia viverra. Donec ut ultrices enim. Ut mi sem,
+          luctus et metus ut, consequat sollicitudin arcu. Morbi feugiat
+          vestibulum quam, sit amet vehicula odio placerat at. Cras vel nunc
+          ligula. Praesent ex augue, dapibus at faucibus a, feugiat a sapien.
+          Donec et dolor urna. Ut luctus placerat finibus.
+        `}
+      />
       <Greek column gap={0.5}>
         <Text size={1.2}>Ἐπίγραμμα παλαιόν.</Text>
         <Text size={1.2}>Σχήματα πέντε Πλάτωνος, ὁ Πυθαγόρας σοφὸς εὗρε.</Text>

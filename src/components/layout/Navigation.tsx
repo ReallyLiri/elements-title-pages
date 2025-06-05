@@ -1,18 +1,29 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
-import { HOME_ROUTE, MAP_ROUTE, TITLE_PAGES_ROUTE, CATALOGUE_ROUTE } from "./routes.ts";
+import {
+  HOME_ROUTE,
+  MAP_ROUTE,
+  TITLE_PAGES_ROUTE,
+  CATALOGUE_ROUTE,
+} from "./routes.ts";
 import { FilterButton } from "./FilterButton";
 import { FaDraftingCompass } from "react-icons/fa";
 
 export const NAVBAR_HEIGHT = 60;
 
+const Placeholder = styled.div`
+  height: ${NAVBAR_HEIGHT}px;
+`;
+
 const NavContainer = styled.nav`
+  position: fixed;
   display: flex;
   width: 100vw;
   padding: 1rem;
   height: calc(${NAVBAR_HEIGHT}px - 2rem);
   background-color: black;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 2001;
 `;
 
 const NavContent = styled.div`
@@ -63,29 +74,32 @@ function Navigation() {
   const location = useLocation();
 
   return (
-    <NavContainer>
-      <NavContent>
-        <FilterButton />
-        <VerticalLine />
-        <SiteTitle>M. Joskowicz Elements Compendium</SiteTitle>
-        <StyledCompassIcon />
-        <VerticalLine />
-        <NavItems>
-          <NavItem active={location.pathname === HOME_ROUTE}>
-            <Link to={HOME_ROUTE}>Home</Link>
-          </NavItem>
-          <NavItem active={location.pathname === TITLE_PAGES_ROUTE}>
-            <Link to={TITLE_PAGES_ROUTE}>Editions</Link>
-          </NavItem>
-          <NavItem active={location.pathname === MAP_ROUTE}>
-            <Link to={MAP_ROUTE}>Timeline</Link>
-          </NavItem>
-          <NavItem active={location.pathname === CATALOGUE_ROUTE}>
-            <Link to={CATALOGUE_ROUTE}>Catalogue</Link>
-          </NavItem>
-        </NavItems>
-      </NavContent>
-    </NavContainer>
+    <>
+      <NavContainer>
+        <NavContent>
+          <FilterButton />
+          <VerticalLine />
+          <SiteTitle>M. Joskowicz Elements Compendium</SiteTitle>
+          <StyledCompassIcon />
+          <VerticalLine />
+          <NavItems>
+            <NavItem active={location.pathname === HOME_ROUTE}>
+              <Link to={HOME_ROUTE}>Home</Link>
+            </NavItem>
+            <NavItem active={location.pathname === CATALOGUE_ROUTE}>
+              <Link to={CATALOGUE_ROUTE}>Catalogue</Link>
+            </NavItem>
+            <NavItem active={location.pathname === TITLE_PAGES_ROUTE}>
+              <Link to={TITLE_PAGES_ROUTE}>Editions</Link>
+            </NavItem>
+            <NavItem active={location.pathname === MAP_ROUTE}>
+              <Link to={MAP_ROUTE}>Timeline</Link>
+            </NavItem>
+          </NavItems>
+        </NavContent>
+      </NavContainer>
+      <Placeholder />
+    </>
   );
 }
 

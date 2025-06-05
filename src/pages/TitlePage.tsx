@@ -182,8 +182,8 @@ function TitlePage() {
         ))}
       </Row>
       <Text size={1}>
-        À la Croisée des Hyperliens, chez la scribe fatiguée et sa féline
-        passivement investie, MMXXV.
+        À la Croisée des Hyperliens, chez le scribe fatigué et son félin
+        passivement investi, MMXXV.
       </Text>
       <div />
     </Container>
