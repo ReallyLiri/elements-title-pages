@@ -19,6 +19,7 @@ import { GiHolySymbol } from "react-icons/gi";
 import { GrCatalog } from "react-icons/gr";
 import { ReactNode, useEffect, useState } from "react";
 import { NAVBAR_HEIGHT } from "../components/layout/Navigation.tsx";
+import { css } from "@emotion/react";
 
 const ParallaxBackground = styled.div`
   position: fixed;
@@ -50,11 +51,15 @@ const Title = styled.div`
   margin: -2rem;
 `;
 
-const CardText = styled.div`
-  background-color: ${TRANSPARENT_BLACK};
+const TextStyle = css`
+  background-color: #282828;
   border-radius: 0.5rem;
   padding: 1rem;
   width: max-content;
+`;
+
+const CardText = styled.div`
+  ${TextStyle};
 `;
 
 const StyledImage = styled.img`
@@ -66,12 +71,9 @@ const StyledImage = styled.img`
 
 const Greek = styled(Row)`
   color: ${SEA_COLOR};
+  ${TextStyle};
   margin-top: 4rem;
   text-align: center;
-  width: max-content;
-  background-color: #282828;
-  padding: 1rem;
-  box-shadow: 0 0 4px 4px #282828;
 `;
 
 const Card = ({
