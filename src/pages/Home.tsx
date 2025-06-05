@@ -22,11 +22,11 @@ import { NAVBAR_HEIGHT } from "../components/layout/Navigation.tsx";
 
 const ParallaxBackground = styled.div`
   position: fixed;
-  top: calc(${NAVBAR_HEIGHT}px + 12rem);
+  top: ${NAVBAR_HEIGHT}px;
   left: 0;
   width: 100vw;
   height: 100%;
-  background-image: url("/scan.png");
+  background-image: url("/scan-v2.png");
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
@@ -69,6 +69,9 @@ const Greek = styled(Row)`
   margin-top: 4rem;
   text-align: center;
   width: max-content;
+  background-color: #282828;
+  padding: 1rem;
+  box-shadow: 0 0 4px 4px #282828;
 `;
 
 const Card = ({
@@ -126,11 +129,11 @@ function Home() {
 
   useEffect(() => {
     const img = new Image();
-    img.src = "/public/scan.png";
+    img.src = "/scan.png";
 
     img.onload = () => {
       const imageAspectRatio = img.naturalHeight / img.naturalWidth;
-      const topOffset = NAVBAR_HEIGHT + 12 * 16;
+      const topOffset = NAVBAR_HEIGHT;
 
       const handleScroll = () => {
         const viewportWidth = window.innerWidth;
@@ -186,7 +189,7 @@ function Home() {
           title="Ov the Evclid"
           icon={<FaDraftingCompass />}
           color={PANE_COLOR}
-          imageSrc="/public/frontpiece.png"
+          imageSrc="/frontpiece.png"
           imageOnLeft={true}
           text={`
        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
@@ -246,7 +249,7 @@ function Home() {
           onClick={() => navigate(MAP_ROUTE)}
           icon={<FaMapMarked />}
           color={MARKER_5}
-          imageSrc="/public/map.png"
+          imageSrc="/map.png"
           imageOnLeft={false}
           text={`
        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris

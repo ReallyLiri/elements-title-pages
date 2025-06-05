@@ -107,7 +107,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   >("filter-include", {});
   const [filterOpen, setFilterOpen] = useLocalStorage<boolean>(
     "filters-open",
-    true,
+    false,
   );
 
   useEffect(() => {
