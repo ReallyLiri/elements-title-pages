@@ -1,7 +1,13 @@
 import styled from "@emotion/styled";
 import { Container, Row, Text } from "../components/common";
 import { useNavigate } from "react-router-dom";
-import { MARKER_4, MARKER_5, PANE_COLOR, SEA_COLOR } from "../utils/colors.ts";
+import {
+  MARKER_4,
+  MARKER_5,
+  PANE_COLOR,
+  SEA_COLOR,
+  TRANSPARENT_BLACK,
+} from "../utils/colors.ts";
 import {
   CATALOGUE_ROUTE,
   MAP_ROUTE,
@@ -12,7 +18,7 @@ import { GiHolySymbol } from "react-icons/gi";
 import { FaMapMarked } from "react-icons/fa";
 
 import { GrCatalog } from "react-icons/gr";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { NAVBAR_HEIGHT } from "../components/layout/Navigation.tsx";
 
 const ParallaxBackground = styled.div`
@@ -45,6 +51,13 @@ const Title = styled.div`
   margin: -2rem;
 `;
 
+const CardText = styled.div`
+  background-color: ${TRANSPARENT_BLACK};
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: max-content;
+`;
+
 const StyledImage = styled.img`
   max-width: 30vw;
   max-height: 60vh;
@@ -53,9 +66,13 @@ const StyledImage = styled.img`
 `;
 
 const Greek = styled(Row)`
-  width: fit-content;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
+  padding: 1rem;
   color: ${SEA_COLOR};
   margin-top: 4rem;
+  text-align: center;
+  width: max-content;
 `;
 
 const Card = ({
@@ -79,20 +96,27 @@ const Card = ({
     <Row noWrap>
       {imageOnLeft && <StyledImage src={imageSrc} alt={title} />}
       <Row column>
-        <Text color={color} size={1.5} onClick={onClick} clickable={!!onClick}>
-          {title}
-        </Text>
+        <CardText>
+          <Text
+            color={color}
+            size={1.5}
+            onClick={onClick}
+            clickable={!!onClick}
+          >
+            {title}
+          </Text>
+        </CardText>
         <Text size={1.5} color={color} onClick={onClick} clickable={!!onClick}>
           {icon}
         </Text>
-        <div>
+        <CardText>
           {text
             .trim()
             .split("\n")
             .map((line, i) => (
               <div key={i}>{line}</div>
             ))}
-        </div>
+        </CardText>
       </Row>
       {!imageOnLeft && <StyledImage src={imageSrc} alt={title} />}
     </Row>
@@ -101,28 +125,49 @@ const Card = ({
 
 function Home() {
   const navigate = useNavigate();
-  const [scrollY, setScrollY] = useState(0);
+  const [bgImageScrollY, setBgImageScrollY] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const totalScrollHeight = document.body.scrollHeight - window.innerHeight;
-      const currentScroll = window.scrollY;
-      const scrollPercentage = currentScroll / totalScrollHeight;
+    const img = new Image();
+    img.src = "/public/scan.png";
 
-      const imageHeight = window.innerWidth * 2; // Estimate image height based on aspect ratio
-      const translateValue =
-        (imageHeight - window.innerHeight) * scrollPercentage;
+    img.onload = () => {
+      const imageAspectRatio = img.naturalHeight / img.naturalWidth;
 
-      setScrollY(translateValue);
+      const handleScroll = () => {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight - NAVBAR_HEIGHT * 3.5;
+        const scrollTop = window.scrollY;
+        const imageHeight = viewportWidth * imageAspectRatio;
+
+        const imageScrollRange = imageHeight - viewportHeight;
+        const pageScrollRange =
+          document.documentElement.scrollHeight - viewportHeight;
+
+        const scrollRatio = scrollTop / pageScrollRange;
+        const translateY = scrollRatio * imageScrollRange;
+
+        setBgImageScrollY(translateY);
+      };
+
+      handleScroll();
+
+      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("resize", handleScroll);
+
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+        window.removeEventListener("resize", handleScroll);
+      };
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <>
-      <ParallaxBackground style={{ transform: `translateY(-${scrollY}px)` }} />
+      <ParallaxBackground
+        id="parallax-bg"
+        style={{ transform: `translateY(-${bgImageScrollY}px)` }}
+      />
       <StyledContainer>
         <Row column gap={1}>
           <Title className="gothic">Euclid's Elements</Title>
@@ -213,14 +258,9 @@ function Home() {
         `}
         />
         <Greek column gap={0.5}>
-          <Text size={1.2}>Ἐπίγραμμα παλαιόν.</Text>
-          <Text size={1.2}>
-            Σχήματα πέντε Πλάτωνος, ὁ Πυθαγόρας σοφὸς εὗρε.
-          </Text>
-          <Text size={1.2}>
-            Πυθαγόρας σοφὸς εὗρε, Πλάτων δ’ ἀρίδηλ’ ἐδίδαξεν,
-          </Text>
-          <Text size={1.2}>Εὐκλείδης ἐπὶ τοῖσι κλέος σοφιηκαλλὲς ἔτευξεν.</Text>
+          Ἐπίγραμμα παλαιόν. Σχήματα πέντε Πλάτωνος, ὁ Πυθαγόρας σοφὸς εὗρε.
+          Πυθαγόρας σοφὸς εὗρε, Πλάτων δ’ ἀρίδηλ’ ἐδίδαξεν, Εὐκλείδης ἐπὶ τοῖσι
+          κλέος σοφιηκαλλὲς ἔτευξεν.
         </Greek>
       </StyledContainer>
     </>
