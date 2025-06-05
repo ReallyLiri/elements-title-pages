@@ -7,12 +7,9 @@ import {
   ModalTextColumn,
   ModalTextContainer,
   ModalTitle,
-  ModalTitleRow,
   TextColumnsContainer,
 } from "./ModalComponents.tsx";
 import { lazy, Suspense } from "react";
-
-const HighlightedText = lazy(() => import("../features/HighlightedText.tsx"));
 import { imageClicked } from "../../../utils/dataUtils.ts";
 import styled from "@emotion/styled";
 import { HelpTip } from "../../map/Filter.tsx";
@@ -21,11 +18,12 @@ import {
   TOOLTIP_EN_TRANSLATION,
   TOOLTIP_SCAN,
   TOOLTIP_TRANSCRIPTION,
-  TOOLTIP_WCLASS,
 } from "../../map/MapTooltips.tsx";
 import { LAND_COLOR } from "../../../utils/colors.ts";
 import { joinArr } from "../../../utils/util.ts";
-import { NO_AUTHOR, NO_CITY } from "../../../constants";
+import { NO_AUTHOR } from "../../../constants";
+
+const HighlightedText = lazy(() => import("../features/HighlightedText.tsx"));
 
 type ItemModalProps = {
   item: Item;
@@ -146,7 +144,12 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
         <ModalClose title="Close" onClick={onClose}>
           ✕
         </ModalClose>
-        {features && <ItemInfo isRow item={item} />}
+        {features && (
+          <ItemInfo
+            isRow={item.imageUrl || (item.title && item.title !== "?")}
+            item={item}
+          />
+        )}
         <ModalTextContainer>
           {item.imageUrl && (
             <ModalTextColumn isImage>
