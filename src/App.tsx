@@ -12,15 +12,20 @@ import { TourProvider } from "@reactour/tour";
 import { tourSteps } from "./components/map/Tour.tsx";
 import { PANE_COLOR_ALT } from "./utils/colors.ts";
 import Map from "./pages/Map.tsx";
+import {
+  HOME_ROUTE,
+  MAP_ROUTE,
+  TITLE_PAGES_ROUTE,
+} from "./components/layout/routes.ts";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/tps" element={<TitlePage />} />
+        <Route path={HOME_ROUTE} element={<Home />} />
+        <Route path={TITLE_PAGES_ROUTE} element={<TitlePage />} />
         <Route
-          path="/map"
+          path={MAP_ROUTE}
           element={
             <TourProvider
               steps={tourSteps}
@@ -37,7 +42,7 @@ function App() {
             </TourProvider>
           }
         />
-        <Route path="*" element={<Navigate replace to="/" />} />
+        <Route path="*" element={<Navigate replace to={HOME_ROUTE} />} />
       </Route>,
     ),
   );

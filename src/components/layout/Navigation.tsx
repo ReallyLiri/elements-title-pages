@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Row } from "../common";
+import { HOME_ROUTE, MAP_ROUTE, TITLE_PAGES_ROUTE } from "./routes.ts";
 
 export const NAVBAR_HEIGHT = 60;
 
@@ -52,14 +53,14 @@ function Navigation() {
         M. Joskowicz Elements Compendium
         <VerticalLine />
         <NavItems>
-          <NavItem active={location.pathname === "/"}>
-            <Link to="/">Home</Link>
+          <NavItem active={location.pathname === HOME_ROUTE}>
+            <Link to={HOME_ROUTE}>Home</Link>
           </NavItem>
-          <NavItem active={location.pathname === "/tps"}>
-            <Link to="/tps">Title Pages</Link>
+          <NavItem active={location.pathname === TITLE_PAGES_ROUTE}>
+            <Link to={TITLE_PAGES_ROUTE}>Title Pages</Link>
           </NavItem>
-          <NavItem active={location.pathname === "/map"}>
-            <Link to="/map">Timeline</Link>
+          <NavItem active={location.pathname === MAP_ROUTE}>
+            <Link to={MAP_ROUTE}>Timeline</Link>
           </NavItem>
         </NavItems>
       </Row>

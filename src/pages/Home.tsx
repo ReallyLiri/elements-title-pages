@@ -9,6 +9,7 @@ import {
   PANE_COLOR,
   SEA_COLOR,
 } from "../utils/colors.ts";
+import { MAP_ROUTE, TITLE_PAGES_ROUTE } from "../components/layout/routes.ts";
 
 const StyledContainer = styled(Container)`
   margin: 0;
@@ -54,7 +55,7 @@ function Home() {
       </Row>
       <Row gap={2} style={{ justifyContent: "center" }}>
         <div
-          onClick={() => navigate("/tps")}
+          onClick={() => navigate(TITLE_PAGES_ROUTE)}
           style={{
             display: "flex",
             justifyContent: "center",
@@ -72,7 +73,7 @@ function Home() {
           </Row>
         </div>
         <div
-          onClick={() => navigate("/map")}
+          onClick={() => navigate(MAP_ROUTE)}
           style={{
             display: "flex",
             justifyContent: "center",
