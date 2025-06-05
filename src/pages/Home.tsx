@@ -1,13 +1,7 @@
 import styled from "@emotion/styled";
 import { Container, Row, Text } from "../components/common";
 import { useNavigate } from "react-router-dom";
-import {
-  MARKER_4,
-  MARKER_5,
-  PANE_COLOR,
-  SEA_COLOR,
-  TRANSPARENT_BLACK,
-} from "../utils/colors.ts";
+import { MARKER_4, MARKER_5, PANE_COLOR, SEA_COLOR } from "../utils/colors.ts";
 import {
   CATALOGUE_ROUTE,
   MAP_ROUTE,
@@ -33,6 +27,7 @@ const ParallaxBackground = styled.div`
   background-repeat: no-repeat;
   z-index: -1;
   transform: translateY(0);
+  will-change: transform;
 `;
 
 const StyledContainer = styled(Container)`
@@ -131,7 +126,7 @@ function Home() {
 
   useEffect(() => {
     const img = new Image();
-    img.src = "/scan.png";
+    img.src = "/scan-v2.png";
 
     img.onload = () => {
       const imageAspectRatio = img.naturalHeight / img.naturalWidth;
@@ -145,7 +140,6 @@ function Home() {
         setImageHeight(imageHeight);
 
         const effectiveBackgroundHeight = viewportHeight - topOffset;
-
         const imageScrollRange = imageHeight - effectiveBackgroundHeight;
         const pageScrollRange =
           document.documentElement.scrollHeight - viewportHeight;
@@ -153,12 +147,14 @@ function Home() {
         const scrollRatio = scrollTop / pageScrollRange;
         const translateY = scrollRatio * imageScrollRange;
 
-        setBgImageScrollY(translateY);
+        window.requestAnimationFrame(() => {
+          setBgImageScrollY(translateY);
+        });
       };
 
       handleScroll();
 
-      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", handleScroll, { passive: true });
       window.addEventListener("resize", handleScroll);
 
       return () => {
