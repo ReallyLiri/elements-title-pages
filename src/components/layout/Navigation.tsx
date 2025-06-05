@@ -9,6 +9,7 @@ import {
 import { FilterButton } from "./FilterButton";
 import { FaDraftingCompass } from "react-icons/fa";
 import { MARKER_5 } from "../../utils/colors.ts";
+import { useLayoutEffect } from "react";
 
 export const NAVBAR_HEIGHT = 60;
 
@@ -74,6 +75,10 @@ const StyledCompassIcon = styled(FaDraftingCompass)`
 
 function Navigation() {
   const location = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <>
