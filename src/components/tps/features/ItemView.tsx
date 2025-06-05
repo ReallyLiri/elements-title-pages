@@ -28,7 +28,7 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (itemRef.current) {
@@ -87,7 +87,7 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
                   >
                     <HighlightedText
                       text={item.title}
-                      features={features}
+                      features={features || []}
                       mapping={item.features}
                     />
                     {item.imprint && (
@@ -95,7 +95,7 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
                         <hr style={{ opacity: 0.3 }} />
                         <HighlightedText
                           text={item.imprint}
-                          features={features}
+                          features={features || []}
                           mapping={item.features}
                         />
                       </>

@@ -9,7 +9,6 @@ import {
   Row,
   ScrollToTopButton,
   Text,
-  ToggleButton,
 } from "../components/common";
 import {
   FeaturesNotSelectedByDefault,
@@ -178,7 +177,7 @@ function TitlePage() {
             width={TILE_WIDTH}
             item={item}
             mode={mode}
-            features={features}
+            features={titlePagesModeOn ? features : null}
           />
         ))}
       </Row>

@@ -39,7 +39,7 @@ const SmallText = styled.span`
 const InfoTitle = styled.div`
   font-size: 0.8rem;
   color: darkgray;
-  width: 2.5rem;
+  width: 3rem;
 `;
 
 const StyledHelpTip = styled(HelpTip)<{

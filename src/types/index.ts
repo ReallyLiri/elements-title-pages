@@ -67,7 +67,7 @@ export type ItemProps = {
   height: number;
   width: number;
   mode: Mode;
-  features: Feature[];
+  features: Feature[] | null;
 };
 
 export type City = {

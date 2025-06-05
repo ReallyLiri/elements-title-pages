@@ -133,8 +133,8 @@ export const loadEditionsData = (
                     type: ItemTypes[type],
                     format: raw["format"] as string | null,
                     ...parseBooks(raw["books"] as string | null),
-                    volumesCount: raw["volumes_count"]
-                      ? parseInt(raw["volumes_count"] as string)
+                    volumesCount: raw["volumesCount"]
+                      ? parseInt(raw["volumesCount"] as string)
                       : null,
                     class: raw["wClass"] as string | null,
                     features: Object.keys(FeatureToColumnName).reduce(

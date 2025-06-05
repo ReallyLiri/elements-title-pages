@@ -4,7 +4,6 @@ import styled from "@emotion/styled";
 import { MdQuestionMark } from "react-icons/md";
 import { Item } from "../../types";
 import { TOOLTIP_WCLASS } from "./MapTooltips.tsx";
-import React from "react";
 import { Switch, SwitchOption } from "./Switch.tsx";
 
 export type FilterValue = { label: string; value: string };
