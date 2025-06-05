@@ -65,9 +65,6 @@ const StyledImage = styled.img`
 `;
 
 const Greek = styled(Row)`
-  background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 0.5rem;
-  padding: 1rem;
   color: ${SEA_COLOR};
   margin-top: 4rem;
   text-align: center;
@@ -125,6 +122,7 @@ const Card = ({
 function Home() {
   const navigate = useNavigate();
   const [bgImageScrollY, setBgImageScrollY] = useState(0);
+  const [imageHeight, setImageHeight] = useState(0);
 
   useEffect(() => {
     const img = new Image();
@@ -132,14 +130,18 @@ function Home() {
 
     img.onload = () => {
       const imageAspectRatio = img.naturalHeight / img.naturalWidth;
+      const topOffset = NAVBAR_HEIGHT + 12 * 16;
 
       const handleScroll = () => {
         const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight - NAVBAR_HEIGHT * 3.5;
+        const viewportHeight = window.innerHeight;
         const scrollTop = window.scrollY;
         const imageHeight = viewportWidth * imageAspectRatio;
+        setImageHeight(imageHeight);
 
-        const imageScrollRange = imageHeight - viewportHeight;
+        const effectiveBackgroundHeight = viewportHeight - topOffset;
+
+        const imageScrollRange = imageHeight - effectiveBackgroundHeight;
         const pageScrollRange =
           document.documentElement.scrollHeight - viewportHeight;
 
@@ -165,7 +167,10 @@ function Home() {
     <>
       <ParallaxBackground
         id="parallax-bg"
-        style={{ transform: `translateY(-${bgImageScrollY}px)` }}
+        style={{
+          height: imageHeight,
+          transform: `translateY(-${bgImageScrollY}px)`,
+        }}
       />
       <StyledContainer>
         <Row column gap={1}>

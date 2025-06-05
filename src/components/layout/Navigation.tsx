@@ -1,13 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
 import {
+  CATALOGUE_ROUTE,
   HOME_ROUTE,
   MAP_ROUTE,
   TITLE_PAGES_ROUTE,
-  CATALOGUE_ROUTE,
 } from "./routes.ts";
 import { FilterButton } from "./FilterButton";
 import { FaDraftingCompass } from "react-icons/fa";
+import { MARKER_5 } from "../../utils/colors.ts";
 
 export const NAVBAR_HEIGHT = 60;
 
@@ -62,12 +63,13 @@ const VerticalLine = styled.div`
 `;
 
 const SiteTitle = styled.div`
-  color: white;
+  color: ${MARKER_5};
   white-space: nowrap;
 `;
 
 const StyledCompassIcon = styled(FaDraftingCompass)`
   margin-left: 0.5rem;
+  color: ${MARKER_5};
 `;
 
 function Navigation() {
