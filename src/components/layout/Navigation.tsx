@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Row } from "../common";
 import { HOME_ROUTE, MAP_ROUTE, TITLE_PAGES_ROUTE } from "./routes.ts";
+import { FilterButton } from "./FilterButton";
 
 export const NAVBAR_HEIGHT = 60;
 
@@ -12,7 +13,12 @@ const NavContainer = styled.nav`
   height: calc(${NAVBAR_HEIGHT}px - 2rem);
   background-color: black;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  justify-content: center;
+`;
+
+const NavContent = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
 `;
 
 const NavItems = styled.ul`
@@ -44,13 +50,20 @@ const VerticalLine = styled.div`
   margin: 0 1rem;
 `;
 
+const SiteTitle = styled.div`
+  color: white;
+  white-space: nowrap;
+`;
+
 function Navigation() {
   const location = useLocation();
 
   return (
     <NavContainer>
-      <Row>
-        M. Joskowicz Elements Compendium
+      <NavContent>
+        <FilterButton />
+        <VerticalLine />
+        <SiteTitle>M. Joskowicz Elements Compendium</SiteTitle>
         <VerticalLine />
         <NavItems>
           <NavItem active={location.pathname === HOME_ROUTE}>
@@ -63,7 +76,7 @@ function Navigation() {
             <Link to={MAP_ROUTE}>Timeline</Link>
           </NavItem>
         </NavItems>
-      </Row>
+      </NavContent>
     </NavContainer>
   );
 }
