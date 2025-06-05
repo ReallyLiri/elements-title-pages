@@ -21,7 +21,6 @@ const PlayButton = styled.div`
 `;
 
 const StyledRangeSlider = styled(RangeSlider)`
-  width: 100%;
   height: 0.5rem;
   gap: 0.5rem;
   input[type="number"] {
@@ -35,7 +34,6 @@ const RangeWrapper = styled.div`
   flex-direction: row;
   gap: 0.5rem;
   height: 100%;
-  width: 100%;
   align-items: center;
 `;
 
@@ -59,8 +57,12 @@ export const Timeline = ({ minYear, maxYear, rangeChanged }: TimelineProps) => {
   }, [maxYear, minYear, range, setGlobalRange]);
 
   const playStep = useCallback(
-    () => setGlobalRange(([from, to]) => [from, Math.min(maxYear, to + PLAY_STEP_YEARS)]),
-    [maxYear, setGlobalRange]
+    () =>
+      setGlobalRange(([from, to]) => [
+        from,
+        Math.min(maxYear, to + PLAY_STEP_YEARS),
+      ]),
+    [maxYear, setGlobalRange],
   );
 
   useEffect(() => {
@@ -72,7 +74,10 @@ export const Timeline = ({ minYear, maxYear, rangeChanged }: TimelineProps) => {
   }, [isPlay, playStep]);
 
   useEffect(() => {
-    if (range[0] !== lastRangeChangedRef.current[0] || range[1] !== lastRangeChangedRef.current[1]) {
+    if (
+      range[0] !== lastRangeChangedRef.current[0] ||
+      range[1] !== lastRangeChangedRef.current[1]
+    ) {
       rangeChangedRef.current(range[0], range[1]);
       lastRangeChangedRef.current = range;
     }

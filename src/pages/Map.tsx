@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useCallback } from "react";
 import { Point } from "react-simple-maps";
 import styled from "@emotion/styled";
 import { isEmpty } from "lodash";
@@ -54,12 +54,13 @@ const MapWrapper = styled.div`
 
 const ControlsRow = styled.div`
   position: relative;
-  left: 2rem;
+  right: 1rem;
   bottom: 4rem;
   display: flex;
   flex-direction: row;
   gap: 1rem;
   align-items: center;
+  justify-content: flex-end;
 `;
 
 const MapSection = styled.div`
@@ -104,8 +105,15 @@ const Pane = styled.div<{
 
 const Map = () => {
   const { height } = useWindowSize();
-  const { cities, filteredItems, range, setRange, filterOpen, maxYear } =
-    useFilter();
+  const {
+    cities,
+    filteredItems,
+    range,
+    setRange,
+    filterOpen,
+    setFilterOpen,
+    maxYear,
+  } = useFilter();
   const [zoom, setZoom] = useLocalStorage<number>("zoom", 1);
   const {
     ref: mapSectionRef,
@@ -134,6 +142,12 @@ const Map = () => {
     }
   }, [setTourOpen, setToured, toured]);
 
+  const handleMapClick = useCallback(() => {
+    if (filterOpen) {
+      setFilterOpen(false);
+    }
+  }, [filterOpen, setFilterOpen]);
+
   const itemsByCity = useMemo(() => {
     const res = {} as Record<string, typeof filteredItems>;
     filteredItems.forEach((item) => {
@@ -161,7 +175,7 @@ const Map = () => {
 
   return (
     <Wrapper>
-      <MapSection ref={mapSectionRef}>
+      <MapSection ref={mapSectionRef} onClick={handleMapClick}>
         <MapWrapper>
           <CitiesMap
             height={height}
