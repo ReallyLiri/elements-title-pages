@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
 import { HOME_ROUTE, MAP_ROUTE, TITLE_PAGES_ROUTE } from "./routes.ts";
 import { FilterButton } from "./FilterButton";
+import { FaDraftingCompass } from "react-icons/fa";
 
 export const NAVBAR_HEIGHT = 60;
 
@@ -54,6 +55,10 @@ const SiteTitle = styled.div`
   white-space: nowrap;
 `;
 
+const StyledCompassIcon = styled(FaDraftingCompass)`
+  margin-left: 0.5rem;
+`;
+
 function Navigation() {
   const location = useLocation();
 
@@ -63,6 +68,7 @@ function Navigation() {
         <FilterButton />
         <VerticalLine />
         <SiteTitle>M. Joskowicz Elements Compendium</SiteTitle>
+        <StyledCompassIcon />
         <VerticalLine />
         <NavItems>
           <NavItem active={location.pathname === HOME_ROUTE}>
