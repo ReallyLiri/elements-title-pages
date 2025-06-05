@@ -20,7 +20,7 @@ type FilterProps = {
 };
 
 const FilterTitle = styled.div`
-  font-size: 1.6rem;
+  font-size: 1rem;
   margin-bottom: -0.5rem;
   color: black;
 `;
@@ -89,7 +89,10 @@ export const Filter = ({
   return (
     <>
       <Row>
-        <FilterTitle className="gothic">{label}</FilterTitle>
+        <FilterTitle>
+          <span className="gothic">{label[0]}</span>
+          {label.slice(1)}
+        </FilterTitle>
         {field === "class" && <HelpTip tooltipId={TOOLTIP_WCLASS} />}
         <Filler />
       </Row>

@@ -1,4 +1,11 @@
-import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Item } from "../types";
 import { FilterValue } from "../components/map/Filter";
 import { useLocalStorage } from "usehooks-ts";
@@ -13,9 +20,13 @@ type FilterContextType = {
   cities: Record<string, Point>;
   filteredItems: Item[];
   filters: Record<string, FilterValue[] | undefined>;
-  setFilters: React.Dispatch<React.SetStateAction<Record<string, FilterValue[] | undefined>>>;
+  setFilters: React.Dispatch<
+    React.SetStateAction<Record<string, FilterValue[] | undefined>>
+  >;
   filtersInclude: Record<string, boolean>;
-  setFiltersInclude: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
+  setFiltersInclude: React.Dispatch<
+    React.SetStateAction<Record<string, boolean>>
+  >;
   range: [number, number];
   setRange: React.Dispatch<React.SetStateAction<[number, number]>>;
   filterOpen: boolean;
@@ -77,10 +88,27 @@ const filterRecord = (
 export const FilterProvider = ({ children }: { children: ReactNode }) => {
   const [data, setData] = useState<Item[]>([]);
   const [cities, setCities] = useState<Record<string, Point>>({});
-  const [range, setRange] = useLocalStorage<[number, number]>("map-timeline", [MIN_YEAR, MAX_YEAR]);
-  const [filters, setFilters] = useLocalStorage<Record<string, FilterValue[] | undefined>>("map-filters", {});
-  const [filtersInclude, setFiltersInclude] = useLocalStorage<Record<string, boolean>>("map-filter-include", {});
-  const [filterOpen, setFilterOpen] = useLocalStorage<boolean>("map-filters-open", true);
+  const [range, setRange] = useLocalStorage<[number, number]>("time-range", [
+    MIN_YEAR,
+    MAX_YEAR,
+  ]);
+  const [filters, setFilters] = useLocalStorage<
+    Record<string, FilterValue[] | undefined>
+  >("filters", {
+    type: [
+      {
+        label: "Elements",
+        value: "Elements",
+      },
+    ],
+  });
+  const [filtersInclude, setFiltersInclude] = useLocalStorage<
+    Record<string, boolean>
+  >("filter-include", {});
+  const [filterOpen, setFilterOpen] = useLocalStorage<boolean>(
+    "filters-open",
+    true,
+  );
 
   useEffect(() => {
     loadEditionsData(setData, true);
@@ -118,5 +146,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     maxYear,
   };
 
-  return <FilterContext.Provider value={value}>{children}</FilterContext.Provider>;
+  return (
+    <FilterContext.Provider value={value}>{children}</FilterContext.Provider>
+  );
 };

@@ -150,6 +150,12 @@ export const FilterPane = () => {
       <FiltersGroup
         data={data}
         fields={{
+          type: {
+            displayName: "Book Classification",
+          },
+          languages: {
+            isArray: true,
+          },
           cities: {
             isArray: true,
             customCompareFn: ((a: string, b: string) => {
@@ -157,10 +163,6 @@ export const FilterPane = () => {
               if (b === FLOATING_CITY) return 1;
               return a.localeCompare(b, undefined, { sensitivity: "base" });
             }) as (a: unknown, b: unknown) => number,
-          },
-          class: { displayName: "Wardhaugh Class" },
-          languages: {
-            isArray: true,
           },
           authors: {
             isArray: true,
@@ -182,6 +184,7 @@ export const FilterPane = () => {
             isArray: true,
             customCompareFn: (a, b) => (a as string).localeCompare(b as string),
           },
+          class: { displayName: "Wardhaugh Class" },
         }}
         filters={filters}
         setFilters={setFilters}
