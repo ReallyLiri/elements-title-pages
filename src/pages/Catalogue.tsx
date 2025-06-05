@@ -11,7 +11,7 @@ import {
 import styled from "@emotion/styled";
 import { Item } from "../types";
 import { useFilter } from "../contexts/FilterContext";
-import { Container, Row, ScrollToTopButton, Text } from "../components/common";
+import { Container, Row, ScrollToTopButton, ScrollbarStyle, Text } from "../components/common";
 import ItemModal from "../components/tps/modal/ItemModal";
 import { NO_AUTHOR, NO_CITY, NO_YEAR } from "../constants";
 import { joinArr } from "../utils/util.ts";
@@ -19,26 +19,8 @@ import { FaBookReader } from "react-icons/fa";
 import { SEA_COLOR } from "../utils/colors.ts";
 
 const TableContainer = styled.div`
+  ${ScrollbarStyle};
   overflow-x: auto;
-
-  ::-webkit-scrollbar-track {
-    background-color: inherit;
-  }
-
-  ::-webkit-scrollbar {
-    width: 0.5rem;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: #666;
-    border-radius: 0.5rem;
-  }
-
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: #666 inherit;
-  }
-
   border-radius: 0.5rem;
   background-color: aliceblue;
   color: black;

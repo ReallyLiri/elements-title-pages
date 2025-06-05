@@ -15,6 +15,7 @@ export const Modal = styled.div`
 `;
 
 export const ModalContent = styled.div<{ hasImage: boolean }>`
+  ${ScrollbarStyle};
   background-color: aliceblue;
   min-height: 24rem;
   max-height: 60vh;
@@ -52,6 +53,7 @@ export const ModalTitleRow = styled(Row)`
 `;
 
 export const ModalTextContainer = styled.div`
+  ${ScrollbarStyle};
   display: flex;
   flex-direction: row;
   gap: 2rem;
