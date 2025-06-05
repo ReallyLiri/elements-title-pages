@@ -23,7 +23,7 @@ const Pane = styled.div`
   border-radius: 0 0.7rem 0.7rem 0.7rem;
   border-right: 2px ${PANE_BORDER} solid;
   border-bottom: 2px ${PANE_BORDER} solid;
-  position: absolute;
+  position: fixed;
   top: 60px;
   left: 0;
   z-index: 100;
