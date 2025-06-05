@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import { PANE_BORDER, PANE_COLOR } from "../../utils/colors";
+import { PANE_BORDER } from "../../utils/colors";
 import { FiltersGroup } from "./FiltersGroup";
 import { useFilter } from "../../contexts/FilterContext";
 import { useEffect, useRef } from "react";
+import { FLOATING_CITY } from "../../types";
 
 const Pane = styled.div<{
   borderRight: boolean;
@@ -16,7 +17,8 @@ const Pane = styled.div<{
   width: ${({ widthPercentage }) => widthPercentage || 20}%;
   min-width: 256px;
   overflow-x: auto;
-  background-color: ${({ backgroundColor }) => backgroundColor || PANE_COLOR};
+  background-color: white;
+  color: black;
   padding: 1rem;
   margin-bottom: 10rem;
   ${({ borderRight }) =>
@@ -25,6 +27,27 @@ const Pane = styled.div<{
   top: 60px;
   left: 0;
   z-index: 100;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+    border: 3px solid #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
 `;
 
 const formatCompare = (a: string, b: string): number => {
@@ -67,11 +90,10 @@ export const FilterPane = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      // Skip if the filter button was clicked (it handles its own state)
-      if ((event.target as Element).closest('#filter-toggle-button')) {
+      if ((event.target as Element).closest("#filter-toggle-button")) {
         return;
       }
-      
+
       if (
         filterOpen &&
         paneRef.current &&
@@ -102,6 +124,11 @@ export const FilterPane = () => {
         fields={{
           cities: {
             isArray: true,
+            customCompareFn: ((a: string, b: string) => {
+              if (a === FLOATING_CITY) return -1;
+              if (b === FLOATING_CITY) return 1;
+              return a.localeCompare(b, undefined, { sensitivity: "base" });
+            }) as (a: unknown, b: unknown) => number,
           },
           class: { displayName: "Wardhaugh Class" },
           languages: {

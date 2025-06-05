@@ -76,7 +76,7 @@ export type City = {
   lat: number;
 };
 
-export const FLOATING_CITY = "-";
+export const FLOATING_CITY = "s.l.";
 export const FLOATING_CITY_ENTRY: City = {
   city: FLOATING_CITY,
   lon: -16,

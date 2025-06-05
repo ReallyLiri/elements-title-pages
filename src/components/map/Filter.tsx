@@ -1,7 +1,6 @@
 import Select from "react-select";
 import {
   LAND_COLOR,
-  PANE_COLOR,
   SEA_COLOR,
   TRANSPARENT_WHITE,
 } from "../../utils/colors";
@@ -28,6 +27,7 @@ type FilterProps = {
 const FilterTitle = styled.div`
   font-size: 1.6rem;
   margin-bottom: -0.5rem;
+  color: black;
 `;
 
 const HelpTipButton = styled.div`
@@ -54,7 +54,7 @@ const HelpFloatingTip = styled.div`
   width: fit-content;
   padding: 0.5rem;
   a {
-    color: ${PANE_COLOR};
+    color: #333;
   }
 `;
 
@@ -127,6 +127,7 @@ const Row = styled.div`
   align-items: center;
   margin-bottom: -0.5rem;
   text-wrap: nowrap;
+  color: black;
 `;
 
 const Filler = styled.div`
@@ -199,7 +200,8 @@ export const Filter = ({
           }),
           option: (styles, { isFocused }) => ({
             ...styles,
-            backgroundColor: isFocused ? LAND_COLOR : undefined,
+            backgroundColor: isFocused ? "#f0f0f0" : undefined,
+            color: "black",
           }),
           multiValueRemove: (styles) => ({
             ...styles,
@@ -207,6 +209,22 @@ export const Filter = ({
               backgroundColor: SEA_COLOR,
               color: "white",
             },
+          }),
+          placeholder: (styles) => ({
+            ...styles,
+            color: "#666",
+          }),
+          singleValue: (styles) => ({
+            ...styles,
+            color: "black",
+          }),
+          multiValue: (styles) => ({
+            ...styles,
+            backgroundColor: "#f0f0f0",
+          }),
+          multiValueLabel: (styles) => ({
+            ...styles,
+            color: "black",
           }),
         }}
       />
