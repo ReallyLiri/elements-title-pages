@@ -3,7 +3,7 @@ import { MdPause, MdPlayArrow } from "react-icons/md";
 import styled from "@emotion/styled";
 import { ButtonStyle, TRANSPARENT_WHITE } from "../../utils/colors";
 import { TOOLTIP_TIMELINE_BUTTON } from "./MapTooltips.tsx";
-import { TIMELINE_PLAY_ID } from "./Tour";
+import { TIMELINE_PLAY_ID, TIMELINE_RANGE_ID } from "./Tour";
 import RangeSlider from "../../RangeSlider.tsx";
 import { useFilter } from "../../contexts/FilterContext";
 
@@ -97,7 +97,7 @@ export const Timeline = ({ minYear, maxYear, rangeChanged }: TimelineProps) => {
       >
         {isPlay ? <MdPause /> : <MdPlayArrow />}
       </PlayButton>
-      <RangeWrapper>
+      <RangeWrapper id={TIMELINE_RANGE_ID}>
         {range[0] > 0 && range[1] > 0 && (
           <StyledRangeSlider
             min={minYear}

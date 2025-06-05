@@ -2,8 +2,7 @@ import styled from "@emotion/styled";
 import { Link } from "./Link";
 import { SEA_COLOR } from "../../utils/colors.ts";
 
-export const COLLAPSE_FILTER_BUTTON_ID = "collapse-filter-btn";
-export const FILTER_INDEXED_ID = "filter-";
+export const FILTER_TOGGLE_BUTTON_ID = "filter-toggle-button";
 export const CITY_MARKER_ID = "marker-city-";
 export const ZOOM_CONTROLS_ID = "zoom-controls";
 export const TIMELINE_RANGE_ID = "range-slider";
@@ -14,6 +13,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem;
+  color: black;
 `;
 
 const Title = styled.div`
@@ -51,14 +51,11 @@ export const tourSteps = [
     ),
   },
   {
-    selector: `#${FILTER_INDEXED_ID}0`,
+    selector: `#${FILTER_TOGGLE_BUTTON_ID}`,
     content: (
       <Wrapper>Use the filters to refine the presented translations.</Wrapper>
     ),
-  },
-  {
-    selector: `#${COLLAPSE_FILTER_BUTTON_ID}`,
-    content: <Wrapper>Collapse or expand the filters pane.</Wrapper>,
+    position: [60, 30],
   },
   {
     selector: `#${ZOOM_CONTROLS_ID}`,
@@ -97,10 +94,10 @@ export const tourSteps = [
       <Wrapper>
         <Title>Credits and License</Title>
         <div>
-          All details can be found at{" "}
+          All details can be found at the{" "}
           <Link
-            url="https://github.com/ReallyLiri/elements-timeline/blob/main/README.md"
-            text="elements-timeline Github repository."
+            url="https://github.com/ReallyLiri/elements-title-pages/blob/main/README.md"
+            text="Github repository."
           />
         </div>
       </Wrapper>

@@ -42,3 +42,7 @@ body {
 .react-tooltip {
   z-index: 2000;
 }
+
+.reactour__close-button {
+  color: black;
+}

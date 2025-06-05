@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { isNil, startCase, uniq } from "lodash";
 import { Filter, FilterValue } from "./Filter";
-import { FILTER_INDEXED_ID } from "./Tour";
+import { FILTER_TOGGLE_BUTTON_ID } from "./Tour";
 import { FLOATING_CITY, Item } from "../../types";
 import { authorDisplayName } from "../../utils/dataUtils.ts";
 
@@ -81,7 +81,7 @@ export const FiltersGroup = ({
     <>
       {keys.map((field, index) => (
         <Filter
-          id={`${FILTER_INDEXED_ID}${index}`}
+          id={`${FILTER_TOGGLE_BUTTON_ID}${index}`}
           field={field}
           key={field}
           label={fields[field]?.displayName || startCase(field)}
