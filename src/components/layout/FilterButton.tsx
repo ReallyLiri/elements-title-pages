@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { LuFilter } from "react-icons/lu";
 import { useFilter } from "../../contexts/FilterContext";
 import { TOOLTIP_FILTERS } from "../map/MapTooltips";
-import { useRef } from "react";
+import React, { useRef } from "react";
 
 const FilterButtonContainer = styled.div`
   font-size: 1.5rem;

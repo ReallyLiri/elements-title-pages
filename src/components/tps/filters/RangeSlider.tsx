@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Row } from "../../common.ts";
 import { useEffect, useRef, useState } from "react";
-import { LAND_COLOR, RANGE_FILL, SEA_COLOR } from "../../../utils/colors.ts";
+import { RANGE_FILL, SEA_COLOR } from "../../../utils/colors.ts";
 
 export type RangeSliderProps = {
   className?: string;
@@ -76,10 +76,11 @@ const ValueInput = styled.input`
   width: 4rem;
   height: 2rem;
   text-align: center;
-  border: 1px solid ${LAND_COLOR};
+  border: 1px solid ${SEA_COLOR};
   border-radius: 4px;
   padding: 2px 4px;
-  background-color: ${SEA_COLOR};
+  background-color: white;
+  color: ${RANGE_FILL};
 
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
@@ -105,7 +106,10 @@ export const RangeSlider = ({
   const prevValueRef = useRef<[number, number]>(value);
 
   useEffect(() => {
-    if (value[0] !== prevValueRef.current[0] || value[1] !== prevValueRef.current[1]) {
+    if (
+      value[0] !== prevValueRef.current[0] ||
+      value[1] !== prevValueRef.current[1]
+    ) {
       setMinInputValue(value[0].toString());
       setMaxInputValue(value[1].toString());
       prevValueRef.current = value;
@@ -125,6 +129,7 @@ export const RangeSlider = ({
           const newMin = parseInt(minInputValue);
           if (!isNaN(newMin)) {
             const clampedMin = Math.max(min, Math.min(newMin, value[1]));
+            setMinInputValue(clampedMin.toString());
             if (clampedMin !== value[0]) {
               onChange([clampedMin, value[1]]);
             }
@@ -176,6 +181,7 @@ export const RangeSlider = ({
           const newMax = parseInt(maxInputValue);
           if (!isNaN(newMax)) {
             const clampedMax = Math.min(max, Math.max(newMax, value[0]));
+            setMaxInputValue(clampedMax.toString());
             if (clampedMax !== value[1]) {
               onChange([value[0], clampedMax]);
             }
