@@ -246,15 +246,15 @@ function Catalogue() {
         sortingFn: (rowA, rowB) => {
           const authorsA = rowA.original.authors || [];
           const authorsB = rowB.original.authors || [];
-          
+
           if (authorsA.length === 0 && authorsB.length === 0) return 0;
           if (authorsA.length === 0) return 1;
           if (authorsB.length === 0) return -1;
-          
+
           // Compare the first author of each item using authorDisplayName
           const displayNameA = authorDisplayName(authorsA[0]);
           const displayNameB = authorDisplayName(authorsB[0]);
-          
+
           return displayNameA.localeCompare(displayNameB);
         },
       }),
