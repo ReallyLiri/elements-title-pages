@@ -29,9 +29,7 @@ const SmallText = styled.span`
   color: darkgray;
 `;
 
-const StyledHelpTip = styled(WClassHelpTip)`
-  background-color: darkgray;
-  color: white;
+const StyledWClassHelpTip = styled(WClassHelpTip)`
   margin: 0 0 0 -0.5rem;
   z-index: 100;
 `;
@@ -105,15 +103,7 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
               <span>
                 <SmallText>Wardhaugh Class:</SmallText> {item.class}
               </span>
-              <StyledHelpTip>
-                <div>
-                  Classification according to{" "}
-                  <Link
-                    url="https://bibsoc.org.uk/euclid-print-1482-1703/"
-                    text="Euclid in print"
-                  />
-                </div>
-              </StyledHelpTip>
+              <StyledWClassHelpTip />
             </>
           )}
           {item.additionalContent && item.additionalContent.length > 0 && (
