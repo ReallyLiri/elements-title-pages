@@ -46,20 +46,21 @@ export const Timeline = ({ minYear, maxYear, rangeChanged }: TimelineProps) => {
   const { range, setRange: setGlobalRange } = useFilter();
   const [isPlay, setPlay] = useState<boolean>(false);
   const rangeChangedRef = useRef(rangeChanged);
+  const lastRangeChangedRef = useRef<[number, number]>([0, 0]);
+  const timelineInitializedRef = useRef(false);
 
   useEffect(() => {
-    if (range[0] === 0 && range[1] === 0) {
-      setGlobalRange([minYear, Math.round((minYear * 3 + maxYear) / 4)]);
+    if (!timelineInitializedRef.current && minYear > 0 && maxYear > 0) {
+      if (range[0] === 0 && range[1] === 0) {
+        setGlobalRange([minYear, Math.round((minYear * 3 + maxYear) / 4)]);
+      }
+      timelineInitializedRef.current = true;
     }
   }, [maxYear, minYear, range, setGlobalRange]);
 
   const playStep = useCallback(
-    () =>
-      setGlobalRange(([from, to]) => [
-        from,
-        Math.min(maxYear, to + PLAY_STEP_YEARS),
-      ]),
-    [maxYear, setGlobalRange],
+    () => setGlobalRange(([from, to]) => [from, Math.min(maxYear, to + PLAY_STEP_YEARS)]),
+    [maxYear, setGlobalRange]
   );
 
   useEffect(() => {
@@ -71,12 +72,14 @@ export const Timeline = ({ minYear, maxYear, rangeChanged }: TimelineProps) => {
   }, [isPlay, playStep]);
 
   useEffect(() => {
-    rangeChangedRef.current(range[0], range[1]);
-  }, [range, rangeChangedRef]);
+    if (range[0] !== lastRangeChangedRef.current[0] || range[1] !== lastRangeChangedRef.current[1]) {
+      rangeChangedRef.current(range[0], range[1]);
+      lastRangeChangedRef.current = range;
+    }
+  }, [range]);
 
   const handleRangeChange = (newRange: [number, number]) => {
     setGlobalRange(newRange);
-    rangeChanged(newRange[0], newRange[1]);
   };
 
   return (

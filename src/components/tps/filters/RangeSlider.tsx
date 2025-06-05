@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Row } from "../../common.ts";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LAND_COLOR, RANGE_FILL, SEA_COLOR } from "../../../utils/colors.ts";
 
 export type RangeSliderProps = {
@@ -102,10 +102,14 @@ export const RangeSlider = ({
 }: RangeSliderProps) => {
   const [minInputValue, setMinInputValue] = useState(value[0].toString());
   const [maxInputValue, setMaxInputValue] = useState(value[1].toString());
+  const prevValueRef = useRef<[number, number]>(value);
 
   useEffect(() => {
-    setMinInputValue(value[0].toString());
-    setMaxInputValue(value[1].toString());
+    if (value[0] !== prevValueRef.current[0] || value[1] !== prevValueRef.current[1]) {
+      setMinInputValue(value[0].toString());
+      setMaxInputValue(value[1].toString());
+      prevValueRef.current = value;
+    }
   }, [value]);
 
   return (
@@ -121,7 +125,9 @@ export const RangeSlider = ({
           const newMin = parseInt(minInputValue);
           if (!isNaN(newMin)) {
             const clampedMin = Math.max(min, Math.min(newMin, value[1]));
-            onChange([clampedMin, value[1]]);
+            if (clampedMin !== value[0]) {
+              onChange([clampedMin, value[1]]);
+            }
           } else {
             setMinInputValue(value[0].toString());
           }
@@ -142,7 +148,7 @@ export const RangeSlider = ({
           value={value[0]}
           onChange={(e) => {
             const newMin = parseInt(e.target.value);
-            if (newMin <= value[1]) {
+            if (newMin <= value[1] && newMin !== value[0]) {
               onChange([newMin, value[1]]);
             }
           }}
@@ -154,7 +160,7 @@ export const RangeSlider = ({
           value={value[1]}
           onChange={(e) => {
             const newMax = parseInt(e.target.value);
-            if (newMax >= value[0]) {
+            if (newMax >= value[0] && newMax !== value[1]) {
               onChange([value[0], newMax]);
             }
           }}
@@ -170,7 +176,9 @@ export const RangeSlider = ({
           const newMax = parseInt(maxInputValue);
           if (!isNaN(newMax)) {
             const clampedMax = Math.min(max, Math.max(newMax, value[0]));
-            onChange([value[0], clampedMax]);
+            if (clampedMax !== value[1]) {
+              onChange([value[0], clampedMax]);
+            }
           } else {
             setMaxInputValue(value[1].toString());
           }
