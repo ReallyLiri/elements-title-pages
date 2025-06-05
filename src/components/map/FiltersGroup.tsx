@@ -3,6 +3,7 @@ import { isNil, startCase, uniq } from "lodash";
 import { Filter, FilterValue } from "./Filter";
 import { FILTER_INDEXED_ID } from "./Tour";
 import { FLOATING_CITY, Item } from "../../types";
+import { authorDisplayName } from "../../utils/dataUtils.ts";
 
 type FilterConfig = {
   isArray?: boolean;
@@ -56,7 +57,14 @@ export const FiltersGroup = ({
                 }),
             )
             .map((n) => n.toString()),
-        ).map(toOption);
+        ).map(
+          field === "authors"
+            ? (n) => ({
+                label: authorDisplayName(n),
+                value: n,
+              })
+            : toOption,
+        );
       } else {
         byFilter[field] = uniq(
           data

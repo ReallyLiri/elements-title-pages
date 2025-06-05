@@ -24,6 +24,7 @@ import { joinArr } from "../utils/util.ts";
 import { FaBookReader } from "react-icons/fa";
 import { SEA_COLOR } from "../utils/colors.ts";
 import { isEmpty } from "lodash";
+import { authorDisplayName } from "../utils/dataUtils.ts";
 
 const TableContainer = styled.div`
   ${ScrollbarStyle};
@@ -242,6 +243,20 @@ function Catalogue() {
         header: "Authors",
         cell: (info) => joinArr(info.getValue()) || NO_AUTHOR,
         size: 160,
+        sortingFn: (rowA, rowB) => {
+          const authorsA = rowA.original.authors || [];
+          const authorsB = rowB.original.authors || [];
+          
+          if (authorsA.length === 0 && authorsB.length === 0) return 0;
+          if (authorsA.length === 0) return 1;
+          if (authorsB.length === 0) return -1;
+          
+          // Compare the first author of each item using authorDisplayName
+          const displayNameA = authorDisplayName(authorsA[0]);
+          const displayNameB = authorDisplayName(authorsB[0]);
+          
+          return displayNameA.localeCompare(displayNameB);
+        },
       }),
       columnHelper.accessor("format", {
         header: "Format",
@@ -250,6 +265,7 @@ function Catalogue() {
       }),
       columnHelper.accessor("elementsBooks", {
         header: "Elements Books",
+        enableSorting: false,
         cell: (info) =>
           info
             .getValue()
@@ -294,6 +310,7 @@ function Catalogue() {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     columnResizeMode,
+    sortDescFirst: false,
   });
 
   const types = isEmpty(filters["type"])
