@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Row, ScrollbarStyle } from "../../common.ts";
+import { css } from "@emotion/react";
 
 export const Modal = styled.div`
   position: fixed;
@@ -73,9 +74,22 @@ export const TextColumnsContainer = styled.div`
 export const ModalTextColumn = styled.div<{
   isImage?: boolean;
   isTextContent?: boolean;
+  isRow?: boolean;
 }>`
   flex: 1;
   overflow-y: ${({ isImage }) => (isImage ? "hidden" : "visible")};
   line-height: 1.8;
   padding: 0 0.5rem;
+  ${({ isRow }) =>
+    isRow &&
+    css`
+      max-width: 60%;
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      div {
+        display: block;
+      }
+    `}
 `;
