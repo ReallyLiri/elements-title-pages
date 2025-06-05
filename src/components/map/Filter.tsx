@@ -95,8 +95,6 @@ export const Filter = ({
         </FilterTitle>
         {field === "class" && <HelpTip tooltipId={TOOLTIP_WCLASS} />}
         <Filler />
-      </Row>
-      <Row>
         <Switch>
           <SwitchOption
             selected={include}

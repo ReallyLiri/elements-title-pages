@@ -8,14 +8,14 @@ import RangeSlider from "../tps/filters/RangeSlider";
 
 const Pane = styled.div<{
   borderRight: boolean;
-  widthPercentage?: number;
   backgroundColor?: string;
 }>`
   display: flex;
   flex-direction: column;
   gap: 1rem;
   height: calc(100vh - 6rem + 4px);
-  width: ${({ widthPercentage }) => widthPercentage || 20}%;
+  width: 20rem;
+  max-width: 100vw;
   min-width: 256px;
   overflow-x: auto;
   background-color: white;
@@ -134,12 +134,7 @@ export const FilterPane = () => {
   if (!filterOpen) return null;
 
   return (
-    <Pane
-      ref={paneRef}
-      borderRight={true}
-      widthPercentage={16}
-      onClick={(e) => e.stopPropagation()}
-    >
+    <Pane ref={paneRef} borderRight={true} onClick={(e) => e.stopPropagation()}>
       <StyledRangeSlider
         min={minYear}
         max={maxYear}
