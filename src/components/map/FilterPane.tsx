@@ -93,7 +93,7 @@ export const FilterPane = () => {
       if (element?.closest("#filter-toggle-button")) {
         return;
       }
-      if (element?.closest("a") || element?.querySelector("a")) {
+      if (element?.tagName === "A" || element?.querySelector(":scope a")) {
         return;
       }
 
@@ -106,10 +106,18 @@ export const FilterPane = () => {
       }
     };
 
+    const handleScroll = () => {
+      if (filterOpen && paneRef.current) {
+        setFilterOpen(false);
+      }
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("scroll", handleScroll);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("scroll", handleScroll);
     };
   }, [filterOpen, setFilterOpen]);
 
