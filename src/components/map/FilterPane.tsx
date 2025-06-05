@@ -67,6 +67,11 @@ export const FilterPane = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      // Skip if the filter button was clicked (it handles its own state)
+      if ((event.target as Element).closest('#filter-toggle-button')) {
+        return;
+      }
+      
       if (
         filterOpen &&
         paneRef.current &&
