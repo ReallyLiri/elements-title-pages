@@ -121,12 +121,15 @@ const Card = ({
 
 function Home() {
   const navigate = useNavigate();
-  const [bgImageScrollY, setBgImageScrollY] = useState(0);
   const [imageHeight, setImageHeight] = useState(0);
 
   useEffect(() => {
     const img = new Image();
     img.src = "/scan-v2.png";
+    const bgElement = document.getElementById("parallax-bg");
+    if (!bgElement) {
+      return;
+    }
 
     img.onload = () => {
       const imageAspectRatio = img.naturalHeight / img.naturalWidth;
@@ -147,9 +150,7 @@ function Home() {
         const scrollRatio = scrollTop / pageScrollRange;
         const translateY = scrollRatio * imageScrollRange;
 
-        window.requestAnimationFrame(() => {
-          setBgImageScrollY(translateY);
-        });
+        bgElement.style.transform = `translateY(-${translateY}px)`;
       };
 
       handleScroll();
@@ -170,7 +171,6 @@ function Home() {
         id="parallax-bg"
         style={{
           height: imageHeight,
-          transform: `translateY(-${bgImageScrollY}px)`,
         }}
       />
       <StyledContainer>
