@@ -25,7 +25,7 @@ import { LAND_COLOR } from "../../../utils/colors.ts";
 
 type ItemModalProps = {
   item: Item;
-  features: Feature[];
+  features: Feature[] | null;
   onClose: () => void;
 };
 
@@ -34,8 +34,18 @@ const SmallText = styled.span`
   color: darkgray;
 `;
 
-const StyledHelpTip = styled(HelpTip)<{ marginTop?: string }>`
-  margin: 0 0 ${({ marginTop }) => marginTop || "0"} -0.5rem;
+const InfoTitle = styled.div`
+  font-size: 0.8rem;
+  color: darkgray;
+  width: 2.5rem;
+`;
+
+const StyledHelpTip = styled(HelpTip)<{
+  marginLeft?: string;
+  marginTop?: string;
+}>`
+  margin: 0 0 ${({ marginTop }) => marginTop || "0"}
+    ${({ marginLeft }) => marginLeft || "-0.5rem"};
   z-index: 100;
 `;
 
@@ -57,68 +67,72 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
         <ModalClose title="Close" onClick={onClose}>
           ✕
         </ModalClose>
-        <ModalTitleRow>
-          <span>{item.year || "s.d."}</span>
-          <span>
-            <SmallText>by</SmallText> {item.authors.join(" & ") || "s.n."}
-          </span>
-          <span>
-            <SmallText>in</SmallText> {item.cities.join(", ") || "s.l."}
-          </span>
-          <span>
-            <SmallText>in</SmallText> {item.languages.join(" & ")}
-          </span>
-          {item.scanUrl && (
-            <StyledAnchor
-              href={item.scanUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-tooltip-id={TOOLTIP_SCAN}
-              data-tooltip-content="View Facsimilie Online"
-              data-tooltip-place="bottom"
-            >
-              <FaBookReader />
-            </StyledAnchor>
-          )}
-        </ModalTitleRow>
-        <ModalTitleRow>
-          {item.format && (
-            <span>
-              <SmallText>Format:</SmallText> {item.format}
-            </span>
-          )}
-          {item.volumesCount && (
-            <span>
-              <SmallText>Volumes:</SmallText> {item.volumesCount}
-            </span>
-          )}
-          {item.elementsBooks && (
-            <span>
-              <SmallText>Books:</SmallText>{" "}
-              {item.elementsBooks
-                .map((range) =>
-                  range.end === range.start
-                    ? range.start.toString()
-                    : `${range.start}-${range.end}`,
-                )
-                .join(", ")}
-            </span>
-          )}
-          {item.class && (
-            <>
+        {features && (
+          <>
+            <ModalTitleRow>
+              <span>{item.year || "s.d."}</span>
               <span>
-                <SmallText>Wardhaugh Class:</SmallText> {item.class}
+                <SmallText>by</SmallText> {item.authors.join(" & ") || "s.n."}
               </span>
-              <StyledHelpTip tooltipId={TOOLTIP_WCLASS} />
-            </>
-          )}
-          {item.additionalContent && item.additionalContent.length > 0 && (
-            <span>
-              <SmallText>Additional Content:</SmallText>{" "}
-              {item.additionalContent.join(", ")}
-            </span>
-          )}
-        </ModalTitleRow>
+              <span>
+                <SmallText>in</SmallText> {item.cities.join(", ") || "s.l."}
+              </span>
+              <span>
+                <SmallText>in</SmallText> {item.languages.join(" & ")}
+              </span>
+              {item.scanUrl && (
+                <StyledAnchor
+                  href={item.scanUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-tooltip-id={TOOLTIP_SCAN}
+                  data-tooltip-content="View Facsimile Online"
+                  data-tooltip-place="bottom"
+                >
+                  <FaBookReader />
+                </StyledAnchor>
+              )}
+            </ModalTitleRow>
+            <ModalTitleRow>
+              {item.format && (
+                <span>
+                  <SmallText>Format:</SmallText> {item.format}
+                </span>
+              )}
+              {item.volumesCount && (
+                <span>
+                  <SmallText>Volumes:</SmallText> {item.volumesCount}
+                </span>
+              )}
+              {item.elementsBooks && (
+                <span>
+                  <SmallText>Books:</SmallText>{" "}
+                  {item.elementsBooks
+                    .map((range) =>
+                      range.end === range.start
+                        ? range.start.toString()
+                        : `${range.start}-${range.end}`,
+                    )
+                    .join(", ")}
+                </span>
+              )}
+              {item.class && (
+                <>
+                  <span>
+                    <SmallText>Wardhaugh Class:</SmallText> {item.class}
+                  </span>
+                  <StyledHelpTip tooltipId={TOOLTIP_WCLASS} />
+                </>
+              )}
+              {item.additionalContent && item.additionalContent.length > 0 && (
+                <span>
+                  <SmallText>Additional Content:</SmallText>{" "}
+                  {item.additionalContent.join(", ")}
+                </span>
+              )}
+            </ModalTitleRow>
+          </>
+        )}
         <ModalTextContainer>
           {item.imageUrl && (
             <ModalTextColumn isImage>
@@ -129,7 +143,7 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
               />
             </ModalTextColumn>
           )}
-          {item.title && item.title !== "?" && (
+          {features && item.title && item.title !== "?" && (
             <TextColumnsContainer>
               <ModalTextColumn isTextContent>
                 <ModalTitle justifyStart gap={1}>
@@ -182,6 +196,88 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
                 </ModalTextColumn>
               )}
             </TextColumnsContainer>
+          )}
+          {!features && (
+            <ModalTextColumn>
+              <Row justifyStart>
+                <InfoTitle>Year: </InfoTitle>
+                {item.year || "s.d."}
+              </Row>
+              <Row justifyStart>
+                <InfoTitle>
+                  {item.authors.length > 1 ? "Authors:" : "Author:"}
+                </InfoTitle>{" "}
+                {item.authors.join(" & ") || "s.n."}
+              </Row>
+              <Row justifyStart>
+                <InfoTitle>
+                  {item.cities.length > 1 ? "Cities:" : "City:"}
+                </InfoTitle>{" "}
+                {item.cities.join(" & ") || "s.l."}
+              </Row>
+              <Row justifyStart>
+                <InfoTitle>
+                  {item.languages.length > 1 ? "Languages:" : "Language:"}
+                </InfoTitle>{" "}
+                {item.languages.join(" & ")}
+              </Row>
+              {item.scanUrl && (
+                <Row justifyStart>
+                  <InfoTitle>Facsimile:</InfoTitle>
+                  <StyledAnchor
+                    href={item.scanUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-tooltip-id={TOOLTIP_SCAN}
+                    data-tooltip-content="View Facsimile Online"
+                    data-tooltip-place="bottom"
+                  >
+                    <FaBookReader />
+                  </StyledAnchor>
+                </Row>
+              )}
+
+              {item.format && (
+                <Row justifyStart>
+                  <InfoTitle>Format:</InfoTitle> {item.format}
+                </Row>
+              )}
+              {item.volumesCount && (
+                <Row justifyStart>
+                  <InfoTitle>Volumes:</InfoTitle> {item.volumesCount}
+                </Row>
+              )}
+              {item.elementsBooks && (
+                <Row justifyStart>
+                  <InfoTitle>Books:</InfoTitle>{" "}
+                  {item.elementsBooks
+                    .map((range) =>
+                      range.end === range.start
+                        ? range.start.toString()
+                        : `${range.start}-${range.end}`,
+                    )
+                    .join(", ")}
+                </Row>
+              )}
+              {item.class && (
+                <>
+                  <Row justifyStart>
+                    <InfoTitle>Class:</InfoTitle> {item.class}
+                    <StyledHelpTip
+                      tooltipId={TOOLTIP_WCLASS}
+                      marginTop="2px"
+                      marginLeft="-1.5rem"
+                    />
+                  </Row>
+                </>
+              )}
+              {item.additionalContent && item.additionalContent.length > 0 && (
+                <Row justifyStart>
+                  <InfoTitle>Additional Content:</InfoTitle>{" "}
+                  {item.additionalContent.join(", ")}
+                </Row>
+              )}
+            </ModalTextColumn>
           )}
         </ModalTextContainer>
       </ModalContent>

@@ -51,7 +51,11 @@ export const HelpTip = ({
   tooltipId: string;
 }) => {
   return (
-    <HelpTipButton className={className} data-tooltip-id={tooltipId}>
+    <HelpTipButton
+      className={className}
+      data-tooltip-id={tooltipId}
+      data-tooltip-place="bottom"
+    >
       <StyledQuestionMark />
     </HelpTipButton>
   );

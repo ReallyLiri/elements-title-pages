@@ -234,7 +234,7 @@ const Map = () => {
       {!isEmpty(selectedRecord) && (
         <ItemModal
           item={selectedRecord}
-          features={[]}
+          features={null}
           onClose={() => setSelectedRecordId(undefined)}
         />
       )}

@@ -203,6 +203,7 @@ export const ImageTile = styled.div`
 
 export const StyledImage = styled.img<{ large?: boolean }>`
   ${Tile};
+  width: min-content;
   max-height: ${({ large }) => (large ? "100%" : "90%")};
   max-width: ${({ large }) => (large ? "100%" : "90%")};
   cursor: pointer;
