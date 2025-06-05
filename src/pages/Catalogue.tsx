@@ -11,23 +11,33 @@ import {
 import styled from "@emotion/styled";
 import { Item } from "../types";
 import { useFilter } from "../contexts/FilterContext";
-import { Container, Row, ScrollToTopButton, ScrollbarStyle, Text } from "../components/common";
+import {
+  Container,
+  Row,
+  ScrollToTopButton,
+  ScrollbarStyle,
+  Text,
+} from "../components/common";
 import ItemModal from "../components/tps/modal/ItemModal";
-import { NO_AUTHOR, NO_CITY, NO_YEAR } from "../constants";
+import { ItemTypes, NO_AUTHOR, NO_CITY, NO_YEAR } from "../constants";
 import { joinArr } from "../utils/util.ts";
 import { FaBookReader } from "react-icons/fa";
 import { SEA_COLOR } from "../utils/colors.ts";
+import { isEmpty } from "lodash";
 
 const TableContainer = styled.div`
   ${ScrollbarStyle};
+  max-width: 98vw;
   overflow-x: auto;
   border-radius: 0.5rem;
   background-color: aliceblue;
   color: black;
-  margin: 1rem;
+  margin-bottom: 2rem;
 `;
 
 const StyledTable = styled.table`
+  table-layout: fixed;
+  width: max-content;
   border-collapse: separate;
   border-spacing: 0;
   font-size: 0.8rem;
@@ -37,6 +47,13 @@ const StyledTable = styled.table`
     padding: 0.75rem;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  td:has(.language-container) {
+    white-space: normal;
   }
 
   thead {
@@ -44,6 +61,10 @@ const StyledTable = styled.table`
     top: 0;
     background-color: #f8f9fa;
     z-index: 1;
+  }
+
+  thead th {
+    background-color: #f8f9fa;
   }
 
   tbody tr {
@@ -125,13 +146,29 @@ const LanguageSpan = styled.span`
 `;
 
 function Catalogue() {
-  const { filteredItems } = useFilter();
+  const { filteredItems, filters } = useFilter();
   const [sorting, setSorting] = useState<SortingState>([
     { id: "year", desc: false },
   ]);
   const [columnResizeMode] = useState<ColumnResizeMode>("onChange");
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+
+  const { authorsCount, languagesCount, citiesCount } = useMemo(() => {
+    const authorsSet = new Set<string>();
+    const citiesSet = new Set<string>();
+    const languagesSet = new Set<string>();
+    filteredItems.forEach((item) => {
+      item.authors?.forEach((author) => authorsSet.add(author));
+      item.cities?.forEach((city) => citiesSet.add(city));
+      item.languages?.forEach((language) => languagesSet.add(language));
+    });
+    return {
+      authorsCount: authorsSet.size,
+      citiesCount: citiesSet.size,
+      languagesCount: languagesSet.size,
+    };
+  }, [filteredItems]);
 
   const handleScroll = () => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -159,38 +196,52 @@ function Catalogue() {
         header: "",
         enableSorting: false,
         cell: (info) => (
-          <ViewButton onClick={() => setSelectedItem(info.getValue())}>
-            ⤢
-          </ViewButton>
+          <Row gap={0.5} justifyStart>
+            <ViewButton
+              onClick={() => setSelectedItem(info.getValue())}
+              title="Full View"
+            >
+              ⤢
+            </ViewButton>
+            {info.row.original.scanUrl && (
+              <a
+                href={info.row.original.scanUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="View Facsimile Online"
+              >
+                <FaBookReader style={{ color: SEA_COLOR }} />
+              </a>
+            )}
+          </Row>
         ),
         size: 60,
       }),
       columnHelper.accessor("year", {
         header: "Year",
         cell: (info) => info.getValue() || NO_YEAR,
-        size: 60,
+        size: 10,
       }),
       columnHelper.accessor("cities", {
         header: "Cities",
         cell: (info) => joinArr(info.getValue()) || NO_CITY,
-        size: 150,
+        size: 40,
       }),
       columnHelper.accessor("languages", {
         header: "Languages",
-        cell: (info) =>
-          info
-            .getValue()
-            .map((lang, i) => <LanguageSpan key={i}>{lang}</LanguageSpan>),
-        size: 200,
+        cell: (info) => (
+          <div className="language-container">
+            {info.getValue().map((lang, i) => (
+              <LanguageSpan key={i}>{lang}</LanguageSpan>
+            ))}
+          </div>
+        ),
+        size: 100,
       }),
       columnHelper.accessor("authors", {
         header: "Authors",
         cell: (info) => joinArr(info.getValue()) || NO_AUTHOR,
-        size: 200,
-      }),
-      columnHelper.accessor("type", {
-        header: "Type",
-        size: 60,
+        size: 160,
       }),
       columnHelper.accessor("format", {
         header: "Format",
@@ -208,12 +259,12 @@ function Catalogue() {
                 : `${range.start}-${range.end}`,
             )
             .join(", "),
-        size: 120,
+        size: 105,
       }),
       columnHelper.accessor("volumesCount", {
         header: "Volumes",
         cell: (info) => info.getValue(),
-        size: 60,
+        size: 40,
       }),
       columnHelper.accessor("class", {
         header: "Class",
@@ -223,21 +274,11 @@ function Catalogue() {
       columnHelper.accessor("additionalContent", {
         header: "Additional Content",
         cell: (info) => joinArr(info.getValue()),
-        size: 250,
+        size: 140,
       }),
-      columnHelper.accessor("scanUrl", {
-        header: "Facsimile",
-        cell: (info) =>
-          info.getValue() && (
-            <a
-              href={info.getValue() as string}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaBookReader style={{ color: SEA_COLOR }} />
-            </a>
-          ),
-        size: 40,
+      columnHelper.accessor("type", {
+        header: "Type",
+        size: 60,
       }),
     ],
     [columnHelper],
@@ -255,8 +296,12 @@ function Catalogue() {
     columnResizeMode,
   });
 
+  const types = isEmpty(filters["type"])
+    ? Object.values(ItemTypes)
+    : filters["type"]?.map((a) => a.label);
+
   return (
-    <Container>
+    <Container style={{ width: "100%" }}>
       {showScrollTop && (
         <ScrollToTopButton onClick={scrollToTop} title="Scroll to top">
           ↑
@@ -264,7 +309,11 @@ function Catalogue() {
       )}
 
       <Row>
-        <Text size={1}>{filteredItems.length} entries found</Text>
+        <Text size={1}>
+          Listing {filteredItems.length} {types && joinArr(types)} editions, by{" "}
+          {authorsCount} authors, in {languagesCount} languages, from{" "}
+          {citiesCount} cities.
+        </Text>
       </Row>
 
       <TableContainer>
