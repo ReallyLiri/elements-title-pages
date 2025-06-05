@@ -6,6 +6,7 @@ import { isEmpty, isNil, isArray } from "lodash";
 import { loadCitiesAsync, loadEditionsData } from "../utils/dataUtils";
 import { Point } from "react-simple-maps";
 import { FLOATING_CITY } from "../types";
+import { MAX_YEAR, MIN_YEAR } from "../constants";
 
 type FilterContextType = {
   data: Item[];
@@ -76,7 +77,7 @@ const filterRecord = (
 export const FilterProvider = ({ children }: { children: ReactNode }) => {
   const [data, setData] = useState<Item[]>([]);
   const [cities, setCities] = useState<Record<string, Point>>({});
-  const [range, setRange] = useState<[number, number]>([0, 0]);
+  const [range, setRange] = useLocalStorage<[number, number]>("map-timeline", [MIN_YEAR, MAX_YEAR]);
   const [filters, setFilters] = useLocalStorage<Record<string, FilterValue[] | undefined>>("map-filters", {});
   const [filtersInclude, setFiltersInclude] = useLocalStorage<Record<string, boolean>>("map-filter-include", {});
   const [filterOpen, setFilterOpen] = useLocalStorage<boolean>("map-filters-open", true);
@@ -90,7 +91,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     const years = data
       .filter((t) => !!t.year)
       .map((t) => parseInt(t.year!.split("/")[0]));
-    return [Math.min(...years) || 0, Math.max(...years) || 0];
+    return [Math.min(...years) || MIN_YEAR, Math.max(...years) || MAX_YEAR];
   }, [data]);
 
   const filteredItems = useMemo(

@@ -1,8 +1,10 @@
 import styled from "@emotion/styled";
 import { Row } from "../../common.ts";
 import { useEffect, useState } from "react";
+import { LAND_COLOR, RANGE_FILL, SEA_COLOR } from "../../../utils/colors.ts";
 
 export type RangeSliderProps = {
+  className?: string;
   name?: string;
   value: [number, number];
   min: number;
@@ -22,7 +24,7 @@ const SliderTrack = styled.div`
   position: absolute;
   width: 100%;
   height: 0.25rem;
-  background-color: #666;
+  background-color: #ddd;
   border-radius: 0.125rem;
 `;
 
@@ -36,7 +38,7 @@ const SliderRange = styled.div<{
   left: ${({ left, min, max }) => ((left - min) / (max - min)) * 100}%;
   width: ${({ width, min, max }) => (width / (max - min)) * 100}%;
   height: 0.25rem;
-  background-color: #ddd;
+  background-color: ${RANGE_FILL};
   border-radius: 0.125rem;
 `;
 
@@ -55,7 +57,7 @@ const SliderInput = styled.input`
     width: 1rem;
     border-radius: 50%;
     background: #ddd;
-    border: 0.125rem solid #666;
+    border: 0.125rem solid ${RANGE_FILL};
     cursor: pointer;
     pointer-events: auto;
   }
@@ -74,9 +76,10 @@ const ValueInput = styled.input`
   width: 4rem;
   height: 2rem;
   text-align: center;
-  border: 1px solid #666;
+  border: 1px solid ${LAND_COLOR};
   border-radius: 4px;
   padding: 2px 4px;
+  background-color: ${SEA_COLOR};
 
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
@@ -90,6 +93,7 @@ const ValueInput = styled.input`
 `;
 
 export const RangeSlider = ({
+  className,
   name,
   value,
   min,
@@ -105,7 +109,7 @@ export const RangeSlider = ({
   }, [value]);
 
   return (
-    <Row justifyStart noWrap id="range-slider">
+    <Row justifyStart noWrap className={className}>
       {name && <div>{name}:</div>}
       <ValueInput
         type="number"

@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MdPause, MdPlayArrow } from "react-icons/md";
 import styled from "@emotion/styled";
-import { ButtonStyle, RANGE_FILL } from "../../utils/colors";
+import { ButtonStyle, TRANSPARENT_WHITE } from "../../utils/colors";
 import { TOOLTIP_TIMELINE_BUTTON } from "./MapTooltips.tsx";
-import { useLocalStorage } from "usehooks-ts";
 import { TIMELINE_PLAY_ID } from "./Tour";
 import RangeSlider from "../../RangeSlider.tsx";
+import { useFilter } from "../../contexts/FilterContext";
 
 type TimelineProps = {
   minYear: number;
@@ -23,6 +23,11 @@ const PlayButton = styled.div`
 const StyledRangeSlider = styled(RangeSlider)`
   width: 100%;
   height: 0.5rem;
+  gap: 0.5rem;
+  input[type="number"] {
+    color: black;
+    background-color: ${TRANSPARENT_WHITE};
+  }
 `;
 
 const RangeWrapper = styled.div`
@@ -32,43 +37,29 @@ const RangeWrapper = styled.div`
   height: 100%;
   width: 100%;
   align-items: center;
-
-  #range-slider {
-    gap: 0.5rem;
-    #range-slider-track {
-      background: ${RANGE_FILL};
-    }
-    input {
-      &::-webkit-slider-thumb {
-        border: 0.125rem solid ${RANGE_FILL};
-      }
-    }
-  }
 `;
 
 const PLAY_STEP_YEARS = 10;
 const PLAY_STEP_SEC = 1;
 
 export const Timeline = ({ minYear, maxYear, rangeChanged }: TimelineProps) => {
-  const [value, setValue] = useLocalStorage<[number, number]>(
-    "map-timeline",
-    [0, 0],
-  );
+  const { range, setRange: setGlobalRange } = useFilter();
   const [isPlay, setPlay] = useState<boolean>(false);
   const rangeChangedRef = useRef(rangeChanged);
 
   useEffect(() => {
-    setValue(([from, to]) =>
-      from > 0 && to > 0
-        ? [from, to]
-        : [minYear, Math.round((minYear * 3 + maxYear) / 4)],
-    );
-  }, [maxYear, minYear, setValue]);
+    if (range[0] === 0 && range[1] === 0) {
+      setGlobalRange([minYear, Math.round((minYear * 3 + maxYear) / 4)]);
+    }
+  }, [maxYear, minYear, range, setGlobalRange]);
 
   const playStep = useCallback(
     () =>
-      setValue(([from, to]) => [from, Math.min(maxYear, to + PLAY_STEP_YEARS)]),
-    [maxYear, setValue],
+      setGlobalRange(([from, to]) => [
+        from,
+        Math.min(maxYear, to + PLAY_STEP_YEARS),
+      ]),
+    [maxYear, setGlobalRange],
   );
 
   useEffect(() => {
@@ -80,8 +71,13 @@ export const Timeline = ({ minYear, maxYear, rangeChanged }: TimelineProps) => {
   }, [isPlay, playStep]);
 
   useEffect(() => {
-    rangeChangedRef.current(value[0], value[1]);
-  }, [rangeChangedRef, value]);
+    rangeChangedRef.current(range[0], range[1]);
+  }, [range, rangeChangedRef]);
+
+  const handleRangeChange = (newRange: [number, number]) => {
+    setGlobalRange(newRange);
+    rangeChanged(newRange[0], newRange[1]);
+  };
 
   return (
     <>
@@ -94,12 +90,12 @@ export const Timeline = ({ minYear, maxYear, rangeChanged }: TimelineProps) => {
         {isPlay ? <MdPause /> : <MdPlayArrow />}
       </PlayButton>
       <RangeWrapper>
-        {value[0] > 0 && value[1] > 0 && (
+        {range[0] > 0 && range[1] > 0 && (
           <StyledRangeSlider
             min={minYear}
             max={maxYear}
-            value={value}
-            onChange={(range: [number, number]) => setValue(range)}
+            value={range}
+            onChange={handleRangeChange}
           />
         )}
       </RangeWrapper>

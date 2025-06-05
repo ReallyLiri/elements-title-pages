@@ -4,6 +4,7 @@ import { FiltersGroup } from "./FiltersGroup";
 import { useFilter } from "../../contexts/FilterContext";
 import { useEffect, useRef } from "react";
 import { FLOATING_CITY } from "../../types";
+import RangeSlider from "../tps/filters/RangeSlider";
 
 const Pane = styled.div<{
   borderRight: boolean;
@@ -76,6 +77,13 @@ const formatCompare = (a: string, b: string): number => {
   }
 };
 
+const StyledRangeSlider = styled(RangeSlider)`
+  gap: 0.5rem;
+  input {
+    margin: 0;
+  }
+`;
+
 export const FilterPane = () => {
   const {
     data,
@@ -85,6 +93,10 @@ export const FilterPane = () => {
     setFiltersInclude,
     filterOpen,
     setFilterOpen,
+    range,
+    setRange,
+    minYear,
+    maxYear,
   } = useFilter();
   const paneRef = useRef<HTMLDivElement>(null);
 
@@ -119,6 +131,13 @@ export const FilterPane = () => {
       widthPercentage={16}
       onClick={(e) => e.stopPropagation()}
     >
+      <StyledRangeSlider
+        min={minYear}
+        max={maxYear}
+        value={range}
+        onChange={setRange}
+      />
+
       <FiltersGroup
         data={data}
         fields={{
