@@ -83,25 +83,25 @@ export const FilterPane = () => {
   const paneRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const toggleButtonId = "filter-toggle-button";
+    const toggleButton = document.getElementById(toggleButtonId);
+
     const handleClickOutside = (event: MouseEvent) => {
+      if (!filterOpen || !paneRef.current) return;
+
       const target = event.target as Node | null;
-      if (!target) {
-        return false;
-      }
-      const element =
-        target instanceof HTMLElement ? target : target.parentElement;
-      if (element?.closest("#filter-toggle-button")) {
-        return;
-      }
-      if (element?.tagName === "A" || element?.querySelector(":scope a")) {
+      if (!target) return false;
+
+      if (toggleButton && toggleButton.contains(target)) {
         return;
       }
 
-      if (
-        filterOpen &&
-        paneRef.current &&
-        !paneRef.current.contains(event.target as Node)
-      ) {
+      const element =
+        target instanceof HTMLElement ? target : target.parentElement;
+      if (element?.tagName === "A" || element?.querySelector(":scope a"))
+        return;
+
+      if (!paneRef.current.contains(target)) {
         setFilterOpen(false);
       }
     };
