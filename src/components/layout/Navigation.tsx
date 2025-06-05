@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
-import { HOME_ROUTE, MAP_ROUTE, TITLE_PAGES_ROUTE } from "./routes.ts";
+import { HOME_ROUTE, MAP_ROUTE, TITLE_PAGES_ROUTE, CATALOGUE_ROUTE } from "./routes.ts";
 import { FilterButton } from "./FilterButton";
 import { FaDraftingCompass } from "react-icons/fa";
 
@@ -79,6 +79,9 @@ function Navigation() {
           </NavItem>
           <NavItem active={location.pathname === MAP_ROUTE}>
             <Link to={MAP_ROUTE}>Timeline</Link>
+          </NavItem>
+          <NavItem active={location.pathname === CATALOGUE_ROUTE}>
+            <Link to={CATALOGUE_ROUTE}>Catalogue</Link>
           </NavItem>
         </NavItems>
       </NavContent>

@@ -24,6 +24,8 @@ import {
   TOOLTIP_WCLASS,
 } from "../../map/MapTooltips.tsx";
 import { LAND_COLOR } from "../../../utils/colors.ts";
+import { joinArr } from "../../../utils/util.ts";
+import { NO_AUTHOR, NO_CITY } from "../../../constants";
 
 type ItemModalProps = {
   item: Item;
@@ -77,10 +79,10 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
                 <SmallText>by</SmallText> {item.authors.join(" & ") || "s.n."}
               </span>
               <span>
-                <SmallText>in</SmallText> {item.cities.join(", ") || "s.l."}
+                <SmallText>in</SmallText> {joinArr(item.cities) || NO_CITY}
               </span>
               <span>
-                <SmallText>in</SmallText> {item.languages.join(" & ")}
+                <SmallText>in</SmallText> {joinArr(item.languages)}
               </span>
               {item.scanUrl && (
                 <StyledAnchor
@@ -109,13 +111,13 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
               {item.elementsBooks && (
                 <span>
                   <SmallText>Books:</SmallText>{" "}
-                  {item.elementsBooks
-                    .map((range) =>
+                  {joinArr(
+                    item.elementsBooks.map((range) =>
                       range.end === range.start
                         ? range.start.toString()
                         : `${range.start}-${range.end}`,
-                    )
-                    .join(", ")}
+                    ),
+                  )}
                 </span>
               )}
               {item.class && (
@@ -129,7 +131,7 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
               {item.additionalContent && item.additionalContent.length > 0 && (
                 <span>
                   <SmallText>Additional Content:</SmallText>{" "}
-                  {item.additionalContent.join(", ")}
+                  {joinArr(item.additionalContent)}
                 </span>
               )}
             </ModalTitleRow>
@@ -217,19 +219,19 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
                 <InfoTitle>
                   {item.authors.length > 1 ? "Authors:" : "Author:"}
                 </InfoTitle>{" "}
-                {item.authors.join(" & ") || "s.n."}
+                {joinArr(item.authors) || NO_AUTHOR}
               </Row>
               <Row justifyStart>
                 <InfoTitle>
                   {item.cities.length > 1 ? "Cities:" : "City:"}
                 </InfoTitle>{" "}
-                {item.cities.join(" & ") || "s.l."}
+                {joinArr(item.cities)}
               </Row>
               <Row justifyStart>
                 <InfoTitle>
                   {item.languages.length > 1 ? "Languages:" : "Language:"}
                 </InfoTitle>{" "}
-                {item.languages.join(" & ")}
+                {joinArr(item.languages)}
               </Row>
               {item.scanUrl && (
                 <Row justifyStart>
@@ -260,13 +262,13 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
               {item.elementsBooks && (
                 <Row justifyStart>
                   <InfoTitle>Books:</InfoTitle>{" "}
-                  {item.elementsBooks
-                    .map((range) =>
+                  {joinArr(
+                    item.elementsBooks.map((range) =>
                       range.end === range.start
                         ? range.start.toString()
                         : `${range.start}-${range.end}`,
-                    )
-                    .join(", ")}
+                    ),
+                  )}
                 </Row>
               )}
               {item.class && (
@@ -284,7 +286,7 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
               {item.additionalContent && item.additionalContent.length > 0 && (
                 <Row justifyStart>
                   <InfoTitle>Additional Content:</InfoTitle>{" "}
-                  {item.additionalContent.join(", ")}
+                  {joinArr(item.additionalContent)}
                 </Row>
               )}
             </ModalTextColumn>

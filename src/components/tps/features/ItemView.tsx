@@ -12,6 +12,8 @@ import {
 } from "../../common.ts";
 import { imageClicked } from "../../../utils/dataUtils.ts";
 import ItemModal from "../modal/ItemModal.tsx";
+import { NO_AUTHOR, NO_CITY, NO_YEAR } from "../../../constants";
+import { joinArr } from "../../../utils/util.ts";
 
 const HighlightedText = lazy(() => import("./HighlightedText.tsx"));
 
@@ -43,9 +45,9 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
   return (
     <Column style={{ height, width }} ref={itemRef}>
       <div>
-        {item.year || "s.d."} {item.authors.join(" & ") || "s.n."},{" "}
-        {item.cities.join(", ") || "s.l."}
-        <LanguagesInfo>{item.languages.join(" & ")}</LanguagesInfo>
+        {item.year || NO_YEAR} {joinArr(item.authors) || NO_AUTHOR},{" "}
+        {joinArr(item.cities) || NO_CITY}
+        <LanguagesInfo>{joinArr(item.languages)}</LanguagesInfo>
       </div>
       {mode === "texts" && (
         <>

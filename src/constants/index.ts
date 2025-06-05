@@ -15,6 +15,10 @@ export const ItemTypes = {
   secondary: "Complementary",
 };
 
+export const NO_CITY = "s.l.";
+export const NO_YEAR = "s.d.";
+export const NO_AUTHOR = "s.n.";
+
 export const FeatureToColumnName: Record<Feature, string[]> = {
   "Elements Designation": ["ELEMENTS DESIGNATION"],
   "Base Content": ["BASE CONTENT"],

@@ -16,7 +16,9 @@ import {
   HOME_ROUTE,
   MAP_ROUTE,
   TITLE_PAGES_ROUTE,
+  CATALOGUE_ROUTE,
 } from "./components/layout/routes.ts";
+import Catalogue from "./pages/Catalogue.tsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -24,6 +26,7 @@ function App() {
       <Route element={<Layout />}>
         <Route path={HOME_ROUTE} element={<Home />} />
         <Route path={TITLE_PAGES_ROUTE} element={<TitlePage />} />
+        <Route path={CATALOGUE_ROUTE} element={<Catalogue />} />
         <Route
           path={MAP_ROUTE}
           element={
