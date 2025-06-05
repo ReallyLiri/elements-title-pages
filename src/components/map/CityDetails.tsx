@@ -76,22 +76,20 @@ export const CityDetails = ({
       <StyledTopDeco height={64} />
       <Subtitle>{data?.length || 0} records</Subtitle>
       {sortedData.map((item) => (
-        <>
-          <div key={item.key}>
-            <Separator />
-            <RowTitle onClick={() => setSelectedRecordKey(item.key)}>
-              <div className="gothic" title="Year">
-                {item.year || item.year || "Unknown"}
+        <div key={item.key}>
+          <Separator />
+          <RowTitle onClick={() => setSelectedRecordKey(item.key)}>
+            <div className="gothic" title="Year">
+              {item.year || item.year || "Unknown"}
+            </div>
+            {item.authors.map((author) => (
+              <div title="Author" key={author}>
+                <span className="gothic">{author[0]}</span>
+                {author.substring(1)}
               </div>
-              {item.authors.map((author) => (
-                <div title="Author" key={author}>
-                  <span className="gothic">{author[0]}</span>
-                  {author.substring(1)}
-                </div>
-              ))}
-            </RowTitle>
-          </div>
-        </>
+            ))}
+          </RowTitle>
+        </div>
       ))}
       <div>
         <StyledBottomDeco viewBox="0 0 80 360" />

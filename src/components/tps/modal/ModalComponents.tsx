@@ -38,7 +38,7 @@ export const ModalClose = styled.div`
   cursor: pointer;
 `;
 
-export const ModalTitle = styled.div`
+export const ModalTitle = styled(Row)`
   color: darkgray;
   font-size: 1rem;
   margin-bottom: 0.5rem;

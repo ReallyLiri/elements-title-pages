@@ -1,5 +1,5 @@
 import { Feature, Item } from "../../../types";
-import { StyledImage } from "../../common.ts";
+import { Row, StyledImage } from "../../common.ts";
 import {
   Modal,
   ModalClose,
@@ -13,10 +13,15 @@ import {
 import HighlightedText from "../features/HighlightedText.tsx";
 import { imageClicked } from "../../../utils/dataUtils.ts";
 import styled from "@emotion/styled";
-import { Link } from "../../map/Link.tsx";
-import { WClassHelpTip } from "../../map/Filter.tsx";
+import { HelpTip } from "../../map/Filter.tsx";
 import { FaBookReader } from "react-icons/fa";
-import { TOOLTIP_SCAN } from "../../map/MapTooltips.tsx";
+import {
+  TOOLTIP_EN_TRANSLATION,
+  TOOLTIP_SCAN,
+  TOOLTIP_TRANSCRIPTION,
+  TOOLTIP_WCLASS,
+} from "../../map/MapTooltips.tsx";
+import { LAND_COLOR } from "../../../utils/colors.ts";
 
 type ItemModalProps = {
   item: Item;
@@ -29,14 +34,15 @@ const SmallText = styled.span`
   color: darkgray;
 `;
 
-const StyledWClassHelpTip = styled(WClassHelpTip)`
-  margin: 0 0 0 -0.5rem;
+const StyledHelpTip = styled(HelpTip)<{ marginTop?: string }>`
+  margin: 0 0 ${({ marginTop }) => marginTop || "0"} -0.5rem;
   z-index: 100;
 `;
 
 const StyledAnchor = styled.a`
   font-size: 1rem;
   svg {
+    color: ${LAND_COLOR};
     margin-bottom: -2px;
   }
 `;
@@ -68,7 +74,7 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
               target="_blank"
               rel="noopener noreferrer"
               data-tooltip-id={TOOLTIP_SCAN}
-              data-tooltip-content="View Scan Online"
+              data-tooltip-content="View Facsimilie Online"
               data-tooltip-place="bottom"
             >
               <FaBookReader />
@@ -103,7 +109,7 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
               <span>
                 <SmallText>Wardhaugh Class:</SmallText> {item.class}
               </span>
-              <StyledWClassHelpTip />
+              <StyledHelpTip tooltipId={TOOLTIP_WCLASS} />
             </>
           )}
           {item.additionalContent && item.additionalContent.length > 0 && (
@@ -126,7 +132,13 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
           {item.title && item.title !== "?" && (
             <TextColumnsContainer>
               <ModalTextColumn isTextContent>
-                <ModalTitle>Original Text</ModalTitle>
+                <ModalTitle justifyStart gap={1}>
+                  Original Text
+                  <StyledHelpTip
+                    tooltipId={TOOLTIP_TRANSCRIPTION}
+                    marginTop="2px"
+                  />
+                </ModalTitle>
                 <HighlightedText
                   text={item.title}
                   features={features}
@@ -145,7 +157,13 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
               </ModalTextColumn>
               {(item.titleEn || item.imprintEn) && (
                 <ModalTextColumn isTextContent>
-                  <ModalTitle>English Translation</ModalTitle>
+                  <ModalTitle justifyStart gap={1}>
+                    English Translation{" "}
+                    <StyledHelpTip
+                      tooltipId={TOOLTIP_EN_TRANSLATION}
+                      marginTop="2px"
+                    />
+                  </ModalTitle>
                   <HighlightedText
                     text={item.titleEn || ""}
                     features={[]}

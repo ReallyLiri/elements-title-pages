@@ -13,6 +13,8 @@ export const TOOLTIP_HELP = "help";
 export const TOOLTIP_MARKER_ARROW = "marker-arrow";
 export const TOOLTIP_SCAN = "view-scan";
 export const TOOLTIP_WCLASS = "w-class";
+export const TOOLTIP_TRANSCRIPTION = "transcription";
+export const TOOLTIP_EN_TRANSLATION = "en-translation";
 
 const LimitedWidthDiv = styled.div`
   max-width: 256px;
@@ -30,6 +32,12 @@ export const MapTooltips = () => (
     <Tooltip id={TOOLTIP_TIMELINE_BUTTON} />
     <Tooltip id={TOOLTIP_HELP} />
     <Tooltip id={TOOLTIP_SCAN} />
+    <Tooltip id={TOOLTIP_TRANSCRIPTION}>
+      Transcription was constructed in part using an LLM
+    </Tooltip>
+    <Tooltip id={TOOLTIP_EN_TRANSLATION}>
+      Translation was constructed in part using an LLM
+    </Tooltip>
     <Tooltip id={TOOLTIP_WCLASS} clickable>
       <div>
         Classification according to{" "}

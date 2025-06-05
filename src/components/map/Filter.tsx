@@ -43,9 +43,15 @@ const StyledQuestionMark = styled(MdQuestionMark)`
   transform: translate(-2px, -2px);
 `;
 
-export const WClassHelpTip = ({ className }: { className?: string }) => {
+export const HelpTip = ({
+  className,
+  tooltipId,
+}: {
+  className?: string;
+  tooltipId: string;
+}) => {
   return (
-    <HelpTipButton className={className} data-tooltip-id={TOOLTIP_WCLASS}>
+    <HelpTipButton className={className} data-tooltip-id={tooltipId}>
       <StyledQuestionMark />
     </HelpTipButton>
   );
@@ -102,7 +108,7 @@ export const Filter = ({
     <>
       <Row>
         <FilterTitle className="gothic">{label}</FilterTitle>
-        {field === "class" && <WClassHelpTip />}
+        {field === "class" && <HelpTip tooltipId={TOOLTIP_WCLASS} />}
         <Filler />
       </Row>
       <Row>
