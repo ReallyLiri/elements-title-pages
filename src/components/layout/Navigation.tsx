@@ -69,7 +69,7 @@ function Navigation() {
             <Link to={HOME_ROUTE}>Home</Link>
           </NavItem>
           <NavItem active={location.pathname === TITLE_PAGES_ROUTE}>
-            <Link to={TITLE_PAGES_ROUTE}>Title Pages</Link>
+            <Link to={TITLE_PAGES_ROUTE}>Editions</Link>
           </NavItem>
           <NavItem active={location.pathname === MAP_ROUTE}>
             <Link to={MAP_ROUTE}>Timeline</Link>

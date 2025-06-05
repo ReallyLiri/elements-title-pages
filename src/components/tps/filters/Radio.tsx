@@ -2,7 +2,7 @@ import { RadioProps } from "../../../types";
 import { Row } from "../../common.ts";
 
 const Radio = ({ name, options, value, onChange }: RadioProps) => (
-  <Row justifyStart>
+  <Row>
     <div>{name}:</div>
     <label>
       <input

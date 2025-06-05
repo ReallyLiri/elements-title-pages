@@ -4,6 +4,8 @@ import styled from "@emotion/styled";
 import { MdQuestionMark } from "react-icons/md";
 import { Item } from "../../types";
 import { TOOLTIP_WCLASS } from "./MapTooltips.tsx";
+import React from "react";
+import { Switch, SwitchOption } from "./Switch.tsx";
 
 export type FilterValue = { label: string; value: string };
 
@@ -60,29 +62,6 @@ export const HelpTip = ({
     </HelpTipButton>
   );
 };
-
-const Switch = styled.div`
-  display: flex;
-  flex-direction: row;
-  font-size: 0.8rem;
-  height: fit-content;
-  align-self: end;
-
-  div:first-child {
-    border-radius: 5px 0 0 5px;
-  }
-
-  div:last-child {
-    border-radius: 0 5px 5px 0;
-  }
-`;
-
-const SwitchOption = styled.div<{ selected: boolean }>`
-  cursor: pointer;
-  padding: 4px;
-  color: white;
-  background-color: ${({ selected }) => (selected ? SEA_COLOR : LAND_COLOR)};
-`;
 
 const Row = styled.div`
   display: flex;

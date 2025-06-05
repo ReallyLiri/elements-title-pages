@@ -16,8 +16,6 @@ import {
   FeatureToColor,
   FeatureToColumnName,
   FeatureToTooltip,
-  MAX_YEAR,
-  MIN_YEAR,
   TILE_HEIGHT,
   TILE_WIDTH,
 } from "../constants";
@@ -25,19 +23,20 @@ import MultiSelect from "../components/tps/filters/MultiSelect";
 import Radio from "../components/tps/filters/Radio";
 import ItemView from "../components/tps/features/ItemView";
 import { useFilter } from "../contexts/FilterContext";
+import { Switch, SwitchOption } from "../components/map/Switch.tsx";
 
 function TitlePage() {
   const { filteredItems } = useFilter();
 
-  const [mode, setMode] = useLocalStorageState<Mode>("tp-mode", {
-    defaultValue: "texts",
-  });
-  const [requireImage, setRequireImage] = useLocalStorageState<boolean>(
-    "tp-requireImage",
+  const [titlePagesModeOn, setTitlePagesModeOn] = useLocalStorageState<boolean>(
+    "tp-on",
     {
       defaultValue: false,
     },
   );
+  const [mode, setMode] = useLocalStorageState<Mode>("tp-mode", {
+    defaultValue: "images",
+  });
   const [features, setFeatures] = useLocalStorageState<Feature[]>(
     "tp-features",
     {
@@ -49,12 +48,6 @@ function TitlePage() {
   >("tp-requiredFeatures", {
     defaultValue: [] as Feature[],
   });
-  const [controlsOpen, setControlsOpen] = useLocalStorageState<boolean>(
-    "tp-controlsOpen",
-    {
-      defaultValue: false,
-    },
-  );
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const handleScroll = useCallback(() => {
@@ -74,10 +67,8 @@ function TitlePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  // Further filter the already filtered items from the global context
   const pageFilteredItems = useMemo(() => {
     return filteredItems?.filter((item) => {
-      // Apply title page specific filters
       if (requiredFeatures.length) {
         const hasFeature =
           item.title !== "?" &&
@@ -88,14 +79,9 @@ function TitlePage() {
           return false;
         }
       }
-      if (mode === "images" && requireImage) {
-        if (!item.imageUrl) {
-          return false;
-        }
-      }
       return true;
     });
-  }, [filteredItems, requiredFeatures, mode, requireImage]);
+  }, [filteredItems, requiredFeatures]);
 
   return (
     <Container style={{ position: "relative", margin: "2rem 0" }}>
@@ -104,101 +90,83 @@ function TitlePage() {
           ↑
         </ScrollToTopButton>
       )}
-      <Row>
-        <Text bold size={1}>
-          <Text size={2.8}>TITLE PAGES</Text>
-          <Text size={1}>in Printed Translations, of</Text>
-          <Text size={1.6}>
-            the <i>Elements</i>
-          </Text>
-          <Text size={1.6}>
-            {MIN_YEAR}–{MAX_YEAR}
-          </Text>
-        </Text>
-      </Row>
       <Column minWidth="min(820px, 90%)">
-        <Row justifyStart>
-          <ToggleButton
-            onClick={() => setControlsOpen(!controlsOpen)}
-            isOpen={controlsOpen}
-          >
-            <span>{controlsOpen ? "▲" : "▼"}</span>
-            {controlsOpen ? "Hide Controls" : "Show Controls"}
-            <span>{controlsOpen ? "▲" : "▼"}</span>
-          </ToggleButton>
+        <Row>
+          <Switch>
+            <SwitchOption
+              selected={titlePagesModeOn}
+              onClick={() => setTitlePagesModeOn(true)}
+              title="Include only selected values"
+            >
+              Title Pages Research View
+            </SwitchOption>
+            <SwitchOption
+              selected={!titlePagesModeOn}
+              onClick={() => {
+                setMode("images");
+                setTitlePagesModeOn(false);
+              }}
+              title="Exclude all selected values"
+            >
+              Title Pages Research Off
+            </SwitchOption>
+          </Switch>
         </Row>
-
-        {controlsOpen && (
+        {titlePagesModeOn && (
           <>
-            <Row justifyStart>
+            <Radio
+              name="View"
+              options={["Texts", "Images"]}
+              value={mode === "images"}
+              onChange={(b) => setMode(b ? "images" : "texts")}
+            />
+            <Row justifyStart noWrap>
+              <Column alignItems="end">
+                <span>Highlight Segments:</span>
+                <ResetButton
+                  onClick={() =>
+                    setFeatures(
+                      Object.keys(FeatureToColumnName).filter(
+                        (f) =>
+                          !FeaturesNotSelectedByDefault.includes(f as Feature),
+                      ) as Feature[],
+                    )
+                  }
+                >
+                  Reset
+                </ResetButton>
+              </Column>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                <MultiSelect
+                  name="Features"
+                  value={features}
+                  options={Object.keys(FeatureToColumnName)}
+                  onChange={(f) => setFeatures(f as Feature[])}
+                  colors={FeatureToColor}
+                  tooltips={FeatureToTooltip}
+                />
+              </div>
+              <Column alignItems="end">
+                <span>Required Features:</span>
+                <ResetButton onClick={() => setRequiredFeatures([])}>
+                  Reset
+                </ResetButton>
+              </Column>
               <div>
-                <Radio
-                  name="Mode"
-                  options={["Texts", "Scans"]}
-                  value={mode === "images"}
-                  onChange={(b) => setMode(b ? "images" : "texts")}
+                <MultiSelect
+                  name="Required features"
+                  options={Object.keys(FeatureToColumnName)}
+                  onChange={(f) => setRequiredFeatures(f as Feature[])}
+                  value={requiredFeatures}
                 />
               </div>
             </Row>
-            {mode === "texts" && (
-              <Row justifyStart noWrap>
-                <Column alignItems="end">
-                  <span>Highlight Segments:</span>
-                  <ResetButton
-                    onClick={() =>
-                      setFeatures(
-                        Object.keys(FeatureToColumnName).filter(
-                          (f) =>
-                            !FeaturesNotSelectedByDefault.includes(
-                              f as Feature,
-                            ),
-                        ) as Feature[],
-                      )
-                    }
-                  >
-                    Reset
-                  </ResetButton>
-                </Column>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                  }}
-                >
-                  <MultiSelect
-                    name="Features"
-                    value={features}
-                    options={Object.keys(FeatureToColumnName)}
-                    onChange={(f) => setFeatures(f as Feature[])}
-                    colors={FeatureToColor}
-                    tooltips={FeatureToTooltip}
-                  />
-                </div>
-                <Column alignItems="end">
-                  <span>Required Features:</span>
-                  <ResetButton onClick={() => setRequiredFeatures([])}>
-                    Reset
-                  </ResetButton>
-                </Column>
-                <div>
-                  <MultiSelect
-                    name="Required features"
-                    options={Object.keys(FeatureToColumnName)}
-                    onChange={(f) => setRequiredFeatures(f as Feature[])}
-                    value={requiredFeatures}
-                  />
-                </div>
-              </Row>
-            )}
-            {mode === "images" && (
-              <Radio
-                name="Scans"
-                options={["All", "Available"]}
-                value={requireImage}
-                onChange={setRequireImage}
-              />
-            )}
           </>
         )}
       </Column>
