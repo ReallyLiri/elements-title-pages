@@ -25,7 +25,7 @@ const NavContainer = styled.nav`
   height: calc(${NAVBAR_HEIGHT}px - 2rem);
   background-color: black;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  z-index: 2001;
+  z-index: 1001;
 `;
 
 const NavContent = styled.div`
