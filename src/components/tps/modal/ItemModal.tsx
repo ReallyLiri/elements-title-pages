@@ -14,7 +14,7 @@ import HighlightedText from "../features/HighlightedText.tsx";
 import { imageClicked } from "../../../utils/dataUtils.ts";
 import styled from "@emotion/styled";
 import { Link } from "../../map/Link.tsx";
-import { HelpTip } from "../../map/Filter.tsx";
+import { WClassHelpTip } from "../../map/Filter.tsx";
 import { FaBookReader } from "react-icons/fa";
 import { TOOLTIP_SCAN } from "../../map/MapTooltips.tsx";
 
@@ -29,7 +29,7 @@ const SmallText = styled.span`
   color: darkgray;
 `;
 
-const StyledHelpTip = styled(HelpTip)`
+const StyledHelpTip = styled(WClassHelpTip)`
   background-color: darkgray;
   color: white;
   margin: 0 0 0 -0.5rem;

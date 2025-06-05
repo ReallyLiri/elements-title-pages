@@ -1,15 +1,9 @@
 import Select from "react-select";
-import {
-  LAND_COLOR,
-  SEA_COLOR,
-  TRANSPARENT_WHITE,
-} from "../../utils/colors";
+import { LAND_COLOR, SEA_COLOR } from "../../utils/colors";
 import styled from "@emotion/styled";
 import { MdQuestionMark } from "react-icons/md";
-import { ReactElement } from "react";
-import { Link } from "./Link";
-import { Tooltip } from "react-tooltip";
 import { Item } from "../../types";
+import { TOOLTIP_WCLASS } from "./MapTooltips.tsx";
 
 export type FilterValue = { label: string; value: string };
 
@@ -34,8 +28,8 @@ const HelpTipButton = styled.div`
   margin: 0.5rem -0.5rem 0 -0.5rem;
   padding: 0.5rem;
   border-radius: 50%;
-  background-color: ${TRANSPARENT_WHITE};
-  color: ${SEA_COLOR};
+  background-color: ${LAND_COLOR};
+  color: white;
   cursor: pointer;
   height: 0.5rem;
   width: 0.5rem;
@@ -49,52 +43,12 @@ const StyledQuestionMark = styled(MdQuestionMark)`
   transform: translate(-2px, -2px);
 `;
 
-const HelpFloatingTip = styled.div`
-  height: fit-content;
-  width: fit-content;
-  padding: 0.5rem;
-  a {
-    color: #333;
-  }
-`;
-
-export const HelpTip = ({
-  children,
-  id,
-  className,
-}: {
-  className?: string;
-  id?: string;
-  children: ReactElement;
-}) => {
-  const HELP_TIP_ID = id || "help-tip";
+export const WClassHelpTip = ({ className }: { className?: string }) => {
   return (
-    <>
-      <HelpTipButton id={HELP_TIP_ID} className={className}>
-        <StyledQuestionMark />
-      </HelpTipButton>
-      <Tooltip anchorSelect={`#${HELP_TIP_ID}`} clickable>
-        <HelpFloatingTip>{children}</HelpFloatingTip>
-      </Tooltip>
-    </>
+    <HelpTipButton className={className} data-tooltip-id={TOOLTIP_WCLASS}>
+      <StyledQuestionMark />
+    </HelpTipButton>
   );
-};
-
-const OptionalHelpTip = ({ field }: { field: keyof Item }) => {
-  if (field === "class") {
-    return (
-      <HelpTip>
-        <div>
-          Classification according to{" "}
-          <Link
-            url="https://bibsoc.org.uk/euclid-print-1482-1703/"
-            text="Euclid in print"
-          />
-        </div>
-      </HelpTip>
-    );
-  }
-  return undefined;
 };
 
 const Switch = styled.div`
@@ -148,7 +102,7 @@ export const Filter = ({
     <>
       <Row>
         <FilterTitle className="gothic">{label}</FilterTitle>
-        <OptionalHelpTip field={field} />
+        {field === "class" && <WClassHelpTip />}
         <Filler />
       </Row>
       <Row>

@@ -1,5 +1,6 @@
 import { Tooltip } from "react-tooltip";
 import styled from "@emotion/styled";
+import { Link } from "./Link.tsx";
 
 export const TOOLTIP_RESET = "reset";
 export const TOOLTIP_ZOOMIN = "zoomin";
@@ -11,6 +12,7 @@ export const TOOLTIP_TIMELINE_BUTTON = "timeline-button";
 export const TOOLTIP_HELP = "help";
 export const TOOLTIP_MARKER_ARROW = "marker-arrow";
 export const TOOLTIP_SCAN = "view-scan";
+export const TOOLTIP_WCLASS = "w-class";
 
 const LimitedWidthDiv = styled.div`
   max-width: 256px;
@@ -28,6 +30,15 @@ export const MapTooltips = () => (
     <Tooltip id={TOOLTIP_TIMELINE_BUTTON} />
     <Tooltip id={TOOLTIP_HELP} />
     <Tooltip id={TOOLTIP_SCAN} />
+    <Tooltip id={TOOLTIP_WCLASS} clickable>
+      <div>
+        Classification according to{" "}
+        <Link
+          url="https://bibsoc.org.uk/euclid-print-1482-1703/"
+          text="Euclid in print"
+        />
+      </div>
+    </Tooltip>
     <Tooltip anchorSelect={`#${TOOLTIP_MARKER_ARROW}`} offset={-14}>
       <LimitedWidthDiv>
         Marker placement is for representation purposes and does not reflect the

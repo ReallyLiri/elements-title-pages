@@ -102,7 +102,16 @@ export const FilterPane = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if ((event.target as Element).closest("#filter-toggle-button")) {
+      const target = event.target as Node | null;
+      if (!target) {
+        return false;
+      }
+      const element =
+        target instanceof HTMLElement ? target : target.parentElement;
+      if (element?.closest("#filter-toggle-button")) {
+        return;
+      }
+      if (element?.closest("a") || element?.querySelector("a")) {
         return;
       }
 
