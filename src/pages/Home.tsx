@@ -13,12 +13,11 @@ import {
   MAP_ROUTE,
   TITLE_PAGES_ROUTE,
 } from "../components/layout/routes.ts";
-import { FaDraftingCompass } from "react-icons/fa";
+import { FaDraftingCompass, FaMapMarked } from "react-icons/fa";
 import { GiHolySymbol } from "react-icons/gi";
-import { FaMapMarked } from "react-icons/fa";
 
 import { GrCatalog } from "react-icons/gr";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { NAVBAR_HEIGHT } from "../components/layout/Navigation.tsx";
 
 const ParallaxBackground = styled.div`
