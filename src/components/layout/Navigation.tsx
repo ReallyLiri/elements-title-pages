@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
-import { Row } from "../common";
 import { HOME_ROUTE, MAP_ROUTE, TITLE_PAGES_ROUTE } from "./routes.ts";
 import { FilterButton } from "./FilterButton";
 

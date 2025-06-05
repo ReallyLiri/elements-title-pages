@@ -15,10 +15,12 @@ type MapProps = {
   zoom: number;
   position: Point;
   setPosition: React.Dispatch<React.SetStateAction<Point>>;
+  setZoom?: React.Dispatch<React.SetStateAction<number>>;
   markers: ReactElement;
 };
 
 export const MAX_ZOOM = 10;
+export const MIN_ZOOM = 1;
 export const DEFAULT_POSITION: Point = [3.3, 45];
 
 export const CitiesMap = ({
@@ -27,6 +29,7 @@ export const CitiesMap = ({
   zoom,
   position,
   setPosition,
+  setZoom,
   markers,
 }: MapProps) => (
   <ComposableMap
@@ -40,9 +43,18 @@ export const CitiesMap = ({
   >
     <ZoomableGroup
       zoom={zoom}
+      minZoom={MIN_ZOOM}
       maxZoom={MAX_ZOOM}
       center={position}
-      onMoveEnd={(e) => setPosition(e.coordinates)}
+      onMoveEnd={(e) => {
+        setPosition(e.coordinates);
+        if (setZoom) {
+          const clampedZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, e.zoom));
+          if (clampedZoom !== zoom) {
+            setZoom(clampedZoom);
+          }
+        }
+      }}
     >
       <Geographies geography={geoUrl}>
         {({ geographies }) =>

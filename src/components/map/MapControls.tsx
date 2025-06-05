@@ -14,6 +14,7 @@ import {
 } from "./MapTooltips.tsx";
 import { ZOOM_CONTROLS_ID } from "./Tour";
 import { ButtonStyle } from "../../utils/colors.ts";
+import { MIN_ZOOM } from "./CitiesMap";
 
 type ZoomControlsProps = {
   className?: string;
@@ -49,7 +50,7 @@ export const MapControls = ({
   }, [maxZoom, setZoom]);
 
   const handleZoomOut = useCallback(() => {
-    setZoom((z) => Math.max(z > 1 ? z - 1 : z - 0.1, 0.1));
+    setZoom((z) => Math.max(z > 1 ? z - 1 : z - 0.1, MIN_ZOOM));
   }, [setZoom]);
 
   return (

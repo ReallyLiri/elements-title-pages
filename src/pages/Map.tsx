@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useCallback } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { Point } from "react-simple-maps";
 import styled from "@emotion/styled";
 import { isEmpty } from "lodash";
@@ -108,7 +108,6 @@ const Map = () => {
   const {
     cities,
     filteredItems,
-    range,
     setRange,
     filterOpen,
     setFilterOpen,
@@ -183,6 +182,7 @@ const Map = () => {
             zoom={zoom}
             position={position}
             setPosition={setPosition}
+            setZoom={setZoom}
             markers={
               <CityMarkers
                 cities={cities}
@@ -203,7 +203,6 @@ const Map = () => {
             }}
             openTour={() => setTourOpen(true)}
           />
-          <div />
           <Timeline
             minYear={maxYear > 0 ? Math.min(1450, maxYear - 300) : 1450}
             maxYear={maxYear}
