@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
-import { Feature, Item, Mode } from "../types";
+import { Feature, Mode } from "../types";
 import {
   Column,
   Container,
@@ -21,49 +21,21 @@ import {
   TILE_HEIGHT,
   TILE_WIDTH,
 } from "../constants";
-import {
-  authorDisplayName,
-  extract,
-  loadEditionsData,
-} from "../utils/dataUtils";
 import MultiSelect from "../components/tps/filters/MultiSelect";
 import Radio from "../components/tps/filters/Radio";
-import RangeSlider from "../components/tps/filters/RangeSlider";
 import ItemView from "../components/tps/features/ItemView";
+import { useFilter } from "../contexts/FilterContext";
 
 function TitlePage() {
-  const [items, setItems] = useState<Item[]>([]);
+  const { filteredItems } = useFilter();
+
   const [mode, setMode] = useLocalStorageState<Mode>("tp-mode", {
     defaultValue: "texts",
-  });
-  const [cities, setCities] = useLocalStorageState<string[]>("tp-cities", {
-    defaultValue: [],
-  });
-  const [authors, setAuthors] = useLocalStorageState<string[]>("tp-authors", {
-    defaultValue: [],
-  });
-  const [languages, setLanguages] = useLocalStorageState<string[]>(
-    "tp-languages",
-    {
-      defaultValue: [],
-    },
-  );
-  const [types, setTypes] = useLocalStorageState<string[]>("tp-types", {
-    defaultValue: ["Elements"],
-  });
-  const [formats, setFormats] = useLocalStorageState<string[]>("tp-formats", {
-    defaultValue: [],
   });
   const [requireImage, setRequireImage] = useLocalStorageState<boolean>(
     "tp-requireImage",
     {
       defaultValue: false,
-    },
-  );
-  const [yearRange, setYearRange] = useLocalStorageState<[number, number]>(
-    "tp-yearRange",
-    {
-      defaultValue: [MIN_YEAR, MAX_YEAR],
     },
   );
   const [features, setFeatures] = useLocalStorageState<Feature[]>(
@@ -102,77 +74,10 @@ function TitlePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const allCities = useMemo(
-    () => (items ? extract(items, "cities") : []),
-    [items],
-  );
-
-  const allAuthors = useMemo(
-    () =>
-      items
-        ? extract(items, "authors")
-            .filter((a) => a.length >= 1)
-            .sort((a, b) =>
-              authorDisplayName(a).localeCompare(authorDisplayName(b)),
-            )
-        : [],
-    [items],
-  );
-
-  const allLanguages = useMemo(
-    () =>
-      (items ? extract(items, "languages") : []).sort((a, b) =>
-        a.localeCompare(b, undefined, { sensitivity: "base" }),
-      ),
-    [items],
-  );
-
-  const allTypes = useMemo(
-    () => (items ? extract(items, "type") : []),
-    [items],
-  );
-
-  const allFormats = useMemo(
-    () =>
-      (items ? extract(items, "format").filter(Boolean) : []).sort((a, b) =>
-        a.toLowerCase().localeCompare(b.toLowerCase()),
-      ),
-    [items],
-  );
-
-  const filteredItems = useMemo(() => {
-    return items?.filter((item) => {
-      if (cities.length) {
-        if (!item.cities.some((city) => cities.includes(city))) {
-          return false;
-        }
-      }
-      if (authors.length) {
-        if (
-          item.authors.length > 0 &&
-          !item.authors.some((a) => authors.includes(a))
-        ) {
-          return false;
-        }
-      }
-      if (languages.length) {
-        if (
-          item.languages.length > 0 &&
-          !item.languages.some((l) => languages.includes(l))
-        ) {
-          return false;
-        }
-      }
-      if (types.length) {
-        if (!types.includes(item.type)) {
-          return false;
-        }
-      }
-      if (formats.length) {
-        if (!item.format || !formats.includes(item.format)) {
-          return false;
-        }
-      }
+  // Further filter the already filtered items from the global context
+  const pageFilteredItems = useMemo(() => {
+    return filteredItems?.filter((item) => {
+      // Apply title page specific filters
       if (requiredFeatures.length) {
         const hasFeature =
           item.title !== "?" &&
@@ -188,30 +93,9 @@ function TitlePage() {
           return false;
         }
       }
-      const year = parseInt(item.year.split("/")[0]);
-      if (!isNaN(year) && (year < yearRange[0] || year > yearRange[1])) {
-        return false;
-      }
       return true;
     });
-  }, [
-    items,
-    cities,
-    authors,
-    languages,
-    types,
-    formats,
-    requiredFeatures,
-    mode,
-    requireImage,
-    yearRange,
-  ]);
-
-  useEffect(() => {
-    if (items.length === 0) {
-      loadEditionsData(setItems);
-    }
-  }, [items, setItems]);
+  }, [filteredItems, requiredFeatures, mode, requireImage]);
 
   return (
     <Container style={{ position: "relative", margin: "2rem 0" }}>
@@ -255,49 +139,6 @@ function TitlePage() {
                   onChange={(b) => setMode(b ? "images" : "texts")}
                 />
               </div>
-            </Row>
-            <Row justifyStart>
-              <div>Filters:</div>
-              <MultiSelect
-                name="Authors"
-                options={allAuthors}
-                onChange={setAuthors}
-                labelFn={authorDisplayName}
-                value={authors}
-              />
-              <MultiSelect
-                name="Cities"
-                options={allCities}
-                onChange={setCities}
-                value={cities}
-              />
-              <MultiSelect
-                name="Languages"
-                options={allLanguages}
-                onChange={setLanguages}
-                value={languages}
-              />
-              <MultiSelect
-                name="Types"
-                options={allTypes}
-                onChange={setTypes}
-                value={types}
-              />
-              <MultiSelect
-                name="Formats"
-                options={allFormats}
-                onChange={setFormats}
-                value={formats}
-              />
-            </Row>
-            <Row justifyStart>
-              <RangeSlider
-                name="Year Range"
-                value={yearRange}
-                min={MIN_YEAR}
-                max={MAX_YEAR}
-                onChange={setYearRange}
-              />
             </Row>
             {mode === "texts" && (
               <Row justifyStart noWrap>
@@ -362,7 +203,7 @@ function TitlePage() {
         )}
       </Column>
       <Row rowGap={6}>
-        {filteredItems?.map((item) => (
+        {pageFilteredItems?.map((item) => (
           <ItemView
             key={item.key}
             height={TILE_HEIGHT}

@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { PANE_BORDER, PANE_COLOR } from "../../utils/colors";
 import { FiltersGroup } from "./FiltersGroup";
 import { useFilter } from "../../contexts/FilterContext";
+import { useEffect, useRef } from "react";
 
 const Pane = styled.div<{
   borderRight: boolean;
@@ -53,12 +54,44 @@ const formatCompare = (a: string, b: string): number => {
 };
 
 export const FilterPane = () => {
-  const { data, filters, setFilters, filtersInclude, setFiltersInclude, filterOpen } = useFilter();
+  const {
+    data,
+    filters,
+    setFilters,
+    filtersInclude,
+    setFiltersInclude,
+    filterOpen,
+    setFilterOpen,
+  } = useFilter();
+  const paneRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        filterOpen &&
+        paneRef.current &&
+        !paneRef.current.contains(event.target as Node)
+      ) {
+        setFilterOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [filterOpen, setFilterOpen]);
 
   if (!filterOpen) return null;
 
   return (
-    <Pane borderRight={true} widthPercentage={16}>
+    <Pane
+      ref={paneRef}
+      borderRight={true}
+      widthPercentage={16}
+      onClick={(e) => e.stopPropagation()}
+    >
       <FiltersGroup
         data={data}
         fields={{
@@ -87,8 +120,7 @@ export const FilterPane = () => {
           additionalContent: {
             displayName: "Additional Content",
             isArray: true,
-            customCompareFn: (a, b) =>
-              (a as string).localeCompare(b as string),
+            customCompareFn: (a, b) => (a as string).localeCompare(b as string),
           },
         }}
         filters={filters}
