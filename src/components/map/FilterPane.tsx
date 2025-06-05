@@ -7,10 +7,7 @@ import { FLOATING_CITY } from "../../types";
 import { ScrollbarStyle } from "../common";
 import RangeSlider from "../tps/filters/RangeSlider";
 
-const Pane = styled.div<{
-  borderRight: boolean;
-  backgroundColor?: string;
-}>`
+const Pane = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -23,9 +20,10 @@ const Pane = styled.div<{
   color: black;
   padding: 1rem;
   margin-bottom: 10rem;
-  ${({ borderRight }) =>
-    borderRight ? "border-right" : "border-left"}: 2px ${PANE_BORDER} solid;
-  position: fixed;
+  border-radius: 0 0.7rem 0.7rem 0.7rem;
+  border-right: 2px ${PANE_BORDER} solid;
+  border-bottom: 2px ${PANE_BORDER} solid;
+  position: absolute;
   top: 60px;
   left: 0;
   z-index: 100;
@@ -61,6 +59,7 @@ const formatCompare = (a: string, b: string): number => {
 
 const StyledRangeSlider = styled(RangeSlider)`
   gap: 0.5rem;
+
   input {
     margin: 0;
   }
@@ -83,48 +82,50 @@ export const FilterPane = () => {
   const paneRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const toggleButtonId = "filter-toggle-button";
-    const toggleButton = document.getElementById(toggleButtonId);
+    const toggleButton = document.getElementById("filter-toggle-button");
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (!filterOpen || !paneRef.current) return;
-
-      const target = event.target as Node | null;
-      if (!target) return false;
-
-      if (toggleButton && toggleButton.contains(target)) {
+      if (!filterOpen || !paneRef.current) {
         return;
       }
 
-      const element =
-        target instanceof HTMLElement ? target : target.parentElement;
-      if (element?.tagName === "A" || element?.querySelector(":scope a"))
-        return;
+      const x = event.clientX;
+      const y = event.clientY;
 
-      if (!paneRef.current.contains(target)) {
-        setFilterOpen(false);
+      const paneRect = paneRef.current.getBoundingClientRect();
+      const isInPane =
+        x >= paneRect.left &&
+        x <= paneRect.right &&
+        y >= paneRect.top &&
+        y <= paneRect.bottom;
+
+      let isInButton = false;
+
+      if (toggleButton) {
+        const buttonRect = toggleButton.getBoundingClientRect();
+        isInButton =
+          x >= buttonRect.left &&
+          x <= buttonRect.right &&
+          y >= buttonRect.top &&
+          y <= buttonRect.bottom;
       }
-    };
 
-    const handleScroll = () => {
-      if (filterOpen && paneRef.current) {
+      if (!isInPane && !isInButton) {
         setFilterOpen(false);
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("scroll", handleScroll);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("scroll", handleScroll);
     };
   }, [filterOpen, setFilterOpen]);
 
   if (!filterOpen) return null;
 
   return (
-    <Pane ref={paneRef} borderRight={true} onClick={(e) => e.stopPropagation()}>
+    <Pane ref={paneRef} onClick={(e) => e.stopPropagation()}>
       <StyledRangeSlider
         min={minYear}
         max={maxYear}
