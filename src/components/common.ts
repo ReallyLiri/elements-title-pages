@@ -21,6 +21,9 @@ export const Container = styled.div`
       width: 80vw;
     }
   }
+  .features-multi-select {
+    width: 40rem;
+  }
 `;
 
 export const Row = styled.div<{

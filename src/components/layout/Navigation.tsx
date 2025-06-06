@@ -7,7 +7,6 @@ import {
   TITLE_PAGES_ROUTE,
 } from "./routes.ts";
 import { FilterButton } from "./FilterButton";
-import { FaDraftingCompass } from "react-icons/fa";
 import { MARKER_5 } from "../../utils/colors.ts";
 import { useLayoutEffect } from "react";
 import { BsBoundingBoxCircles } from "react-icons/bs";

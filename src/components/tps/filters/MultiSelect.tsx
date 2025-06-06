@@ -20,6 +20,7 @@ type MultiSelectProps = {
   tooltips?: Record<string, string>;
   labelFn?: (opt: string) => string;
   value?: string[];
+  className?: string;
 };
 
 const MultiSelect = ({
@@ -31,6 +32,7 @@ const MultiSelect = ({
   tooltips,
   labelFn,
   value,
+  className,
 }: MultiSelectProps) => (
   <Select
     isMulti
@@ -65,7 +67,7 @@ const MultiSelect = ({
         option
       ),
     }))}
-    className="basic-multi-select"
+    className={`basic-multi-select ${className}`}
     classNamePrefix="select"
     onChange={(selected) => onChange(selected.map((option) => option.value))}
     placeholder={`Select ${name}`}

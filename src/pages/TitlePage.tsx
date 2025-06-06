@@ -22,6 +22,13 @@ import Radio from "../components/tps/filters/Radio";
 import ItemView from "../components/tps/features/ItemView";
 import { useFilter } from "../contexts/FilterContext";
 import { Switch, SwitchOption } from "../components/map/Switch.tsx";
+import { IoWarning } from "react-icons/io5";
+import styled from "@emotion/styled";
+
+const NoteLine = styled(Row)`
+  font-size: 0.8rem;
+  opacity: 0.8;
+`;
 
 function TitlePage() {
   const { filteredItems } = useFilter();
@@ -108,6 +115,7 @@ function TitlePage() {
                 onChange={(f) => setFeatures(f as Feature[])}
                 colors={FeatureToColor}
                 tooltips={FeatureToTooltip}
+                className="features-multi-select"
               />
               <ResetButton
                 onClick={() =>
@@ -122,10 +130,10 @@ function TitlePage() {
                 Reset
               </ResetButton>
             </Row>
-            <Row>
-              Attention: features were partially identified using an LLM and may
-              not be accurate.
-            </Row>
+            <NoteLine gap={0.5}>
+              <IoWarning /> Highlighted features were partially identified using
+              an LLM and may not be accurate.
+            </NoteLine>
           </>
         )}
       </Column>
