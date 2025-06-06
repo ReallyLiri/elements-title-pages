@@ -3,13 +3,12 @@ import { LAND_COLOR, SEA_COLOR } from "../../utils/colors";
 import styled from "@emotion/styled";
 import { MdQuestionMark } from "react-icons/md";
 import { Item } from "../../types";
-import { TOOLTIP_WCLASS } from "./MapTooltips.tsx";
+import { TOOLTIP_BOOK_TYPE, TOOLTIP_WCLASS } from "./MapTooltips.tsx";
 import { Switch, SwitchOption } from "./Switch.tsx";
 
 export type FilterValue = { label: string; value: string };
 
 type FilterProps = {
-  id: string;
   field: keyof Item;
   label: string;
   include: boolean;
@@ -77,7 +76,6 @@ const Filler = styled.div`
 `;
 
 export const Filter = ({
-  id,
   field,
   label,
   value,
@@ -94,6 +92,7 @@ export const Filter = ({
           {label.slice(1)}
         </FilterTitle>
         {field === "class" && <HelpTip tooltipId={TOOLTIP_WCLASS} />}
+        {field === "type" && <HelpTip tooltipId={TOOLTIP_BOOK_TYPE} />}
         <Filler />
         <Switch>
           <SwitchOption
@@ -113,7 +112,6 @@ export const Filter = ({
         </Switch>
       </Row>
       <Select
-        id={id}
         value={value}
         options={options}
         isMulti

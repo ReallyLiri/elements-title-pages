@@ -3,6 +3,7 @@ import { LuFilter } from "react-icons/lu";
 import { useFilter } from "../../contexts/FilterContext";
 import { TOOLTIP_FILTERS } from "../map/MapTooltips";
 import React, { useRef } from "react";
+import { FILTER_TOGGLE_BUTTON_ID } from "../map/Tour.tsx";
 
 const FilterButtonContainer = styled.div`
   font-size: 1.5rem;
@@ -35,7 +36,7 @@ export const FilterButton = () => {
       onClick={handleClick}
       data-tooltip-id={TOOLTIP_FILTERS}
       data-tooltip-content={filterOpen ? "Hide Filters" : "Show Filters"}
-      id="filter-toggle-button"
+      id={FILTER_TOGGLE_BUTTON_ID}
     >
       <LuFilter />
     </FilterButtonContainer>

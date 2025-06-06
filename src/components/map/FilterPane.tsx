@@ -84,8 +84,6 @@ export const FilterPane = () => {
   const paneRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const toggleButton = document.getElementById("filter-toggle-button");
-
     const handleClickOutside = (event: MouseEvent) => {
       if (!filterOpen || !paneRef.current) {
         return;
@@ -101,18 +99,7 @@ export const FilterPane = () => {
         y >= paneRect.top &&
         y <= paneRect.bottom;
 
-      let isInButton = false;
-
-      if (toggleButton) {
-        const buttonRect = toggleButton.getBoundingClientRect();
-        isInButton =
-          x >= buttonRect.left &&
-          x <= buttonRect.right &&
-          y >= buttonRect.top &&
-          y <= buttonRect.bottom;
-      }
-
-      if (!isInPane && !isInButton) {
+      if (!isInPane) {
         setFilterOpen(false);
       }
     };

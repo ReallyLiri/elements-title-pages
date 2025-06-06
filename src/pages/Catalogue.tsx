@@ -25,6 +25,11 @@ import { FaBookReader } from "react-icons/fa";
 import { SEA_COLOR } from "../utils/colors.ts";
 import { isEmpty } from "lodash";
 import { authorDisplayName } from "../utils/dataUtils.ts";
+import {
+  TOOLTIP_BOOK_TYPE,
+  TOOLTIP_WCLASS,
+} from "../components/map/MapTooltips.tsx";
+import { HelpTip } from "../components/map/Filter.tsx";
 
 const TableContainer = styled.div`
   ${ScrollbarStyle};
@@ -146,6 +151,10 @@ const LanguageSpan = styled.span`
   font-size: 0.8rem;
 `;
 
+const StyledHelpTip = styled(HelpTip)`
+  margin: 0;
+`;
+
 function Catalogue() {
   const { filteredItems, filters } = useFilter();
   const [sorting, setSorting] = useState<SortingState>([
@@ -259,7 +268,6 @@ function Catalogue() {
           if (authorsA.length === 0) return 1;
           if (authorsB.length === 0) return -1;
 
-          // Compare the first author of each item using authorDisplayName
           const displayNameA = authorDisplayName(authorsA[0]);
           const displayNameB = authorDisplayName(authorsB[0]);
 
@@ -291,7 +299,12 @@ function Catalogue() {
         size: 40,
       }),
       columnHelper.accessor("class", {
-        header: "Wardhaugh Class",
+        header: () => (
+          <Row gap={0.5}>
+            W-Class <StyledHelpTip tooltipId={TOOLTIP_WCLASS} />
+          </Row>
+        ),
+        enableSorting: false,
         cell: (info) => info.getValue(),
         size: 120,
       }),
@@ -301,8 +314,12 @@ function Catalogue() {
         size: 140,
       }),
       columnHelper.accessor("type", {
-        header: "Type",
-        size: 60,
+        header: () => (
+          <Row gap={0.5}>
+            Classification <StyledHelpTip tooltipId={TOOLTIP_BOOK_TYPE} />
+          </Row>
+        ),
+        size: 120,
       }),
     ],
     [columnHelper],
@@ -367,12 +384,14 @@ function Catalogue() {
                           header.column.columnDef.header,
                           header.getContext(),
                         )}
-                        <SortIndicator>
-                          {{
-                            asc: "↑",
-                            desc: "↓",
-                          }[header.column.getIsSorted() as string] || ""}
-                        </SortIndicator>
+                        {header.column.columnDef.enableSorting && (
+                          <SortIndicator>
+                            {{
+                              asc: "↑",
+                              desc: "↓",
+                            }[header.column.getIsSorted() as string] || ""}
+                          </SortIndicator>
+                        )}
                       </div>
                     )}
                     <div

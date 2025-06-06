@@ -13,6 +13,7 @@ export const TOOLTIP_HELP = "help";
 export const TOOLTIP_MARKER_ARROW = "marker-arrow";
 export const TOOLTIP_SCAN = "view-scan";
 export const TOOLTIP_WCLASS = "w-class";
+export const TOOLTIP_BOOK_TYPE = "book-type";
 export const TOOLTIP_TRANSCRIPTION = "transcription";
 export const TOOLTIP_EN_TRANSLATION = "en-translation";
 
@@ -37,6 +38,10 @@ export const MapTooltips = () => (
     </Tooltip>
     <Tooltip id={TOOLTIP_EN_TRANSLATION}>
       Translation was constructed in part using an LLM
+    </Tooltip>
+    <Tooltip id={TOOLTIP_BOOK_TYPE}>
+      The classification of a book as a distinct edition or as a translation of
+      Elements is not always clear and can be challenged.
     </Tooltip>
     <Tooltip id={TOOLTIP_WCLASS} clickable>
       <div>
