@@ -139,12 +139,6 @@ const Map = () => {
     }
   }, [setTourOpen, setToured, toured]);
 
-  const handleMapClick = useCallback(() => {
-    if (filterOpen) {
-      setFilterOpen(false);
-    }
-  }, [filterOpen, setFilterOpen]);
-
   const itemsByCity = useMemo(() => {
     const res = {} as Record<string, typeof filteredItems>;
     filteredItems.forEach((item) => {
@@ -172,7 +166,7 @@ const Map = () => {
 
   return (
     <Wrapper>
-      <MapSection ref={mapSectionRef} onClick={handleMapClick}>
+      <MapSection ref={mapSectionRef}>
         <MapWrapper>
           <CitiesMap
             height={height}
