@@ -27,6 +27,9 @@ const ParallaxBackground = styled.div`
   z-index: -1;
   transform: translateY(0);
   will-change: transform;
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const StyledContainer = styled(Container)`
@@ -43,6 +46,17 @@ const StyledContainer = styled(Container)`
 const Title = styled.div`
   font-size: 6rem;
   margin: -2rem;
+  max-width: 100%;
+  @media (max-width: 600px) {
+    font-size: 4rem;
+    margin: 0;
+  }
+`;
+
+const SubTitle = styled(Text)`
+  @media (max-width: 600px) {
+    font-size: 2rem;
+  }
 `;
 
 const TextStyle = css`
@@ -62,6 +76,9 @@ const StyledImage = styled.img`
   max-height: 50vh;
   object-fit: contain;
   border-radius: 0.5rem;
+  @media (max-width: 600px) {
+    max-width: 90vw;
+  }
 `;
 
 const Credits = styled(Row)`
@@ -92,6 +109,9 @@ const Card = ({
   imageOnLeft: boolean;
   text: string | ReactNode;
 }) => {
+  if (window.innerWidth < 600) {
+    imageOnLeft = true;
+  }
   return (
     <Row noWrap>
       {imageOnLeft && <StyledImage src={imageSrc} alt={title} />}
@@ -189,9 +209,9 @@ function Home() {
       <StyledContainer>
         <Row column gap={1}>
           <Title className="gothic">Euclid's Elements</Title>
-          <Text size={3} color={MARKER_5}>
+          <SubTitle size={3} color={MARKER_5}>
             A RESOURCE BOX
-          </Text>
+          </SubTitle>
         </Row>
         <Card
           title="The Project"
