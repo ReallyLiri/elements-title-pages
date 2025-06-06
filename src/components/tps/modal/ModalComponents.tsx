@@ -80,14 +80,17 @@ export const ModalTextColumn = styled.div<{
   overflow-y: ${({ isImage }) => (isImage ? "hidden" : "visible")};
   line-height: 1.8;
   padding: 0 0.5rem;
+  min-width: 420px;
+  max-width: 90vw;
+  width: min-content;
   ${({ isRow }) =>
     isRow &&
     css`
-      max-width: 60%;
+      max-width: 90%;
       display: flex;
       flex-direction: row;
       gap: 0.5rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
       div {
         display: block;
       }
