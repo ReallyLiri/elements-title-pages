@@ -1,14 +1,7 @@
 import styled from "@emotion/styled";
 import { Container, Row, Text } from "../components/common";
 import { useNavigate } from "react-router-dom";
-import {
-  LAND_COLOR,
-  MARKER_1,
-  MARKER_4,
-  MARKER_5,
-  PANE_COLOR,
-  SEA_COLOR,
-} from "../utils/colors.ts";
+import { LAND_COLOR, MARKER_4, MARKER_5, PANE_COLOR } from "../utils/colors.ts";
 import {
   CATALOGUE_ROUTE,
   TITLE_PAGES_ROUTE,
@@ -65,8 +58,8 @@ const CardText = styled.div`
 `;
 
 const StyledImage = styled.img`
-  max-width: 40vw;
-  max-height: 60vh;
+  max-width: 30vw;
+  max-height: 50vh;
   object-fit: contain;
   border-radius: 0.5rem;
 `;
@@ -253,7 +246,7 @@ function Home() {
           icon={<GiHolySymbol />}
           color={MARKER_5}
           imageSrc="https://i.imgur.com/rumIeIz.jpeg"
-          imageOnLeft={false}
+          imageOnLeft={true}
           text={
             <div>
               The Gallery tab includes a toggle that lets you view an experiment
@@ -276,7 +269,7 @@ function Home() {
         <Card
           onClick={() => navigate(TITLE_PAGES_ROUTE)}
           imageSrc="/modal.png"
-          imageOnLeft={true}
+          imageOnLeft={false}
           text={
             <div>
               The experiment involved segmenting each text into distinct
@@ -295,7 +288,7 @@ function Home() {
           icon={<TbMathMaxMin />}
           color={MARKER_4}
           imageSrc="/mactutor.png"
-          imageOnLeft={false}
+          imageOnLeft={true}
           text={
             <div>
               Another LLM experiment is the MacTutor Index Graph. This project
