@@ -1,19 +1,18 @@
 import styled from "@emotion/styled";
 import { Container, Row, Text } from "../components/common";
 import { useNavigate } from "react-router-dom";
-import { MARKER_5, PANE_COLOR, SEA_COLOR } from "../utils/colors.ts";
+import { MARKER_4, MARKER_5, PANE_COLOR, SEA_COLOR } from "../utils/colors.ts";
 import {
   CATALOGUE_ROUTE,
-  MAP_ROUTE,
   TITLE_PAGES_ROUTE,
 } from "../components/layout/routes.ts";
-import { FaDraftingCompass, FaMapMarked } from "react-icons/fa";
+import { FaDraftingCompass } from "react-icons/fa";
 import { GiHolySymbol } from "react-icons/gi";
-
-import { GrCatalog } from "react-icons/gr";
 import { ReactNode, useEffect, useState } from "react";
 import { NAVBAR_HEIGHT } from "../components/layout/Navigation.tsx";
 import { css } from "@emotion/react";
+import { EIP_URL, MACTUTOR_URL } from "../constants";
+import { TbMathMaxMin } from "react-icons/tb";
 
 const ParallaxBackground = styled.div`
   position: fixed;
@@ -34,7 +33,7 @@ const StyledContainer = styled(Container)`
   padding-top: 2rem;
   z-index: 1;
   padding-bottom: 2rem;
-  max-width: 60vw;
+  max-width: 70vw;
   margin: auto;
   @media (max-width: 600px) {
     max-width: 96vw;
@@ -49,7 +48,7 @@ const Title = styled.div`
 const TextStyle = css`
   background-color: #282828;
   border-radius: 0.5rem;
-  padding: 1rem;
+  padding: 0.5rem;
   width: auto;
 `;
 
@@ -58,7 +57,7 @@ const CardText = styled.div`
 `;
 
 const StyledImage = styled.img`
-  max-width: 30vw;
+  max-width: 40vw;
   max-height: 60vh;
   object-fit: contain;
   border-radius: 0.5rem;
@@ -69,6 +68,10 @@ const Credits = styled(Row)`
   ${TextStyle};
   margin-top: 4rem;
   text-align: center;
+
+  a {
+    color: ${SEA_COLOR};
+  }
 `;
 
 const Card = ({
@@ -80,38 +83,47 @@ const Card = ({
   imageOnLeft,
   onClick,
 }: {
-  title: string;
-  icon: ReactNode;
+  title?: string;
+  icon?: ReactNode;
   onClick?: () => void;
   color?: string;
   imageSrc: string;
   imageOnLeft: boolean;
-  text: string;
+  text: string | ReactNode;
 }) => {
   return (
     <Row noWrap>
       {imageOnLeft && <StyledImage src={imageSrc} alt={title} />}
-      <Row column>
-        <CardText>
+      <Row column gap={0.5}>
+        {title && (
+          <CardText>
+            <Text
+              color={color}
+              size={1.5}
+              onClick={onClick}
+              clickable={!!onClick}
+            >
+              {title}
+            </Text>
+          </CardText>
+        )}
+        {icon && (
           <Text
-            color={color}
             size={1.5}
+            color={color}
             onClick={onClick}
             clickable={!!onClick}
           >
-            {title}
+            {icon}
           </Text>
-        </CardText>
-        <Text size={1.5} color={color} onClick={onClick} clickable={!!onClick}>
-          {icon}
-        </Text>
+        )}
         <CardText>
-          {text
-            .trim()
-            .split("\n")
-            .map((line, i) => (
-              <div key={i}>{line}</div>
-            ))}
+          {typeof text === "string"
+            ? text
+                .trim()
+                .split("\n")
+                .map((line, i) => <div key={i}>{line}</div>)
+            : text}
         </CardText>
       </Row>
       {!imageOnLeft && <StyledImage src={imageSrc} alt={title} />}
@@ -187,71 +199,126 @@ function Home() {
           imageSrc="/frontpiece.png"
           imageOnLeft={true}
           text={`
-This web application is a living resource book that accompanies my PhD research in the area of early modern transmission of Euclid’s Elements. This project is rooted in two realizations I had early in my PhD journey. First, a defining feature of a PhD is that there is no source book or textbook to rely on; if there were, it would hardly count as a PhD. Second, reading mathematical works taught me that one of the best ways to understand something is to explain and demonstrate it. As an engineer, coding is a primary way for me to express myself, so I began building this site as my evolving handbook. It’s a playground, not a finished product, and it keeps changing alongside the research itself.
+This web application is a living resource book that accompanies my PhD research in the area of early modern transmission of Euclid’s Elements.
+This project is rooted in two realizations I had early in my PhD journey.
+First, a defining feature of a PhD is that there is no source book or textbook to rely on; if there were, it would hardly count as a PhD.
+Second, reading mathematical works taught me that one of the best ways to understand something is to explain and demonstrate it.
+As an engineer, coding is a primary way for me to express myself, so I began building this site as my evolving handbook. It’s a playground, not a finished product, and it keeps changing alongside the research itself.
         `}
         />
         <Card
-          title="Editions Catalogue"
-          onClick={() => navigate(CATALOGUE_ROUTE)}
-          icon={<GrCatalog />}
-          color={MARKER_5}
-          imageSrc="https://i.imgur.com/MO2gGL6.jpeg"
-          imageOnLeft={false}
-          text={`
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-          facilisis et mauris nec tincidunt. Orci varius natoque penatibus et
-          magnis dis parturient montes, nascetur ridiculus mus. Donec mollis,
-          sapien quis elementum condimentum, magna urna vulputate erat, sit amet
-          accumsan magna urna non magna. Nulla pharetra magna odio, auctor
-          bibendum nunc lacinia viverra. Donec ut ultrices enim. Ut mi sem,
-          luctus et metus ut, consequat sollicitudin arcu. Morbi feugiat
-          vestibulum quam, sit amet vehicula odio placerat at. Cras vel nunc
-          ligula. Praesent ex augue, dapibus at faucibus a, feugiat a sapien.
-          Donec et dolor urna. Ut luctus placerat finibus.
-        `}
-        />
-        <Card
-          title="Title Pages Research"
-          onClick={() => navigate(TITLE_PAGES_ROUTE)}
-          icon={<GiHolySymbol />}
-          color={PANE_COLOR}
-          imageSrc="https://i.imgur.com/MO2gGL6.jpeg"
-          imageOnLeft={true}
-          text={`
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-          facilisis et mauris nec tincidunt. Orci varius natoque penatibus et
-          magnis dis parturient montes, nascetur ridiculus mus. Donec mollis,
-          sapien quis elementum condimentum, magna urna vulputate erat, sit amet
-          accumsan magna urna non magna. Nulla pharetra magna odio, auctor
-          bibendum nunc lacinia viverra. Donec ut ultrices enim. Ut mi sem,
-          luctus et metus ut, consequat sollicitudin arcu. Morbi feugiat
-          vestibulum quam, sit amet vehicula odio placerat at. Cras vel nunc
-          ligula. Praesent ex augue, dapibus at faucibus a, feugiat a sapien.
-          Donec et dolor urna. Ut luctus placerat finibus.
-        `}
-        />
-        <Card
-          title="Timeline and Map"
-          onClick={() => navigate(MAP_ROUTE)}
-          icon={<FaMapMarked />}
-          color={MARKER_5}
           imageSrc="/map.png"
           imageOnLeft={false}
+          text={
+            <>
+              <div>
+                The Catalog, Editions Gallery, and Map tabs offer three
+                different ways to explore the editions of Euclidean and related
+                texts.
+              </div>
+              <div>
+                The Catalog lists editions in a table, each with key details and
+                a link to a digital facsimile when available.
+              </div>
+              <div>
+                The Gallery presents the same information with thumbnails and an
+                option to expand and view the full details on each edition.
+              </div>
+              <div>
+                The Map places the editions geographically along a timeline.
+              </div>
+              <div>
+                All three tabs share a filtering function that preserves the
+                search parameters as you navigate between them.
+              </div>
+              <div>
+                The corpus is based primarily on the{" "}
+                <a href={EIP_URL} target="_blank" rel="noopener noreferrer">
+                  Wardhaugh et al. catalog
+                </a>
+                , supplemented by bibliographies from scholarly articles and
+                searches in the USTC, BnF collection, and Google Books.
+              </div>
+              <div>
+                The distinction between edition, reimpression, version and the
+                classification of a book as a translation of Elements or “other”
+                is not always clear and can be challenged.
+              </div>
+            </>
+          }
+        />
+        <Card
+          title="Title Pages Experiment"
+          onClick={() => navigate(CATALOGUE_ROUTE)}
+          icon={<GiHolySymbol />}
+          color={MARKER_5}
+          imageSrc="https://i.imgur.com/rumIeIz.jpeg"
+          imageOnLeft={false}
           text={`
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-          facilisis et mauris nec tincidunt. Orci varius natoque penatibus et
-          magnis dis parturient montes, nascetur ridiculus mus. Donec mollis,
-          sapien quis elementum condimentum, magna urna vulputate erat, sit amet
-          accumsan magna urna non magna. Nulla pharetra magna odio, auctor
-          bibendum nunc lacinia viverra. Donec ut ultrices enim. Ut mi sem,
-          luctus et metus ut, consequat sollicitudin arcu. Morbi feugiat
-          vestibulum quam, sit amet vehicula odio placerat at. Cras vel nunc
-          ligula. Praesent ex augue, dapibus at faucibus a, feugiat a sapien.
-          Donec et dolor urna. Ut luctus placerat finibus.
+The Gallery tab includes a toggle that lets you view an experiment in analyzing the title pages of the editions.
+This experiment is based on the idea that title pages serve multiple roles.
+They designate the book’s identity and can be viewed as an instrument of intellectual and commercial positioning, they can reflect contemporary aesthetic and typographical conventions and they advertise the book’s contents to its intended audience and encode broader intellectual and disciplinary priorities.
+In the case of mathematical works such as Elements, title pages can reveal the pedagogical and epistemological frameworks and networks within which mathematics was studied, taught, and disseminated. Thus, they can offer insight into both the circulation of Elements and the social, intellectual, and commercial forces shaping its transmission.
         `}
         />
+        <Card
+          onClick={() => navigate(TITLE_PAGES_ROUTE)}
+          imageSrc="/modal.png"
+          imageOnLeft={true}
+          text={`
+The experiment involved segmenting each text into distinct elements to identify patterns and variations.
+The transcription and segmentation of the title pages were done partly by an LLM and partly by automated processes. As a result, the data may contain some unusual errors but also fewer human mistakes and inconsistencies.
+The hands-on work with multiple models was part of the experience I aimed to gain from this exploration.
+        `}
+        />
+        <Card
+          title="MacTutor Index"
+          onClick={() => navigate(MACTUTOR_URL)}
+          icon={<TbMathMaxMin />}
+          color={MARKER_4}
+          imageSrc="/mactutor.png"
+          imageOnLeft={false}
+          text={
+            <>
+              <div>
+                Another LLM experiment is the MacTutor Index Graph. This project
+                grew out of my attempts to make sense of the many mathematicians
+                and practitioners active during the period, leading me to rely
+                on{" "}
+                <a
+                  href="https://mathshistory.st-andrews.ac.uk/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  MacTutor Index
+                </a>
+                , an online resource which contains biographies of over 3,000
+                mathematicians.
+              </div>
+              <div>
+                Using an LLM to process that website, I extracted key
+                information from each biography and mapped the connections
+                between individuals, displaying everything as a graph.
+              </div>
+              <div>
+                This project is still in its early stages and the LLM output has
+                not yet been fully verified and refined.
+              </div>
+            </>
+          }
+        />
+
         <Credits column gap={0.5}>
-          A data visualization project by Mia Joskowicz and Liri Sokol, 2025
+          <div>
+            A data visualization project by Mia Joskowicz and Liri Sokol, 2025,{" "}
+            <a
+              href="https://creativecommons.org/licenses/by-nc/4.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              License
+            </a>
+          </div>
         </Credits>
       </StyledContainer>
     </>

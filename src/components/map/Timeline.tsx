@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MdPause, MdPlayArrow } from "react-icons/md";
 import styled from "@emotion/styled";
 import { ButtonStyle, TRANSPARENT_WHITE } from "../../utils/colors";
