@@ -2176,19 +2176,7 @@ Milan 1702,1702,Milan,,ITALIAN,,Pietro Paolo Caravaggi,I PRIMI SEI LIBRI D’EVC
 Naples 1702,1702,Naples,,LATIN,,Porpora,EVCLIDIS ELEMENTA ex Traditione Federici Commandini,EUCLID'S ELEMENTS from the Tradition of Federico Commandino,EVCLIDIS ELEMENTA,,,,,,,,Federici Commandini,,,,,,,,,,,,,,,,,,1702,CAROLVM PORPORA,NEAPOL,,,,,ai_02_14-55,ex Traditione Federici Commandini,,,,Porpora,CAROLVM PORPORA,Carlo Porpora,,NEAPOL 1702 APVD CAROLVM PORPORA,NAPLES 1702 APPROVED CARLO PORPORA,Octavo,Elements 1–6,1,COMMANDINO,-,,,,,
 London 1705,1705,London,,ENGLISH,,Isaac Barrow,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Barrow,,,,,,Duodecimo,Elements 1-15,,HÉRIGONE/BARROW,,,,,,
 Kiel and Leipzig 1697,1697,Kiel,Leipzig,GERMAN,,Samuel Reyher,,,,Samuel Reyhers,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Samuel Reyher,,,,,,Quarto,Elements 1–6,,TACQUET,,,,,,
-s.l 1650,1650,,,LATIN,,,"EVCLIDIS
-ELEMENTORVM
-LIBRI SEX PRIORES,
-Qui in Scholis legi solent.
-Ex editione
-CHRISTOPHORI CLAVII
-Bambergensis è Societate IESV.","OF EUCLID’S
-ELEMENTS
-THE FIRST SIX BOOKS,
-As are commonly read in schools.
-From the edition
-OF CHRISTOPHER CLAVIUS
-of Bamberg, from the Society of JESUS.",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Octavo,Elements 1-6,,CLAVIUS,,https://digital.slub-dresden.de/werkansicht/dlf/26307/1,https://i.imgur.com/RLcu3so.png,,,"Extracted presumably from Rome 1629/Graz 1636. The only copy known to us, at the Sächsische LandesbibliothekStaats- und Universitätsbibliothek Dresden, lacks a title page; we transcribe as its title the heading at the beginning of the main text. The library gives its date as ‘circa 1650’; we have not found any further relevant evidence."
+s.l 1650,1650,,,LATIN,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Octavo,Elements 1-6,,CLAVIUS,,https://digital.slub-dresden.de/werkansicht/dlf/26307/1,,,,"Extracted presumably from Rome 1629/Graz 1636. The only copy known to us, at the Sächsische LandesbibliothekStaats- und Universitätsbibliothek Dresden, lacks a title page; we transcribe as its title the heading at the beginning of the main text. The library gives its date as ‘circa 1650’; we have not found any further relevant evidence."
 Oxford 1703,1703,Oxford,,LATIN,,David Gregory,"ΕΥΚΛΕΙΔΟΥ
 ΤΑ ΣΩΖΟΜΕΝΑ.
 
@@ -2204,7 +2192,10 @@ OF EUCLID
 ALL THAT SURVIVES.
 
 From the edition of DAVID GREGORY, M.D.
-Savilian Professor of Astronomy, & Fellow of the Royal Society.",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"OXONIAE,
+Savilian Professor of Astronomy, & Fellow of the Royal Society.","EUCLIDIS
+QUAE SUPERSUNT
+OMNIA",DAVIDIS GREGORII M. D.,,Astronomiae Professoris Saviliani, R. S. S.,"EUCLIDIS, ΕΥΚΛΕΙΔΟΥ",,,,,,,,,,,,,,"ΕΥΚΛΕΙΔΟΥ
+ΤΑ ΣΩΖΟΜΕΝΑ.",, R. S. S.,,,none,,An. Dom. MDCCIII.,,OXONIAE,,,,,mia,,,,,,,,,"OXONIAE,
 E THEATRO SHELDONIANO, An. Dom. MDCCIII.","OXFORD,
 From the Sheldonian Theatre, A.D. 1703.",Folio,Elements 1-15; Optica; Catoptrica; Introductio harmonica; Sectio canonis; Phaenomena; Data; De Divisionibus; De levi et ponderoso,,GREGORY,,https://www.google.co.il/books/edition/Euclidis_quae_supersunt_omnia/mJNBAAAAcAAJ,https://i.imgur.com/2x9T5OH.png,,https://i.imgur.com/Pw7GbDY.png,
 Utrecht n.d,,Utrecht,,DUTCH,,Nienrode,"EVCLIDES.
@@ -2235,4 +2226,9 @@ ply presented for the benefit of the
 studious and brought to light.
 
 By
-C. V. N., Lover of Mathematics.",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"TOT UYTRECHT. Door den Autheur, woonende in’t Schoonhuys.","IN UTRECHT. By the author, residing in the Schoonhuys.",Octavo,Elements 1-15,,CLAVIUS,1012100,https://books.google.co.uk/books?id=xNYqIHfhOh8C,https://i.imgur.com/Fsedeqw.png,,,"The book gives no direct indication of its date of printing; it is sometimes catalogued c. 1615, sometimes c. 1630, but the evidence on which these conjectures are based is not clear. The introduction mentions the six-book version of Dou (1606) and the fteen-book version of van Schooten (1617) as well as the earlier Latin versions of Ramus, Proclus, Commandino, Peletarius and Clavius: thus it can be placed no earlier than 1617. It is perhaps unlikely to have been printed after the 1662 reimpression of the van Schooten edition. The only other published work of (this) Cornelis van Nienrode appears to be a work on the circle, Volkomen proportie des circkels diameter teghen synen ronden om-loop printed at Utrecht in 1628."
+C. V. N., Lover of Mathematics.",EVCLIDES,C. V. N.,,Liefhebber der Mathematica,,EVCLIDES,,,"de outste naturalisten ende con-
+flige Schrijvers",,,,,"ghegheven, verciert, overgeset",Latijnsche spraecke,nederduyts,,,"leer-
+samen ",,,,"een-
+voudelijck tot dienst, verciert met schoo-
+ne verclaringen ende leringen","Het Fondament der Surdische,
+ende Binomische getallen",EVCLIDES,,,Autheur,UYTRECHT,,,,,,,,,,,,,,"TOT UYTRECHT. Door den Autheur, woonende in’t Schoonhuys.","IN UTRECHT. By the author, residing in the Schoonhuys.",Octavo,Elements 1-15,,CLAVIUS,1012100,https://books.google.co.uk/books?id=xNYqIHfhOh8C,https://i.imgur.com/Fsedeqw.png,,,"The book gives no direct indication of its date of printing; it is sometimes catalogued c. 1615, sometimes c. 1630, but the evidence on which these conjectures are based is not clear. The introduction mentions the six-book version of Dou (1606) and the fteen-book version of van Schooten (1617) as well as the earlier Latin versions of Ramus, Proclus, Commandino, Peletarius and Clavius: thus it can be placed no earlier than 1617. It is perhaps unlikely to have been printed after the 1662 reimpression of the van Schooten edition. The only other published work of (this) Cornelis van Nienrode appears to be a work on the circle, Volkomen proportie des circkels diameter teghen synen ronden om-loop printed at Utrecht in 1628."
