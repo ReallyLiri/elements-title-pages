@@ -22,7 +22,7 @@ import ItemModal from "../components/tps/modal/ItemModal";
 import { ItemTypes, NO_AUTHOR, NO_CITY, NO_YEAR } from "../constants";
 import { joinArr } from "../utils/util.ts";
 import { FaBookReader } from "react-icons/fa";
-import { SEA_COLOR } from "../utils/colors.ts";
+import { MARKER_2, MARKER_3, MARKER_4, SEA_COLOR } from "../utils/colors.ts";
 import { isEmpty } from "lodash";
 import { authorDisplayName } from "../utils/dataUtils.ts";
 import {
@@ -153,6 +153,10 @@ const LanguageSpan = styled.span`
 
 const StyledHelpTip = styled(HelpTip)`
   margin: 0;
+`;
+
+const Highlight = styled.span`
+  color: ${MARKER_4};
 `;
 
 function Catalogue() {
@@ -352,9 +356,11 @@ function Catalogue() {
 
       <Row>
         <Text size={1}>
-          Listing {filteredItems.length} {types && joinArr(types)} editions, by{" "}
-          {authorsCount} authors, in {languagesCount} languages, from{" "}
-          {citiesCount} cities.
+          Listing <Highlight>{filteredItems.length}</Highlight>{" "}
+          {types && joinArr(types)} editions, by{" "}
+          <Highlight>{authorsCount}</Highlight> authors, in{" "}
+          <Highlight>{languagesCount}</Highlight> languages, from{" "}
+          <Highlight>{citiesCount}</Highlight> cities.
         </Text>
       </Row>
 
