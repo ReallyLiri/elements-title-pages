@@ -20,13 +20,13 @@ export type Feature =
   | "Institutions"
   | "Bound With"
   | "Enriched With"
-  | "Imprint Date"
-  | "Imprint Publisher"
-  | "Imprint Place"
-  | "Imprint Privileges"
-  | "Imprint Dedication"
-  | "Imprint Author Name"
-  | "Imprint Author Description";
+  | "Date in Imprint"
+  | "Publisher in Imprint"
+  | "Place in Imprint"
+  | "Privileges in Imprint"
+  | "Dedication in Imprint"
+  | "Adapter Attribution in Imprint"
+  | "Adapter Description in Imprint";
 
 export type Range = {
   start: number;

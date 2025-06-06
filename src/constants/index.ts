@@ -45,13 +45,13 @@ export const FeatureToColumnName: Record<Feature, string[]> = {
   Institutions: ["INSTITUTIONS"],
   "Bound With": ["BOUND WITH"],
   "Enriched With": ["ENRICHED WITH"],
-  "Imprint Date": ["IMPRINT DATE"],
-  "Imprint Publisher": ["IMPRINT PUBLISHER"],
-  "Imprint Place": ["IMPRINT PLACE"],
-  "Imprint Privileges": ["IMPRINT PRIVILEGES"],
-  "Imprint Dedication": ["IMPRINT DEDICATION"],
-  "Imprint Author Name": ["IMPRINT AUTHOR NAME"],
-  "Imprint Author Description": ["IMPRINT AUTHOR DESCRIPTION"],
+  "Date in Imprint": ["IMPRINT DATE"],
+  "Publisher in Imprint": ["IMPRINT PUBLISHER"],
+  "Place in Imprint": ["IMPRINT PLACE"],
+  "Privileges in Imprint": ["IMPRINT PRIVILEGES"],
+  "Dedication in Imprint": ["IMPRINT DEDICATION"],
+  "Adapter Attribution in Imprint": ["IMPRINT AUTHOR NAME"],
+  "Adapter Description in Imprint": ["IMPRINT AUTHOR DESCRIPTION"],
 };
 
 export const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
@@ -63,9 +63,9 @@ export const FeaturesToSplit: Partial<Record<Feature, boolean>> = {
   "Elements Designation": true,
   "Bound With": true,
   "Enriched With": true,
-  "Imprint Publisher": true,
-  "Imprint Privileges": true,
-  "Imprint Place": true,
+  "Publisher in Imprint": true,
+  "Privileges in Imprint": true,
+  "Place in Imprint": true,
 };
 
 export const FeaturesNotSelectedByDefault: Feature[] = [
@@ -73,13 +73,13 @@ export const FeaturesNotSelectedByDefault: Feature[] = [
   "Elements Designation",
   "Base Content Description",
   "Supplementary Content",
-  "Imprint Date",
-  "Imprint Publisher",
-  "Imprint Place",
-  "Imprint Privileges",
-  "Imprint Dedication",
-  "Imprint Author Name",
-  "Imprint Author Description",
+  "Date in Imprint",
+  "Publisher in Imprint",
+  "Place in Imprint",
+  "Privileges in Imprint",
+  "Dedication in Imprint",
+  "Adapter Attribution in Imprint",
+  "Adapter Description in Imprint",
 
 ];
 
@@ -103,13 +103,13 @@ export const FeatureToColor: Record<Feature, string> = {
   Institutions: "#B0C4DE",
   "Bound With": "#FFB6C1",
   "Enriched With": "#D3D3D3",
-  "Imprint Date": "#FFDEAD",
-  "Imprint Publisher": "#ADD8E6",
-  "Imprint Place": "#E6E6FA",
-  "Imprint Privileges": "#D1E7E0",
-  "Imprint Dedication": "#D4C5F9",
-  "Imprint Author Name": "#909fd7",
-  "Imprint Author Description": "#FFDAB9",
+  "Date in Imprint": "#FFDEAD",
+  "Publisher in Imprint": "#ADD8E6",
+  "Place in Imprint": "#E6E6FA",
+  "Privileges in Imprint": "#D1E7E0",
+  "Dedication in Imprint": "#D4C5F9",
+  "Adapter Attribution in Imprint": "#909fd7",
+  "Adapter Description in Imprint": "#FFDAB9",
 };
 
 export const FeatureToTooltip: Record<Feature, string> = {
@@ -145,18 +145,18 @@ export const FeatureToTooltip: Record<Feature, string> = {
     "Mentions of institutions, such as societies or universities, associated with the book.",
   "Bound With": "Mentions of other works included in the book, such as 'Optics'.",
   "Enriched With": "Mentions of additional content that is not part of the core text that enriches the text and makes it more understandable, accurate, or useful.",
-  "Imprint Date":
+  "Date in Imprint":
     "The date of publication as it appears on the title page, typically in the form of a year.",
-  "Imprint Publisher":
+  "Publisher in Imprint":
     "The name of the publisher or printer as it appears on the title page.",
-  "Imprint Place":
+  "Place in Imprint":
     "The place of publication as it appears on the title page, typically a city.",
-  "Imprint Privileges":
+  "Privileges in Imprint":
     "Mentions of royal privileges or legal permissions granted for printing, such as 'by royal permission' or 'with the approval of the censor'.",
-  "Imprint Dedication":
+  "Dedication in Imprint":
     "Mentions of dedications to patrons or other individuals, typically found on the title page or in the preface.",
-  "Imprint Author Name":
+  "Adapter Attribution in Imprint":
     "The name of the author as it appears on the title page, typically in the form of 'by [Author Name]'.",
-  "Imprint Author Description":
+  "Adapter Description in Imprint":
     "Any descriptors found alongside the author name, such as academic titles, ranks, or affiliations.",
 };
