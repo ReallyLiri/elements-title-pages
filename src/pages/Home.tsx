@@ -310,7 +310,7 @@ function Home() {
         />
         <Card
           title="MacTutor Index Graph"
-          onClick={() => navigate(MACTUTOR_URL)}
+          onClick={() => window.open(MACTUTOR_URL, "_blank")}
           icon={<TbMathMaxMin />}
           color={MARKER_4}
           imageSrc="/mactutor.png"
