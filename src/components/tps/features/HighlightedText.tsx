@@ -195,7 +195,12 @@ const HighlightedText = memo(
     }
 
     return (
-      <div style={{ position: "relative", whiteSpace: "pre-wrap" }}>
+      <div
+        style={{
+          position: "relative",
+          whiteSpace: "pre-wrap",
+        }}
+      >
         {processedLayers.map((layer, i) => (
           <div
             key={i}

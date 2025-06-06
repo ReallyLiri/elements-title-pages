@@ -69,6 +69,7 @@ export const TextColumnsContainer = styled.div`
   gap: 2rem;
   overflow-y: auto;
   flex: 2;
+  overflow-x: hidden;
 `;
 
 export const ModalTextColumn = styled.div<{
@@ -83,13 +84,14 @@ export const ModalTextColumn = styled.div<{
   min-width: 420px;
   max-width: 90vw;
   width: min-content;
+  white-space: nowrap;
   ${({ isRow }) =>
     isRow &&
     css`
       max-width: 90%;
       display: flex;
       flex-direction: row;
-      gap: 0.5rem;
+      gap: 1rem;
       margin-bottom: 1rem;
       div {
         display: block;
