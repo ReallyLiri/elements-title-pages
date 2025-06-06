@@ -256,10 +256,9 @@ function Home() {
               function that preserves the search parameters as you navigate
               between them. The corpus is based primarily on the{" "}
               <a href={EIP_URL} target="_blank" rel="noopener noreferrer">
-                Wardhaugh et al. catalog
+                Euclid in print (1482–1703) catalog
               </a>
-              , supplemented by bibliographies from scholarly articles and
-              searches in the USTC, BnF collection, and Google Books. The
+              , supplemented with references from scholarship, USTC, BnF collection, and Google Books. The
               distinction between edition, reimpression, version and the
               classification of a book as a translation of Elements or “other”
               is not always clear and can be challenged.
