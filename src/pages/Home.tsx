@@ -283,7 +283,7 @@ function Home() {
           }
         />
         <Card
-          title="MacTutor Index"
+          title="MacTutor Index Graph"
           onClick={() => navigate(MACTUTOR_URL)}
           icon={<TbMathMaxMin />}
           color={MARKER_4}

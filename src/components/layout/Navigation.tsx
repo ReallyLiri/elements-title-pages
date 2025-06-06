@@ -132,7 +132,7 @@ function Navigation() {
             <div />
             <NavItem active={false}>
               <Link to={MACTUTOR_URL} target="_blank" rel="noreferrer noopener">
-                MacTutor Index <StyledExternalIcon />
+                MacTutor Index Graph <StyledExternalIcon />
               </Link>
             </NavItem>
           </NavItems>
