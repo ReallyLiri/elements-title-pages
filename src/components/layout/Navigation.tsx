@@ -11,6 +11,8 @@ import { useEffect, useLayoutEffect } from "react";
 import { BsBoundingBoxCircles } from "react-icons/bs";
 import { FilterButton } from "./FilterButton";
 import { useFilter } from "../../contexts/FilterContext.tsx";
+import { MACTUTOR_URL } from "../../constants";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 export const NAVBAR_HEIGHT = 60;
 
@@ -81,6 +83,11 @@ const FixedFilterButtonContainer = styled.div`
   z-index: 90;
 `;
 
+const StyledExternalIcon = styled(FaExternalLinkAlt)`
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+`;
+
 function Navigation() {
   const location = useLocation();
   const { hasVisited, setHasVisited, setFilterOpen } = useFilter();
@@ -116,6 +123,12 @@ function Navigation() {
             </NavItem>
             <NavItem active={location.pathname === MAP_ROUTE}>
               <Link to={MAP_ROUTE}>Map</Link>
+            </NavItem>
+            <div />
+            <NavItem active={false}>
+              <Link to={MACTUTOR_URL} target="_blank" rel="noreferrer noopener">
+                MacTutor Index <StyledExternalIcon />
+              </Link>
             </NavItem>
           </NavItems>
         </NavContent>
