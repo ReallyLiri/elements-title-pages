@@ -73,6 +73,14 @@ export const FeaturesNotSelectedByDefault: Feature[] = [
   "Elements Designation",
   "Base Content Description",
   "Supplementary Content",
+  "Imprint Date",
+  "Imprint Publisher",
+  "Imprint Place",
+  "Imprint Privileges",
+  "Imprint Dedication",
+  "Imprint Author Name",
+  "Imprint Author Description",
+
 ];
 
 export const FeatureToColor: Record<Feature, string> = {
@@ -135,8 +143,8 @@ export const FeatureToTooltip: Record<Feature, string> = {
   "Greek designation": "Greek designation of the book in non-Greek books.",
   Institutions:
     "Mentions of institutions, such as societies or universities, associated with the book.",
-  "Bound With": "TBC",
-  "Enriched With": "TBC",
+  "Bound With": "Mentions of other works included in the book, such as 'Optics'.",
+  "Enriched With": "Mentions of additional content that is not part of the core text that enriches the text and makes it more understandable, accurate, or useful.",
   "Imprint Date":
     "The date of publication as it appears on the title page, typically in the form of a year.",
   "Imprint Publisher":
