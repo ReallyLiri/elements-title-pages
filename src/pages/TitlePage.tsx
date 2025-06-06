@@ -27,7 +27,6 @@ import Switch from "react-switch";
 import { MARKER_3 } from "../utils/colors.ts";
 
 const NoteLine = styled(Row)`
-  font-size: 0.8rem;
   opacity: 0.8;
 `;
 
