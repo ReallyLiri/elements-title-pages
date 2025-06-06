@@ -7,12 +7,6 @@ import { TIMELINE_PLAY_ID, TIMELINE_RANGE_ID } from "./Tour";
 import RangeSlider from "../../RangeSlider.tsx";
 import { useFilter } from "../../contexts/FilterContext";
 
-type TimelineProps = {
-  minYear: number;
-  maxYear: number;
-  rangeChanged: (from: number, to: number) => void;
-};
-
 const PlayButton = styled.div`
   ${ButtonStyle};
   svg {
@@ -40,29 +34,20 @@ const RangeWrapper = styled.div`
 const PLAY_STEP_YEARS = 10;
 const PLAY_STEP_SEC = 1;
 
-export const Timeline = ({ minYear, maxYear, rangeChanged }: TimelineProps) => {
-  const { range, setRange: setGlobalRange } = useFilter();
+export const Timeline = () => {
+  const { range, setRange, minYear, maxYear } = useFilter();
   const [isPlay, setPlay] = useState<boolean>(false);
-  const rangeChangedRef = useRef(rangeChanged);
-  const lastRangeChangedRef = useRef<[number, number]>([0, 0]);
-  const timelineInitializedRef = useRef(false);
-
-  useEffect(() => {
-    if (!timelineInitializedRef.current && minYear > 0 && maxYear > 0) {
-      if (range[0] === 0 && range[1] === 0) {
-        setGlobalRange([minYear, Math.round((minYear * 3 + maxYear) / 4)]);
-      }
-      timelineInitializedRef.current = true;
-    }
-  }, [maxYear, minYear, range, setGlobalRange]);
 
   const playStep = useCallback(
     () =>
-      setGlobalRange(([from, to]) => [
-        from,
-        Math.min(maxYear, to + PLAY_STEP_YEARS),
-      ]),
-    [maxYear, setGlobalRange],
+      setRange(([from, to]) => {
+        to = Math.min(maxYear, to + PLAY_STEP_YEARS);
+        if (to >= maxYear) {
+          setPlay(false);
+        }
+        return [from, to];
+      }),
+    [maxYear, setRange],
   );
 
   useEffect(() => {
@@ -72,20 +57,6 @@ export const Timeline = ({ minYear, maxYear, rangeChanged }: TimelineProps) => {
     const id = setInterval(playStep, PLAY_STEP_SEC * 1000);
     return () => clearTimeout(id);
   }, [isPlay, playStep]);
-
-  useEffect(() => {
-    if (
-      range[0] !== lastRangeChangedRef.current[0] ||
-      range[1] !== lastRangeChangedRef.current[1]
-    ) {
-      rangeChangedRef.current(range[0], range[1]);
-      lastRangeChangedRef.current = range;
-    }
-  }, [range]);
-
-  const handleRangeChange = (newRange: [number, number]) => {
-    setGlobalRange(newRange);
-  };
 
   return (
     <>
@@ -103,7 +74,7 @@ export const Timeline = ({ minYear, maxYear, rangeChanged }: TimelineProps) => {
             min={minYear}
             max={maxYear}
             value={range}
-            onChange={handleRangeChange}
+            onChange={setRange}
           />
         )}
       </RangeWrapper>

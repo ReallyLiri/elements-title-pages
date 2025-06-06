@@ -105,14 +105,7 @@ const Pane = styled.div<{
 
 const Map = () => {
   const { height } = useWindowSize();
-  const {
-    cities,
-    filteredItems,
-    setRange,
-    filterOpen,
-    setFilterOpen,
-    maxYear,
-  } = useFilter();
+  const { cities, filteredItems, filterOpen, setFilterOpen } = useFilter();
   const [zoom, setZoom] = useLocalStorage<number>("zoom", 1);
   const {
     ref: mapSectionRef,
@@ -203,11 +196,7 @@ const Map = () => {
             }}
             openTour={() => setTourOpen(true)}
           />
-          <Timeline
-            minYear={maxYear > 0 ? Math.min(1450, maxYear - 300) : 1450}
-            maxYear={maxYear}
-            rangeChanged={(from, to) => setRange([from, to])}
-          />
+          <Timeline />
         </ControlsRow>
         <HeatLegend
           offsetRight={mapX + mapWidth}
