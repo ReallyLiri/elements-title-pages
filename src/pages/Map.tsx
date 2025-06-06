@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Point } from "react-simple-maps";
 import styled from "@emotion/styled";
 import { isEmpty } from "lodash";

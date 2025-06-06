@@ -14,15 +14,15 @@ import { useFilter } from "../contexts/FilterContext";
 import {
   Container,
   Row,
-  ScrollToTopButton,
   ScrollbarStyle,
+  ScrollToTopButton,
   Text,
 } from "../components/common";
 import ItemModal from "../components/tps/modal/ItemModal";
 import { ItemTypes, NO_AUTHOR, NO_CITY, NO_YEAR } from "../constants";
 import { joinArr } from "../utils/util.ts";
 import { FaBookReader } from "react-icons/fa";
-import { MARKER_2, MARKER_3, MARKER_4, SEA_COLOR } from "../utils/colors.ts";
+import { MARKER_4, SEA_COLOR } from "../utils/colors.ts";
 import { isEmpty } from "lodash";
 import { authorDisplayName } from "../utils/dataUtils.ts";
 import {
