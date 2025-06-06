@@ -80,7 +80,14 @@ function TitlePage() {
           <Switch
             onColor={MARKER_3}
             activeBoxShadow={`0 0 2px 3px ${MARKER_3}`}
-            onChange={() => setTitlePagesModeOn((b) => !b)}
+            onChange={() =>
+              setTitlePagesModeOn((b) => {
+                if (b) {
+                  setMode("images");
+                }
+                return !b;
+              })
+            }
             checked={titlePagesModeOn}
           />
         </Row>
