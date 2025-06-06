@@ -63,7 +63,7 @@ const VerticalLine = styled.div`
   width: 1px;
   height: 20px;
   background-color: #aaaaaa;
-  margin: 0 1rem;
+  margin: 0 2rem;
 `;
 
 const SiteTitle = styled.div`
