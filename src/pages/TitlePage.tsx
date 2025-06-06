@@ -21,9 +21,10 @@ import MultiSelect from "../components/tps/filters/MultiSelect";
 import Radio from "../components/tps/filters/Radio";
 import ItemView from "../components/tps/features/ItemView";
 import { useFilter } from "../contexts/FilterContext";
-import { Switch, SwitchOption } from "../components/map/Switch.tsx";
 import { IoWarning } from "react-icons/io5";
 import styled from "@emotion/styled";
+import Switch from "react-switch";
+import { MARKER_3 } from "../utils/colors.ts";
 
 const NoteLine = styled(Row)`
   font-size: 0.8rem;
@@ -75,31 +76,19 @@ function TitlePage() {
         </ScrollToTopButton>
       )}
       <Column minWidth="min(820px, 90%)">
-        <Row>
-          <Switch>
-            <SwitchOption
-              selected={titlePagesModeOn}
-              onClick={() => setTitlePagesModeOn(true)}
-              title="Include only selected values"
-            >
-              Title Pages Research View
-            </SwitchOption>
-            <SwitchOption
-              selected={!titlePagesModeOn}
-              onClick={() => {
-                setMode("images");
-                setTitlePagesModeOn(false);
-              }}
-              title="Exclude all selected values"
-            >
-              Title Pages Research Off
-            </SwitchOption>
-          </Switch>
+        <Row gap={0.5}>
+          Title Pages View{" "}
+          <Switch
+            onColor={MARKER_3}
+            activeBoxShadow={`0 0 2px 3px ${MARKER_3}`}
+            onChange={() => setTitlePagesModeOn((b) => !b)}
+            checked={titlePagesModeOn}
+          />
         </Row>
         {titlePagesModeOn && (
           <>
             <Radio
-              name="View"
+              name="Show"
               options={["Texts", "Images"]}
               value={mode === "images"}
               onChange={(b) => setMode(b ? "images" : "texts")}

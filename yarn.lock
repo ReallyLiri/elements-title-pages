@@ -2105,7 +2105,7 @@ prettier@^3.4.2:
   resolved "https://registry.npmmirror.com/prettier/-/prettier-3.4.2.tgz#a5ce1fb522a588bf2b78ca44c6e6fe5aa5a2b13f"
   integrity sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==
 
-prop-types@^15.6.0, prop-types@^15.6.2:
+prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.8.1"
   resolved "https://registry.npmmirror.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -2194,6 +2194,13 @@ react-simple-maps@^3.0.0:
     d3-selection "^2.0.0"
     d3-zoom "^2.0.0"
     topojson-client "^3.1.0"
+
+react-switch@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.npmmirror.com/react-switch/-/react-switch-7.1.0.tgz#5318f4745b83793fecbca16c49ba62da485a550b"
+  integrity sha512-4xVeyImZE8QOTDw2FmhWz0iqo2psoRiS7XzdjaZBCIP8Dzo3rT0esHUjLee5WsAPSFXWWl1eVA5arp9n2C6yQA==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-tooltip@^5.28.0:
   version "5.28.0"
