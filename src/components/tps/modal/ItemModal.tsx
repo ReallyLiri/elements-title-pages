@@ -10,7 +10,7 @@ import {
   TextColumnsContainer,
 } from "./ModalComponents.tsx";
 import { lazy, Suspense } from "react";
-import {imageClicked, imageClickedModal} from "../../../utils/dataUtils.ts";
+import { openImage } from "../../../utils/dataUtils.ts";
 import styled from "@emotion/styled";
 import { HelpTip } from "../../map/Filter.tsx";
 import { FaBookReader } from "react-icons/fa";
@@ -146,7 +146,7 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
         </ModalClose>
         {features && (
           <ItemInfo
-            isRow={item.imageUrl || (item.title && item.title !== "?")}
+            isRow={Boolean(item.imageUrl || (item.title && item.title !== "?"))}
             item={item}
           />
         )}
@@ -156,7 +156,7 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
               <StyledImage
                 large
                 src={item.imageUrl}
-                onClick={() => imageClickedModal(item)}
+                onClick={() => openImage(item)}
               />
             </ModalTextColumn>
           )}

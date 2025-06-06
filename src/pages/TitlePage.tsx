@@ -1,5 +1,4 @@
-import { isEmpty } from "lodash";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import { Feature, Mode } from "../types";
 import {
@@ -42,11 +41,6 @@ function TitlePage() {
       defaultValue: Object.keys(FeatureToColumnName) as Feature[],
     },
   );
-  const [requiredFeatures, setRequiredFeatures] = useLocalStorageState<
-    Feature[]
-  >("tp-requiredFeatures", {
-    defaultValue: [] as Feature[],
-  });
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const handleScroll = useCallback(() => {
@@ -65,22 +59,6 @@ function TitlePage() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
-
-  const pageFilteredItems = useMemo(() => {
-    return filteredItems?.filter((item) => {
-      if (requiredFeatures.length) {
-        const hasFeature =
-          item.title !== "?" &&
-          requiredFeatures.every(
-            (f) => !isEmpty(item.features[f]?.filter(Boolean)),
-          );
-        if (!hasFeature) {
-          return false;
-        }
-      }
-      return true;
-    });
-  }, [filteredItems, requiredFeatures]);
 
   return (
     <Container style={{ position: "relative", margin: "2rem 0" }}>
@@ -123,22 +101,14 @@ function TitlePage() {
               <Column alignItems="end">
                 <span>Highlight Segments:</span>
               </Column>
-              {/*<div*/}
-              {/*  style={{*/}
-              {/*    display: "flex",*/}
-              {/*    alignItems: "center",*/}
-              {/*    gap: "0.5rem",*/}
-              {/*  }}*/}
-              {/*>*/}
-                <MultiSelect
-                  name="Features"
-                  value={features}
-                  options={Object.keys(FeatureToColumnName)}
-                  onChange={(f) => setFeatures(f as Feature[])}
-                  colors={FeatureToColor}
-                  tooltips={FeatureToTooltip}
-                />
-              {/*</div>*/}
+              <MultiSelect
+                name="Features"
+                value={features}
+                options={Object.keys(FeatureToColumnName)}
+                onChange={(f) => setFeatures(f as Feature[])}
+                colors={FeatureToColor}
+                tooltips={FeatureToTooltip}
+              />
               <ResetButton
                 onClick={() =>
                   setFeatures(
@@ -151,38 +121,31 @@ function TitlePage() {
               >
                 Reset
               </ResetButton>
-              {/*<Column alignItems="end">*/}
-              {/*  <span>Required Features:</span>*/}
-              {/*  <ResetButton onClick={() => setRequiredFeatures([])}>*/}
-              {/*    Reset*/}
-              {/*  </ResetButton>*/}
-              {/*</Column>*/}
-              {/*<div>*/}
-              {/*  <MultiSelect*/}
-              {/*    name="Required features"*/}
-              {/*    options={Object.keys(FeatureToColumnName)}*/}
-              {/*    onChange={(f) => setRequiredFeatures(f as Feature[])}*/}
-              {/*    value={requiredFeatures}*/}
-              {/*  />*/}
-              {/*</div>*/}
             </Row>
             <Row>
-              Attention: features were partially identified using an LLM and may not be accurate.
+              Attention: features were partially identified using an LLM and may
+              not be accurate.
             </Row>
           </>
         )}
       </Column>
       <Row rowGap={6}>
-        {pageFilteredItems?.map((item) => (
-          <ItemView
-            key={item.key}
-            height={TILE_HEIGHT}
-            width={TILE_WIDTH}
-            item={item}
-            mode={mode}
-            features={titlePagesModeOn ? features : null}
-          />
-        ))}
+        {filteredItems
+          ?.sort((a, b) => {
+            if (!a.year) return 1;
+            if (!b.year) return -1;
+            return a.year.localeCompare(b.year);
+          })
+          .map((item) => (
+            <ItemView
+              key={item.key}
+              height={TILE_HEIGHT}
+              width={TILE_WIDTH}
+              item={item}
+              mode={mode}
+              features={titlePagesModeOn ? features : null}
+            />
+          ))}
       </Row>
       <Text size={1}>
         À la Croisée des Hyperliens, chez le scribe fatigué et son félin

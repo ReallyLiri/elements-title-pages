@@ -222,6 +222,14 @@ function Catalogue() {
         header: "Year",
         cell: (info) => info.getValue() || NO_YEAR,
         size: 10,
+        sortingFn: (rowA, rowB) => {
+          const yearA = rowA.original.year;
+          const yearB = rowB.original.year;
+          if (!yearA && !yearB) return 0;
+          if (!yearA) return 1;
+          if (!yearB) return -1;
+          return yearA.localeCompare(yearB);
+        },
       }),
       columnHelper.accessor("cities", {
         header: "Cities",

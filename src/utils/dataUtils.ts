@@ -230,13 +230,14 @@ export const authorDisplayName = (author: string) => {
   return `${parts.slice(1).join(" ").trim()}, ${parts[0]}`;
 };
 
-export function imageClicked(item: Item) {
-  return window
-    .open(item.scanUrl?.replace("i.imgur.com", "rimgo.catsarch.com"), "_blank")
-    ?.focus();
+export function openScan(item: Item) {
+  if (!item.scanUrl) {
+    return;
+  }
+  return window.open(item.scanUrl, "_blank")?.focus();
 }
 
-export function imageClickedModal(item: Item) {
+export function openImage(item: Item) {
   return window
     .open(item.imageUrl?.replace("i.imgur.com", "rimgo.catsarch.com"), "_blank")
     ?.focus();

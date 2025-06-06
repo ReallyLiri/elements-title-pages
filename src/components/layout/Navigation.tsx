@@ -10,6 +10,7 @@ import { FilterButton } from "./FilterButton";
 import { FaDraftingCompass } from "react-icons/fa";
 import { MARKER_5 } from "../../utils/colors.ts";
 import { useLayoutEffect } from "react";
+import { BsBoundingBoxCircles } from "react-icons/bs";
 
 export const NAVBAR_HEIGHT = 60;
 
@@ -68,7 +69,7 @@ const SiteTitle = styled.div`
   white-space: nowrap;
 `;
 
-const StyledCompassIcon = styled(FaDraftingCompass)`
+const StyledBoxIcon = styled(BsBoundingBoxCircles)`
   margin-left: 0.5rem;
   color: ${MARKER_5};
 `;
@@ -87,7 +88,7 @@ function Navigation() {
           <FilterButton />
           <VerticalLine />
           <SiteTitle>Euclid's Elements: A Resource Box</SiteTitle>
-          <StyledCompassIcon />
+          <StyledBoxIcon />
           <VerticalLine />
           <NavItems>
             <NavItem active={location.pathname === HOME_ROUTE}>

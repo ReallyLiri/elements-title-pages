@@ -10,7 +10,7 @@ import {
   StyledImage,
   TextTile,
 } from "../../common.ts";
-import { imageClicked } from "../../../utils/dataUtils.ts";
+import { openScan } from "../../../utils/dataUtils.ts";
 import ItemModal from "../modal/ItemModal.tsx";
 import { NO_AUTHOR, NO_CITY, NO_YEAR } from "../../../constants";
 import { joinArr } from "../../../utils/util.ts";
@@ -115,10 +115,7 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
       {mode === "images" &&
         (item.imageUrl ? (
           <ImageTile>
-            <StyledImage
-              src={item.imageUrl}
-              onClick={() => imageClicked(item)}
-            />
+            <StyledImage src={item.imageUrl} onClick={() => openScan(item)} />
             <ImageExpandIcon
               title="Expand"
               onClick={(e) => {

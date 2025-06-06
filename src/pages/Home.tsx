@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Container, Row, Text } from "../components/common";
 import { useNavigate } from "react-router-dom";
-import { MARKER_4, MARKER_5, PANE_COLOR, SEA_COLOR } from "../utils/colors.ts";
+import { MARKER_5, PANE_COLOR, SEA_COLOR } from "../utils/colors.ts";
 import {
   CATALOGUE_ROUTE,
   MAP_ROUTE,
@@ -50,7 +50,7 @@ const TextStyle = css`
   background-color: #282828;
   border-radius: 0.5rem;
   padding: 1rem;
-  width: max-content;
+  width: auto;
 `;
 
 const CardText = styled.div`
@@ -64,7 +64,7 @@ const StyledImage = styled.img`
   border-radius: 0.5rem;
 `;
 
-const Greek = styled(Row)`
+const Credits = styled(Row)`
   color: ${SEA_COLOR};
   ${TextStyle};
   margin-top: 4rem;
@@ -179,27 +179,15 @@ function Home() {
           <Text size={3} color={MARKER_5}>
             A RESOURCE BOX
           </Text>
-          {/*<Text size={1.5} color={MARKER_4}>*/}
-          {/*  by Mia Joskowicz*/}
-          {/*</Text>*/}
         </Row>
         <Card
-          title="Ov the Evclid"
+          title="The Project"
           icon={<FaDraftingCompass />}
           color={PANE_COLOR}
           imageSrc="/frontpiece.png"
           imageOnLeft={true}
           text={`
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-          facilisis et mauris nec tincidunt. Orci varius natoque penatibus et
-          magnis dis parturient montes, nascetur ridiculus mus. Donec mollis,
-          sapien quis elementum condimentum, magna urna vulputate erat, sit amet
-          accumsan magna urna non magna. Nulla pharetra magna odio, auctor
-          bibendum nunc lacinia viverra. Donec ut ultrices enim. Ut mi sem,
-          luctus et metus ut, consequat sollicitudin arcu. Morbi feugiat
-          vestibulum quam, sit amet vehicula odio placerat at. Cras vel nunc
-          ligula. Praesent ex augue, dapibus at faucibus a, feugiat a sapien.
-          Donec et dolor urna. Ut luctus placerat finibus.
+This web application is a living resource book that accompanies my PhD research in the area of early modern transmission of Euclid’s Elements. This project is rooted in two realizations I had early in my PhD journey. First, a defining feature of a PhD is that there is no source book or textbook to rely on; if there were, it would hardly count as a PhD. Second, reading mathematical works taught me that one of the best ways to understand something is to explain and demonstrate it. As an engineer, coding is a primary way for me to express myself, so I began building this site as my evolving handbook. It’s a playground, not a finished product, and it keeps changing alongside the research itself.
         `}
         />
         <Card
@@ -262,11 +250,9 @@ function Home() {
           Donec et dolor urna. Ut luctus placerat finibus.
         `}
         />
-        <Greek column gap={0.5}>
-          Ἐπίγραμμα παλαιόν. Σχήματα πέντε Πλάτωνος, ὁ Πυθαγόρας σοφὸς εὗρε.
-          Πυθαγόρας σοφὸς εὗρε, Πλάτων δ’ ἀρίδηλ’ ἐδίδαξεν, Εὐκλείδης ἐπὶ τοῖσι
-          κλέος σοφιηκαλλὲς ἔτευξεν.
-        </Greek>
+        <Credits column gap={0.5}>
+          A data visualization project by Mia Joskowicz and Liri Sokol, 2025
+        </Credits>
       </StyledContainer>
     </>
   );
