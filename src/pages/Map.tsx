@@ -128,6 +128,10 @@ const Map = () => {
   const { setIsOpen: setTourOpen } = useTour();
 
   useEffect(() => {
+    setFilterOpen(true);
+  }, [setFilterOpen]);
+
+  useEffect(() => {
     if (!toured) {
       setToured(true);
       setTourOpen(true);

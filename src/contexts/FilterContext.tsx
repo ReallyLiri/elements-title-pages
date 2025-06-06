@@ -32,8 +32,6 @@ type FilterContextType = {
   setFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
   minYear: number;
   maxYear: number;
-  hasVisited: Record<string, boolean>;
-  setHasVisited: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
 };
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
@@ -110,10 +108,6 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     "filters-open",
     false,
   );
-  const [hasVisited, setHasVisited] = useLocalStorage<Record<string, boolean>>(
-    "page-visited",
-    {},
-  );
 
   useEffect(() => {
     loadEditionsData(setData, true);
@@ -149,8 +143,6 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     setFilterOpen,
     minYear,
     maxYear,
-    hasVisited,
-    setHasVisited,
   };
 
   return (

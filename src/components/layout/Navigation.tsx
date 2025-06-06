@@ -7,10 +7,9 @@ import {
   TITLE_PAGES_ROUTE,
 } from "./routes.ts";
 import { MARKER_5 } from "../../utils/colors.ts";
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { BsBoundingBoxCircles } from "react-icons/bs";
 import { FilterButton } from "./FilterButton";
-import { useFilter } from "../../contexts/FilterContext.tsx";
 import { MACTUTOR_URL } from "../../constants";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
@@ -93,19 +92,10 @@ const StyledExternalIcon = styled(FaExternalLinkAlt)`
 function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { hasVisited, setHasVisited, setFilterOpen } = useFilter();
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
-
-  useEffect(() => {
-    const currentPath = location.pathname;
-    if (currentPath !== HOME_ROUTE && !hasVisited[currentPath]) {
-      setFilterOpen(true);
-      setHasVisited({ ...hasVisited, [currentPath]: true });
-    }
-  }, [location, hasVisited, setHasVisited, setFilterOpen]);
 
   return (
     <>
