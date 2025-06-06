@@ -260,7 +260,7 @@ function Home() {
               </a>
               , supplemented with references from scholarship, USTC, the BnF collection, and Google Books. The
               distinction between edition, reimpression, version and the
-              classification of a book as a translation of Elements or “other”
+              classification of a book as a translation of Elements or "other"
               is not always clear and can be challenged.
             </div>
           }
