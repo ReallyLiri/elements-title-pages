@@ -14,6 +14,8 @@ import { loadCitiesAsync, loadEditionsData } from "../utils/dataUtils";
 import { Point } from "react-simple-maps";
 import { FLOATING_CITY } from "../types";
 import { MAX_YEAR, MIN_YEAR } from "../constants";
+import { HOME_ROUTE } from "../components/layout/routes";
+import { useLocation } from "react-router-dom";
 
 type FilterContextType = {
   data: Item[];
@@ -109,11 +111,24 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     "filters-open",
     false,
   );
+  const [hasVisited, setHasVisited] = useLocalStorage<Record<string, boolean>>(
+    "page-visited",
+    {},
+  );
+  const location = useLocation();
 
   useEffect(() => {
     loadEditionsData(setData, true);
     loadCitiesAsync().then(setCities);
   }, []);
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    if (currentPath !== HOME_ROUTE && !hasVisited[currentPath]) {
+      setFilterOpen(true);
+      setHasVisited({ ...hasVisited, [currentPath]: true });
+    }
+  }, [location, hasVisited, setHasVisited, setFilterOpen]);
 
   const [minYear, maxYear] = useMemo(() => {
     const years = data
