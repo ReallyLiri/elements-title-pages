@@ -86,7 +86,7 @@ function Navigation() {
         <NavContent>
           <FilterButton />
           <VerticalLine />
-          <SiteTitle>M. Joskowicz Elements Compendium</SiteTitle>
+          <SiteTitle>Euclid's Elements: A Resource Box</SiteTitle>
           <StyledCompassIcon />
           <VerticalLine />
           <NavItems>

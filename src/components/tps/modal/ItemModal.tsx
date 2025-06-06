@@ -10,7 +10,7 @@ import {
   TextColumnsContainer,
 } from "./ModalComponents.tsx";
 import { lazy, Suspense } from "react";
-import { imageClicked } from "../../../utils/dataUtils.ts";
+import {imageClicked, imageClickedModal} from "../../../utils/dataUtils.ts";
 import styled from "@emotion/styled";
 import { HelpTip } from "../../map/Filter.tsx";
 import { FaBookReader } from "react-icons/fa";
@@ -156,7 +156,7 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
               <StyledImage
                 large
                 src={item.imageUrl}
-                onClick={() => imageClicked(item)}
+                onClick={() => imageClickedModal(item)}
               />
             </ModalTextColumn>
           )}

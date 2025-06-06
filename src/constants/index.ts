@@ -12,7 +12,7 @@ export const MAX_YEAR = 1705;
 
 export const ItemTypes = {
   elements: "Elements",
-  secondary: "Complementary",
+  secondary: "Other",
 };
 
 export const NO_CITY = "s.l.";

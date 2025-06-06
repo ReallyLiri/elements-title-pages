@@ -232,6 +232,12 @@ export const authorDisplayName = (author: string) => {
 
 export function imageClicked(item: Item) {
   return window
+    .open(item.scanUrl?.replace("i.imgur.com", "rimgo.catsarch.com"), "_blank")
+    ?.focus();
+}
+
+export function imageClickedModal(item: Item) {
+  return window
     .open(item.imageUrl?.replace("i.imgur.com", "rimgo.catsarch.com"), "_blank")
     ?.focus();
 }

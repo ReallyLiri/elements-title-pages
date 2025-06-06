@@ -177,11 +177,11 @@ function Home() {
         <Row column gap={1}>
           <Title className="gothic">Euclid's Elements</Title>
           <Text size={3} color={MARKER_5}>
-            A COMPENDIUM
+            A RESOURCE BOX
           </Text>
-          <Text size={1.5} color={MARKER_4}>
-            by Mia Joskowicz
-          </Text>
+          {/*<Text size={1.5} color={MARKER_4}>*/}
+          {/*  by Mia Joskowicz*/}
+          {/*</Text>*/}
         </Row>
         <Card
           title="Ov the Evclid"

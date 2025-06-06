@@ -122,26 +122,14 @@ function TitlePage() {
             <Row justifyStart noWrap>
               <Column alignItems="end">
                 <span>Highlight Segments:</span>
-                <ResetButton
-                  onClick={() =>
-                    setFeatures(
-                      Object.keys(FeatureToColumnName).filter(
-                        (f) =>
-                          !FeaturesNotSelectedByDefault.includes(f as Feature),
-                      ) as Feature[],
-                    )
-                  }
-                >
-                  Reset
-                </ResetButton>
               </Column>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                }}
-              >
+              {/*<div*/}
+              {/*  style={{*/}
+              {/*    display: "flex",*/}
+              {/*    alignItems: "center",*/}
+              {/*    gap: "0.5rem",*/}
+              {/*  }}*/}
+              {/*>*/}
                 <MultiSelect
                   name="Features"
                   value={features}
@@ -150,21 +138,36 @@ function TitlePage() {
                   colors={FeatureToColor}
                   tooltips={FeatureToTooltip}
                 />
-              </div>
-              <Column alignItems="end">
-                <span>Required Features:</span>
-                <ResetButton onClick={() => setRequiredFeatures([])}>
-                  Reset
-                </ResetButton>
-              </Column>
-              <div>
-                <MultiSelect
-                  name="Required features"
-                  options={Object.keys(FeatureToColumnName)}
-                  onChange={(f) => setRequiredFeatures(f as Feature[])}
-                  value={requiredFeatures}
-                />
-              </div>
+              {/*</div>*/}
+              <ResetButton
+                onClick={() =>
+                  setFeatures(
+                    Object.keys(FeatureToColumnName).filter(
+                      (f) =>
+                        !FeaturesNotSelectedByDefault.includes(f as Feature),
+                    ) as Feature[],
+                  )
+                }
+              >
+                Reset
+              </ResetButton>
+              {/*<Column alignItems="end">*/}
+              {/*  <span>Required Features:</span>*/}
+              {/*  <ResetButton onClick={() => setRequiredFeatures([])}>*/}
+              {/*    Reset*/}
+              {/*  </ResetButton>*/}
+              {/*</Column>*/}
+              {/*<div>*/}
+              {/*  <MultiSelect*/}
+              {/*    name="Required features"*/}
+              {/*    options={Object.keys(FeatureToColumnName)}*/}
+              {/*    onChange={(f) => setRequiredFeatures(f as Feature[])}*/}
+              {/*    value={requiredFeatures}*/}
+              {/*  />*/}
+              {/*</div>*/}
+            </Row>
+            <Row>
+              Attention: features were partially identified using an LLM and may not be accurate.
             </Row>
           </>
         )}

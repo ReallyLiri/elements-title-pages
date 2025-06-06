@@ -283,7 +283,7 @@ function Catalogue() {
         size: 40,
       }),
       columnHelper.accessor("class", {
-        header: "Class",
+        header: "Wardhaugh Class",
         cell: (info) => info.getValue(),
         size: 120,
       }),
