@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   ReactNode,
   useContext,
@@ -6,16 +6,13 @@ import {
   useMemo,
   useState,
 } from "react";
-import { Item } from "../types";
+import { FLOATING_CITY, Item } from "../types";
 import { FilterValue } from "../components/map/Filter";
 import { useLocalStorage } from "usehooks-ts";
-import { isEmpty, isNil, isArray } from "lodash";
+import { isArray, isEmpty, isNil } from "lodash";
 import { loadCitiesAsync, loadEditionsData } from "../utils/dataUtils";
 import { Point } from "react-simple-maps";
-import { FLOATING_CITY } from "../types";
 import { MAX_YEAR, MIN_YEAR } from "../constants";
-import { HOME_ROUTE } from "../components/layout/routes";
-import { useLocation } from "react-router-dom";
 
 type FilterContextType = {
   data: Item[];
@@ -35,6 +32,8 @@ type FilterContextType = {
   setFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
   minYear: number;
   maxYear: number;
+  hasVisited: Record<string, boolean>;
+  setHasVisited: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
 };
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
@@ -115,20 +114,11 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     "page-visited",
     {},
   );
-  const location = useLocation();
 
   useEffect(() => {
     loadEditionsData(setData, true);
     loadCitiesAsync().then(setCities);
   }, []);
-
-  useEffect(() => {
-    const currentPath = location.pathname;
-    if (currentPath !== HOME_ROUTE && !hasVisited[currentPath]) {
-      setFilterOpen(true);
-      setHasVisited({ ...hasVisited, [currentPath]: true });
-    }
-  }, [location, hasVisited, setHasVisited, setFilterOpen]);
 
   const [minYear, maxYear] = useMemo(() => {
     const years = data
@@ -159,6 +149,8 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     setFilterOpen,
     minYear,
     maxYear,
+    hasVisited,
+    setHasVisited,
   };
 
   return (

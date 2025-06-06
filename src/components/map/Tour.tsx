@@ -55,7 +55,7 @@ export const tourSteps = [
     content: (
       <Wrapper>Use the filters to refine the presented translations.</Wrapper>
     ),
-    position: [120, 60],
+    position: [120, 60] as [number, number],
   },
   {
     selector: `#${ZOOM_CONTROLS_ID}`,

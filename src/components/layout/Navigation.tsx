@@ -7,9 +7,10 @@ import {
   TITLE_PAGES_ROUTE,
 } from "./routes.ts";
 import { MARKER_5 } from "../../utils/colors.ts";
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { BsBoundingBoxCircles } from "react-icons/bs";
 import { FilterButton } from "./FilterButton";
+import { useFilter } from "../../contexts/FilterContext.tsx";
 
 export const NAVBAR_HEIGHT = 60;
 
@@ -82,10 +83,19 @@ const FixedFilterButtonContainer = styled.div`
 
 function Navigation() {
   const location = useLocation();
+  const { hasVisited, setHasVisited, setFilterOpen } = useFilter();
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    if (currentPath !== HOME_ROUTE && !hasVisited[currentPath]) {
+      setFilterOpen(true);
+      setHasVisited({ ...hasVisited, [currentPath]: true });
+    }
+  }, [location, hasVisited, setHasVisited, setFilterOpen]);
 
   return (
     <>
