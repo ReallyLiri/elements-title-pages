@@ -1,7 +1,14 @@
 import styled from "@emotion/styled";
 import { Container, Row, Text } from "../components/common";
 import { useNavigate } from "react-router-dom";
-import { MARKER_4, MARKER_5, PANE_COLOR, SEA_COLOR } from "../utils/colors.ts";
+import {
+  LAND_COLOR,
+  MARKER_1,
+  MARKER_4,
+  MARKER_5,
+  PANE_COLOR,
+  SEA_COLOR,
+} from "../utils/colors.ts";
 import {
   CATALOGUE_ROUTE,
   TITLE_PAGES_ROUTE,
@@ -50,6 +57,7 @@ const TextStyle = css`
   border-radius: 0.5rem;
   padding: 0.5rem;
   width: auto;
+  font-size: 1.2rem;
 `;
 
 const CardText = styled.div`
@@ -64,13 +72,13 @@ const StyledImage = styled.img`
 `;
 
 const Credits = styled(Row)`
-  color: ${SEA_COLOR};
+  color: ${LAND_COLOR};
   ${TextStyle};
   margin-top: 4rem;
   text-align: center;
 
   a {
-    color: ${SEA_COLOR};
+    color: ${MARKER_4};
   }
 `;
 
@@ -99,7 +107,7 @@ const Card = ({
           <CardText>
             <Text
               color={color}
-              size={1.5}
+              size={1.8}
               onClick={onClick}
               clickable={!!onClick}
             >
@@ -198,53 +206,45 @@ function Home() {
           color={PANE_COLOR}
           imageSrc="/frontpiece.png"
           imageOnLeft={true}
-          text={`
-This web application is a living resource book that accompanies my PhD research in the area of early modern transmission of Euclid’s Elements.
-This project is rooted in two realizations I had early in my PhD journey.
-First, a defining feature of a PhD is that there is no source book or textbook to rely on; if there were, it would hardly count as a PhD.
-Second, reading mathematical works taught me that one of the best ways to understand something is to explain and demonstrate it.
-As an engineer, coding is a primary way for me to express myself, so I began building this site as my evolving handbook. It’s a playground, not a finished product, and it keeps changing alongside the research itself.
-        `}
+          text={
+            <div>
+              This web application is a living resource book that accompanies my
+              PhD research in the area of early modern transmission of Euclid’s{" "}
+              <i>Elements</i>. This project is rooted in two realizations I had
+              early in my PhD journey. First, a defining feature of a PhD is
+              that there is no source book or textbook to rely on; if there
+              were, it would hardly count as a PhD. Second, reading mathematical
+              works taught me that one of the best ways to understand something
+              is to explain and demonstrate it. As an engineer, coding is a
+              primary way for me to express myself, so I began building this
+              site as my evolving handbook. It’s a playground, not a finished
+              product, and it keeps changing alongside the research itself.
+            </div>
+          }
         />
         <Card
           imageSrc="/map.png"
           imageOnLeft={false}
           text={
-            <>
-              <div>
-                The Catalog, Editions Gallery, and Map tabs offer three
-                different ways to explore the editions of Euclidean and related
-                texts.
-              </div>
-              <div>
-                The Catalog lists editions in a table, each with key details and
-                a link to a digital facsimile when available.
-              </div>
-              <div>
-                The Gallery presents the same information with thumbnails and an
-                option to expand and view the full details on each edition.
-              </div>
-              <div>
-                The Map places the editions geographically along a timeline.
-              </div>
-              <div>
-                All three tabs share a filtering function that preserves the
-                search parameters as you navigate between them.
-              </div>
-              <div>
-                The corpus is based primarily on the{" "}
-                <a href={EIP_URL} target="_blank" rel="noopener noreferrer">
-                  Wardhaugh et al. catalog
-                </a>
-                , supplemented by bibliographies from scholarly articles and
-                searches in the USTC, BnF collection, and Google Books.
-              </div>
-              <div>
-                The distinction between edition, reimpression, version and the
-                classification of a book as a translation of Elements or “other”
-                is not always clear and can be challenged.
-              </div>
-            </>
+            <div>
+              The Catalog, Editions Gallery, and Map tabs offer three different
+              ways to explore the editions of Euclidean and related texts. The
+              Catalog lists editions in a table, each with key details and a
+              link to a digital facsimile when available. The Gallery presents
+              the same information with thumbnails and an option to expand and
+              view the full details on each edition. The Map places the editions
+              geographically along a timeline. All three tabs share a filtering
+              function that preserves the search parameters as you navigate
+              between them. The corpus is based primarily on the{" "}
+              <a href={EIP_URL} target="_blank" rel="noopener noreferrer">
+                Wardhaugh et al. catalog
+              </a>
+              , supplemented by bibliographies from scholarly articles and
+              searches in the USTC, BnF collection, and Google Books. The
+              distinction between edition, reimpression, version and the
+              classification of a book as a translation of Elements or “other”
+              is not always clear and can be challenged.
+            </div>
           }
         />
         <Card
@@ -254,22 +254,40 @@ As an engineer, coding is a primary way for me to express myself, so I began bui
           color={MARKER_5}
           imageSrc="https://i.imgur.com/rumIeIz.jpeg"
           imageOnLeft={false}
-          text={`
-The Gallery tab includes a toggle that lets you view an experiment in analyzing the title pages of the editions.
-This experiment is based on the idea that title pages serve multiple roles.
-They designate the book’s identity and can be viewed as an instrument of intellectual and commercial positioning, they can reflect contemporary aesthetic and typographical conventions and they advertise the book’s contents to its intended audience and encode broader intellectual and disciplinary priorities.
-In the case of mathematical works such as Elements, title pages can reveal the pedagogical and epistemological frameworks and networks within which mathematics was studied, taught, and disseminated. Thus, they can offer insight into both the circulation of Elements and the social, intellectual, and commercial forces shaping its transmission.
-        `}
+          text={
+            <div>
+              The Gallery tab includes a toggle that lets you view an experiment
+              in analyzing the title pages of the editions. This experiment is
+              based on the idea that title pages serve multiple roles. They
+              designate the book’s identity and can be viewed as an instrument
+              of intellectual and commercial positioning, they can reflect
+              contemporary aesthetic and typographical conventions and they
+              advertise the book’s contents to its intended audience and encode
+              broader intellectual and disciplinary priorities. In the case of
+              mathematical works such as <i>Elements</i>, title pages can reveal
+              the pedagogical and epistemological frameworks and networks within
+              which mathematics was studied, taught, and disseminated. Thus,
+              they can offer insight into both the circulation of{" "}
+              <i>Elements</i> and the social, intellectual, and commercial
+              forces shaping its transmission.
+            </div>
+          }
         />
         <Card
           onClick={() => navigate(TITLE_PAGES_ROUTE)}
           imageSrc="/modal.png"
           imageOnLeft={true}
-          text={`
-The experiment involved segmenting each text into distinct elements to identify patterns and variations.
-The transcription and segmentation of the title pages were done partly by an LLM and partly by automated processes. As a result, the data may contain some unusual errors but also fewer human mistakes and inconsistencies.
-The hands-on work with multiple models was part of the experience I aimed to gain from this exploration.
-        `}
+          text={
+            <div>
+              The experiment involved segmenting each text into distinct
+              elements to identify patterns and variations. The transcription
+              and segmentation of the title pages were done partly by an LLM and
+              partly by automated processes. As a result, the data may contain
+              some unusual errors but also fewer human mistakes and
+              inconsistencies. The hands-on work with multiple models was part
+              of the experience I aimed to gain from this exploration.
+            </div>
+          }
         />
         <Card
           title="MacTutor Index"
@@ -279,38 +297,31 @@ The hands-on work with multiple models was part of the experience I aimed to gai
           imageSrc="/mactutor.png"
           imageOnLeft={false}
           text={
-            <>
-              <div>
-                Another LLM experiment is the MacTutor Index Graph. This project
-                grew out of my attempts to make sense of the many mathematicians
-                and practitioners active during the period, leading me to rely
-                on{" "}
-                <a
-                  href="https://mathshistory.st-andrews.ac.uk/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  MacTutor Index
-                </a>
-                , an online resource which contains biographies of over 3,000
-                mathematicians.
-              </div>
-              <div>
-                Using an LLM to process that website, I extracted key
-                information from each biography and mapped the connections
-                between individuals, displaying everything as a graph.
-              </div>
-              <div>
-                This project is still in its early stages and the LLM output has
-                not yet been fully verified and refined.
-              </div>
-            </>
+            <div>
+              Another LLM experiment is the MacTutor Index Graph. This project
+              grew out of my attempts to make sense of the many mathematicians
+              and practitioners active during the period, leading me to rely on{" "}
+              <a
+                href="https://mathshistory.st-andrews.ac.uk/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                MacTutor Index
+              </a>
+              , an online resource which contains biographies of over 3,000
+              mathematicians. Using an LLM to process that website, I extracted
+              key information from each biography and mapped the connections
+              between individuals, displaying everything as a graph. This
+              project is still in its early stages and the LLM output has not
+              yet been fully verified and refined.
+            </div>
           }
         />
 
         <Credits column gap={0.5}>
           <div>
-            A data visualization project by Mia Joskowicz and Liri Sokol, 2025,{" "}
+            Created and maintained by Mia Joskowicz as part of her PhD project
+            with the assistance of Liri Sokol, 2025,{" "}
             <a
               href="https://creativecommons.org/licenses/by-nc/4.0/"
               target="_blank"

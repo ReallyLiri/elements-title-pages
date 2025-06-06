@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { PANE_BORDER } from "../../utils/colors";
 import { FiltersGroup } from "./FiltersGroup";
 import { useFilter } from "../../contexts/FilterContext";
-import { useEffect, useRef } from "react";
 import { FLOATING_CITY } from "../../types";
 import { ScrollbarStyle } from "../common";
 import RangeSlider from "../tps/filters/RangeSlider";
@@ -75,46 +74,17 @@ export const FilterPane = () => {
     filtersInclude,
     setFiltersInclude,
     filterOpen,
-    setFilterOpen,
     range,
     setRange,
     minYear,
     maxYear,
   } = useFilter();
-  const paneRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (!filterOpen || !paneRef.current) {
-        return;
-      }
-
-      const x = event.clientX;
-      const y = event.clientY;
-
-      const paneRect = paneRef.current.getBoundingClientRect();
-      const isInPane =
-        x >= paneRect.left &&
-        x <= paneRect.right &&
-        y >= paneRect.top &&
-        y <= paneRect.bottom;
-
-      if (!isInPane) {
-        setFilterOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [filterOpen, setFilterOpen]);
-
-  if (!filterOpen) return null;
+  if (!filterOpen) {
+    return null;
+  }
 
   return (
-    <Pane ref={paneRef} onClick={(e) => e.stopPropagation()}>
+    <Pane onClick={(e) => e.stopPropagation()}>
       <FilterButton />
       <StyledRangeSlider
         min={minYear}

@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import {
   CATALOGUE_ROUTE,
@@ -69,11 +69,13 @@ const VerticalLine = styled.div`
 const SiteTitle = styled.div`
   color: ${MARKER_5};
   white-space: nowrap;
+  cursor: pointer;
 `;
 
 const StyledBoxIcon = styled(BsBoundingBoxCircles)`
   margin-left: 0.5rem;
   color: ${MARKER_5};
+  cursor: pointer;
 `;
 
 const FixedFilterButtonContainer = styled.div`
@@ -90,6 +92,7 @@ const StyledExternalIcon = styled(FaExternalLinkAlt)`
 
 function Navigation() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { hasVisited, setHasVisited, setFilterOpen } = useFilter();
 
   useLayoutEffect(() => {
@@ -108,8 +111,10 @@ function Navigation() {
     <>
       <NavContainer>
         <NavContent>
-          <SiteTitle>Euclid's Elements: A Resource Box</SiteTitle>
-          <StyledBoxIcon />
+          <SiteTitle onClick={() => navigate(HOME_ROUTE)}>
+            Euclid's Elements: A Resource Box
+          </SiteTitle>
+          <StyledBoxIcon onClick={() => navigate(HOME_ROUTE)} />
           <VerticalLine />
           <NavItems>
             <NavItem active={location.pathname === HOME_ROUTE}>

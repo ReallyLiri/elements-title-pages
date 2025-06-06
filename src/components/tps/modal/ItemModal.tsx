@@ -34,7 +34,7 @@ type ItemModalProps = {
 const InfoTitle = styled.div`
   font-size: 0.8rem;
   color: darkgray;
-  min-width: 3rem;
+  min-width: 4rem;
 `;
 
 const StyledHelpTip = styled(HelpTip)<{

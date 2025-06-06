@@ -69,7 +69,7 @@ export const TextColumnsContainer = styled.div`
   gap: 2rem;
   overflow-y: auto;
   flex: 2;
-  overflow-x: hidden;
+  overflow-x: visible;
 `;
 
 export const ModalTextColumn = styled.div<{
@@ -81,10 +81,9 @@ export const ModalTextColumn = styled.div<{
   overflow-y: ${({ isImage }) => (isImage ? "hidden" : "visible")};
   line-height: 1.8;
   padding: 0 0.5rem;
-  min-width: 420px;
+  min-width: 250px;
   max-width: 90vw;
-  width: min-content;
-  white-space: nowrap;
+  width: auto;
   ${({ isRow }) =>
     isRow &&
     css`
