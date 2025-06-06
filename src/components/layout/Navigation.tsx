@@ -112,10 +112,10 @@ function Navigation() {
               <Link to={CATALOGUE_ROUTE}>Catalogue</Link>
             </NavItem>
             <NavItem active={location.pathname === TITLE_PAGES_ROUTE}>
-              <Link to={TITLE_PAGES_ROUTE}>Editions</Link>
+              <Link to={TITLE_PAGES_ROUTE}>Editions Gallery</Link>
             </NavItem>
             <NavItem active={location.pathname === MAP_ROUTE}>
-              <Link to={MAP_ROUTE}>Timeline</Link>
+              <Link to={MAP_ROUTE}>Map</Link>
             </NavItem>
           </NavItems>
         </NavContent>
