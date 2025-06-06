@@ -76,7 +76,7 @@ function TitlePage() {
       )}
       <Column minWidth="min(820px, 90%)">
         <Row gap={0.5}>
-          Title Pages View{" "}
+          Title Pages Experiment View{" "}
           <Switch
             onColor={MARKER_3}
             activeBoxShadow={`0 0 2px 3px ${MARKER_3}`}

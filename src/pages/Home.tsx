@@ -258,7 +258,7 @@ function Home() {
               <a href={EIP_URL} target="_blank" rel="noopener noreferrer">
                 Euclid in print (1482–1703) catalog
               </a>
-              , supplemented with references from scholarship, USTC, BnF collection, and Google Books. The
+              , supplemented with references from scholarship, USTC, the BnF collection, and Google Books. The
               distinction between edition, reimpression, version and the
               classification of a book as a translation of Elements or “other”
               is not always clear and can be challenged.
@@ -297,7 +297,7 @@ function Home() {
           imageOnLeft={false}
           text={
             <div>
-              The experiment involved segmenting each text into distinct
+              The experiment involved segmenting the title page's text into distinct
               elements to identify patterns and variations. The transcription
               and segmentation of the title pages were done partly by an LLM and
               partly by automated processes. As a result, the data may contain
