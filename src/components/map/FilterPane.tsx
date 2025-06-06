@@ -6,6 +6,8 @@ import { useEffect, useRef } from "react";
 import { FLOATING_CITY } from "../../types";
 import { ScrollbarStyle } from "../common";
 import RangeSlider from "../tps/filters/RangeSlider";
+import { NAVBAR_HEIGHT } from "../layout/Navigation.tsx";
+import { FilterButton } from "../layout/FilterButton.tsx";
 
 const Pane = styled.div`
   display: flex;
@@ -24,7 +26,7 @@ const Pane = styled.div`
   border-right: 2px ${PANE_BORDER} solid;
   border-bottom: 2px ${PANE_BORDER} solid;
   position: fixed;
-  top: 60px;
+  top: ${NAVBAR_HEIGHT}px;
   left: 0;
   z-index: 100;
 
@@ -126,6 +128,7 @@ export const FilterPane = () => {
 
   return (
     <Pane ref={paneRef} onClick={(e) => e.stopPropagation()}>
+      <FilterButton />
       <StyledRangeSlider
         min={minYear}
         max={maxYear}

@@ -6,10 +6,10 @@ import {
   MAP_ROUTE,
   TITLE_PAGES_ROUTE,
 } from "./routes.ts";
-import { FilterButton } from "./FilterButton";
 import { MARKER_5 } from "../../utils/colors.ts";
 import { useLayoutEffect } from "react";
 import { BsBoundingBoxCircles } from "react-icons/bs";
+import { FilterButton } from "./FilterButton";
 
 export const NAVBAR_HEIGHT = 60;
 
@@ -73,6 +73,13 @@ const StyledBoxIcon = styled(BsBoundingBoxCircles)`
   color: ${MARKER_5};
 `;
 
+const FixedFilterButtonContainer = styled.div`
+  position: fixed;
+  top: calc(${NAVBAR_HEIGHT}px + 1rem);
+  left: 1rem;
+  z-index: 90;
+`;
+
 function Navigation() {
   const location = useLocation();
 
@@ -84,8 +91,6 @@ function Navigation() {
     <>
       <NavContainer>
         <NavContent>
-          <FilterButton />
-          <VerticalLine />
           <SiteTitle>Euclid's Elements: A Resource Box</SiteTitle>
           <StyledBoxIcon />
           <VerticalLine />
@@ -106,6 +111,11 @@ function Navigation() {
         </NavContent>
       </NavContainer>
       <Placeholder />
+      {location.pathname !== HOME_ROUTE && (
+        <FixedFilterButtonContainer>
+          <FilterButton />
+        </FixedFilterButtonContainer>
+      )}
     </>
   );
 }

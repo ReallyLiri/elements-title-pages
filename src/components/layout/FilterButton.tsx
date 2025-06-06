@@ -10,6 +10,14 @@ const FilterButtonContainer = styled.div`
   color: white;
   display: flex;
   align-items: center;
+  background-color: black;
+  padding: 0.5rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  width: fit-content;
+  svg {
+    transform: translateY(2px);
+  }
 `;
 
 export const FilterButton = () => {
