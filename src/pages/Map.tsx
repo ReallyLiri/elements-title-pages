@@ -129,6 +129,7 @@ const Map = () => {
 
   useEffect(() => {
     setFilterOpen(true);
+    return () => setFilterOpen(false);
   }, [setFilterOpen]);
 
   useEffect(() => {

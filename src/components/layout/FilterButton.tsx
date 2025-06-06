@@ -14,8 +14,9 @@ const FilterButtonContainer = styled.div`
   background-color: black;
   padding: 0.5rem;
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
   width: fit-content;
+
   svg {
     transform: translateY(2px);
   }
