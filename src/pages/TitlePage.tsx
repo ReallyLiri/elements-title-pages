@@ -83,7 +83,7 @@ function TitlePage() {
             onChange={() =>
               setTitlePagesModeOn((b) => {
                 if (b) {
-                  setMode("images");
+                  setMode("texts");
                 }
                 return !b;
               })
