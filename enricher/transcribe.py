@@ -103,7 +103,9 @@ With the following definitions:
                 entries[i][key] = (
                     ", ".join([strip_surrounding_quotes(v) for v in value])
                     if isinstance(value, list)
-                    else strip_surrounding_quotes(value))
+                    else strip_surrounding_quotes(value)
+                    if isinstance(value, str)
+                    else value)
         except Exception as e:
             print(f"Error processing features for {entry['key']}: {e}")
             continue
