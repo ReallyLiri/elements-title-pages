@@ -107,6 +107,10 @@ export const loadEditionsData = (
             complete: (result) => {
               const items = (result.data as Record<string, unknown>[])
                 .map((raw) => {
+                  const hasTitle =
+                    Boolean(raw["tp_url"]) &&
+                    Boolean(raw["title"]) &&
+                    raw["title"] !== "?";
                   return {
                     key: raw["key"] as string,
                     year: raw["year"] as string,
@@ -138,6 +142,36 @@ export const loadEditionsData = (
                       ? parseInt(raw["volumesCount"] as string)
                       : null,
                     class: raw["wClass"] as string | null,
+                    hasTitle,
+                    colorInTitle: hasTitle ? raw["has_red"] === "True" : null,
+                    titlePageDesign: startCase(
+                      (raw["tp_design"] as string | null)?.toLowerCase(),
+                    ),
+                    titlePageNumberOfTypes: raw["num_of_types"]
+                      ? parseInt(raw["num_of_types"] as string)
+                      : null,
+                    titlePageFrameType: startCase(
+                      (raw["frame_type"] as string | null)?.toLowerCase(),
+                    ),
+                    titlePageEngraving: startCase(
+                      (raw["engraving"] as string | null)?.toLowerCase(),
+                    ),
+                    hasPrintersDevice: hasTitle
+                      ? raw["printer_device"] === "True"
+                      : null,
+                    hasHourGlassShape: hasTitle
+                      ? raw["hour_glass"] === "True"
+                      : null,
+                    fontTypes:
+                      (raw["font_types"] as string | null)
+                        ?.split(", ")
+                        .map((type) => startCase(type.toLowerCase()))
+                        .filter(Boolean) || [],
+                    calligraphicFeatures: startCase(
+                      (
+                        raw["calligraphic_features"] as string | null
+                      )?.toLowerCase(),
+                    ),
                     features: Object.keys(FeatureToColumnName).reduce(
                       (acc, feature) => {
                         acc[feature as Feature] = FeatureToColumnName[

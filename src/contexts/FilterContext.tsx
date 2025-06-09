@@ -72,6 +72,14 @@ const filterRecord = (
       return true;
     }
     const fieldValue = t[field];
+    if (filterValues?.every((v) => v === "true" || v === "false")) {
+      if (isNil(fieldValue)) {
+        return false;
+      }
+      return filtersInclude[field] || isNil(filtersInclude[field])
+        ? filterValues.includes(fieldValue.toString() as "true" | "false")
+        : !filterValues.includes(fieldValue.toString() as "true" | "false");
+    }
     const match = isArray(fieldValue)
       ? filterValues!.some(
           (v) =>

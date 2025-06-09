@@ -40,6 +40,7 @@ export type Item = {
   languages: string[];
   authors: string[];
   imageUrl: string | null;
+  hasTitle: boolean;
   title: string;
   titleEn: string | null;
   imprint: string | null;
@@ -53,6 +54,15 @@ export type Item = {
   additionalContent: string[];
   volumesCount: number | null;
   class: string | null;
+  colorInTitle: boolean | null;
+  titlePageDesign: string | null;
+  titlePageNumberOfTypes: number | null;
+  titlePageFrameType: string | null;
+  titlePageEngraving: string | null;
+  hasPrintersDevice: boolean | null;
+  hasHourGlassShape: boolean | null;
+  fontTypes: string[];
+  calligraphicFeatures: string | null;
 };
 
 export type RadioProps = {

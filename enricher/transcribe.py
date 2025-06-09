@@ -5,10 +5,11 @@ from tqdm import tqdm
 
 from tools import openai_client, write_csv, read_csv, strip_surrounding_quotes
 
-file_path = "../public/docs/EiP.csv"
+#file_path = "../public/docs/EiP.csv"
+file_path = "../public/docs/EiP-secondary.csv"
 
-_EXTRACT_FEATURES = False
-_MERGE_FEATURES = True
+_EXTRACT_FEATURES = True
+_MERGE_FEATURES = False
 
 entries, fieldnames = read_csv(file_path)
 for field in [
@@ -19,7 +20,7 @@ for field in [
     "engraving",
     "printer_device",
     "hour_glass",
-    "types",
+    "font_types",
     "has_calligraphic_features",
     "calligraphic_features",
 ]:
@@ -58,22 +59,20 @@ Output format:
     "engraving": <oneof "none", "woodcut", "copperplate">,
     "printer_device": boolean, 
     "hour_glass": boolean,
-    "types": [list of strings from: "italics", "roman", "majuscule roman", "blackletter"],
-    "has_calligraphic_features": boolean,
+    "font_types": [list of strings from: "italics", "roman", "majuscule roman", "blackletter"],
     "calligraphic_features": string
 }
 
 With the following definitions:
-- "has_red": true if the title page contains any red ink, false otherwise.
+- "has_red": true if the title page text contains any red ink, false otherwise. Ignore any background colors or stamps.
 - "tp_design": the design of the title page, one of "typographic" (if it is a typographic only title page), "custom" (Unique, handcrafted designs tailored specifically for the book), or "standard" (Common, reused templates employed by a printer across multiple works).
 - "num_of_types": the number of different typefaces used in the title page. Consider different font sizes as different typefaces.
 - "frame_type": the type of frame used in the title page, one of "none" (no frame), "woodcut" (a woodcut frame), or "line" (a line frame).
 - "engraving": the type of engraving used in the title page, one of "none" (no engraving), "woodcut" (a woodcut engraving), or "copperplate" (a copperplate engraving).
 - "printer_device": true if the title page contains any printer's device, false otherwise.
 - "hour_glass": true if the title page is formatted in an hourglass or a top-only hourglass shape, false otherwise.
-- "types": a list of typefaces used in the title page, from the following options: "italics", "roman", "majuscule roman", "blackletter". If no typefaces are used, return an empty list.
-- "has_calligraphic_features": true if the title page contains any calligraphic features, false otherwise.
-- "calligraphic_features": a description of the calligraphic features present in the title page, if any. If no calligraphic features are present, return an empty string.
+- "font_types": a list of typefaces used in the title page, from the following options: "italics", "roman", "majuscule roman", "blackletter". If no typefaces are used, return an empty list.
+- "calligraphic_features": a description of calligraphic features present in the title page, if any. If no calligraphic features are present, return an empty string. Ignore any handwritten text that was not part of the original print.
                          """.strip()},
                             {
                                 "type": "image_url",

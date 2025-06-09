@@ -131,6 +131,20 @@ export const FilterPane = () => {
             customCompareFn: (a, b) => (a as string).localeCompare(b as string),
           },
           class: { displayName: "Wardhaugh Class" },
+          hasTitle: { displayName: "Has Title Page" },
+          colorInTitle: { displayName: "Colors in Title Page" },
+          titlePageDesign: { displayName: "Title Page Design" },
+          titlePageNumberOfTypes: {
+            displayName: "Title Page Number of Types",
+          },
+          titlePageFrameType: { displayName: "Title Page Frame Type" },
+          titlePageEngraving: { displayName: "Title Page Engraving" },
+          hasPrintersDevice: { displayName: "Title Page has Printer's Device" },
+          hasHourGlassShape: { displayName: "Title Page with Hourglass Shape" },
+          fontTypes: {
+            displayName: "Font Types",
+            isArray: true,
+          },
         }}
         filters={filters}
         setFilters={setFilters}
