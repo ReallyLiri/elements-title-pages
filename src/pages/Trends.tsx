@@ -15,6 +15,7 @@ import { Item } from "../types";
 import { filterFields } from "../constants/filterFields";
 import { Container, Row, Text } from "../components/common.ts";
 import {
+  getStableColor,
   LAND_COLOR,
   MARKER_3,
   MARKER_4,
@@ -45,20 +46,6 @@ type TimeWindow = {
   count: number;
   groups: Record<string, number>;
 };
-
-const COLORS = [
-  "#8884d8",
-  "#82ca9d",
-  "#ffc658",
-  "#ff8042",
-  "#0088fe",
-  "#00c49f",
-  "#ffbb28",
-  "#ff8042",
-  "#a4de6c",
-  "#d0ed57",
-  "#ffc658",
-];
 
 function Trends() {
   const { filteredItems, range } = useFilter();
@@ -228,12 +215,12 @@ function Trends() {
             />
             <Legend />
             {groupBy.key ? (
-              uniqueGroups.map((group, index) => (
+              uniqueGroups.map((group) => (
                 <Bar
                   key={group}
                   dataKey={group}
                   stackId="a"
-                  fill={COLORS[index % COLORS.length]}
+                  fill={getStableColor(group)}
                   name={group}
                 />
               ))
