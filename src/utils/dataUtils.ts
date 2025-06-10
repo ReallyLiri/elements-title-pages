@@ -90,6 +90,10 @@ const parseBooks = (
 const ifEmpty = <T>(arr: T[], defaultValue: T[]): T[] =>
   arr.length === 0 ? defaultValue : arr;
 
+const toYesNo = (value: string): "Yes" | "No" => {
+  return value === "True" ? "Yes" : "No";
+};
+
 export const loadEditionsData = (
   setItems: Dispatch<SetStateAction<Item[]>>,
   setFloatingCity = false,
@@ -142,8 +146,10 @@ export const loadEditionsData = (
                       ? parseInt(raw["volumesCount"] as string)
                       : null,
                     class: raw["wClass"] as string | null,
-                    hasTitle,
-                    colorInTitle: hasTitle ? raw["has_red"] === "True" : null,
+                    hasTitle: (hasTitle ? "Yes" : "No") as "Yes" | "No",
+                    colorInTitle: hasTitle
+                      ? toYesNo(raw["has_red"] as string)
+                      : null,
                     titlePageDesign: startCase(
                       (raw["tp_design"] as string | null)?.toLowerCase(),
                     ),
@@ -157,10 +163,10 @@ export const loadEditionsData = (
                       (raw["engraving"] as string | null)?.toLowerCase(),
                     ),
                     hasPrintersDevice: hasTitle
-                      ? raw["printer_device"] === "True"
+                      ? toYesNo(raw["printer_device"] as string)
                       : null,
                     hasHourGlassShape: hasTitle
-                      ? raw["hour_glass"] === "True"
+                      ? toYesNo(raw["hour_glass"] as string)
                       : null,
                     fontTypes:
                       (raw["font_types"] as string | null)

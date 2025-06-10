@@ -33,6 +33,8 @@ export type Range = {
   end: number;
 };
 
+type YesNoBool = "Yes" | "No";
+
 export type Item = {
   key: string;
   year: string;
@@ -40,7 +42,7 @@ export type Item = {
   languages: string[];
   authors: string[];
   imageUrl: string | null;
-  hasTitle: boolean;
+  hasTitle: YesNoBool;
   title: string;
   titleEn: string | null;
   imprint: string | null;
@@ -54,13 +56,13 @@ export type Item = {
   additionalContent: string[];
   volumesCount: number | null;
   class: string | null;
-  colorInTitle: boolean | null;
+  colorInTitle: YesNoBool | null;
   titlePageDesign: string | null;
   titlePageNumberOfTypes: number | null;
   titlePageFrameType: string | null;
   titlePageEngraving: string | null;
-  hasPrintersDevice: boolean | null;
-  hasHourGlassShape: boolean | null;
+  hasPrintersDevice: YesNoBool | null;
+  hasHourGlassShape: YesNoBool | null;
   fontTypes: string[];
   calligraphicFeatures: string | null;
 };

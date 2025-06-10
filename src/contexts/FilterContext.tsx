@@ -72,13 +72,13 @@ const filterRecord = (
       return true;
     }
     const fieldValue = t[field];
-    if (filterValues?.every((v) => v === "true" || v === "false")) {
+    if (filterValues?.every((v) => v === "Yes" || v === "No")) {
       if (isNil(fieldValue)) {
         return false;
       }
       return filtersInclude[field] || isNil(filtersInclude[field])
-        ? filterValues.includes(fieldValue.toString() as "true" | "false")
-        : !filterValues.includes(fieldValue.toString() as "true" | "false");
+        ? filterValues.includes(fieldValue.toString() as "Yes" | "No")
+        : !filterValues.includes(fieldValue.toString() as "Yes" | "No");
     }
     const match = isArray(fieldValue)
       ? filterValues!.some(

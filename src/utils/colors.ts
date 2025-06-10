@@ -32,6 +32,10 @@ export const ButtonStyle = css`
 `;
 
 export const getStableColor = (input: string): string => {
+  if (input === "Yes") {
+    input = "true";
+  }
+
   let hash = 0;
   const multiplier = 53;
 
