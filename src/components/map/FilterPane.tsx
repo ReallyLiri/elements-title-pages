@@ -2,11 +2,11 @@ import styled from "@emotion/styled";
 import { PANE_BORDER } from "../../utils/colors";
 import { FiltersGroup } from "./FiltersGroup";
 import { useFilter } from "../../contexts/FilterContext";
-import { FLOATING_CITY } from "../../types";
 import { ScrollbarStyle } from "../common";
 import RangeSlider from "../tps/filters/RangeSlider";
 import { NAVBAR_HEIGHT } from "../layout/Navigation.tsx";
 import { FilterButton } from "../layout/FilterButton.tsx";
+import { filterFields } from "../../constants/filterFields";
 
 const Pane = styled.div`
   display: flex;
@@ -31,32 +31,6 @@ const Pane = styled.div`
 
   ${ScrollbarStyle};
 `;
-
-const formatCompare = (a: string, b: string): number => {
-  const order = [
-    "folio",
-    "folio in 8s",
-    "quarto",
-    "quarto in 8s",
-    "sexto",
-    "octavo",
-    "duodecimo",
-    "octodecimo",
-  ];
-  a = a.toLocaleLowerCase();
-  b = b.toLocaleLowerCase();
-  const aIndex = order.indexOf(a);
-  const bIndex = order.indexOf(b);
-  if (aIndex === -1 && bIndex === -1) {
-    return a.localeCompare(b);
-  } else if (aIndex === -1) {
-    return 1;
-  } else if (bIndex === -1) {
-    return -1;
-  } else {
-    return aIndex - bIndex;
-  }
-};
 
 const StyledRangeSlider = styled(RangeSlider)`
   gap: 0.5rem;
@@ -95,57 +69,7 @@ export const FilterPane = () => {
 
       <FiltersGroup
         data={data}
-        fields={{
-          type: {
-            displayName: "Book Classification",
-          },
-          languages: {
-            isArray: true,
-          },
-          cities: {
-            isArray: true,
-            customCompareFn: ((a: string, b: string) => {
-              if (a === FLOATING_CITY) return -1;
-              if (b === FLOATING_CITY) return 1;
-              return a.localeCompare(b, undefined, { sensitivity: "base" });
-            }) as (a: unknown, b: unknown) => number,
-          },
-          authors: {
-            isArray: true,
-          },
-          elementsBooksExpanded: {
-            displayName: "Elements Books",
-            isArray: true,
-          },
-          format: {
-            displayName: "Edition Format",
-            customCompareFn: formatCompare as (
-              a: unknown,
-              b: unknown,
-            ) => number,
-          },
-          volumesCount: { displayName: "Number of Volumes" },
-          additionalContent: {
-            displayName: "Additional Content",
-            isArray: true,
-            customCompareFn: (a, b) => (a as string).localeCompare(b as string),
-          },
-          class: { displayName: "Wardhaugh Class" },
-          hasTitle: { displayName: "Has Title Page" },
-          colorInTitle: { displayName: "Colors in Title Page" },
-          titlePageDesign: { displayName: "Title Page Design" },
-          titlePageNumberOfTypes: {
-            displayName: "Title Page Number of Types",
-          },
-          titlePageFrameType: { displayName: "Title Page Frame Type" },
-          titlePageEngraving: { displayName: "Title Page Engraving" },
-          hasPrintersDevice: { displayName: "Title Page has Printer's Device" },
-          hasHourGlassShape: { displayName: "Title Page with Hourglass Shape" },
-          fontTypes: {
-            displayName: "Font Types",
-            isArray: true,
-          },
-        }}
+        fields={filterFields}
         filters={filters}
         setFilters={setFilters}
         filtersInclude={filtersInclude}

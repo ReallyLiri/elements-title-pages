@@ -12,6 +12,7 @@ import {
   YAxis,
 } from "recharts";
 import { Item } from "../types";
+import { filterFields } from "../constants/filterFields";
 
 const Container = styled.div`
   display: flex;
@@ -63,30 +64,6 @@ type TimeWindow = {
   groups: Record<string, number>;
 };
 
-function getGroupByOptions(): GroupByOption[] {
-  return [
-    { key: "", label: "None" },
-    { key: "type", label: "Book Classification" },
-    { key: "languages", label: "Languages", isArray: true },
-    { key: "cities", label: "Cities", isArray: true },
-    { key: "authors", label: "Authors", isArray: true },
-    { key: "elementsBooksExpanded", label: "Elements Books", isArray: true },
-    { key: "format", label: "Edition Format" },
-    { key: "volumesCount", label: "Number of Volumes" },
-    { key: "additionalContent", label: "Additional Content", isArray: true },
-    { key: "class", label: "Wardhaugh Class" },
-    { key: "hasTitle", label: "Has Title Page" },
-    { key: "colorInTitle", label: "Colors in Title Page" },
-    { key: "titlePageDesign", label: "Title Page Design" },
-    { key: "titlePageNumberOfTypes", label: "Title Page Number of Types" },
-    { key: "titlePageFrameType", label: "Title Page Frame Type" },
-    { key: "titlePageEngraving", label: "Title Page Engraving" },
-    { key: "hasPrintersDevice", label: "Title Page has Printer's Device" },
-    { key: "hasHourGlassShape", label: "Title Page with Hourglass Shape" },
-    { key: "fontTypes", label: "Font Types", isArray: true },
-  ];
-}
-
 const COLORS = [
   "#8884d8",
   "#82ca9d",
@@ -108,7 +85,22 @@ function Trends() {
     label: "None",
   });
   const [windowSize, setWindowSize] = useState(10);
-  const groupByOptions = useMemo(() => getGroupByOptions(), []);
+  
+  const groupByOptions = useMemo(() => {
+    const options: GroupByOption[] = [{ key: "", label: "None" }];
+    
+    Object.entries(filterFields).forEach(([key, config]) => {
+      if (key !== "year") {
+        options.push({
+          key: key as keyof Item,
+          label: config.displayName || key,
+          isArray: config.isArray || false,
+        });
+      }
+    });
+    
+    return options;
+  }, []);
 
   const handleGroupByChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
