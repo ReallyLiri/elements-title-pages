@@ -6,7 +6,10 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Cell,
   Legend,
+  Pie,
+  PieChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -36,6 +39,18 @@ const ChartContainer = styled.div`
   width: 100%;
   .recharts-legend-wrapper {
     padding-top: 1rem;
+  }
+`;
+
+const PieChartContainer = styled.div`
+  margin-top: -2rem;
+  height: 24rem;
+  max-height: 60vh;
+  width: 100%;
+  .recharts-legend-wrapper {
+    right: 20vw !important;
+    max-height: 24rem;
+    overflow-y: auto;
   }
 `;
 
@@ -130,7 +145,10 @@ function Trends() {
                 (windows[windowIndex].groups[strVal] || 0) + 1;
             });
           } else if (value !== null && value !== undefined) {
-            const strVal = String(value);
+            let strVal = String(value);
+            if (strVal === "") {
+              strVal = "Uncategorized";
+            }
             windows[windowIndex].groups[strVal] =
               (windows[windowIndex].groups[strVal] || 0) + 1;
           }
@@ -170,6 +188,40 @@ function Trends() {
 
     return Array.from(groups);
   }, [timeWindows, groupBy]);
+
+  const pieChartData = useMemo(() => {
+    if (!groupBy.key || !filteredItems.length) return [];
+
+    const groupCounts: Record<string, number> = {};
+    let totalCount = 0;
+
+    filteredItems.forEach((item) => {
+      const value = item[groupBy.key as keyof Item];
+
+      if (groupBy.isArray && Array.isArray(value)) {
+        value.forEach((val) => {
+          const strVal = String(val);
+          groupCounts[strVal] = (groupCounts[strVal] || 0) + 1;
+          totalCount += 1;
+        });
+      } else if (value !== null && value !== undefined) {
+        let strVal = String(value);
+        if (strVal === "") {
+          strVal = "Uncategorized";
+        }
+        groupCounts[strVal] = (groupCounts[strVal] || 0) + 1;
+        totalCount += 1;
+      }
+    });
+
+    return Object.entries(groupCounts)
+      .map(([name, value]) => ({
+        name,
+        value,
+        percent: Math.round((value / totalCount) * 100),
+      }))
+      .sort((a, b) => b.value - a.value);
+  }, [filteredItems, groupBy]);
 
   return (
     <Container>
@@ -306,6 +358,74 @@ function Trends() {
           </BarChart>
         </ResponsiveContainer>
       </ChartContainer>
+
+      {groupBy.key && pieChartData.length > 0 && (
+        <>
+          <Text size={1.5} style={{ marginTop: "-4rem" }}>
+            Distribution of {groupBy.label}
+          </Text>
+          <PieChartContainer>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={pieChartData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius="70%"
+                  labelLine={true}
+                  label={({ name, percent }) => `${name}: ${percent}%`}
+                >
+                  {pieChartData.map((entry) => (
+                    <Cell key={entry.name} fill={getStableColor(entry.name)} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: SEA_COLOR,
+                    border: `1px solid ${MARKER_3}`,
+                    borderRadius: "8px",
+                  }}
+                  itemStyle={{ color: "#ffffff" }}
+                  formatter={(value, name) => {
+                    const entry = pieChartData.find(
+                      (item) => item.name === name,
+                    );
+                    return [
+                      `${name}: ${value} (${entry?.percent}%)`,
+                      <span style={{ display: "flex", alignItems: "center" }}>
+                        <span
+                          style={{
+                            display: "inline-block",
+                            width: "10px",
+                            height: "10px",
+                            backgroundColor: getStableColor(name as string),
+                            marginRight: "8px",
+                            borderRadius: "2px",
+                          }}
+                        />
+                        {name}
+                      </span>,
+                    ];
+                  }}
+                />
+                <Legend
+                  layout="vertical"
+                  verticalAlign="middle"
+                  align="right"
+                  formatter={(value) => {
+                    const entry = pieChartData.find(
+                      (item) => item.name === value,
+                    );
+                    return `${value}: ${entry?.value} (${entry?.percent}%)`;
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </PieChartContainer>
+        </>
+      )}
     </Container>
   );
 }

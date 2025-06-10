@@ -35,6 +35,9 @@ export const getStableColor = (input: string): string => {
   if (input === "Yes") {
     input = "true";
   }
+  if (input === "Uncategorized") {
+    return "#9f9f9f";
+  }
 
   let hash = 0;
   const multiplier = 53;
