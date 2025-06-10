@@ -26,12 +26,14 @@ const formatCompare = (a: string, b: string): number => {
   }
 };
 
+export type Filterable = {
+  displayName: string;
+  isArray?: boolean;
+  customCompareFn?: (a: unknown, b: unknown) => number;
+};
+
 export const filterFields: {
-  [key: string]: {
-    displayName: string;
-    isArray?: boolean;
-    customCompareFn?: (a: unknown, b: unknown) => number;
-  };
+  [key: string]: Filterable;
 } = {
   type: {
     displayName: "Book Classification",

@@ -26,12 +26,16 @@ import {
 const Select = styled.select`
   padding: 0.5rem;
   border-radius: 0.5rem;
-  min-width: 200px;
+  min-width: 12rem;
 `;
 
 const ChartContainer = styled.div`
-  height: 600px;
+  height: 42rem;
+  max-height: 80vh;
   width: 100%;
+  .recharts-legend-wrapper {
+    padding-top: 1rem;
+  }
 `;
 
 type GroupByOption = {
@@ -212,6 +216,66 @@ function Trends() {
                 paddingBottom: "5px",
               }}
               cursor={{ fill: "rgba(74, 7, 106, 0.6)" }}
+              itemSorter={() => -1}
+              content={({ active, payload, label }) => {
+                if (active && payload && payload.length) {
+                  return (
+                    <div
+                      style={{
+                        backgroundColor: SEA_COLOR,
+                        padding: "10px",
+                        border: `1px solid ${MARKER_3}`,
+                        borderRadius: "8px",
+                      }}
+                    >
+                      <p
+                        style={{
+                          color: MARKER_5,
+                          fontWeight: "bold",
+                          marginBottom: "10px",
+                          borderBottom: `1px solid ${MARKER_4}`,
+                          paddingBottom: "5px",
+                        }}
+                      >
+                        {label}
+                      </p>
+                      {payload.map((entry, index) => {
+                        const color =
+                          entry.name === "Total Editions"
+                            ? LAND_COLOR
+                            : getStableColor(entry.name as string);
+
+                        return (
+                          <div
+                            key={`item-${index}`}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              color: "#ffffff",
+                              margin: "4px 0",
+                            }}
+                          >
+                            <div
+                              style={{
+                                width: "10px",
+                                height: "10px",
+                                backgroundColor: color,
+                                marginRight: "8px",
+                                borderRadius: "2px",
+                              }}
+                            />
+                            <span style={{ marginRight: "8px" }}>
+                              {entry.name}:
+                            </span>
+                            <span>{entry.value}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                }
+                return null;
+              }}
             />
             <Legend />
             {groupBy.key ? (
