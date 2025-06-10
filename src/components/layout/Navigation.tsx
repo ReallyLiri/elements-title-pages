@@ -5,6 +5,7 @@ import {
   HOME_ROUTE,
   MAP_ROUTE,
   TITLE_PAGES_ROUTE,
+  TRENDS_ROUTE,
 } from "./routes.ts";
 import { MARKER_5 } from "../../utils/colors.ts";
 import { useLayoutEffect } from "react";
@@ -115,6 +116,9 @@ function Navigation() {
             </NavItem>
             <NavItem active={location.pathname === TITLE_PAGES_ROUTE}>
               <Link to={TITLE_PAGES_ROUTE}>Editions Gallery</Link>
+            </NavItem>
+            <NavItem active={location.pathname === TRENDS_ROUTE}>
+              <Link to={TRENDS_ROUTE}>Trends</Link>
             </NavItem>
             <NavItem active={location.pathname === MAP_ROUTE}>
               <Link to={MAP_ROUTE}>Map</Link>
