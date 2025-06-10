@@ -13,32 +13,8 @@ import {
 } from "recharts";
 import { Item } from "../types";
 import { filterFields } from "../constants/filterFields";
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  gap: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-`;
-
-const Title = styled.h1`
-  font-size: 2rem;
-  margin-bottom: 1rem;
-`;
-
-const ControlsContainer = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  align-items: center;
-`;
-
-const Label = styled.label`
-  font-size: 1.2rem;
-  margin-right: 0.5rem;
-`;
+import { Container, Row, Text } from "../components/common.ts";
+import { LAND_COLOR, SEA_COLOR } from "../utils/colors.ts";
 
 const Select = styled.select`
   padding: 0.5rem;
@@ -85,10 +61,10 @@ function Trends() {
     label: "None",
   });
   const [windowSize, setWindowSize] = useState(10);
-  
+
   const groupByOptions = useMemo(() => {
     const options: GroupByOption[] = [{ key: "", label: "None" }];
-    
+
     Object.entries(filterFields).forEach(([key, config]) => {
       if (key !== "year") {
         options.push({
@@ -98,7 +74,7 @@ function Trends() {
         });
       }
     });
-    
+
     return options;
   }, []);
 
@@ -167,7 +143,7 @@ function Trends() {
     if (!timeWindows.length) return [];
 
     return timeWindows.map((window) => {
-      const data: Record<string, any> = {
+      const data: Record<string, unknown> = {
         name: `${window.start}-${window.end}`,
         total: window.count,
       };
@@ -195,10 +171,10 @@ function Trends() {
 
   return (
     <Container>
-      <Title>Publication Trends Over Time</Title>
+      <Text size={1.5}>Editions Trends Over Time</Text>
 
-      <ControlsContainer>
-        <Label htmlFor="groupBy">Group by:</Label>
+      <Row>
+        <Text size={1.2}>Group by:</Text>
         <Select id="groupBy" value={groupBy.key} onChange={handleGroupByChange}>
           {groupByOptions.map((option) => (
             <option key={option.key} value={option.key}>
@@ -207,18 +183,19 @@ function Trends() {
           ))}
         </Select>
 
-        <Label htmlFor="windowSize">Year range:</Label>
+        <Text size={1.2}>Year range:</Text>
         <Select
           id="windowSize"
           value={windowSize}
           onChange={(e) => setWindowSize(Number(e.target.value))}
         >
-          <option value={5}>5 years</option>
-          <option value={10}>10 years</option>
-          <option value={20}>20 years</option>
-          <option value={50}>50 years</option>
+          {[1, 5, 10, 20, 50].map((size) => (
+            <option key={size} value={size}>
+              {size} year{size > 1 ? "s" : ""}
+            </option>
+          ))}
         </Select>
-      </ControlsContainer>
+      </Row>
 
       <ChartContainer>
         <ResponsiveContainer width="100%" height="100%">
@@ -242,7 +219,7 @@ function Trends() {
                 />
               ))
             ) : (
-              <Bar dataKey="total" fill="#8884d8" name="Total Publications" />
+              <Bar dataKey="total" fill={LAND_COLOR} name="Total Editions" />
             )}
           </BarChart>
         </ResponsiveContainer>

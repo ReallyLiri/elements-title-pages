@@ -26,7 +26,13 @@ const formatCompare = (a: string, b: string): number => {
   }
 };
 
-export const filterFields = {
+export const filterFields: {
+  [key: string]: {
+    displayName: string;
+    isArray?: boolean;
+    customCompareFn?: (a: unknown, b: unknown) => number;
+  };
+} = {
   type: {
     displayName: "Book Classification",
   },
