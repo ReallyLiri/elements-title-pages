@@ -278,6 +278,8 @@ function Trends() {
               itemSorter={() => -1}
               content={({ active, payload, label }) => {
                 if (active && payload && payload.length) {
+                  const sortedPayload = [...payload].sort((a, b) => (b.value as number) - (a.value as number));
+                  
                   return (
                     <div
                       style={{
@@ -298,7 +300,7 @@ function Trends() {
                       >
                         {label}
                       </p>
-                      {payload.map((entry, index) => {
+                      {sortedPayload.map((entry, index) => {
                         const color =
                           entry.name === "Total Editions"
                             ? LAND_COLOR
