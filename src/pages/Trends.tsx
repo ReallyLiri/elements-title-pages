@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import styled from "@emotion/styled";
 import { useFilter } from "../contexts/FilterContext";
+import { useLocalStorage } from "usehooks-ts";
 import {
   Bar,
   BarChart,
@@ -53,11 +54,17 @@ type TimeWindow = {
 
 function Trends() {
   const { filteredItems, range } = useFilter();
-  const [groupBy, setGroupBy] = useState<GroupByOption>({
-    key: "",
-    label: "None",
-  });
-  const [windowSize, setWindowSize] = useState(10);
+  const [groupBy, setGroupBy] = useLocalStorage<GroupByOption>(
+    "trends-group-by",
+    {
+      key: "",
+      label: "None",
+    },
+  );
+  const [windowSize, setWindowSize] = useLocalStorage<number>(
+    "trends-window-size",
+    10,
+  );
 
   const groupByOptions = useMemo(() => {
     const options: GroupByOption[] = [{ key: "", label: "None" }];
