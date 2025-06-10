@@ -2514,7 +2514,7 @@ AVEC PRIVILEGE DV ROY.",,,,,6025821,https://search.proquest.com/docview/20903051
 At SEBASTIEN CRAMOISY, Ordinary Printer
 to the King, Saint Jacques street, at the Storks.
 M. D.C. X L.
-WITH THE KING'S PRIVILEGE.",True,typographic,4,none,none,False,False,"roman, italics, majuscule roman",,
+WITH THE KING'S PRIVILEGE.",False,typographic,4,none,none,False,False,"roman, italics, majuscule roman",,
 ustc-30,1640,Paris,,FRENCH,,Jean Boulenger,"LA
 GEOMETRIE
 PRATIQVE
@@ -2551,7 +2551,7 @@ AVEC PRIVILEGE DV ROY.",,,,,6025821,https://gallica.bnf.fr/ark:/12148/bpt6k87022
 At SEBASTIEN CRAMOISY, Ordinary Printer
 to the King, Saint Jacques street, at the Storks.
 M. D. C. X L.
-WITH THE KING'S PRIVILEGE.",True,standard,3,none,none,False,False,"roman, majuscule roman",,
+WITH THE KING'S PRIVILEGE.",False,standard,3,none,none,False,False,"roman, majuscule roman",,
 ustc-35,1640,Paris,,FRENCH,,Jean Boulenger,"LA
 GEOMETRIE
 PRATIQVE
@@ -2587,7 +2587,7 @@ AVEC PRIVILEGE DV ROY.",,,,,,https://gallica.bnf.fr/ark:/12148/bpt6k87022241,htt
 At SEBASTIEN CRAMOISY, Ordinary Printer
 to the King, rue Saint Jacques, at the Storks.
 M. D. C. XL.
-WITH PRIVILEGE OF THE KING.",True,typographic,3,none,none,False,False,"roman, majuscule roman",,
+WITH PRIVILEGE OF THE KING.",False,typographic,3,none,none,False,False,"roman, majuscule roman",,
 ustc-63,1640,Paris,,FRENCH,,J.-L. de Vaulézard,"TRAICTE'
 OV VSAGE DV
 QVADRANT
@@ -2626,7 +2626,7 @@ Ruë S. Iacques, au Globe Celeste.
 M. DC. XXXX.",,,,,6039095,https://gallica.bnf.fr/ark:/12148/bpt6k8720784z,https://i.imgur.com/8Fkg96H.jpeg,,,"IN PARIS;  
 For the Author.  
 Rue St. Jacques, at the Celestial Globe.  
-M. DC. XXXX.",True,typographic,3,none,none,True,False,"roman, italics, majuscule roman",,
+M. DC. XXXX.",False,typographic,3,none,none,True,False,"roman, italics, majuscule roman",,
 ustc-20,1641,Paris,,FRENCH,,,"LE
 COVRS
 DE MATHEMATIQVE,
@@ -2704,7 +2704,7 @@ Alliott, at the Palace, near the Chapel
 St. Michael, & at the Widow M.
 rez St. Jacques street in Gloue.
 M. DC X L V.
-Ane'e Premulieu in Son.",True,typographic,3,none,woodcut,True,False,"roman, majuscule roman",,
+Ane'e Premulieu in Son.",False,typographic,3,none,woodcut,True,False,"roman, majuscule roman",,
 ustc-53,1646,Paris,,FRENCH,,François Le Gendre,"TRAICTE
 ARITHMETIQVE',
 CONTENANT TOVTES
@@ -2741,7 +2741,7 @@ At CARDIN BESONGNE, at the top of the
 ascent of the Holy Chapel, at the Red
 Roses.
 M. DC. XLVI.
-With the King's Privilege.",True,typographic,4,line,none,False,False,"roman, italics, majuscule roman",,
+With the King's Privilege.",False,typographic,4,line,none,False,False,"roman, italics, majuscule roman",,
 ustc-17,1647,Paris,,FRENCH,,,"NOVVELLE
 ARITHMÉTIQVE
 POVR LES FINANCES.
@@ -2778,7 +2778,7 @@ From the Printing House of I EAN B R V N E T,
 new street Saint Louys, at the Royal
 Cannon, 1647.
 And sold at the Author's, at the two
-Globes, near the Augustins.",True,typographic,3,none,none,True,False,"roman, majuscule roman",,
+Globes, near the Augustins.",False,typographic,3,none,none,True,False,"roman, majuscule roman",,
 Pisa 1658,1658,Pisa,,LATIN,,Giovanni Alfonso Borelli,"EVCLIDES
 RESTITUTUS,
 Sive,
@@ -2808,7 +2808,7 @@ nova, firmiorique Methodo promuntur",,secondary,Giovanni Alfonso Borelli,Francis
 1658.
 Superiorum permissu.",,,,,,https://www.google.com/books/edition/Euclides_restitutus_sive_Prisca_geometri/Dz8PAAAAQAAJ,https://i.imgur.com/vGMPNIM.png,,,"Pisis, from the Workshop of Francis Honophus.
 1658.  
-With the permission of superiors.",True,typographic,3,none,woodcut,True,False,"roman, majuscule roman",,
+With the permission of superiors.",False,typographic,3,none,woodcut,True,False,"roman, majuscule roman",,
 Amsterdam 1660a,1660,Amsterdam,,LATIN,,Gerrit Janszoon Vos,"GERARDI IOANNIS VOSSII
 DE
 UNIVERSAE MATHESIOS
@@ -2870,7 +2870,7 @@ M. DC. LX.",,,,,,https://gallica.bnf.fr/ark:/12148/bpt6k8720498z,https://i.imgur
 At Cardin Besongne, at the Palace  
 in the Gallery of prisoners,  
 Vermilion Roses.  
-M. DC. LX.",True,typographic,3,line,none,True,False,"roman, italics, majuscule roman",,
+M. DC. LX.",False,typographic,3,line,none,True,False,"roman, italics, majuscule roman",,
 Paris 1661,1661,Paris,,FRENCH,,R. P. Bourdín,"LE COVRS
 DE
 MATHÉMATIQVE,
@@ -2914,7 +2914,7 @@ of Our Lady of Faith, opposite the R. R.
 Jesuit Fathers.
 M. DC. LXI.
 With the King's Privilege.",False,typographic,3,none,none,False,False,"roman, majuscule roman, italics",,
-Le Mans 1663,1663,Le Mans,,FRENCH,,Roland Fréart,"LA PERSPECTIVE D’EVCLIDE, TRADVITE EN FRANÇOIS SVR LE TEXTE GREC, ORIGINAL DE L’AVTHEVR, Et demonstrée PAR ROL. FRÉART DE CHANTELOV SIEVR DE CHAM-BRAY.","THE PERSPECTIVE OF EUCLID, TRANSLATED INTO FRENCH ON THE GREEK TEXT, ORIGINAL OF THE AUTHOR, And demonstrated BY ROL. FRÉART DE CHANTELOU LORD OF CHAM-BRAY.",LA PERSPECTIVE D’EVCLIDE,ROL. FRÉART DE CHANTELOV SIEVR DE CHAM-BRAY,,,,EVCLIDE,,,,,,,,"TRADVITE, demonstrée","FRANÇOIS, GREC",EN FRANÇOIS,,,,,,,,,ai,"TRADVITE EN FRANÇOIS SVR LE TEXTE GREC, ORIGINAL DE L’AVTHEVR",Et demonstrée,,,secondary,Roland Fréart,IACQVES YSAMBART,IACQVES YSAMBART,,"AV MANS. De l’Imprimerie de IACQVES YSAMBART Marchand Libraire, et Imprimeur, demeurant au Pont-neuf, à l’Enseigne du Sainct Esprit. M. DC. LXIII.",,Quarto,Optica,,,https://www.google.com/books/edition/La_perspective_d_Euclide_traduite_en_fra/_pzn2kW9CAcC,https://i.imgur.com/aGbXkB9.png,,,"AV MANS. From the Printing House of JACQUES YSAMBART, Merchant Bookseller, and Printer, residing at the Pont-neuf, at the Sign of the Holy Spirit. M. DC. LXIII.",True,standard,3,none,woodcut,True,False,"roman, majuscule roman",,
+Le Mans 1663,1663,Le Mans,,FRENCH,,Roland Fréart,"LA PERSPECTIVE D’EVCLIDE, TRADVITE EN FRANÇOIS SVR LE TEXTE GREC, ORIGINAL DE L’AVTHEVR, Et demonstrée PAR ROL. FRÉART DE CHANTELOV SIEVR DE CHAM-BRAY.","THE PERSPECTIVE OF EUCLID, TRANSLATED INTO FRENCH ON THE GREEK TEXT, ORIGINAL OF THE AUTHOR, And demonstrated BY ROL. FRÉART DE CHANTELOU LORD OF CHAM-BRAY.",LA PERSPECTIVE D’EVCLIDE,ROL. FRÉART DE CHANTELOV SIEVR DE CHAM-BRAY,,,,EVCLIDE,,,,,,,,"TRADVITE, demonstrée","FRANÇOIS, GREC",EN FRANÇOIS,,,,,,,,,ai,"TRADVITE EN FRANÇOIS SVR LE TEXTE GREC, ORIGINAL DE L’AVTHEVR",Et demonstrée,,,secondary,Roland Fréart,IACQVES YSAMBART,IACQVES YSAMBART,,"AV MANS. De l’Imprimerie de IACQVES YSAMBART Marchand Libraire, et Imprimeur, demeurant au Pont-neuf, à l’Enseigne du Sainct Esprit. M. DC. LXIII.",,Quarto,Optica,,,https://www.google.com/books/edition/La_perspective_d_Euclide_traduite_en_fra/_pzn2kW9CAcC,https://i.imgur.com/aGbXkB9.png,,,"AV MANS. From the Printing House of JACQUES YSAMBART, Merchant Bookseller, and Printer, residing at the Pont-neuf, at the Sign of the Holy Spirit. M. DC. LXIII.",False,standard,3,none,woodcut,True,False,"roman, majuscule roman",,
 Bologna 1663,1663,Bologna,,ITALIAN,,Giovanni Alfonso Borelli,"EVCLIDE
 RINNOVATO,
 OVERO
@@ -3524,5 +3524,5 @@ Amsterdam 1652,1652,Amsterdam,,LATIN,,Marcus Meibom,"ANTIQVÆ MVSICÆ AVCTORES S
 LATINE. MARCVS MEIBOMIVS Restiuit ac Notis explicavit.","ANCIENT MUSIC AUTHORS SEVEN. IN GREEK AND
 LATIN. MARCUS MEIBOMIUS Restored and Explained with Notes.",ANTIQVÆ MVSICÆ AVCTORES SEPTEM.,MARCVS MEIBOMIVS,,,,,,,,,,Restiuit ac Notis explicavit.,,"Restiuit, explicavit","GRÆCE ET
 LATINE",,,,,,,,,,ai,"GRÆCE ET
-LATINE",,,,secondary,Marcus Meibom,Ludovicum Elzevirium,Ludovicum Elzevirium,,"AMSTELODAMI, Apud Ludovicum Elzevirium, M DC LII.",2,Quarto,Introductio harmonica; Sectio canonis,,,https://www.google.com/books/edition/Antiquae_musicae_auctores_septem/QdsPAAAAQAAJ,https://i.imgur.com/127A0R0.png,,,"AMSTERDAM, By Louis Elzevir, 1652.",True,typographic,3,none,woodcut,True,False,"roman, majuscule roman",,
+LATINE",,,,secondary,Marcus Meibom,Ludovicum Elzevirium,Ludovicum Elzevirium,,"AMSTELODAMI, Apud Ludovicum Elzevirium, M DC LII.",2,Quarto,Introductio harmonica; Sectio canonis,,,https://www.google.com/books/edition/Antiquae_musicae_auctores_septem/QdsPAAAAQAAJ,https://i.imgur.com/127A0R0.png,,,"AMSTERDAM, By Louis Elzevir, 1652.",False,typographic,3,none,woodcut,True,False,"roman, majuscule roman",,
 Cambridge 1657,1657,Cambridge,,LATIN,,Isaac Barrow,"EUCLIDIS DATA succinctè demonstrata: Unà cum Emendation-ibus quibusdam & Additionibus ad Elementa EUCLIDIS nuper edita. Operâ Mri. IS. BARROVV, CANTABRIGIENSIS Coll. Trin. Soc.","EUCLID'S DATA succinctly demonstrated: Together with certain Corrections & Additions to the Elements of EUCLID recently published. By the work of Mr. IS. BARROW, of Trinity College, Cambridge.",EUCLIDIS DATA,IS. BARROVV,,Mri.,CANTABRIGIENSIS Coll. Trin. Soc.,EUCLIDIS,,,,,,,,demonstrata,,,,,,,,,,,mia,succinctè demonstrata,,Unà cum Emendation-ibus quibusdam & Additionibus ad Elementa EUCLIDIS nuper edita,,secondary,,,,"CANTABRIGIÆ; Ex oicina JOANN. FIELD, celeber-rimæ Academiæ Typographi. Impensis Guilielmi Nealand Bibliopolæ. ANNO DOM. 1657.",,,,Data,,-,https://www.google.com/books/edition/Euclidis_Data_succinct%C3%A8_demonstrata_un/YcllAAAAcAAJ,https://i.imgur.com/McR1PMM.png,,,,False,typographic,4,line,none,True,False,"roman, majuscule roman, italics",,
