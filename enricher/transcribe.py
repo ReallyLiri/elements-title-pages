@@ -8,8 +8,8 @@ from tools import openai_client, write_csv, read_csv, strip_surrounding_quotes
 #file_path = "../public/docs/EiP.csv"
 file_path = "../public/docs/EiP-secondary.csv"
 
-_EXTRACT_FEATURES = True
-_MERGE_FEATURES = False
+_EXTRACT_FEATURES = False
+_MERGE_FEATURES = True
 
 entries, fieldnames = read_csv(file_path)
 for field in [

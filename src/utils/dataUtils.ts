@@ -132,7 +132,9 @@ export const loadEditionsData = (
                       (raw["author (normalized)"] as string | null)?.split(
                         ", ",
                       ) || [],
-                    imageUrl: raw["tp_url"] as string | null,
+                    imageUrl: (raw["tp_url"] || raw["tp_url_alt"]) as
+                      | string
+                      | null,
                     title: raw["title"] as string,
                     titleEn: raw["title_EN"] as string | null,
                     imprint: raw["imprint"] as string | null,
