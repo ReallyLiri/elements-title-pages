@@ -111,7 +111,7 @@ export const loadEditionsData = (
             complete: (result) => {
               const items = (result.data as Record<string, unknown>[])
                 .map((raw) => {
-                  const hasTitle =
+                  const hasTitleImage =
                     Boolean(raw["tp_url"]) &&
                     Boolean(raw["title"]) &&
                     raw["title"] !== "?";
@@ -146,8 +146,8 @@ export const loadEditionsData = (
                       ? parseInt(raw["volumesCount"] as string)
                       : null,
                     class: raw["wClass"] as string | null,
-                    hasTitle: (hasTitle ? "Yes" : "No") as "Yes" | "No",
-                    colorInTitle: hasTitle
+                    hasTitle: (hasTitleImage ? "Yes" : "No") as "Yes" | "No",
+                    colorInTitle: hasTitleImage
                       ? toYesNo(raw["has_red"] as string)
                       : null,
                     titlePageDesign: startCase(
@@ -162,10 +162,10 @@ export const loadEditionsData = (
                     titlePageEngraving: startCase(
                       (raw["engraving"] as string | null)?.toLowerCase(),
                     ),
-                    hasPrintersDevice: hasTitle
+                    hasPrintersDevice: hasTitleImage
                       ? toYesNo(raw["printer_device"] as string)
                       : null,
-                    hasHourGlassShape: hasTitle
+                    hasHourGlassShape: hasTitleImage
                       ? toYesNo(raw["hour_glass"] as string)
                       : null,
                     fontTypes:

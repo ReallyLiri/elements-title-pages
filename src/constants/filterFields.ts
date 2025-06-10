@@ -71,7 +71,7 @@ export const filterFields: {
       (a as string).localeCompare(b as string),
   },
   class: { displayName: "Wardhaugh Class" },
-  hasTitle: { displayName: "Has Title Page" },
+  hasTitle: { displayName: "Has Title Page Image" },
   colorInTitle: { displayName: "Colors in Title Page" },
   titlePageDesign: { displayName: "Title Page Design" },
   titlePageNumberOfTypes: {
@@ -82,7 +82,7 @@ export const filterFields: {
   hasPrintersDevice: { displayName: "Title Page has Printer's Device" },
   hasHourGlassShape: { displayName: "Title Page with Hourglass Shape" },
   fontTypes: {
-    displayName: "Font Types",
+    displayName: "Title Page Font Types",
     isArray: true,
   },
 };
