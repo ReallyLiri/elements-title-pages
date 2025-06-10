@@ -152,34 +152,45 @@ export const loadEditionsData = (
                     colorInTitle: hasTitleImage
                       ? toYesNo(raw["has_red"] as string)
                       : null,
-                    titlePageDesign: startCase(
-                      (raw["tp_design"] as string | null)?.toLowerCase(),
-                    ),
-                    titlePageNumberOfTypes: raw["num_of_types"]
-                      ? parseInt(raw["num_of_types"] as string)
+                    titlePageDesign: hasTitleImage
+                      ? startCase(
+                          (raw["tp_design"] as string | null)?.toLowerCase(),
+                        )
                       : null,
-                    titlePageFrameType: startCase(
-                      (raw["frame_type"] as string | null)?.toLowerCase(),
-                    ),
-                    titlePageEngraving: startCase(
-                      (raw["engraving"] as string | null)?.toLowerCase(),
-                    ),
+                    titlePageNumberOfTypes: hasTitleImage
+                      ? raw["num_of_types"]
+                        ? parseInt(raw["num_of_types"] as string)
+                        : null
+                      : null,
+                    titlePageFrameType: hasTitleImage
+                      ? startCase(
+                          (raw["frame_type"] as string | null)?.toLowerCase(),
+                        )
+                      : null,
+                    titlePageEngraving: hasTitleImage
+                      ? startCase(
+                          (raw["engraving"] as string | null)?.toLowerCase(),
+                        )
+                      : null,
                     hasPrintersDevice: hasTitleImage
                       ? toYesNo(raw["printer_device"] as string)
                       : null,
                     hasHourGlassShape: hasTitleImage
                       ? toYesNo(raw["hour_glass"] as string)
                       : null,
-                    fontTypes:
-                      (raw["font_types"] as string | null)
-                        ?.split(", ")
-                        .map((type) => startCase(type.toLowerCase()))
-                        .filter(Boolean) || [],
-                    calligraphicFeatures: startCase(
-                      (
-                        raw["calligraphic_features"] as string | null
-                      )?.toLowerCase(),
-                    ),
+                    fontTypes: hasTitleImage
+                      ? (raw["font_types"] as string | null)
+                          ?.split(", ")
+                          .map((type) => startCase(type.toLowerCase()))
+                          .filter(Boolean) || []
+                      : [],
+                    calligraphicFeatures: hasTitleImage
+                      ? startCase(
+                          (
+                            raw["calligraphic_features"] as string | null
+                          )?.toLowerCase(),
+                        )
+                      : null,
                     features: Object.keys(FeatureToColumnName).reduce(
                       (acc, feature) => {
                         acc[feature as Feature] = FeatureToColumnName[
