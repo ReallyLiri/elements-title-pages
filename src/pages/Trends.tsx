@@ -1,3 +1,2 @@
-import TrendsPage from './trends';
-
-export default TrendsPage;
+import Trends from './trends/index';
+export default Trends;

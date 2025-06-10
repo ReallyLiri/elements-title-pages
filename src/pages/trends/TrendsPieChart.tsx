@@ -1,5 +1,12 @@
-import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
-import { getStableColor, MARKER_3, MARKER_4, MARKER_5, SEA_COLOR } from "../../utils/colors";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
+import { getStableColor, MARKER_3, SEA_COLOR } from "../../utils/colors";
 import { GroupByOption } from "./useTrendsData";
 import { PieChartContainer } from "./TrendsStyles";
 import { Text } from "../../components/common";
@@ -48,9 +55,7 @@ export function TrendsPieChart({ pieChartData, groupBy }: TrendsPieChartProps) {
               }}
               itemStyle={{ color: "#ffffff" }}
               formatter={(value, name) => {
-                const entry = pieChartData.find(
-                  (item) => item.name === name
-                );
+                const entry = pieChartData.find((item) => item.name === name);
                 return [
                   `${name}: ${value} (${entry?.percent}%)`,
                   <span style={{ display: "flex", alignItems: "center" }}>
@@ -74,9 +79,7 @@ export function TrendsPieChart({ pieChartData, groupBy }: TrendsPieChartProps) {
               verticalAlign="middle"
               align="right"
               formatter={(value) => {
-                const entry = pieChartData.find(
-                  (item) => item.name === value
-                );
+                const entry = pieChartData.find((item) => item.name === value);
                 return `${value}: ${entry?.value} (${entry?.percent}%)`;
               }}
             />
