@@ -14,7 +14,13 @@ import {
 import { Item } from "../types";
 import { filterFields } from "../constants/filterFields";
 import { Container, Row, Text } from "../components/common.ts";
-import { LAND_COLOR, SEA_COLOR } from "../utils/colors.ts";
+import {
+  LAND_COLOR,
+  MARKER_3,
+  MARKER_4,
+  MARKER_5,
+  SEA_COLOR,
+} from "../utils/colors.ts";
 
 const Select = styled.select`
   padding: 0.5rem;
@@ -93,7 +99,6 @@ function Trends() {
     const [minYear, maxYear] = range;
     const windowsCount = Math.ceil((maxYear - minYear) / windowSize);
 
-    // Initialize time windows
     const windows: TimeWindow[] = Array.from(
       { length: windowsCount },
       (_, i) => {
@@ -108,7 +113,6 @@ function Trends() {
       },
     );
 
-    // Count items in each window
     filteredItems.forEach((item) => {
       if (!item.year) return;
 
@@ -206,7 +210,22 @@ function Trends() {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" angle={-45} textAnchor="end" height={70} />
             <YAxis />
-            <Tooltip />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: SEA_COLOR,
+                border: `1px solid ${MARKER_3}`,
+                borderRadius: "8px",
+              }}
+              itemStyle={{ color: "#ffffff" }}
+              labelStyle={{
+                color: MARKER_5,
+                fontWeight: "bold",
+                marginBottom: "10px",
+                borderBottom: `1px solid ${MARKER_4}`,
+                paddingBottom: "5px",
+              }}
+              cursor={{ fill: "rgba(74, 7, 106, 0.6)" }}
+            />
             <Legend />
             {groupBy.key ? (
               uniqueGroups.map((group, index) => (
@@ -219,7 +238,12 @@ function Trends() {
                 />
               ))
             ) : (
-              <Bar dataKey="total" fill={LAND_COLOR} name="Total Editions" />
+              <Bar
+                dataKey="total"
+                fill={LAND_COLOR}
+                name="Total Editions"
+                activeBar={{ fill: MARKER_3 }}
+              />
             )}
           </BarChart>
         </ResponsiveContainer>
