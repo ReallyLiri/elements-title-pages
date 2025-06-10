@@ -43,7 +43,7 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
   }, []);
 
   return (
-    <Column style={{ height, width }} ref={itemRef}>
+    <Column id={item.key} style={{ height, width }} ref={itemRef}>
       <div>
         {item.year || NO_YEAR} {joinArr(item.authors) || NO_AUTHOR},{" "}
         {joinArr(item.cities) || NO_CITY}
