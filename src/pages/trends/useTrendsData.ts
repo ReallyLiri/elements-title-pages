@@ -1,13 +1,16 @@
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { Item } from "../../types";
-import { filterFields } from "../../constants/filterFields";
+import { Item, Range } from "../../types";
+import { itemProperties } from "../../constants/itemProperties.ts";
 import { useFilter } from "../../contexts/FilterContext";
+import { isNil } from "lodash";
 
 export type GroupByOption = {
   key: keyof Item | "";
   label: string;
   isArray?: boolean;
+  origIsArray?: boolean;
+  isTitlePageImageFeature?: boolean;
 };
 
 export type TimeWindow = {
@@ -17,6 +20,41 @@ export type TimeWindow = {
   groups: Record<string, number>;
 };
 
+function countItem(
+  groupBy: GroupByOption,
+  value: unknown,
+  addValue: (key: string, count: number) => void,
+) {
+  if (groupBy.isArray && Array.isArray(value)) {
+    value.forEach((val) => {
+      let strVal: string;
+      if (groupBy.key === "elementsBooks") {
+        const range = val as Range;
+        strVal =
+          range.start === range.end
+            ? range.start.toString()
+            : `${range.start}-${range.end}`;
+      } else {
+        strVal = String(val);
+      }
+      addValue(strVal, 1 / value.length);
+    });
+  } else {
+    let strVal: string;
+    if (groupBy.origIsArray) {
+      strVal = (value as string[] | null)?.join(" & ") || "";
+    } else {
+      strVal = isNil(value) ? "" : String(value);
+    }
+    if (strVal === "") {
+      strVal = groupBy.isTitlePageImageFeature
+        ? "No Digital Facsimile"
+        : "Uncategorized";
+    }
+    addValue(strVal, 1);
+  }
+}
+
 export function useTrendsData() {
   const { filteredItems, range } = useFilter();
   const [groupBy, setGroupBy] = useLocalStorage<GroupByOption>(
@@ -24,22 +62,24 @@ export function useTrendsData() {
     {
       key: "",
       label: "None",
-    }
+    },
   );
   const [windowSize, setWindowSize] = useLocalStorage<number>(
     "trends-window-size",
-    10
+    10,
   );
 
   const groupByOptions = useMemo(() => {
     const options: GroupByOption[] = [{ key: "", label: "None" }];
 
-    Object.entries(filterFields).forEach(([key, config]) => {
-      if (key !== "year") {
+    Object.entries(itemProperties).forEach(([key, config]) => {
+      if (!config.notGroupable) {
         options.push({
           key: key as keyof Item,
           label: config.displayName || key,
-          isArray: config.isArray || false,
+          isArray: (config.isArray || false) && !config.groupByJoinArray,
+          origIsArray: config.isArray || false,
+          isTitlePageImageFeature: config.isTitlePageImageFeature,
         });
       }
     });
@@ -73,7 +113,7 @@ export function useTrendsData() {
           count: 0,
           groups: {},
         };
-      }
+      },
     );
 
     filteredItems.forEach((item) => {
@@ -87,21 +127,10 @@ export function useTrendsData() {
 
         if (groupBy.key) {
           const value = item[groupBy.key];
-
-          if (groupBy.isArray && Array.isArray(value)) {
-            value.forEach((val) => {
-              const strVal = String(val);
-              windows[windowIndex].groups[strVal] =
-                (windows[windowIndex].groups[strVal] || 0) + 1;
-            });
-          } else if (value !== null && value !== undefined) {
-            let strVal = String(value);
-            if (strVal === "") {
-              strVal = "Uncategorized";
-            }
-            windows[windowIndex].groups[strVal] =
-              (windows[windowIndex].groups[strVal] || 0) + 1;
-          }
+          countItem(groupBy, value, (key, count) => {
+            windows[windowIndex].groups[key] =
+              (windows[windowIndex].groups[key] || 0) + count;
+          });
         }
       }
     });
@@ -148,20 +177,10 @@ export function useTrendsData() {
     filteredItems.forEach((item) => {
       const value = item[groupBy.key as keyof Item];
 
-      if (groupBy.isArray && Array.isArray(value)) {
-        value.forEach((val) => {
-          const strVal = String(val);
-          groupCounts[strVal] = (groupCounts[strVal] || 0) + 1;
-          totalCount += 1;
-        });
-      } else if (value !== null && value !== undefined) {
-        let strVal = String(value);
-        if (strVal === "") {
-          strVal = "Uncategorized";
-        }
-        groupCounts[strVal] = (groupCounts[strVal] || 0) + 1;
-        totalCount += 1;
-      }
+      countItem(groupBy, value, (key, count) => {
+        groupCounts[key] = (groupCounts[key] || 0) + count;
+        totalCount += count;
+      });
     });
 
     return Object.entries(groupCounts)

@@ -6,7 +6,7 @@ import { ScrollbarStyle } from "../common";
 import RangeSlider from "../tps/filters/RangeSlider";
 import { NAVBAR_HEIGHT } from "../layout/Navigation.tsx";
 import { FilterButton } from "../layout/FilterButton.tsx";
-import { filterFields } from "../../constants/filterFields";
+import { itemProperties } from "../../constants/itemProperties.ts";
 
 const Pane = styled.div`
   display: flex;
@@ -69,7 +69,7 @@ export const FilterPane = () => {
 
       <FiltersGroup
         data={data}
-        fields={filterFields}
+        fields={itemProperties}
         filters={filters}
         setFilters={setFilters}
         filtersInclude={filtersInclude}

@@ -8,9 +8,17 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { getStableColor, LAND_COLOR, MARKER_3, MARKER_4, MARKER_5, SEA_COLOR } from "../../utils/colors";
+import {
+  getStableColor,
+  LAND_COLOR,
+  MARKER_3,
+  MARKER_4,
+  MARKER_5,
+  SEA_COLOR,
+} from "../../utils/colors";
 import { GroupByOption } from "./useTrendsData";
 import { ChartContainer } from "./TrendsStyles";
+import { itemProperties } from "../../constants/itemProperties.ts";
 
 type TrendsBarChartProps = {
   chartData: Record<string, unknown>[];
@@ -18,7 +26,13 @@ type TrendsBarChartProps = {
   groupBy: GroupByOption;
 };
 
-export function TrendsBarChart({ chartData, uniqueGroups, groupBy }: TrendsBarChartProps) {
+const lastValuesInSort = ["uncategorized", "no digital facsimile"];
+
+export function TrendsBarChart({
+  chartData,
+  uniqueGroups,
+  groupBy,
+}: TrendsBarChartProps) {
   return (
     <ChartContainer>
       <ResponsiveContainer width="100%" height="100%">
@@ -47,8 +61,39 @@ export function TrendsBarChart({ chartData, uniqueGroups, groupBy }: TrendsBarCh
             itemSorter={() => -1}
             content={({ active, payload, label }) => {
               if (active && payload && payload.length) {
-                const sortedPayload = [...payload].sort((a, b) => (b.value as number) - (a.value as number));
-                
+                let sortedPayload = [...payload];
+
+                if (groupBy.key) {
+                  const fieldConfig = itemProperties[groupBy.key as string];
+                  if (fieldConfig && fieldConfig.customCompareFn) {
+                    sortedPayload = sortedPayload.sort((a, b) =>
+                      fieldConfig.customCompareFn!(a.name, b.name),
+                    );
+                  } else {
+                    sortedPayload = sortedPayload.sort((a, b) => {
+                      if (
+                        lastValuesInSort.includes(
+                          (a.name as string).toLowerCase(),
+                        )
+                      ) {
+                        return 1;
+                      }
+                      if (
+                        lastValuesInSort.includes(
+                          (b.name as string).toLowerCase(),
+                        )
+                      ) {
+                        return -1;
+                      }
+                      return (a.name as string).localeCompare(b.name as string);
+                    });
+                  }
+                } else {
+                  sortedPayload = sortedPayload.sort(
+                    (a, b) => (b.value as number) - (a.value as number),
+                  );
+                }
+
                 return (
                   <div
                     style={{
@@ -109,15 +154,29 @@ export function TrendsBarChart({ chartData, uniqueGroups, groupBy }: TrendsBarCh
           />
           <Legend />
           {groupBy.key ? (
-            uniqueGroups.map((group) => (
-              <Bar
-                key={group}
-                dataKey={group}
-                stackId="a"
-                fill={getStableColor(group)}
-                name={group}
-              />
-            ))
+            [...uniqueGroups]
+              .sort((a, b) => {
+                const fieldConfig = itemProperties[groupBy.key as string];
+                if (fieldConfig && fieldConfig.customCompareFn) {
+                  return fieldConfig.customCompareFn(a, b);
+                }
+                if (lastValuesInSort.includes(a.toLowerCase())) {
+                  return 1;
+                }
+                if (lastValuesInSort.includes(b.toLowerCase())) {
+                  return -1;
+                }
+                return a.localeCompare(b);
+              })
+              .map((group) => (
+                <Bar
+                  key={group}
+                  dataKey={group}
+                  stackId="a"
+                  fill={getStableColor(group)}
+                  name={group}
+                />
+              ))
           ) : (
             <Bar
               dataKey="total"

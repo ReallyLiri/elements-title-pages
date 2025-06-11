@@ -3,16 +3,11 @@ import { isNil, startCase, uniq } from "lodash";
 import { Filter, FilterValue } from "./Filter";
 import { FLOATING_CITY, Item } from "../../types";
 import { authorDisplayName } from "../../utils/dataUtils.ts";
-
-type FilterConfig = {
-  isArray?: boolean;
-  displayName?: string;
-  customCompareFn?: (a: unknown, b: unknown) => number;
-};
+import { ItemProperty } from "../../constants/itemProperties.ts";
 
 type FiltersGroupProps = {
   data: Item[];
-  fields: Partial<Record<keyof Item, FilterConfig>>;
+  fields: Partial<Record<keyof Item, ItemProperty>>;
   filters: Record<string, FilterValue[] | undefined>;
   setFilters: React.Dispatch<
     React.SetStateAction<Record<string, FilterValue[] | undefined>>
@@ -33,7 +28,9 @@ export const FiltersGroup = ({
   filtersInclude,
   setFiltersInclude,
 }: FiltersGroupProps) => {
-  const keys = Object.keys(fields).map((field) => field as keyof Item);
+  const keys = Object.keys(fields)
+    .filter((key) => !fields[key as keyof Item]?.notFilterable)
+    .map((field) => field as keyof Item);
   const optionsByFilter = useMemo(() => {
     const byFilter: Record<string, FilterValue[]> = {};
     keys.forEach((field) => {

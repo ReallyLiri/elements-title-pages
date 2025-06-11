@@ -62,7 +62,6 @@ export type Item = {
   titlePageFrameType: string | null;
   titlePageEngraving: string | null;
   hasPrintersDevice: YesNoBool | null;
-  hasHourGlassShape: YesNoBool | null;
   fontTypes: string[];
   calligraphicFeatures: string | null;
 };

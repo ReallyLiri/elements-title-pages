@@ -175,9 +175,6 @@ export const loadEditionsData = (
                     hasPrintersDevice: hasTitleImage
                       ? toYesNo(raw["printer_device"] as string)
                       : null,
-                    hasHourGlassShape: hasTitleImage
-                      ? toYesNo(raw["hour_glass"] as string)
-                      : null,
                     fontTypes: hasTitleImage
                       ? (raw["font_types"] as string | null)
                           ?.split(", ")
