@@ -26,6 +26,9 @@ function countItem(
   addValue: (key: string, count: number) => void,
 ) {
   if (groupBy.isArray && Array.isArray(value)) {
+    if (value.length === 0) {
+      addValue("None", 1);
+    }
     value.forEach((val) => {
       let strVal: string;
       if (groupBy.key === "elementsBooks") {

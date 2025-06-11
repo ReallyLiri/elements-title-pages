@@ -41,6 +41,9 @@ function parseRangeIfNeeded(a: Range | string): Range {
   if (!(typeof a === "string")) {
     return a;
   }
+  if (a === "None") {
+    return { start: 100, end: 100 };
+  }
   const parts = (a as string).split("-");
   return {
     start: parseInt(parts[0]),
