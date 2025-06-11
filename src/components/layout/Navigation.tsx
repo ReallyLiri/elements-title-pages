@@ -118,7 +118,7 @@ function Navigation() {
               <Link to={TITLE_PAGES_ROUTE}>Editions Gallery</Link>
             </NavItem>
             <NavItem active={location.pathname === TRENDS_ROUTE}>
-              <Link to={TRENDS_ROUTE}>Trends</Link>
+              <Link to={TRENDS_ROUTE}>Explorer</Link>
             </NavItem>
             <NavItem active={location.pathname === MAP_ROUTE}>
               <Link to={MAP_ROUTE}>Map</Link>
