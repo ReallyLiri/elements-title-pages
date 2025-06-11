@@ -103,8 +103,6 @@ export const itemProperties: {
   additionalContent: {
     displayName: "Additional Content",
     isArray: true,
-    customCompareFn: (a: unknown, b: unknown) =>
-      (a as string).localeCompare(b as string),
   },
   class: { displayName: "Wardhaugh Class" },
   hasTitle: { displayName: "Has Title Page Image" },

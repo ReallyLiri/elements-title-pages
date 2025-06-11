@@ -47,7 +47,7 @@ const parseBooks = (
   for (const entry of entries) {
     const match = entry.match(/^"?Elements\s+(.+?)"?$/i);
     if (!match) {
-      additionalContent.push(entry);
+      additionalContent.push(startCase(entry.toLowerCase()));
       continue;
     }
 

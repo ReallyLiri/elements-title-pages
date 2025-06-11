@@ -13,6 +13,10 @@ export const ChartContainer = styled.div`
   .recharts-legend-wrapper {
     padding-top: 1rem;
   }
+  .recharts-default-legend {
+    max-width: 80%;
+    margin: auto !important;
+  }
 `;
 
 export const PieChartContainer = styled.div`
