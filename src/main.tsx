@@ -4,7 +4,10 @@ import "./index.css";
 import "react-tooltip/dist/react-tooltip.css";
 import App from "./App.tsx";
 import { Tooltip } from "react-tooltip";
-import { MapTooltips } from "./components/map/MapTooltips.tsx";
+import {
+  MapTooltips,
+  TOOLTIP_FEATURES_HIGHLIGHT,
+} from "./components/map/MapTooltips.tsx";
 import { FilterProvider } from "./contexts/FilterContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
@@ -12,11 +15,11 @@ createRoot(document.getElementById("root")!).render(
     <FilterProvider>
       <App />
       <Tooltip
-        id="features"
+        id={TOOLTIP_FEATURES_HIGHLIGHT}
         delayHide={200}
         clickable
         style={{
-          zIndex: 2,
+          zIndex: 11,
           backgroundColor: "white",
           color: "black",
           padding: "1rem",

@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { Link } from "./Link.tsx";
 import { EIP_URL } from "../../constants";
 
+export const TOOLTIP_FEATURES_HIGHLIGHT = "features-highlight";
 export const TOOLTIP_RESET = "reset";
 export const TOOLTIP_ZOOMIN = "zoomin";
 export const TOOLTIP_ZOOMOUT = "zoomout";

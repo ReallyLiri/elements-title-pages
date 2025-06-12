@@ -46,3 +46,7 @@ body {
 .reactour__close-button {
   color: black;
 }
+
+.basic-multi-select {
+  z-index: 11;
+}

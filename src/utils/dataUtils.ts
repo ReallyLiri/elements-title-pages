@@ -158,35 +158,6 @@ function parseInstitutions(institutions: string) {
             /\b(?:compagnie|compañia|la\s*compania)\s+de\s+(?:jesus|iesvs|jesvs)|\b(?:soc\.?|soci[eé]t\.?|societate|societ\.)\s*(?:jesu|iesv|jesv)|\b(?:societatis)(?:\s+(?:jesu|iesv))?(?:\s+gymnasio)?\b|\bsociety of jesus\b|\bjesuite\b|\bpanormitano.*sicili\b|\bherbipolitano.*franconi\b|\bgymnasio.*(?:jesu|iesv|jesv)\b/,
           label: "Jesuits",
         },
-        {
-          match:
-            /\b(?:cantabrigiensis|cantabrigienses|camberensis|coll\.?\s*trin\.?\s*soc\.?|trinity)\b/,
-          label: "Trinity College, Cambridge",
-        },
-        {
-          match: /academi(a|ae|æ).*argentin|schol.*argentin/,
-          label: "University of Strasbourg",
-        },
-        {
-          match:
-            /academia tubing|universit.*tubing|vniuersitet.*tubing|zu tubingen/,
-          label: "University of Tübingen",
-        },
-        { match: /acad(\.|emia).*lips/, label: "University of Leipzig" },
-        {
-          match: /l[’']?vni.*paris|université de paris/,
-          label: "University of Paris",
-        },
-        {
-          match: /leyden|hooge schoole.*leyden|stadt leyden/,
-          label: "Leiden University",
-        },
-        { match: /academia leucorea/, label: "University of Wittenberg" },
-        {
-          match: /academies du roy|l[’']?academie fran/,
-          label: "Royal Academies of France",
-        },
-        { match: /r\.?\s*s\.?\s*s\.?|royal society/, label: "Royal Society" },
       ];
 
       for (const { match, label } of rules) {
