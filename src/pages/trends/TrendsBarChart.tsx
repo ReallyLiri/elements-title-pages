@@ -26,7 +26,12 @@ type TrendsBarChartProps = {
   groupBy: GroupByOption;
 };
 
-const lastValuesInSort = ["uncategorized", "no digital facsimile", "none"];
+const lastValuesInSort = [
+  "other",
+  "uncategorized",
+  "no digital facsimile",
+  "none",
+];
 
 export function TrendsBarChart({
   chartData,

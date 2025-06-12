@@ -135,4 +135,43 @@ export const itemProperties: {
     isTitlePageImageFeature: true,
     isArray: true,
   },
+  otherNamesClassification: {
+    displayName: "Other Educational Authorities",
+    isArray: true,
+    notFilterable: true,
+  },
+  hasIntendedAudience: {
+    displayName: "Has Intended Audience",
+    notFilterable: true,
+  },
+  hasPatronageDedication: {
+    displayName: "Has Patronage Dedication",
+    notFilterable: true,
+  },
+  hasAdapterAttribution: {
+    displayName: "Has Adapter Attribution",
+    notFilterable: true,
+  },
+  hasAdapterDescription: {
+    displayName: "Has Adapter Description",
+    notFilterable: true,
+  },
+  hasPublishingPrivileges: {
+    displayName: "Has Publishing Privileges",
+    notFilterable: true,
+  },
+  hasGreekDesignation: {
+    displayName: "Has Greek Designation",
+    notFilterable: true,
+  },
+  explicitLanguageReferences: {
+    displayName: "Explicit Language References",
+    isArray: true,
+    notFilterable: true,
+  },
+  institutions: {
+    displayName: "Institutions",
+    isArray: true,
+    notFilterable: true,
+  },
 };

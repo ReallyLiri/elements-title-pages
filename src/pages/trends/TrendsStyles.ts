@@ -25,7 +25,7 @@ export const PieChartContainer = styled.div`
   max-height: 60vh;
   width: 100%;
   .recharts-legend-wrapper {
-    right: 20vw !important;
+    right: 12vw !important;
     max-height: 24rem;
     overflow-y: auto;
   }

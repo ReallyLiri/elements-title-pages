@@ -45,7 +45,10 @@ function countItem(
   } else {
     let strVal: string;
     if (groupBy.origIsArray) {
-      strVal = (value as string[] | null)?.join(" & ") || "";
+      strVal =
+        (value as string[] | null)?.length === 0
+          ? ""
+          : (value as string[] | null)?.join(" & ") || "";
     } else {
       strVal = isNil(value) ? "" : String(value);
     }

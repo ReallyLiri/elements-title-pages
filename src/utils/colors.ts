@@ -38,6 +38,9 @@ export const getStableColor = (input: string): string => {
   if (["No Digital Facsimile", "Uncategorized", "None"].includes(input)) {
     return "#9f9f9f";
   }
+  if (input === "Other") {
+    return "#757575";
+  }
 
   let hash = 0;
   const multiplier = 53;
@@ -49,7 +52,7 @@ export const getStableColor = (input: string): string => {
     hash = (hash << 5) + hash + input.charCodeAt(i);
   }
 
-  const h = Math.abs(hash) % 360;
+  const h = Math.abs(hash + 200) % 360;
 
   const s = 60 + (Math.abs(hash >> 8) % 20);
 

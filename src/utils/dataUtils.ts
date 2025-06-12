@@ -94,6 +94,111 @@ const toYesNo = (value: string): "Yes" | "No" => {
   return value === "True" ? "Yes" : "No";
 };
 
+function parseExplicitLanguages(langs: string) {
+  return langs
+    .split(/, | et | en | & /)
+    .map((input) => {
+      const normalized = input
+        .replaceAll("-", "")
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+      const rules = [
+        {
+          match:
+            /latin|latina|latino|latine|latein|latijn|latinum|latinit|la tine|latijnsche/,
+          lang: "Latin",
+        },
+        { match: /greek|graec|græc|grec|griech/, lang: "Greek" },
+        { match: /fran[çc]ois|francois|french/, lang: "French" },
+        { match: /italien|italian|italiana|thoscana|toscana/, lang: "Italian" },
+        {
+          match: /spanish|espanol|española|traduzidas|castellano|hispanice/,
+          lang: "Spanish",
+        },
+        { match: /german|teutsch|teutscher|deutsch/, lang: "German" },
+        {
+          match: /nederduyts|nederduytse|neerduid|neerduyts|neerdvyt|niderland/,
+          lang: "Dutch",
+        },
+        { match: /arabic/, lang: "Arabic" },
+        { match: /english|englishe/, lang: "English" },
+        {
+          match: /romance|vulgar|volgar|vvlgare|vernacul|en nostre langve/,
+          lang: "general-vernacular",
+        },
+      ];
+
+      for (const { match, lang } of rules) {
+        if (match.test(normalized)) return lang;
+      }
+
+      return normalized ? "Other" : "";
+    })
+    .filter(Boolean)
+    .map((lang) => startCase(lang.toLowerCase()));
+}
+
+function parseInstitutions(institutions: string) {
+  return institutions
+    .split(/, | et | en | & /)
+    .map((input) => {
+      const normalized = input
+        .replaceAll("-", "")
+        .replaceAll("\n", "")
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+      const rules = [
+        {
+          match:
+            /\b(?:compagnie|compañia|la\s*compania)\s+de\s+(?:jesus|iesvs|jesvs)|\b(?:soc\.?|soci[eé]t\.?|societate|societ\.)\s*(?:jesu|iesv|jesv)|\b(?:societatis)(?:\s+(?:jesu|iesv))?(?:\s+gymnasio)?\b|\bsociety of jesus\b|\bjesuite\b|\bpanormitano.*sicili\b|\bherbipolitano.*franconi\b|\bgymnasio.*(?:jesu|iesv|jesv)\b/,
+          label: "Jesuits",
+        },
+        {
+          match:
+            /\b(?:cantabrigiensis|cantabrigienses|camberensis|coll\.?\s*trin\.?\s*soc\.?|trinity)\b/,
+          label: "Trinity College, Cambridge",
+        },
+        {
+          match: /academi(a|ae|æ).*argentin|schol.*argentin/,
+          label: "University of Strasbourg",
+        },
+        {
+          match:
+            /academia tubing|universit.*tubing|vniuersitet.*tubing|zu tubingen/,
+          label: "University of Tübingen",
+        },
+        { match: /acad(\.|emia).*lips/, label: "University of Leipzig" },
+        {
+          match: /l[’']?vni.*paris|université de paris/,
+          label: "University of Paris",
+        },
+        {
+          match: /leyden|hooge schoole.*leyden|stadt leyden/,
+          label: "Leiden University",
+        },
+        { match: /academia leucorea/, label: "University of Wittenberg" },
+        {
+          match: /academies du roy|l[’']?academie fran/,
+          label: "Royal Academies of France",
+        },
+        { match: /r\.?\s*s\.?\s*s\.?|royal society/, label: "Royal Society" },
+      ];
+
+      for (const { match, label } of rules) {
+        if (match.test(normalized)) return label;
+      }
+
+      return normalized ? "Other" : "";
+    })
+    .filter(Boolean)
+    .map((lang) => startCase(lang.toLowerCase()));
+}
+
 export const loadEditionsData = (
   setItems: Dispatch<SetStateAction<Item[]>>,
   setFloatingCity = false,
@@ -188,6 +293,34 @@ export const loadEditionsData = (
                           )?.toLowerCase(),
                         )
                       : null,
+                    otherNamesClassification:
+                      (raw["other_names_classification"] as string | null)
+                        ?.split(", ")
+                        .map((s) => startCase(s.toLowerCase()))
+                        .filter(Boolean) ?? [],
+                    hasIntendedAudience:
+                      raw["EXPLICIT RECIPIENT"] || raw["EXPLICIT RECIPIENT 2"]
+                        ? "Yes"
+                        : "No",
+                    hasPatronageDedication:
+                      raw["PATRON REF"] || raw["IMPRINT DEDICATION"]
+                        ? "Yes"
+                        : "No",
+                    hasAdapterAttribution:
+                      raw["AUTHOR NAME"] || raw["AUTHOR NAME 2"] ? "Yes" : "No",
+                    hasPublishingPrivileges:
+                      raw["PRIVILEGES"] || raw["IMPRINT PRIVILEGES"]
+                        ? "Yes"
+                        : "No",
+                    hasGreekDesignation: raw["GREEK IN NON GREEK BOOKS"]
+                      ? "Yes"
+                      : "No",
+                    explicitLanguageReferences: parseExplicitLanguages(
+                      `${raw["EXPLICITLY STATED: TRANSLATED FROM"] || ""}, ${raw["EXPLICITLY STATED: TRANSLATED TO"] || ""}`,
+                    ),
+                    institutions: parseInstitutions(
+                      (raw["INSTITUTIONS"] as string | null) || "",
+                    ),
                     features: Object.keys(FeatureToColumnName).reduce(
                       (acc, feature) => {
                         acc[feature as Feature] = FeatureToColumnName[
@@ -237,27 +370,6 @@ export const loadEditionsData = (
     })
     .catch((error) => console.error("Error reading CSV:", error));
 };
-
-export const extract = (items: Item[], property: keyof Item) =>
-  items
-    .reduce((acc, item) => {
-      if (item[property]) {
-        if (Array.isArray(item[property])) {
-          item[property].forEach((value) => {
-            if (!acc.includes(value)) {
-              acc.push(value);
-            }
-          });
-        } else {
-          const value = item[property] as string;
-          if (!acc.includes(value)) {
-            acc.push(value);
-          }
-        }
-      }
-      return acc;
-    }, [] as string[])
-    .sort();
 
 export const loadCitiesAsync = async (): Promise<Record<string, Point>> => {
   const response = await fetch(CSV_PATH_CITIES);
