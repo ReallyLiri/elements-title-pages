@@ -44,7 +44,7 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
 
   return (
     <Column id={item.key} style={{ height, width }} ref={itemRef}>
-      <div>
+      <div style={{ zIndex: 11 }}>
         {item.year || NO_YEAR} {joinArr(item.authors) || NO_AUTHOR},{" "}
         {joinArr(item.cities) || NO_CITY}
         <LanguagesInfo>{joinArr(item.languages)}</LanguagesInfo>
