@@ -24,7 +24,7 @@ import { useFilter } from "../contexts/FilterContext";
 import { IoWarning } from "react-icons/io5";
 import styled from "@emotion/styled";
 import Switch from "react-switch";
-import { MARKER_3 } from "../utils/colors.ts";
+import { LAND_COLOR, MARKER_3 } from "../utils/colors.ts";
 
 const NoteLine = styled(Row)`
   opacity: 0.8;
@@ -145,7 +145,7 @@ function TitlePage() {
               <MultiSelect
                 name="Features"
                 value={features}
-                options={Object.keys(FeatureToColumnName)}
+                options={Object.keys(FeatureToColumnName).sort()}
                 onChange={(f) => setFeatures((f as Feature[]).sort())}
                 colors={FeatureToColor}
                 tooltips={FeatureToTooltip}
@@ -185,22 +185,28 @@ function TitlePage() {
         )}
       </Column>
       <Row rowGap={6}>
-        {filteredBySearchItems
-          ?.sort((a, b) => {
-            if (!a.year) return 1;
-            if (!b.year) return -1;
-            return a.year.localeCompare(b.year);
-          })
-          .map((item) => (
-            <ItemView
-              key={item.key}
-              height={TILE_HEIGHT}
-              width={TILE_WIDTH}
-              item={item}
-              mode={mode}
-              features={titlePagesModeOn ? features : null}
-            />
-          ))}
+        {(filteredBySearchItems?.length || 0) > 0 ? (
+          filteredBySearchItems
+            ?.sort((a, b) => {
+              if (!a.year) return 1;
+              if (!b.year) return -1;
+              return a.year.localeCompare(b.year);
+            })
+            .map((item) => (
+              <ItemView
+                key={item.key}
+                height={TILE_HEIGHT}
+                width={TILE_WIDTH}
+                item={item}
+                mode={mode}
+                features={titlePagesModeOn ? features : null}
+              />
+            ))
+        ) : (
+          <Text size={1.5} color={LAND_COLOR}>
+            No matches. Try adjusting the filters or search.
+          </Text>
+        )}
       </Row>
       <Text size={1}>
         À la Croisée des Hyperliens, chez le scribe fatigué et son félin
