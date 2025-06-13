@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo, useRef } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import { Feature, Mode } from "../types";
 import {
@@ -30,6 +30,14 @@ const NoteLine = styled(Row)`
   opacity: 0.8;
 `;
 
+const SearchInput = styled.input`
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-size: 1rem;
+`;
+
 function TitlePage() {
   const { filteredItems } = useFilter();
 
@@ -45,10 +53,12 @@ function TitlePage() {
   const [features, setFeatures] = useLocalStorageState<Feature[]>(
     "tp-features",
     {
-      defaultValue: Object.keys(FeatureToColumnName) as Feature[],
+      defaultValue: Object.keys(FeatureToColumnName).sort() as Feature[],
     },
   );
+  const [searchText, setSearchText] = useState("");
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const handleScroll = useCallback(() => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -62,10 +72,39 @@ function TitlePage() {
     });
   };
 
+  const filteredBySearchItems = useMemo(() => {
+    if (!searchText.trim() || !titlePagesModeOn) {
+      return filteredItems;
+    }
+
+    const searchLower = searchText.toLowerCase();
+    return filteredItems.filter((item) => {
+      const title = item.title?.toLowerCase() || "";
+      const imprint = item.imprint?.toLowerCase() || "";
+      return title.includes(searchLower) || imprint.includes(searchLower);
+    });
+  }, [filteredItems, searchText, titlePagesModeOn]);
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "f") {
+        e.preventDefault();
+        if (titlePagesModeOn && mode === "texts" && searchInputRef.current) {
+          searchInputRef.current.focus();
+        }
+      }
+    },
+    [titlePagesModeOn, mode],
+  );
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleScroll, handleKeyDown]);
 
   return (
     <Container style={{ position: "relative", margin: "2rem 0" }}>
@@ -107,7 +146,7 @@ function TitlePage() {
                 name="Features"
                 value={features}
                 options={Object.keys(FeatureToColumnName)}
-                onChange={(f) => setFeatures(f as Feature[])}
+                onChange={(f) => setFeatures((f as Feature[]).sort())}
                 colors={FeatureToColor}
                 tooltips={FeatureToTooltip}
                 className="features-multi-select"
@@ -115,16 +154,29 @@ function TitlePage() {
               <ResetButton
                 onClick={() =>
                   setFeatures(
-                    Object.keys(FeatureToColumnName).filter(
-                      (f) =>
-                        !FeaturesNotSelectedByDefault.includes(f as Feature),
-                    ) as Feature[],
+                    Object.keys(FeatureToColumnName)
+                      .filter(
+                        (f) =>
+                          !FeaturesNotSelectedByDefault.includes(f as Feature),
+                      )
+                      .sort() as Feature[],
                   )
                 }
               >
                 Reset
               </ResetButton>
             </Row>
+            {mode === "texts" && (
+              <Row>
+                <SearchInput
+                  ref={searchInputRef}
+                  type="text"
+                  placeholder="Search in title pages..."
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                />
+              </Row>
+            )}
             <NoteLine gap={0.5}>
               <IoWarning /> Highlighted features were partially identified using
               an LLM and may not be accurate.
@@ -133,7 +185,7 @@ function TitlePage() {
         )}
       </Column>
       <Row rowGap={6}>
-        {filteredItems
+        {filteredBySearchItems
           ?.sort((a, b) => {
             if (!a.year) return 1;
             if (!b.year) return -1;
