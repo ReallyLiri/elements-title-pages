@@ -166,17 +166,15 @@ function TitlePage() {
                 Reset
               </ResetButton>
             </Row>
-            {mode === "texts" && (
-              <Row>
-                <SearchInput
-                  ref={searchInputRef}
-                  type="text"
-                  placeholder="Search in title pages..."
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                />
-              </Row>
-            )}
+            <Row>
+              <SearchInput
+                ref={searchInputRef}
+                type="text"
+                placeholder="Search in title pages..."
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+            </Row>
             <NoteLine gap={0.5}>
               <IoWarning /> Highlighted features were partially identified using
               an LLM and may not be accurate.
