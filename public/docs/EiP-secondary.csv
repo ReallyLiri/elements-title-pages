@@ -1,5 +1,5 @@
 key,year,city,city 2,language,language 2,author (normalized),title,title_EN,BASE CONTENT,AUTHOR NAME,AUTHOR NAME 2,AUTHOR DESCRIPTION,AUTHOR DESCRIPTION 2,EUCLID REF,EUCLID DESCRIPTION,EUCLID DESCRIPTION 2,OTHER NAMES,PATRON REF,EDITION INFO 2,EDITION INFO,PRIVILEGES,VERBS,EXPLICITLY STATED: TRANSLATED FROM,EXPLICITLY STATED: TRANSLATED TO,RECIPIENT VERBS,EXPLICIT RECIPIENT 2,EXPLICIT RECIPIENT,GREEK IN NON GREEK BOOKS,INNOVATION,INSTITUTIONS,ELEMENTS DESIGNATION,invalid transcription,tagger,CONTENT DESC,CONTENT DESC 2,ADDITIONAL CONTENT,ADDITIONAL CONTENT 2,type,author (orig),publisher (orig),publisher (normalized),colophon,imprint,volumesCount,format,books,notes,ustc_id,scan_url,tp_url,tp_url_alt,frontpiece_url,imprint_EN,has_red,tp_design,num_of_types,frame_type,engraving,printer_device,font_types,has_calligraphic_features,calligraphic_features,other_names_classification
-1496,1496,,,LATIN,,Jacques Lefèvre d'Étaples,?,,,,,,,,,,,,,,,,,,,,,,,,,,mia,,,,,secondary,Jacques Lefèvre d'Étaples,,,,,,,,In hoc opere contenta Arithmetica decem libris demonstrata ; Musica libris demonstrata quattuor ; Epitome i[n] libros arithmeticos diui Seuerini Boetij ; Rithmimachie ludus q[ui] [et] pugna nu[m]ero[rum] appellat[ur],,https://www.loc.gov/item/27001435/,,,,,,,,,,,,,
+1496,1496,,,LATIN,,Jacques Lefèvre d'Étaples,?,,,,,,,,,,,,,,,,,,,,,,,,,,mia,,,,,secondary,Jacques Lefèvre d'Étaples,,,,,,,,In hoc opere contenta Arithmetica decem libris demonstrata ; Musica libris demonstrata quattuor ; Epitome i[n] libros arithmeticos diui Seuerini Boetij ; Rithmimachie ludus q[ui] [et] pugna nu[m]ero[rum] appellat[ur],,https://www.loc.gov/item/27001435/,,,,,,,,,,,,,,
 Strasbourg 1529,1529,Strasbourg,,LATIN,,Johann Vögelin,"ELEMEN-
 TALE GEOMETRICVM, EX EVCLI-
 dis Geometria, à Ioanne Vœgelin, Haylpronensi,
@@ -28,7 +28,7 @@ dis Geometria",,ai,"EX EVCLI-
 dis Geometria","ad omnium Mathematicæ studiosorum
 utilitatem decerptum",,,secondary,Joannes Vœgelin,Christian Egenolff,,,"ARGENTORATI, apud Christianum
 Egenolphum. An. M.D.XXIX.",,,,,,https://www.google.com/books/edition/Elementale_geometricum/mN9RAAAAcAAJ,,,,"ARGENTORATI, at Christian
-Egenolph. Year 1529.",,,,,,,,,
+Egenolph. Year 1529.",,,,,,,,,,
 Paris 1532,1532,Paris,,LATIN,,Oronce Fine,"ORONTII
 FINEI DEL-
 PHINATIS, LIBERALIUM DISCIPLI-
@@ -61,7 +61,7 @@ Francorum Regis, ad Decennium.",,,,,,https://www.google.com/books/edition/Oronti
 YEAR
 1532.
 With the grace & privilege of the Most Christian
-King of the French, for a Decade.",False,standard,3,woodcut,woodcut,True,"roman, majuscule roman",,
+King of the French, for a Decade.",False,standard,5,woodcut,woodcut,True,"roman, majuscule roman",,,
 Paris 1534a,1534,Paris,,LATIN,,Johann Vögelin,"ELEMENTALE GEOMETRI
 CVM, EX EUCLIDIS GEOMETRIA, á IONNE Vægelin, Hayl-
 pronensi, ad omnium Mathematices studiosorum utilitatem
@@ -74,7 +74,7 @@ decerptum",,secondary,Jonnes Vægelin,Christian Wechel,,,"PARISIIS
 Apud Christianum Wechelum sub scuto Basiliensi.
 Anno M. D. XXXIIII.",,,,,,https://www.google.com/books/edition/Elementale_geometricum_ex_Euclidis_geome/175Y7ym3ricC,,,,"PARIS
 At Christian Wechel's under the Basel shield.
-Year 1534.",,,,,,,,,
+Year 1534.",,,,,,,,,,
 Nuremberg 1539,1539,Nuremberg,,GERMAN,,Wolfgang Schmid,"Das erst buch der Geometria.
 Ein kurtze unterweisung, was vnd worauff
 Geometria gegründet sey, vnd wie man / nach anweisung der selben / mit dem Circkel vnd Richtscheydt / allerley Lini / Flech / vnd Cörper außztheylen / vnd in fürgegebener propozition / machen soll. Aus bewerten leren / gemelter freyen kunst / allen liebhabern der selben / zu einem eingang / vnd allen künstlichen werckleuten zu sonderm nutz vnd vorteyl zusammen gezogen
@@ -100,7 +100,7 @@ With Roman Imperial and Royal Majesty's
 Privilege for VI years.",Das erst buch der Geometria.,Wolfgang Schmid,,"Rechen-
 meyster zu Bamberg.",,Euclide,,,,,,,"Mit Röm. Keysl. und König. May.
 Privilegio auff VI. Jar.",zusammen gezogen,,,,,allen liebhabern der selben / zu einem eingang / vnd allen künstlichen werckleuten zu sonderm nutz vnd vorteyl,,,,,,ai,"Ein kurtze unterweisung, was vnd worauff
-Geometria gegründet sey, vnd wie man / nach anweisung der selben / mit dem Circkel vnd Richtscheydt / allerley Lini / Flech / vnd Cörper außztheylen / vnd in fürgegebener propozition / machen soll.",Aus bewerten leren / gemelter freyen kunst / allen liebhabern der selben / zu einem eingang / vnd allen künstlichen werckleuten zu sonderm nutz vnd vorteyl zusammen gezogen,,,secondary,Wolfgang Schmid,,,,,,,,,,https://www.google.com/books/edition/Das_erst_buch_der_Geometria/Vg88AAAAcAAJ,https://i.imgur.com/HckqQLU.png,,,,False,typographic,2,none,none,False,"blackletter, roman",,
+Geometria gegründet sey, vnd wie man / nach anweisung der selben / mit dem Circkel vnd Richtscheydt / allerley Lini / Flech / vnd Cörper außztheylen / vnd in fürgegebener propozition / machen soll.",Aus bewerten leren / gemelter freyen kunst / allen liebhabern der selben / zu einem eingang / vnd allen künstlichen werckleuten zu sonderm nutz vnd vorteyl zusammen gezogen,,,secondary,Wolfgang Schmid,,,,,,,,,,https://www.google.com/books/edition/Das_erst_buch_der_Geometria/Vg88AAAAcAAJ,https://i.imgur.com/HckqQLU.png,,,,False,typographic,5,none,none,False,"blackletter, roman",,,
 Basel 1546b,1546,Basel,,LATIN,,Philipp Melanchthon,"Euclidis Megarensis mathematici
 clarissimi Elementorum geometricorum libri XV.
 Cum expositione Theonis in priores XIII à Bartholomaeo
@@ -118,7 +118,7 @@ M.D.XLVI.
 Cum privilegio Caesareo.",,,,,,https://www.google.com/books/edition/Euclidis_Megarensis_mathematici_clarissi/lDJZAAAAcAAJ,https://i.imgur.com/nES767c.png,,,"BASEL, BY JOHANN HERVAGIUS,
 IN THE MONTH OF AUGUST, YEAR
 1546.
-With Imperial privilege.",False,typographic,3,none,woodcut,True,"roman, majuscule roman, italics",,,"ancient, contemporary"
+With Imperial privilege.",False,typographic,5,none,woodcut,True,"roman, majuscule roman, italics",,,"ancient, contemporary"
 ustc-44,1555,Paris,,FRENCH,,Charles de Bovelles,"GEOMETRIE
 PRACTIQVE, COMPOSEE
 par le noble Philosophe maïstre Charles
@@ -142,30 +142,30 @@ leonard à botailly A Ste Fils",,,,,,https://gallica.bnf.fr/ark:/12148/bpt6k8702
 At Guillaume Cauellat's at the sign of the Clawing Hen,
 in front of the Cambray college.
 1555.
-leonard à botailly To His Son",False,typographic,2,none,woodcut,True,"roman, majuscule roman",,
+leonard à botailly To His Son",False,typographic,4,none,woodcut,True,"roman, majuscule roman",,,
 Paris 1557a,1557,Paris,,LATIN,,Jean de la Pène,"ΕΥΚΛΕΙΔΟΥ ὈΠΤΙΚΑ ΚΑΙ ΚΑΤΟΠΤΡΙΚΑ. Euclidis Optica & Catoptrica, nunquam antehac Graece ædita.
 EADEM  LATINE  REDDITA  PER  Ioannem  Penam  Regium Mathematicum.	His præposita est eiusdem Ioannis Penæ de vsu
 Optices præfatio, AD ILLVSTRISSIMVM PRINCIPEM CAROLVM LOTHARINGVM CARDINALEM.","EUCLID'S OPTICS AND CATOPTRICS. Euclidis Optica & Catoptrica, never before published in Greek.
 THE SAME RENDERED INTO LATIN BY Ioannes Pena, Royal Mathematician.	Preceded by a preface by the same Ioannes Pena on the use
 of Optics, TO THE MOST ILLUSTRIOUS PRINCE CHARLES OF LORRAINE, CARDINAL.",ΕΥΚΛΕΙΔΟΥ ὈΠΤΙΚΑ ΚΑΙ ΚΑΤΟΠΤΡΙΚΑ.,PER  Ioannem  Penam,,Regium Mathematicum.,,"ΕΥΚΛΕΙΔΟΥ, Euclidis",,,,AD ILLVSTRISSIMVM PRINCIPEM CAROLVM LOTHARINGVM CARDINALEM.,,nunquam antehac Graece ædita.,,REDDITA,"Graece, LATINE",,,,,,,,,,ai,"Euclidis Optica & Catoptrica, nunquam antehac Graece ædita",,EADEM  LATINE  REDDITA  PER  Ioannem  Penam  Regium Mathematicum,"His præposita est eiusdem Ioannis Penæ de vsu
-Optices præfatio, AD ILLVSTRISSIMVM PRINCIPEM CAROLVM LOTHARINGVM CARDINALEM",secondary,Jean de la Pène,Andreas Wechelus,Guillaume Cavellat,,"PARISIIS, Apud Andream Wechelum, sub Pegaso, in vico Bellouaco: Anno Salutis, 1557.",,Quarto,Optica; Catoptrica,,,https://www.google.com/books/edition/Eisag%C5%8Dg%C4%93_harmonik%C4%93/EUM8AAAAcAAJ,https://i.imgur.com/tUOIAqk.png,,,"PARIS, At Andrew Wechel, under Pegasus, in Bellouac Street: Year of Salvation, 1557.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
-Paris 1557b,1557,Paris,,GREEK,LATIN,Jean de la Pène,"ΕΥΚΛΕΙΔΟΥ ΕἸΣΑΓΩΓΗ ἉΡΜΟΝΙΚΗ. Τοῦ αὐτοῦ κατατομὴ κανόνος. Euclidis Rudimenta MUSICÆ. Eiusdem sectio regulæ harmonicæ. E Regia bibliotheca desumpta, ac nunc primùm Graecè & Latinè excusa, Ioanne Pena Regio Mathematico interprete. AD ILLVSTRISSIMVM PRINCIPEM CAROLVM LOTHARINGVM CARDINALEM.","EUCLID'S INTRODUCTION TO HARMONICS. The same author's division of the canon. Euclid's Rudiments of MUSIC. The same section of the harmonic rule. Taken from the Royal Library, and now for the first time printed in Greek & Latin, interpreted by John Pena, Royal Mathematician. TO THE MOST ILLUSTRIOUS PRINCE CHARLES OF LORRAINE, CARDINAL.",ΕἸΣΑΓΩΓΗ ἉΡΜΟΝΙΚΗ,Ioanne Pena,,Regio Mathematico interprete,,"ΕΥΚΛΕΙΔΟΥ, Euclidis",,,,AD ILLVSTRISSIMVM PRINCIPEM CAROLVM LOTHARINGVM CARDINALEM,,"E Regia bibliotheca desumpta, ac nunc primùm Graecè & Latinè excusa",,excusa,Graecè & Latinè,,,,,,,,,,ai,,,Τοῦ αὐτοῦ κατατομὴ κανόνος,Euclidis Rudimenta MUSICÆ. Eiusdem sectio regulæ harmonicæ,secondary,Jean de la Pène,Andreas Wechelus,Andreas Wechelus,,"PARISIIS, Apud Andream Wechelum, sub Pegaso, in vico Bellouaco: Anno Salutis, 1557. CVM PRIVILEGIO REGIS.",,Quarto,Introductio harmonica; Sectio canonis,,,https://www.google.com/books/edition/Eisag%C5%8Dg%C4%93_harmonik%C4%93/EUM8AAAAcAAJ,https://i.imgur.com/FMaUbNh.png,,,"PARIS, At Andrew Wechel's, under Pegasus, in Bellouac Street: In the Year of Salvation, 1557. WITH THE PRIVILEGE OF THE KING.",False,typographic,4,none,woodcut,True,"roman, majuscule roman, italics",,
+Optices præfatio, AD ILLVSTRISSIMVM PRINCIPEM CAROLVM LOTHARINGVM CARDINALEM",secondary,Jean de la Pène,Andreas Wechelus,Guillaume Cavellat,,"PARISIIS, Apud Andream Wechelum, sub Pegaso, in vico Bellouaco: Anno Salutis, 1557.",,Quarto,Optica; Catoptrica,,,https://www.google.com/books/edition/Eisag%C5%8Dg%C4%93_harmonik%C4%93/EUM8AAAAcAAJ,https://i.imgur.com/tUOIAqk.png,,,"PARIS, At Andrew Wechel, under Pegasus, in Bellouac Street: Year of Salvation, 1557.",False,typographic,5,none,woodcut,True,"roman, majuscule roman",,,
+Paris 1557b,1557,Paris,,GREEK,LATIN,Jean de la Pène,"ΕΥΚΛΕΙΔΟΥ ΕἸΣΑΓΩΓΗ ἉΡΜΟΝΙΚΗ. Τοῦ αὐτοῦ κατατομὴ κανόνος. Euclidis Rudimenta MUSICÆ. Eiusdem sectio regulæ harmonicæ. E Regia bibliotheca desumpta, ac nunc primùm Graecè & Latinè excusa, Ioanne Pena Regio Mathematico interprete. AD ILLVSTRISSIMVM PRINCIPEM CAROLVM LOTHARINGVM CARDINALEM.","EUCLID'S INTRODUCTION TO HARMONICS. The same author's division of the canon. Euclid's Rudiments of MUSIC. The same section of the harmonic rule. Taken from the Royal Library, and now for the first time printed in Greek & Latin, interpreted by John Pena, Royal Mathematician. TO THE MOST ILLUSTRIOUS PRINCE CHARLES OF LORRAINE, CARDINAL.",ΕἸΣΑΓΩΓΗ ἉΡΜΟΝΙΚΗ,Ioanne Pena,,Regio Mathematico interprete,,"ΕΥΚΛΕΙΔΟΥ, Euclidis",,,,AD ILLVSTRISSIMVM PRINCIPEM CAROLVM LOTHARINGVM CARDINALEM,,"E Regia bibliotheca desumpta, ac nunc primùm Graecè & Latinè excusa",,excusa,Graecè & Latinè,,,,,,,,,,ai,,,Τοῦ αὐτοῦ κατατομὴ κανόνος,Euclidis Rudimenta MUSICÆ. Eiusdem sectio regulæ harmonicæ,secondary,Jean de la Pène,Andreas Wechelus,Andreas Wechelus,,"PARISIIS, Apud Andream Wechelum, sub Pegaso, in vico Bellouaco: Anno Salutis, 1557. CVM PRIVILEGIO REGIS.",,Quarto,Introductio harmonica; Sectio canonis,,,https://www.google.com/books/edition/Eisag%C5%8Dg%C4%93_harmonik%C4%93/EUM8AAAAcAAJ,https://i.imgur.com/FMaUbNh.png,,,"PARIS, At Andrew Wechel's, under Pegasus, in Bellouac Street: In the Year of Salvation, 1557. WITH THE PRIVILEGE OF THE KING.",False,typographic,7,none,woodcut,True,"roman, majuscule roman, italics",,,
 Strasbourg 1557,1557,Strasbourg,,GREEK,LATIN,Conrad Dasypodius,"ΕΥΚΛΕΙΔΟΥ ΚΑΤΟΠΤΡΙΚΑ. EVCLIDIS CATOPTRICA, ID
 EST ELEMENTA eius scientiæ, qua uniuersa speculorum uis atque natura explicatur: primum Græce, antehac nunquam in lucem ædita: & nunc noua translatione per Conradum Dasypodium in Latinam linguam translata.","EUCLID'S CATOPTRICS. EVCLIDIS CATOPTRICA, THAT IS
 THE ELEMENTS of that science, by which the entire power and nature of mirrors is explained: first in Greek, never before published: & now translated into Latin by Conrad Dasypodius with a new translation.",ΕΥΚΛΕΙΔΟΥ ΚΑΤΟΠΤΡΙΚΑ.,Conradum Dasypodium,,,,EVCLIDIS,,,,,,"primum Græce, antehac nunquam in lucem ædita: & nunc noua translatione",,translata,"Græce, Latinam linguam",,,,,,,,ELEMENTA,,ai,"ID
-EST ELEMENTA eius scientiæ, qua uniuersa speculorum uis atque natura explicatur",,"primum Græce, antehac nunquam in lucem ædita: & nunc noua translatione per Conradum Dasypodium in Latinam linguam translata",,secondary,Conrad Dasypodius,Conradum Dasypodium,Conradum Dasypodium,,ARGENTORATI. M. D. LVII.,,Quarto,Catoptrica,,,https://www.google.com/books/edition/%CE%95%E1%BD%90%CE%BA%CE%BB%CE%B5%CE%B9%CE%B4%CE%BF%CF%85_%CE%9A%CE%B1%CF%84%CE%BF%CF%80%CF%84%CF%81%CE%B9%CE%BA%CE%B1/VcNlAAAAcAAJ,https://i.imgur.com/dkGIItU.png,,,ARGENTORATI. 1557.,False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
+EST ELEMENTA eius scientiæ, qua uniuersa speculorum uis atque natura explicatur",,"primum Græce, antehac nunquam in lucem ædita: & nunc noua translatione per Conradum Dasypodium in Latinam linguam translata",,secondary,Conrad Dasypodius,Conradum Dasypodium,Conradum Dasypodium,,ARGENTORATI. M. D. LVII.,,Quarto,Catoptrica,,,https://www.google.com/books/edition/%CE%95%E1%BD%90%CE%BA%CE%BB%CE%B5%CE%B9%CE%B4%CE%BF%CF%85_%CE%9A%CE%B1%CF%84%CE%BF%CF%80%CF%84%CF%81%CE%B9%CE%BA%CE%B1/VcNlAAAAcAAJ,https://i.imgur.com/dkGIItU.png,,,ARGENTORATI. 1557.,False,typographic,5,none,woodcut,True,"roman, majuscule roman",,,
 Messina 1558,1558,Messina,,LATIN,,Francesco Maurolico,"THEODOSII SPHAERICORVM ELEMENTORVM LIBRI.
 III. Ex traditione Maurolyci Messanensis Mathematici. MENELAI SPHAERICORVM LIB. III. Ex traditione eiusdem. MAVROLYCI SPHAERICORVM LIB. II. AVTOLYCI DE SPHAERA, QUAE MOVETVR Liber.   THEODOSII DE HABITATIONIBVS. EV-
 CLIDIS PHAENOMENA Brevissime demonstrata. Demonstratio & praxis trium tabellarum scilicet Sinus recti, Fœcundæ, & Beneficæ ad Sphæralia triangula pertinentium. COMPENDIVM MATHEMATI-CAE mira breuitate ex clarissimis Authoribus. Maurolyci de Sphæra sermo.","THEODOSIUS' SPHERICAL ELEMENTS BOOKS.
 III. From the tradition of Maurolycus of Messina, Mathematician. MENELAUS' SPHERICAL BOOKS III. From the tradition of the same. MAUROLYCUS' SPHERICAL BOOKS II. AUTOLYCUS ON THE SPHERE, WHICH MOVES Book.   THEODOSIUS ON HABITATIONS. EU-
 CLID'S PHENOMENA Most briefly demonstrated. Demonstration & practice of three tables namely of the Right Sine, Fertile, & Beneficial pertaining to Spherical triangles. COMPENDIUM OF MATHEMATICS with remarkable brevity from the most illustrious Authors. Maurolycus' discourse on the Sphere.",THEODOSII SPHAERICORVM ELEMENTORVM LIBRI.,Maurolyci Messanensis,,Mathematici.,,EVCLIDIS,,,"MENELAI, MAVROLYCI, AVTOLYCI, THEODOSII",,,,,Ex traditione,,,,,,,,,,,ai,Ex traditione Maurolyci Messanensis Mathematici.,,"MENELAI SPHAERICORVM LIB. III. Ex traditione eiusdem. MAVROLYCI SPHAERICORVM LIB. II. AVTOLYCI DE SPHAERA, QUAE MOVETVR Liber.   THEODOSII DE HABITATIONIBVS. EV-
-CLIDIS PHAENOMENA Brevissime demonstrata. Demonstratio & praxis trium tabellarum scilicet Sinus recti, Fœcundæ, & Beneficæ ad Sphæralia triangula pertinentium. COMPENDIVM MATHEMATI-CAE mira breuitate ex clarissimis Authoribus. Maurolyci de Sphæra sermo.",,secondary,Francesco Maurolico,Petrus Spira,Petrus Spira,MESSANAE IN FRETO SICVLO IMPRESSIT PETRVS SPIRA MENSE AVGVSTO M. D. LVIII.,,,Folio,Phaenomena (enunciations),,-,https://www.google.com/books/edition/Theodosii_Sphaericorvm_Elementorvm_Libri/SUxZAAAAcAAJ,https://i.imgur.com/kZswWbV.png,,,,False,typographic,3,none,woodcut,False,"roman, majuscule roman, italics",,,"contemporary, ancient"
+CLIDIS PHAENOMENA Brevissime demonstrata. Demonstratio & praxis trium tabellarum scilicet Sinus recti, Fœcundæ, & Beneficæ ad Sphæralia triangula pertinentium. COMPENDIVM MATHEMATI-CAE mira breuitate ex clarissimis Authoribus. Maurolyci de Sphæra sermo.",,secondary,Francesco Maurolico,Petrus Spira,Petrus Spira,MESSANAE IN FRETO SICVLO IMPRESSIT PETRVS SPIRA MENSE AVGVSTO M. D. LVIII.,,,Folio,Phaenomena (enunciations),,-,https://www.google.com/books/edition/Theodosii_Sphaericorvm_Elementorvm_Libri/SUxZAAAAcAAJ,https://i.imgur.com/kZswWbV.png,,,,False,typographic,6,none,woodcut,False,"roman, majuscule roman, italics",,,"contemporary, ancient"
 Paris 1565a,1565,Paris,,FRENCH,,Pierre Forcadel,"LE LIVRE D’ARCHIMEDE DES POIS, QVI AVSSI EST DICT DES CHOSES TOMBANTES EN L’HVMIDE, TRADVICT ET
 COMMENté par Pierre Forcadel de Bezies lecteur ordinaire du Roy
 es Mathematiques en l’Vniuersité de Paris. Ensemble ce qui se trouue du Liure d’Euclide intitulé du leger & du pesant traduict & commenté par le mesme Forcadel.","THE BOOK OF ARCHIMEDES ON FLOATING BODIES, ALSO CALLED ON THINGS FALLING IN THE FLUID, TRANSLATED AND
 COMMENTED by Pierre Forcadel of Bezies, ordinary lecturer of the King
-in Mathematics at the University of Paris. Together with what is found from the Book of Euclid titled on the light & the heavy translated & commented by the same Forcadel.","LE LIVRE D’ARCHIMEDE DES POIS, QVI AVSSI EST DICT DES CHOSES TOMBANTES EN L’HVMIDE",Pierre Forcadel de Bezies,,lecteur ordinaire du Roy,es Mathematiques en l’Vniuersité de Paris,Euclide,,,,,,,,"TRADVICT, COMMENté, trouue, traduict, commenté",,,,,,,,,,,ai,,,ce qui se trouue du Liure d’Euclide intitulé du leger & du pesant,,secondary,Pierre Forcadel,Charles Perier,Charles Perier,,"A PARIS. Chez Charles Perier, demourant en la rue S. Iean de Beauuais, au Bellerophon. 1565. AVEC PRIVILEGE DV ROY.",,Quarto,De levi et ponderoso,,,https://www.google.com/books/edition/Le_Premier_liure_d_Archimede_des_choses/CGhnAAAAcAAJ,https://i.imgur.com/ag4GNm0.png,,,"IN PARIS. At Charles Perier's, residing on S. Jean de Beauvais street, at the Bellerophon. 1565. WITH THE KING'S PRIVILEGE.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
-Paris 1566b,1566,Paris,,FRENCH,,Pierre Forcadel,LE Liure de la Musique d’Euclide traduit par P. Forcadel lecteur du Roy es Mathematiques.,"The Book of Music by Euclid translated by P. Forcadel, the King's lecturer in Mathematics.",LE Liure de la Musique,P. Forcadel,,lecteur du Roy es Mathematiques,,Euclide,,,,lecteur du Roy es Mathematiques,,,,traduit,,,,,,,,,,,ai,traduit,,,,secondary,Pierre Forcadel,Charles Perier,Charles Perier,,"A PARIS, Chez Charles Perier, au Bellerophon rue S. Iehan de Beauuais. 1566.",,Octavo,Introductio harmonica; Sectio canonis,Two DIFFERENT title pages here! I think these are different editions that should be split. See the two google books links,,https://www.google.com/books/edition/Euclidis_Elementa_geometrica_libris_15_a/9nWsxqL3RZgC https://www.google.com/books/edition/Elementa_geometrica/hJdpAAAAcAAJ,,https://i.imgur.com/bXZjLTu.png,,"IN PARIS, At Charles Perier's, at the Bellerophon, S. Iehan de Beauvais street. 1566.",,,,,,,,,
+in Mathematics at the University of Paris. Together with what is found from the Book of Euclid titled on the light & the heavy translated & commented by the same Forcadel.","LE LIVRE D’ARCHIMEDE DES POIS, QVI AVSSI EST DICT DES CHOSES TOMBANTES EN L’HVMIDE",Pierre Forcadel de Bezies,,lecteur ordinaire du Roy,es Mathematiques en l’Vniuersité de Paris,Euclide,,,,,,,,"TRADVICT, COMMENté, trouue, traduict, commenté",,,,,,,,,,,ai,,,ce qui se trouue du Liure d’Euclide intitulé du leger & du pesant,,secondary,Pierre Forcadel,Charles Perier,Charles Perier,,"A PARIS. Chez Charles Perier, demourant en la rue S. Iean de Beauuais, au Bellerophon. 1565. AVEC PRIVILEGE DV ROY.",,Quarto,De levi et ponderoso,,,https://www.google.com/books/edition/Le_Premier_liure_d_Archimede_des_choses/CGhnAAAAcAAJ,https://i.imgur.com/ag4GNm0.png,,,"IN PARIS. At Charles Perier's, residing on S. Jean de Beauvais street, at the Bellerophon. 1565. WITH THE KING'S PRIVILEGE.",False,typographic,4,none,woodcut,True,"roman, majuscule roman",,,
+Paris 1566b,1566,Paris,,FRENCH,,Pierre Forcadel,LE Liure de la Musique d’Euclide traduit par P. Forcadel lecteur du Roy es Mathematiques.,"The Book of Music by Euclid translated by P. Forcadel, the King's lecturer in Mathematics.",LE Liure de la Musique,P. Forcadel,,lecteur du Roy es Mathematiques,,Euclide,,,,lecteur du Roy es Mathematiques,,,,traduit,,,,,,,,,,,ai,traduit,,,,secondary,Pierre Forcadel,Charles Perier,Charles Perier,,"A PARIS, Chez Charles Perier, au Bellerophon rue S. Iehan de Beauuais. 1566.",,Octavo,Introductio harmonica; Sectio canonis,Two DIFFERENT title pages here! I think these are different editions that should be split. See the two google books links,,https://www.google.com/books/edition/Euclidis_Elementa_geometrica_libris_15_a/9nWsxqL3RZgC https://www.google.com/books/edition/Elementa_geometrica/hJdpAAAAcAAJ,,https://i.imgur.com/bXZjLTu.png,,"IN PARIS, At Charles Perier's, at the Bellerophon, S. Iehan de Beauvais street. 1566.",,,,,,,,,,
 Valencia 1569,1569,Valencia,,LATIN,,Pedro Monçón,"ELEMENTA Arithmeticæ, ac
 GEOMETRIÆ, AD
 disciplinas omnes, Aristoteleam praesertim Dialecticam, ac Philosophiam apprime necessaria, ex Euclide decerpta.
@@ -178,8 +178,8 @@ in platea herbaria.
 1569.",,,,,,https://www.google.com/books/edition/Elementa_Arithmeticae_ac_Geometriae_ad_d/K70GCXRIKywC,https://i.imgur.com/jkpqAj1.png,,,"VALENTIAE,
 From the printing house of Peter à Huete,
 in the herb street.
-1569.",False,typographic,3,none,woodcut,True,"roman, majuscule roman, italics",,,ancient
-Florence 1573,1573,Florence,,ITALIAN,,Ignazio Danti,"LA PROSPETTIVA DI EVCLIDE, Nella quale si tratta di quelle cose, che per raggi diritti si veggono: & di quelle, che con raggi ref-lessi nelli SPECCHI appariscono. Tradotta dal R. P. M. Egnatio Danti Cosmografo del Seren. Gran Duca di Toscana. Con alcune sue An-notationi de’luoghi piu importanti. INSIEME CON LA PROSPET-TIVA DI Eliodoro Larisseo Cauata della Libreria Vaticana, e tradotta dal medesimo nuouamente data in luce.","THE PERSPECTIVE OF EUCLID, In which those things are discussed, that are seen by straight rays: & those, that appear with reflected rays in MIRRORS. Translated by R. P. M. Egnatio Danti Cosmographer of the Most Serene Grand Duke of Tuscany. With some of his Annotations on the most important places. TOGETHER WITH THE PERSPECTIVE OF Heliodorus of Larissa Extracted from the Vatican Library, and translated by the same newly brought to light.",LA PROSPETTIVA DI EVCLIDE,R. P. M. Egnatio Danti,,Cosmografo del Seren. Gran Duca di Toscana,,EVCLIDE,,,Eliodoro Larisseo,,,Con alcune sue An-notationi de’luoghi piu importanti,,"Tradotta, tradotta",,,,,,,,,,,ai,"Nella quale si tratta di quelle cose, che per raggi diritti si veggono: & di quelle, che con raggi ref-lessi nelli SPECCHI appariscono",,"INSIEME CON LA PROSPET-TIVA DI Eliodoro Larisseo Cauata della Libreria Vaticana, e tradotta dal medesimo nuouamente data in luce",,secondary,Egnatio Danti,Giunti,Giunti,IN FIRENZE. Nella stemperia de’Giunti. M D LXXIII.,In FIORENZA. Nella Stamperia de’Giunti. MDLXXIII. Con licenzia & Priuilegio.,,Quarto,Optica; Catoptrica,,,https://archive.org/details/prospettivadieu00eucl/page/n1/mode/2up,https://i.imgur.com/94N49R8.png,,,In FLORENCE. At the Printing House of Giunti. 1573. With license & Privilege.,False,typographic,4,none,woodcut,True,"italics, roman, majuscule roman",,,ancient
+1569.",False,typographic,6,none,woodcut,True,"roman, majuscule roman, italics",,,ancient
+Florence 1573,1573,Florence,,ITALIAN,,Ignazio Danti,"LA PROSPETTIVA DI EVCLIDE, Nella quale si tratta di quelle cose, che per raggi diritti si veggono: & di quelle, che con raggi ref-lessi nelli SPECCHI appariscono. Tradotta dal R. P. M. Egnatio Danti Cosmografo del Seren. Gran Duca di Toscana. Con alcune sue An-notationi de’luoghi piu importanti. INSIEME CON LA PROSPET-TIVA DI Eliodoro Larisseo Cauata della Libreria Vaticana, e tradotta dal medesimo nuouamente data in luce.","THE PERSPECTIVE OF EUCLID, In which those things are discussed, that are seen by straight rays: & those, that appear with reflected rays in MIRRORS. Translated by R. P. M. Egnatio Danti Cosmographer of the Most Serene Grand Duke of Tuscany. With some of his Annotations on the most important places. TOGETHER WITH THE PERSPECTIVE OF Heliodorus of Larissa Extracted from the Vatican Library, and translated by the same newly brought to light.",LA PROSPETTIVA DI EVCLIDE,R. P. M. Egnatio Danti,,Cosmografo del Seren. Gran Duca di Toscana,,EVCLIDE,,,Eliodoro Larisseo,,,Con alcune sue An-notationi de’luoghi piu importanti,,"Tradotta, tradotta",,,,,,,,,,,ai,"Nella quale si tratta di quelle cose, che per raggi diritti si veggono: & di quelle, che con raggi ref-lessi nelli SPECCHI appariscono",,"INSIEME CON LA PROSPET-TIVA DI Eliodoro Larisseo Cauata della Libreria Vaticana, e tradotta dal medesimo nuouamente data in luce",,secondary,Egnatio Danti,Giunti,Giunti,IN FIRENZE. Nella stemperia de’Giunti. M D LXXIII.,In FIORENZA. Nella Stamperia de’Giunti. MDLXXIII. Con licenzia & Priuilegio.,,Quarto,Optica; Catoptrica,,,https://archive.org/details/prospettivadieu00eucl/page/n1/mode/2up,https://i.imgur.com/94N49R8.png,,,In FLORENCE. At the Printing House of Giunti. 1573. With license & Privilege.,False,typographic,6,none,woodcut,True,"italics, roman, majuscule roman",,,ancient
 ustc-32,1578,Paris,,FRENCH,,Niccolò Tartaglia,"L'ARITHMETIQVE
 DE NICOLAS
 TARTAGLIA BRESCIAN,
@@ -225,11 +225,11 @@ Chez Gilles Beys, rue S. Iacques, au Lis blanc.
 AVEC PRIVILEGE DV ROY.",,,,,,https://gallica.bnf.fr/ark:/12148/bpt6k87019956,https://i.imgur.com/Ofw9UUC.jpeg,,,"IN PARIS,
 At Gilles Beys, rue S. Jacques, at the White Lily.
 1578.
-WITH THE PRIVILEGE OF THE KING.",False,typographic,3,none,woodcut,True,"roman, italics, majuscule roman",,
+WITH THE PRIVILEGE OF THE KING.",False,typographic,7,none,woodcut,True,"roman, italics, majuscule roman",,,
 Madrid 1585,1585,Madrid,,SPANISH,,Pedro Ambrosio Ondériz,"LA PERSPECTIVA, Y ESPECVLARIA DE Euclides. Traduzidas en vulgar Castellano, y dirigidas a la S. C. R. M. del Rey don Phelippe nuestro Señor. Por Pedro Ambrosio Onderiz su criado.","THE PERSPECTIVE, AND SPECULATIONS OF Euclid. Translated into common Castilian, and addressed to the S. C. R. M. of King Philip our Lord. By Pedro Ambrosio Onderiz his servant.","LA PERSPECTIVA, Y ESPECVLARIA DE Euclides.",Por Pedro Ambrosio Onderiz,,su criado.,,Euclides,,,,dirigidas a la S. C. R. M. del Rey don Phelippe nuestro Señor.,,,,,"Traduzidas en vulgar Castellano, ",,,,dirigidas a la S. C. R. M. del Rey don Phelippe nuestro Señor.,,,,,,ai,Traduzidas en vulgar Castellano,,,,secondary,Pedro Ambrosio Ondériz,Viuda de Alonso Gomez,Viuda de Alonso Gomez,"EN MADRID. En casa de la viuda de Alonso Gomez. Año.
 M.D.LXXXIIII.","EN MADRID. En casa de la viuda de Alonso Gomez. Año.
 M.D.LXXXV.",,Quarto,Optica; Catoptrica,,,https://www.google.com/books/edition/La_perspectiva_y_especularia_traduzidas/7cVZAAAAcAAJ,https://i.imgur.com/AJVUtNs.png,,,"IN MADRID. In the house of the widow of Alonso Gomez. Year.
-M.D.LXXXV.",False,typographic,3,none,woodcut,True,"roman, blackletter, italics",,
+M.D.LXXXV.",False,typographic,5,none,woodcut,True,"roman, blackletter, italics",,,
 Ferrara 1587,1587,Ferrara,,ITALIAN,,Francesco Patrizi,"DELLA
 NUOVA GEOMETRIA
 DI FRANC. PATRICI
@@ -259,7 +259,7 @@ per via Regia, e più piana che da
 gli antichi fatto non s'è, si
 possono trattare.",,,secondary,Franc. Patrici,Vittorio Baldini,Vittorio Baldini,,"IN FERRARA,
 Per Vittorio Baldini Stampator Ducale. 1587.",,,,,,https://www.google.com/books/edition/Della_Nuova_Geometria_Libri_XV/Yww8AAAAcAAJ,https://i.imgur.com/FdzlItd.png,,,"IN FERRARA,
-By Vittorio Baldini Ducal Printer. 1587.",False,typographic,3,none,woodcut,True,"italics, roman, majuscule roman",,
+By Vittorio Baldini Ducal Printer. 1587.",False,typographic,5,none,woodcut,True,"italics, roman, majuscule roman",,,
 Tours 1593,1593,Tours,,LATIN,,François Viète,"Francisci Vietæ
 Variorum de Rebus Mathematicis
 Responsorum, Liber VIII.
@@ -280,8 +280,8 @@ Typographum Regium.
 1593",,,,,,https://www.google.com/books/edition/Variorum_de_rebus_mathematicis_responsor/7_BCAAAAcAAJ,https://i.imgur.com/7lo34ie.png,,,"Turonis,
 At Iamettus Mettayer,
 Royal Printer.
-1593",False,typographic,4,none,woodcut,True,"roman, majuscule roman, italics",,
-Leiden 1599,1599,Leiden,,LATIN,,Jean de la Pène,EVCLIDIS Optica & Catoptrica è Græco versa PER IOANNEM PENAM Regium Mathematicum. AD Illustrissimum Principem Car-olum Lotharingum Cardinalem.,EUCLID'S Optics & Catoptrics translated from Greek BY IOANNES PENA Royal Mathematician. TO the Most Illustrious Prince Charles of Lorraine Cardinal.,EVCLIDIS Optica & Catoptrica,PER IOANNEM PENAM,,Regium Mathematicum,,EVCLIDIS,,,,AD Illustrissimum Principem Car-olum Lotharingum Cardinalem.,,,,versa,è Græco,,,,,,,,,,ai,è Græco versa,,,,secondary,Jean de la Pène,,,,LVGDVNI BATAVORVM Ex Typographeio Christophori Gujotij. M. D. IC.,,Quarto,Optica; Catoptrica (enunciations),,,https://www.google.com/books/edition/Optica_et_catoptrica/WAuofnpXfqgC,https://i.imgur.com/rb1jIQP.png,,,LEIDEN OF THE BATAVIANS From the Printing House of Christophorus Guyot. 1601.,False,typographic,4,none,none,True,"roman, italics, majuscule roman",,
+1593",False,typographic,6,none,woodcut,True,"roman, majuscule roman, italics",,,
+Leiden 1599,1599,Leiden,,LATIN,,Jean de la Pène,EVCLIDIS Optica & Catoptrica è Græco versa PER IOANNEM PENAM Regium Mathematicum. AD Illustrissimum Principem Car-olum Lotharingum Cardinalem.,EUCLID'S Optics & Catoptrics translated from Greek BY IOANNES PENA Royal Mathematician. TO the Most Illustrious Prince Charles of Lorraine Cardinal.,EVCLIDIS Optica & Catoptrica,PER IOANNEM PENAM,,Regium Mathematicum,,EVCLIDIS,,,,AD Illustrissimum Principem Car-olum Lotharingum Cardinalem.,,,,versa,è Græco,,,,,,,,,,ai,è Græco versa,,,,secondary,Jean de la Pène,,,,LVGDVNI BATAVORVM Ex Typographeio Christophori Gujotij. M. D. IC.,,Quarto,Optica; Catoptrica (enunciations),,,https://www.google.com/books/edition/Optica_et_catoptrica/WAuofnpXfqgC,https://i.imgur.com/rb1jIQP.png,,,LEIDEN OF THE BATAVIANS From the Printing House of Christophorus Guyot. 1601.,False,typographic,6,none,none,True,"roman, italics, majuscule roman",,,
 ustc-29,1602,Paris,,FRENCH,,Jean Erard,"Comma preſſs mony ſrien xxx
 LA GEOMETRIE
 ET
@@ -314,12 +314,12 @@ At WILLIAM AURAY at the top of the street
 St. John of Beauvais, at the Crowned Bellerophon.
 Year 1602.
 With the Privilege of the King.
-Do not remove from this Library. Out of obedience:",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
+Do not remove from this Library. Out of obedience:",False,typographic,7,none,woodcut,True,"roman, majuscule roman",,,
 Paris 1604,1604,Paris,,LATIN,,Jean de la Pène,"EVCLIDIS OPTICA ET CATOPTRICA E GRÆCO VERSA
 PER IOAN. Penam Mathematicum Regium. His præposita est eius-dem Ioannis Penæ de vsu Optices præfatio, AD ILLVSTRISSIMVM PRINCIPEM  CAROLVM  LOTHARINGVM  CARDINALEM.","EUCLID'S OPTICS AND CATOPTRICS TRANSLATED FROM GREEK
 BY IOAN. Pena, the King's Mathematician. Prefixed to this is the same Ioan Pena's preface on the use of Optics, TO THE MOST ILLUSTRIOUS PRINCE CHARLES OF LORRAINE, CARDINAL.",EVCLIDIS OPTICA ET CATOPTRICA,IOAN. Penam,,Mathematicum Regium,,EVCLIDIS,,,,AD ILLVSTRISSIMVM PRINCIPEM  CAROLVM  LOTHARINGVM  CARDINALEM,,,,VERSA,E GRÆCO,,,,,,,,,,ai,E GRÆCO VERSA,,His præposita est eius-dem Ioannis Penæ de vsu Optices præfatio,,secondary,Jean de la Pène,Dionysius Duvallius,Dionysius Duvallius,,"PARISIIS, Ex oicina Dionysii Duvallii, via Bellovaca.
 M.DC.IIII.",,Quarto,Optica; Catoptrica,,,https://www.google.com/books/edition/Euclidis_Optica_et_Catoptrica/eZIIMmRZpToC,https://i.imgur.com/KdbxgBG.png,,,"PARIS, From the workshop of Dionysius Duvallius, Bellovaca Street.
-1604.",False,typographic,4,none,woodcut,True,"roman, majuscule roman, italics",,
+1604.",False,typographic,6,none,woodcut,True,"roman, majuscule roman, italics",,,
 ustc-16,1604,Paris,,FRENCH,,Pierre Le Comte,"LA FABRIQVE
 ET L'VSAGE DV
 RADIOMETRE. INSTRV-
@@ -363,7 +363,7 @@ Auec Priuilege du Roy.",,,,,6014623,https://search.proquest.com/docview/20903079
 At TOVSSAINCTS DV BRAY, at the Palace
 in the gallery of the Prisoners.
 1604.
-With the King's Privilege.  ",False,typographic,3,none,woodcut,False,"roman, italics, majuscule roman",,
+With the King's Privilege.  ",False,typographic,5,none,woodcut,False,"roman, italics, majuscule roman",,,
 ustc-8,1605,Paris,,FRENCH,,Charles de Bovelles,"GEOMETRIE
 PRATIQVE, COMPOSEE
 PAR NOBLE PHILOSOPHE
@@ -409,7 +409,7 @@ S. Hilaire, à l'enseigne du Pelican.
 M. DCV X.",,,,,6014616,https://search.proquest.com/docview/2090298556,https://i.imgur.com/sD0Z8V7.jpeg,,,"IN PARIS,
 At Denise Cavellat's, on Mount
 St. Hilaire, at the sign of the Pelican.
-M. DCV X.",False,typographic,3,none,woodcut,True,"roman, italics, majuscule roman",,
+M. DCV X.",False,typographic,5,none,woodcut,True,"roman, italics, majuscule roman",,,
 ustc-22,1605,Paris,,FRENCH,,Pierre Le Comte,"LA FABRIQVE
 ET L'VSAGEDV
 RADIOMETRE. INSTRV-
@@ -445,7 +445,7 @@ Auec Priuilege du Roy.",,,,,6015603,https://search.proquest.com/docview/20903150
 At TOUSSAINTS DU BRAY, at the Palace
 in the gallery of the Prisoners.
 1605.
-With the King's Privilege.",False,typographic,3,none,none,True,"roman, majuscule roman",,
+With the King's Privilege.",False,typographic,5,none,none,True,"roman, majuscule roman",,,
 ustc-43,1605,Paris,,FRENCH,,Charles de Bovelles,"GEOMETRIE
 PRATICQVE, COMPOSEE
 PAR  NOBLE  PHILOSOPHE
@@ -496,7 +496,7 @@ S. Hilaire, à l’enseigne du Pelican.
 M. DCV. X.",,,,,6014616,https://gallica.bnf.fr/ark:/12148/bpt6k8702038c,https://i.imgur.com/BBsyIeX.jpeg,,,"IN PARIS.
 At Denise Cavellat's, on Mount
 St. Hilaire, at the sign of the Pelican.
-M. DCV. X.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
+M. DCV. X.",False,typographic,6,none,woodcut,True,"roman, majuscule roman",,,
 ustc-14,1608,Paris,,FRENCH,,Jean Bullant,"GEOMETRIE.
 ET HORLOGIOGRAPHIE
 PRATIQVE, CONTENANT LA
@@ -550,7 +550,7 @@ S. Hilaire à l’enſeigne du Pelican.
 M. DC VIII.",,,,,6018486,https://search.proquest.com/docview/2090334673,https://i.imgur.com/rDpkk3x.jpeg,,,"IN PARIS,
 At DENISE CAVELLAT's, at Mount
 St. Hilaire at the sign of the Pelican.
-M. DC VIII.",False,typographic,3,none,none,True,"roman, italics, majuscule roman",,
+M. DC VIII.",False,typographic,6,none,none,True,"roman, italics, majuscule roman",,,
 ustc-54,1608,Paris,,FRENCH,,Charles de Bovelles,"GÉOMETRIE
 PRATIQVE, COMPOSEE
 PAR NOBLE PHILOSOPHE
@@ -597,7 +597,7 @@ Lecteur & Profeſſeur du Roy ès Mathematiques.",secondary,Charles de Bovelles,
 Chez DENISE CAVELLAT, au mont S. Hilaire, à l’enſeigne du Pelican.
 M. DCVIII.",,,,,,https://gallica.bnf.fr/ark:/12148/bpt6k8720508w,https://i.imgur.com/PnsEu7k.jpeg,,,"IN PARIS.
 At DENISE CAVELLAT, on Mount St. Hilaire, at the sign of the Pelican.
-M. DCVIII.",False,typographic,3,none,woodcut,True,"roman, majuscule roman, italics",,
+M. DCVIII.",False,typographic,6,none,woodcut,True,"roman, majuscule roman, italics",,,
 ustc-2,1613,Paris,,FRENCH,,Adrien Périer,"L'ARITHMETIQVE
 DE NICOLAS
 TARTAGLIA BRESCIAN,
@@ -628,7 +628,7 @@ au Compas d'or.
 M. DC. XIII.",,,,,6010179,https://search.proquest.com/docview/2090320706,https://i.imgur.com/5tg8Uuq.jpeg,,,"IN PARIS,
 At Adrian Perier's, Saint Jacques street,
 at the Golden Compass.
-1613.",False,typographic,3,none,none,True,"roman, italics, majuscule roman",,
+1613.",False,typographic,6,none,none,True,"roman, italics, majuscule roman",,,
 ustc-18,1613,Paris,,FRENCH,,Didier Henrion,"MEMOIRES
 MATHEMATIQVES
 RECVEILLIS ET DRESSEZ
@@ -672,7 +672,7 @@ M. DC. XIII.
 AVEC PRIVILEGE DV ROT.",,,,,6010564,https://search.proquest.com/docview/2090304714,https://i.imgur.com/DTSPv3b.jpeg,,,"IN PARIS,
 On the Island of the Palace, at the Image of St. Michael.
 M. DC. XIII.
-WITH THE KING'S PRIVILEGE.",False,typographic,3,none,none,True,"roman, italics, blackletter",,,
+WITH THE KING'S PRIVILEGE.",False,typographic,5,none,none,True,"roman, italics, blackletter",,,
 ustc-31,1613,Paris,,FRENCH,,Niccolò Tartaglia,"L'ARITHMETIQVE
 DE NICOLAS
 TARTAGLIA BRESCIAN,
@@ -706,7 +706,7 @@ au Compas d’or.
 M. D. C. XIII.",,,,,6010179,https://gallica.bnf.fr/ark:/12148/bpt6k87026608,https://i.imgur.com/HbbX0Dx.jpeg,,,"IN PARIS,
 At ADRIAN PERIER, rue Saint Jacques,
 at the Golden Compass.
-M. D. C. XIII.",False,typographic,4,none,woodcut,True,"roman, italics, majuscule roman",,
+M. D. C. XIII.",False,typographic,6,none,woodcut,True,"roman, italics, majuscule roman",,,
 Leiden 1615,1615,Leiden,,LATIN,,Ludolph van Ceulen,"FUNDAMENTA
 ARITHMETICA
 ET
@@ -736,7 +736,7 @@ WIL. SN. R. F.",,WIL. SN. R. F.,,,,,,,,,,,,translatae,E vernaculo in Latinum,,,,
 Excudebat Georgius Abrahami A Marcße,
 Anno cIo Io cxv.",,,,,,https://www.google.com/books/edition/Fundamenta_arithmetica_et_geometrica_cum/RJoezKwHV3AC,https://i.imgur.com/f1bNC6Q.png,,,"LVGDVNI BATAVORVM,
 Printed by Georgius Abrahami A Marcße,
-In the year 1615.",False,typographic,4,none,none,False,"roman, majuscule roman, italics",,
+In the year 1615.",False,typographic,6,none,none,False,"roman, majuscule roman, italics",,,
 ustc-3,1617,Paris,,FRENCH,,Didier Henrion,"TRAICTE'
 DES
 TRIANGLES
@@ -754,7 +754,7 @@ M. DC. XVII.
 AVEC PRIVILEGE DV ROY.",,,,,6011987,https://search.proquest.com/docview/2090307978,https://i.imgur.com/HdP8Q78.jpeg,,,"IN PARIS;
 On the Isle of the Palace, at the Image of St. Michael.
 M. DC. XVII.
-WITH THE KING'S PRIVILEGE.",False,typographic,4,none,woodcut,True,"roman, italics, majuscule roman",,
+WITH THE KING'S PRIVILEGE.",False,typographic,7,none,woodcut,True,"roman, italics, majuscule roman",,,
 ustc-33,1618,Paris,,FRENCH,,Didier Henrion,"TRAICTE'
 DES
 GLOBES,
@@ -790,7 +790,7 @@ AVEC PRIVILEGE DV ROY.",,,,,6017044,https://gallica.bnf.fr/ark:/12148/bpt6k10784
 At ABRAHAM PACARD, rue Saint Jacques,
 at the sacrifice of Abraham.
 1618.
-WITH THE KING'S PRIVILEGE.",False,typographic,3,none,woodcut,True,"roman, italics, majuscule roman",,,contemporary
+WITH THE KING'S PRIVILEGE.",False,typographic,6,none,woodcut,True,"roman, italics, majuscule roman",,,contemporary
 ustc-56,1618,Paris,,FRENCH,,,"TRAICTE
 D'ARITHMETIQVE,
 GEOMETRIE.
@@ -817,7 +817,7 @@ Avec permission.",,,,,6009758,https://gallica.bnf.fr/ark:/12148/bpt6k87092602,ht
 At NICOLAS ROVSSET, on the Isle of the Palace, fac
 ing the Augustinians.
 M DC. XVIII.
-With permission.",False,typographic,3,none,woodcut,True,"roman, italics, majuscule roman",,
+With permission.",False,typographic,6,none,woodcut,True,"roman, italics, majuscule roman",,,
 ustc-59,1618,Paris,,FRENCH,,Didier Henrion,"TRAICTE
 DES
 GLOBES,
@@ -853,7 +853,7 @@ AVEC PRIVILEGE DV ROY.",,,,,6001925,https://gallica.bnf.fr/ark:/12148/bpt6k10784
 At ABRAHAM PACARD, Saint Jacques street,
 at the sacrifice of Abraham.
 M. DC. XVIII.
-WITH THE KING'S PRIVILEGE.",False,typographic,3,none,woodcut,True,"roman, italics, majuscule roman",,,contemporary
+WITH THE KING'S PRIVILEGE.",False,typographic,6,none,woodcut,True,"roman, italics, majuscule roman",,,contemporary
 ustc-57,1619,Paris,,FRENCH,,Jean Erard,"LA
 GEOMETRIE
 ET
@@ -888,7 +888,7 @@ Avec Privilege du Roy,",,,,,6015020,https://gallica.bnf.fr/ark:/12148/bpt6k87204
 At MICHEL DANIEL's, on the Isle of the Palace,
 at King David.
 M. DC. XIX.
-With the King's Privilege,",False,typographic,4,none,woodcut,True,"roman, italics, majuscule roman",,
+With the King's Privilege,",False,typographic,7,none,woodcut,True,"roman, italics, majuscule roman",,,
 Bologna 1620,1620,Bologna,,ITALIAN,,Pietro Antonio Cataldi,"I PRIMI SEI LIBRI
 DE GL’ ELEMENTI
 d’Euclide ridotti alla Pratica
@@ -912,7 +912,7 @@ d’Euclide",,ai,,,"Ne mostrano le inventioni delle regole geometriche, arithmet
 M. DC. XX.
 Con licenza de’ Superiori.",,,,,,https://www.google.com/books/edition/I_primi_sei_libri_de_gl_Elementi_d_Eucli/F1e1uphuIpUC,https://i.imgur.com/1ipoDdK.png,,,"IN BOLOGNA, By Sebastiano Bonomi.
 M. DC. XX.
-With permission of the Superiors.",True,typographic,4,none,woodcut,True,"roman, majuscule roman, italics",,
+With permission of the Superiors.",True,typographic,6,none,woodcut,True,"roman, majuscule roman, italics",,,
 ustc-55,1620,Paris,,FRENCH,,Didier Henrion,"BRIEFVE
 EXPLICATION
 DE L'VSAGE
@@ -934,7 +934,7 @@ DE L'ASTROLABE.",D. H. M.,,,,,,,,,,,,,,,,,,,,,,,ai,,,"AVEC VN SOMMAIRE TRAICTE
 de la Sphere: comme aussi de l'vsage tant du quarré
 Geometrique, que des Globes.",,secondary,Didier Henrion,,,,"A PARIS,
 M. D. C. XX.",,,,,6009866,https://gallica.bnf.fr/ark:/12148/bpt6k62778862,https://i.imgur.com/MXWi3QA.jpeg,,,"IN PARIS,
-M. D. C. XX.",False,typographic,3,line,woodcut,True,"roman, italics, majuscule roman",,
+M. D. C. XX.",False,typographic,5,line,woodcut,True,"roman, italics, majuscule roman",,,
 ustc-58,1620,Paris,,FRENCH,,Didier Henrion,"QVATRE LIVRES
 DE LA GEOMETRIE
 PRATIQVE.
@@ -945,7 +945,7 @@ By D. Henrion Mathemat.","QVATRE LIVRES
 DE LA GEOMETRIE
 PRATIQVE.",D. Henrion,,Mathemat.,,,,,,,,,,,,,,,,,,,,,ai,,,,,secondary,Didier Henrion,,,,"A PARIS:
 M. DC. XX.",,,,,6014004,https://gallica.bnf.fr/ark:/12148/bpt6k6273664j,https://i.imgur.com/56TXhIo.jpeg,,,"IN PARIS:
-M. DC. XX.",False,typographic,3,none,woodcut,True,"roman, italics, majuscule roman",,
+M. DC. XX.",False,typographic,5,none,woodcut,True,"roman, italics, majuscule roman",,,
 ustc-39,1621,Paris,,FRENCH,,Jean Erard,"LA
 GEOMETRIE
 ET
@@ -973,7 +973,7 @@ D'ICELLE.","Par I. ERRARD, de Bar-le Duc, Ingenieur ordinaire
 de sa Majesté.",,"de Bar-le Duc, Ingenieur ordinaire
 de sa Majesté.",,,,,,,,"Reveuë, corrigée, & beaucoup augmentée.",,"Reveuë, corrigée, augmentée",,,,,,,,,,,ai,"Reveuë, corrigée, & beaucoup augmentée",,,,secondary,Jean Erard,,,,"A PARIS,
 M. DC. XXI.",,,,,6032076,https://gallica.bnf.fr/ark:/12148/bpt6k62761670,https://i.imgur.com/0SsFk9C.jpeg,,,"IN PARIS,
-M. DC. XXI.",False,typographic,3,line,woodcut,True,"roman, italics, majuscule roman",,
+M. DC. XXI.",False,typographic,6,line,woodcut,True,"roman, italics, majuscule roman",,,
 ustc-61,1621,Paris,,FRENCH,,Didier Henrion,"COLLECTION,
 OU
 RECVEIL DE DIVERS
@@ -1019,7 +1019,7 @@ M. DC. XXI.
 AVEC PRIVILEGE DV ROY.",,,,,6032043,https://gallica.bnf.fr/ark:/12148/bpt6k6273667s,https://i.imgur.com/IZCsJCK.jpeg,,,"IN PARIS,
 Printed by Fleury Bourriquant, residing on the Isle of the Palace.
 M. DC. XXI.
-WITH THE KING'S PRIVILEGE.",False,typographic,4,line,none,True,"roman, italics, majuscule roman",,
+WITH THE KING'S PRIVILEGE.",False,typographic,8,line,none,True,"roman, italics, majuscule roman",,,
 ustc-62,1621,Paris,,FRENCH,,Didier Henrion,"COLLECTION,
 OV
 RECVEIL DE DIVERS
@@ -1054,7 +1054,7 @@ M. DC. XXI.
 AVEC PRIVILEGE DV ROY.",,,,,6024164,https://gallica.bnf.fr/ark:/12148/bpt6k6273667s,https://i.imgur.com/BIQY5f2.jpeg,,,"IN PARIS,
 Printed by Fleury Bourriquant, residing on the Isle of the Palace.
 M. DC. XXI.
-WITH THE KING'S PRIVILEGE.",False,typographic,4,line,none,True,"roman, italics, majuscule roman",,
+WITH THE KING'S PRIVILEGE.",False,typographic,8,line,none,True,"roman, italics, majuscule roman",,,
 ustc-36,1622,Rouen,,FRENCH,,Jacques Chauvet,"METHODIQVES
 INSTITVTIONS
 DE LA VRAYE ET
@@ -1098,7 +1098,7 @@ le portail des Libraires.
 M. DC. XXII.",,,,,,https://gallica.bnf.fr/ark:/12148/bpt6k8720054d,https://i.imgur.com/pS3CDkO.jpeg,,,"IN ROUEN,
 At MANASSEZ DE PREAVLX, in front
 of the Booksellers' portal.
-M. DC. XXII.",True,typographic,4,none,woodcut,True,"roman, majuscule roman",,
+M. DC. XXII.",True,typographic,7,none,woodcut,True,"roman, majuscule roman",,,
 ustc-60,1623,Paris,,FRENCH,,Didier Henrion,"RÉPONSE
 APOLOGETIQVE
 POVR LES TRADVCTEVRS
@@ -1138,7 +1138,7 @@ At Jean Antoine Joallin's,
 in the Courtyard of the Palace, between the two
 large gates, near the
 Treasury barrier.
-M. DC. XXIII.",False,typographic,4,none,none,True,"roman, italics, majuscule roman",,
+M. DC. XXIII.",False,typographic,5,none,none,True,"roman, italics, majuscule roman",,,
 ustc-11,1624,Paris,,FRENCH,,Jean Boulenger,"LA
 GEOMETRIE
 OV MESVRE
@@ -1180,7 +1180,7 @@ AND
 NICOLAS LE ROY, rue de la Harpe in front of
 the Red Pillar.
 M. DC. XXIIII.
-WITH PRIVILEGE OF THE KING.",False,typographic,3,none,none,True,"roman, italics, majuscule roman",,
+WITH PRIVILEGE OF THE KING.",False,typographic,5,none,none,True,"roman, italics, majuscule roman",,,
 ustc-21,1624,Paris,,FRENCH,,Luis Ballester,"L’VSAGE
 DE LA
 REIGLE DE
@@ -1214,7 +1214,7 @@ At MELCHIOR MONDIERE,
 on the Island of the Palace, Harlay street,
 at the two Vipers.
 M. DC. XXIV.
-With the King's Privilege.",False,typographic,4,none,woodcut,True,"roman, italics, majuscule roman",,
+With the King's Privilege.",False,typographic,5,none,woodcut,True,"roman, italics, majuscule roman",,,
 ustc-51,1624,Paris,,FRENCH,,Jean Boulenger,"LA
 GEOMETRIE
 OV MESVRE
@@ -1253,7 +1253,7 @@ AND
 NICOLAS LE ROY, rue de la Harpe in front
 of the Red Pillar.
 M. DC. XXIIII.
-WITH PRIVILEGE OF THE KING.",False,typographic,4,none,none,True,"roman, majuscule roman, italics",,
+WITH PRIVILEGE OF THE KING.",False,typographic,6,none,none,True,"roman, majuscule roman, italics",,,
 Strasbourg 1625,1625,Strasbourg,,LATIN,,Joseph Langi,"JOSEPHI LANGII
 CAESAREMONTANI
 ELEMENTALE
@@ -1288,7 +1288,7 @@ Doctor of Philosophy and Medicine.",,"ISAACI HABRECHTI, ARGENTINENSIS, ",,Phil. 
 Sumptibus Haeredum Lazari Zetzneri.
 Anno M.DC.XXV.",,,,,,https://www.google.com/books/edition/Josephi_Langii_Caesaremontani_Elementale/1pxlziDi9p0C,https://i.imgur.com/Tg4KQzC.png,,,"ARGENTORATI,
 At the expense of the heirs of Lazarus Zetzner.
-Year 1625.",False,typographic,3,none,woodcut,True,"roman, majuscule roman, italics",,
+Year 1625.",False,typographic,6,none,woodcut,True,"roman, majuscule roman, italics",,,
 ustc-4,1625,Paris,,FRENCH,,,"LIVRE
 D'ARITHMETIQVE
 ET
@@ -1324,7 +1324,7 @@ Auec Permission.",,,,,6032559,https://search.proquest.com/docview/2090310381,htt
 At NICOLAS ROVSSET, Bookseller in the
 great Hall of the Palace.
 M. DC. XXV.
-With Permission.",False,typographic,3,none,woodcut,True,"roman, italics, majuscule roman",,
+With Permission.",False,typographic,6,none,woodcut,True,"roman, italics, majuscule roman",,,
 Paris 1626,1626,Paris,,FRENCH,,Honorat de Meynier,"PARADOXES DE
 MEYNIER,
 CONTRE LES
@@ -1358,7 +1358,7 @@ Maximes, d’Euclides, d’Archimedes, de Proclus, de Sacrobosco, & d’Aristote
 proprement des Mathematiques, &
 de la Philosophie.","AVEC VN ABREGE' DES
 Reigles de la Geometrie, & des prin-
-cipalles Maximes & reigles des Arts, de fortifier & assaillir les places.",secondary,MEYNIER,"NICOLAS ROUSSET, IVLIAN IACQVIN","NICOLAS ROUSSET, Ivlian Iacqvin",,"A PARIS, NICOLAS ROUSSET, dans la grand’ salle du Palais. Chez IVLIAN IACQVIN, ruë de la Harpe, au Sauvage. M. DC. XXVI. Avec Privilege du Roy.",,Vincesimo-quarto,Elements ?,,-,https://gallica.bnf.fr/view3if/ga/ark:/12148/bpt6k8702136w,https://i.imgur.com/vJB7EZo.jpeg,,,"IN PARIS, NICOLAS ROUSSET, in the great hall of the Palace. At JULIAN JACQUIN, rue de la Harpe, at the Sauvage. M. DC. XXVI. With the King's Privilege.",False,typographic,3,none,none,True,"italics, roman, majuscule roman",,,ancient
+cipalles Maximes & reigles des Arts, de fortifier & assaillir les places.",secondary,MEYNIER,"NICOLAS ROUSSET, IVLIAN IACQVIN","NICOLAS ROUSSET, Ivlian Iacqvin",,"A PARIS, NICOLAS ROUSSET, dans la grand’ salle du Palais. Chez IVLIAN IACQVIN, ruë de la Harpe, au Sauvage. M. DC. XXVI. Avec Privilege du Roy.",,Vincesimo-quarto,Elements ?,,-,https://gallica.bnf.fr/view3if/ga/ark:/12148/bpt6k8702136w,https://i.imgur.com/vJB7EZo.jpeg,,,"IN PARIS, NICOLAS ROUSSET, in the great hall of the Palace. At JULIAN JACQUIN, rue de la Harpe, at the Sauvage. M. DC. XXVI. With the King's Privilege.",False,typographic,6,none,none,True,"italics, roman, majuscule roman",,,ancient
 ustc-9,1626,Paris,,FRENCH,,Luis Ballester,"ARITHMETIQVE
 LOGARITHMETIQVE,
 OV
@@ -1407,7 +1407,7 @@ M. DC. XXVI.",,,,,6019182,https://search.proquest.com/docview/2090301422,https:/
 At MATTHIEV MONDIERE,
 on the Island of the Palace, Harlay
 street, at the two Vipers.
-M. DC. XXVI.",False,typographic,3,none,none,True,"roman, majuscule roman",,
+M. DC. XXVI.",False,typographic,5,none,none,True,"roman, majuscule roman",,,
 ustc-10,1626,Paris,,FRENCH,,Michel Connette,"LA
 GEOMETRIE,
 REDVITE
@@ -1470,7 +1470,7 @@ At CHARLES HVLPAV, Dauphine street, at the Royal
 Scarf, & in his shop on the Pont Neuf,
 near the Augustins.
 M.DC.XXVI.
-With the King's Privilege.",False,typographic,4,none,none,True,"roman, majuscule roman, italics",,,contemporary
+With the King's Privilege.",False,typographic,6,none,none,True,"roman, majuscule roman, italics",,,contemporary
 ustc-23,1626,Paris,,FRENCH,,Didier Henrion,"LOGOCANON
 		OV
 REGLE PROPORTIONELLE:
@@ -1501,7 +1501,7 @@ Printed by I. Bourriquant for the Author,
 At SAMUEL THIBOUST's, at the Palace,
 	in the Gallery of Prisoners.
 				M. DC. XXVI.
-			With the King's Privilege.",False,typographic,3,none,none,True,"roman, majuscule roman",,
+			With the King's Privilege.",False,typographic,6,none,none,True,"roman, majuscule roman",,,
 ustc-38,1626,Paris,,FRENCH,,Edmund Wingate,"ARITHMETIQVE
 LOGARITHMETIQVE,
 OV
@@ -1549,7 +1549,7 @@ M. DC. XXVI.",,,,,,https://gallica.bnf.fr/ark:/12148/bpt6k8702145v,https://i.img
 At MELCHIOR MONDIERE,
 on the Island of the Palace, street of Har-
 lay, at the two Vipers.
-M. DC. XXVI.",False,typographic,3,line,none,True,"roman, majuscule roman, italics",,
+M. DC. XXVI.",False,typographic,5,line,none,True,"roman, majuscule roman, italics",,,
 ustc-50,False,Paris,,FRENCH,,Didier Henrion,"TRAICTE
 DES
 LOGARITHMES.
@@ -1571,7 +1571,7 @@ At the Author's place, residing on the Isle of
 the Palace, at the Image of St. Michael.
 M. DC. XXVI.
 With the King's privilege.
-August. Dice. Par.",True,typographic,3,none,woodcut,True,"roman, italics, majuscule roman",,
+August. Dice. Par.",True,typographic,6,none,woodcut,True,"roman, italics, majuscule roman",,,
 ustc-26,1627,Paris,,FRENCH,,Didier Henrion,"MEMOIRES
 MATHEMATIQVES,
 RECEVILLIS ET DRESSEZ
@@ -1621,7 +1621,7 @@ Printed by FLEVR Y BOVR YQYA NT, having his shop
 on the Isle of the Palace at the Royal flowers.
 M. DC. XXIII.
 WITH PRIVILEGES.
-Do not remove from this Library. By obedience.",False,typographic,3,line,none,True,"roman, majuscule roman, italics",,,contemporary
+Do not remove from this Library. By obedience.",False,typographic,5,line,none,True,"roman, majuscule roman, italics",,,contemporary
 ustc-40,1627,Paris,,FRENCH,,Jean Leurechon,"RECREATION
 MATHEMATIQVE,
 COMPOSE'E
@@ -1674,7 +1674,7 @@ Avec Privilcge dv Roy.",,,,,6023406,https://gallica.bnf.fr/ark:/12148/bpt6k87204
 At ROLET BOVTONNE', at the Palace;
 in the Booksellers' Gallery.
 M. DC. XXVII.
-With the King's Privilege.",False,typographic,3,none,none,True,"roman, majuscule roman",,
+With the King's Privilege.",False,typographic,6,none,none,True,"roman, majuscule roman",,,
 Jena 1628,1628,Jena,,GERMAN,,Heinrich Hofmann,"HEINRICI HOFMANNI
 PROFESSORIS MATHEMATICI
 in der Universität Jehna
@@ -1696,7 +1696,7 @@ Of the same Elements.
 Printed there by Johan Weichner's Widow, / at the Author's expense. 1628.",GEOMETRIAE,HEINRICI HOFMANNI,,PROFESSORIS MATHEMATICI,in der Universität Jehna,Eu-CLIDES,,,,,,,,,Teutscher,,,,,,,,Elementen,,ai,"Das ist, seiner
 GEOMETRIAE
 Erster Theil
-Von derselben Elementen.",,,,secondary,Heinrich Hofmann,Johann Weichner’s widow,,,,,,,,,https://www.google.com/books/edition/Heinrici_Hofmanni_Professoris_Mathematic/sswGAAAAcAAJ,https://i.imgur.com/9FY3hQ0.png,,,,False,standard,4,woodcut,woodcut,True,"roman, blackletter, italics",,
+Von derselben Elementen.",,,,secondary,Heinrich Hofmann,Johann Weichner’s widow,,,,,,,,,https://www.google.com/books/edition/Heinrici_Hofmanni_Professoris_Mathematic/sswGAAAAcAAJ,https://i.imgur.com/9FY3hQ0.png,,,,False,standard,6,woodcut,woodcut,True,"roman, blackletter, italics",,,
 ustc-6,1629,Paris,,FRENCH,,François Malthus,"TRAITÉ
 DES FEUX
 ARTIFICIELS POVR
@@ -1734,7 +1734,7 @@ AVEC PRIVILEGE DV ROY.",,,,,6022904,https://search.proquest.com/docview/20903233
 At PIERRE GVILLEMOT's, at
 the Palace, in the gallery of the Prisoners.
 M. DC. XXIX.
-WITH THE KING'S PRIVILEGE.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
+WITH THE KING'S PRIVILEGE.",False,typographic,6,none,woodcut,True,"roman, majuscule roman",,,
 ustc-15,1630,Paris,,FRENCH,,Jean Boulenger,"LA
 GEOMETRIE
 PRACTIQVE DV
@@ -1781,7 +1781,7 @@ At the Author's, rue de la Tissierne, adjoining the Reale, near the
 Montmartre gate, & at PHILIBERT CHARPENTIER,
 rue Charierte, near the Puy Certain.
 M. DC. XXXIV.
-WITH ROYAL PRIVILEGE.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
+WITH ROYAL PRIVILEGE.",False,typographic,5,none,woodcut,True,"roman, majuscule roman",,,
 ustc-41,1630,Paris,,FRENCH,,Jean Leurechon,"EXAMEN
 DV LIVRE DES
 RECREATIONS
@@ -1812,7 +1812,7 @@ Avec Privilege du Roy.",,,,,6032540,https://gallica.bnf.fr/ark:/12148/bpt6k58219
 At ANTHOINE ROBINOT's, at the fourth
 pillar of the great Hall of the Palace.
 M. DC. XXX.
-With the King's Privilege.  ",False,typographic,3,none,woodcut,True,"roman, majuscule roman, italics",,
+With the King's Privilege.  ",False,typographic,6,none,woodcut,True,"roman, majuscule roman, italics",,,
 ustc-47,1630,Paris,,FRENCH,,François Viète,"INTRODVCTION
 EN L’ART ANALYTIC,
 OV NOVVELLE ALGEBRE
@@ -1852,7 +1852,7 @@ AVEC PERMISSION.",,,,,6032521,https://gallica.bnf.fr/ark:/12148/bpt6k58230969,ht
 At IVILIANIACQVIN in the Court of the Palace, at the bottom
 of the steps of the Sainte-Chappelle.
 M.DC.XXX.
-WITH PERMISSION.",False,typographic,4,none,none,True,"roman, majuscule roman, italics",,,contemporary
+WITH PERMISSION.",False,typographic,8,none,none,True,"roman, majuscule roman, italics",,,contemporary
 ustc-48,1630,Paris,,FRENCH,,François Viète,"L'ALGBRE
 NOVVELLE DE
 Mr. VIETE Mr
@@ -1884,7 +1884,7 @@ in the gallery of the Puilon,
 amidst the Arms of the
 City
 With the King's Privilege.
-1630.",False,custom,2,woodcut,copperplate,True,"roman, majuscule roman",,,contemporary
+1630.",False,custom,3,woodcut,copperplate,True,"roman, majuscule roman",,,contemporary
 ustc-49,1630,Paris,,FRENCH,,François Viète,"LES CINQ LIVRES DES
 ZETETIQVES DE
 FRANCOIS VIETTE.
@@ -1916,7 +1916,7 @@ augmentex des exemples du Poristique, & Exe-
 getique, parties restantes de l’Analitique.",,"MIS EN FRANCOIS, , COMMENTEZ, augmentex","MIS EN FRANCOIS, ",,,,,,,,,,ai,"MIS EN FRANCOIS, COMMENTEZ ET
 augmentex des exemples du Poristique, & Exe-
 getique, parties restantes de l’Analitique.",,"Soit que l’Exeuetique, soit traité en Nombres
-ou en Lignes.",,secondary,François Viète,,,,,,,,,,https://gallica.bnf.fr/ark:/12148/bpt6k5823709j,https://i.imgur.com/ZtwQbp8.jpeg,,,,False,typographic,3,none,none,False,"roman, italics, majuscule roman",,
+ou en Lignes.",,secondary,François Viète,,,,,,,,,,https://gallica.bnf.fr/ark:/12148/bpt6k5823709j,https://i.imgur.com/ZtwQbp8.jpeg,,,,False,typographic,7,none,none,False,"roman, italics, majuscule roman",,,
 ustc-28,1631,Rouen,,FRENCH,,Jacques Chauvet,"METHOIQVES
 INSTITV TIONS
 DE LA VRAYE ET
@@ -1960,7 +1960,7 @@ Ne extra hauc Bibliothecam efferatur. Ex obedientia.",,,,,,https://gallica.bnf.f
 At ADRIAN Ovin's, on the first level
 of the Palace ascent.
 M. DC. XXXI.
-Let it not be taken out of this Library. By obedience.",True,typographic,3,none,woodcut,True,"roman, majuscule roman",,
+Let it not be taken out of this Library. By obedience.",True,typographic,6,none,woodcut,True,"roman, majuscule roman",,,
 ustc-27,1632,Paris,,FRENCH,,,"ARITHMETIQVE
 MEMORIALE.
 Par le moyen de laquelle on peut resolu-
@@ -2008,7 +2008,7 @@ Draperie, deuant le Palais.
 M. D C. XXX II.",,,,,6032117,https://gallica.bnf.fr/ark:/12148/bpt6k887117s,https://i.imgur.com/j3JN8Kc.jpeg,,,"IN PARIS,
 At FRANÇOIS SARADIN, rue de la vieille
 Draperie, in front of the Palace.
-M. D C. XXX II.",False,typographic,3,none,none,True,"roman, italics, majuscule roman",,
+M. D C. XXX II.",False,typographic,5,none,none,True,"roman, italics, majuscule roman",,,
 ustc-52,1632,Paris,,FRENCH,,De La Fontaine,"ARITHMETIQVE
 MEMORIALLE.
 Par le moyen de laquelle on peut resou-
@@ -2060,7 +2060,7 @@ Draperie, deuant le Palais.
 M. DC. XXXII.",,,,,,https://gallica.bnf.fr/ark:/12148/bpt6k887117s,https://i.imgur.com/QBXCNjn.jpeg,,,"IN PARIS,
 At FRANÇOIS SARADIN, street of the old
 Drapery, in front of the Palace.
-M. DC. XXXII.",False,typographic,3,none,none,True,"roman, italics, majuscule roman",,
+M. DC. XXXII.",False,typographic,5,none,none,True,"roman, italics, majuscule roman",,,
 Innsbruck 1634,1634,Innsbruck,,LATIN,,Andreas Arzet,"CLAVIS
 MATHEMATICA
 QUA
@@ -2111,7 +2111,7 @@ M.DC.XXXIV.",,,,,,https://www.google.com/books/edition/Clavis_mathematica/RptEAA
 With the permission of the Superiors.
 INNSBRUCK,
 By Daniel Agricola.
-1634.",False,typographic,4,none,woodcut,True,"roman, majuscule roman",,
+1634.",False,typographic,7,none,woodcut,True,"roman, majuscule roman",,,
 ustc-5,1634,Paris,,FRENCH,,Marin Mersenne,"LES
 QVESTIONS
 THEOLOGIQVES.
@@ -2134,7 +2134,7 @@ Auec Privilège & Approbation.",,,,,6003678,https://search.proquest.com/docview/
 At HENRY GVENON, rue Saint
 Jacques, near the Jacobins, at the ima-
 ge Saint Bernard.
-With Privilege & Approval.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
+With Privilege & Approval.",False,typographic,6,none,woodcut,True,"roman, majuscule roman",,,
 ustc-24,1634,Paris,,FRENCH,,Marin Mersenne,"QVESTIONS
 INOVYES,
 OV
@@ -2158,7 +2158,7 @@ At HVGUES VILLERY, Clopin street
 at the Shield of France, & at the corner of
 Dauphine street at the three Wigs.
 M. DC. XXXIIII.
-WITH THE KING'S PRIVILEGE.",False,typographic,3,none,woodcut,True,"roman, italics, majuscule roman",,
+WITH THE KING'S PRIVILEGE.",False,typographic,6,none,woodcut,True,"roman, italics, majuscule roman",,,
 ustc-34,1634,Paris,,FRENCH,,Jean Boulenger,"LA
 GEOMETRIE
 PRACTIQVE DV
@@ -2206,7 +2206,7 @@ At the Author's, rue de la Jussienne, adjoining the Reale, near the
 Montmartre gate, & at Philibert Charpentier's,
 rue Chartière, near the Puy Certain.
 M. DC. XXXIV.
-WITH THE KING'S PRIVILEGE.",False,typographic,3,none,none,False,"roman, majuscule roman",,
+WITH THE KING'S PRIVILEGE.",False,typographic,5,none,none,False,"roman, majuscule roman",,,
 ustc-45,1634,Paris,,FRENCH,,Marin Mersenne,"LES
 QVESTIONS
 THEOLOGIQVES.
@@ -2229,7 +2229,7 @@ Auec Priuilege & Approbation.",,,,,6028340,https://gallica.bnf.fr/ark:/12148/bpt
 At HENRY GVENON, rue Saint
 Jacques, near the Jacobins, at the ima-
 ge of Saint Bernard.
-With Privilege & Approval.",False,typographic,3,none,none,True,"roman, majuscule roman, italics",,
+With Privilege & Approval.",False,typographic,5,none,none,True,"roman, majuscule roman, italics",,,
 ustc-25,1635,Paris,,FRENCH,,Jacques Hume,"TRAICTE
 DE
 L’ALGEBRE,
@@ -2269,7 +2269,7 @@ AVEC PRIVILEGE DU ROI.",,,,,6028235,https://search.proquest.com/docview/20903103
 At LOVYS BOULENGER, rue Saint
 Jacques, at the Image of Saint Louis.
 M. DC. XXXV.
-WITH THE KING'S PRIVILEGE.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
+WITH THE KING'S PRIVILEGE.",False,typographic,6,none,woodcut,True,"roman, majuscule roman",,,
 Innsbruck 1636,1636,Innsbruck,,LATIN,,Andreas Arzet,"CLAVIS
 MATHEMATICA
 QUA
@@ -2317,7 +2317,7 @@ M. DC. XXXVI.",,,,is it really a different edition from 1634 ?,,,,,,"FOR CANDIDA
 With the Approval of the Superiors.
 INNSBRUCK,
 By Daniel Agricola.
-1636.",,,,,,,,,
+1636.",,,,,,,,,,
 ustc-12,1636,Paris,,FRENCH,,Jacques Hume,"TRAITE' DE LA
 TRIGONOMETRIE,
 POUR RESOUDRE TOUS
@@ -2359,7 +2359,7 @@ Mount St. Hilaire, at the Shield of Brittany, & in their
 shop at the small door of the Palace
 before the Augustinians.
 M. DC. XXXVI.
-WITH PRIVILEGE OF THE KING.",False,typographic,3,none,woodcut,True,"roman, italics, majuscule roman",,
+WITH PRIVILEGE OF THE KING.",False,typographic,6,none,woodcut,True,"roman, italics, majuscule roman",,,
 ustc-46,1638,Paris,,FRENCH,,Jean de Poix,"LA VRAYE ET
 PARFAICTE INSTRV-
 ction, dela nouuelle
@@ -2408,7 +2408,7 @@ AVEC PRIVILEGE DV ROY.",,,,,6040009,https://gallica.bnf.fr/ark:/12148/bpt6k15206
 At the Author's, on the street of Poirées at the Image
 of St. Julien, in front of the Sorbonne.
 M. DC. XXXVIII.
-WITH ROYAL PRIVILEGE.",False,typographic,3,none,none,False,"roman, majuscule roman",,
+WITH ROYAL PRIVILEGE.",False,typographic,6,none,none,False,"roman, majuscule roman",,,
 ustc-7,1639,Paris,,FRENCH,,Nicolas Forest-Duchesne,"LA FLEVR
 DES PRATIQVES
 DV COMPAS
@@ -2438,7 +2438,7 @@ Auec Priuilege du Roʒ.",,,,,6035084,https://search.proquest.com/docview/2090310
 At HENRY GVENON's, Saint Jacques street, at
 the image of St. Bernard, near the Jacobins.
 M. D C. XXXIX.
-With the King's Privilege.",False,typographic,3,none,none,False,"roman, majuscule roman, italics",,
+With the King's Privilege.",False,typographic,5,none,none,False,"roman, majuscule roman, italics",,,
 ustc-13,1639,Paris,,FRENCH,,Jean Leurechon,"EXAMEN
 DU LIVRE DES
 RECREATIONS
@@ -2468,7 +2468,7 @@ au Soleil d'or : Et en fa boutique fur le Pont-neuf.
 M. DC. XXXIX.",,,,,6040268,https://search.proquest.com/docview/2090349026,https://i.imgur.com/FlKOt5M.jpeg,,,"IN PARIS,
 At ANTOINE ROBINOT's, in Place Dauphine
 at the Golden Sun: And in his shop on the Pont-neuf.
-M. DC. XXXIX.",False,typographic,3,none,woodcut,True,"roman, italics, majuscule roman",,
+M. DC. XXXIX.",False,typographic,6,none,woodcut,True,"roman, italics, majuscule roman",,,
 ustc-1,1640,Paris,,FRENCH,,Jean Boulenger,"LA
 GEOMETRIE
 PRATIQVE
@@ -2505,7 +2505,7 @@ AVEC PRIVILEGE DV ROY.",,,,,6025821,https://search.proquest.com/docview/20903051
 At SEBASTIEN CRAMOISY, Ordinary Printer
 to the King, Saint Jacques street, at the Storks.
 M. D.C. X L.
-WITH THE KING'S PRIVILEGE.",False,typographic,4,none,none,False,"roman, italics, majuscule roman",,
+WITH THE KING'S PRIVILEGE.",False,typographic,6,none,none,False,"roman, italics, majuscule roman",,,
 ustc-30,1640,Paris,,FRENCH,,Jean Boulenger,"LA
 GEOMETRIE
 PRATIQVE
@@ -2542,7 +2542,7 @@ AVEC PRIVILEGE DV ROY.",,,,,6025821,https://gallica.bnf.fr/ark:/12148/bpt6k87022
 At SEBASTIEN CRAMOISY, Ordinary Printer
 to the King, Saint Jacques street, at the Storks.
 M. D. C. X L.
-WITH THE KING'S PRIVILEGE.",False,typographic,3,none,none,False,"roman, majuscule roman",,
+WITH THE KING'S PRIVILEGE.",False,typographic,6,none,none,False,"roman, majuscule roman",,,
 ustc-35,1640,Paris,,FRENCH,,Jean Boulenger,"LA
 GEOMETRIE
 PRATIQVE
@@ -2578,7 +2578,7 @@ AVEC PRIVILEGE DV ROY.",,,,,,https://gallica.bnf.fr/ark:/12148/bpt6k87022241,htt
 At SEBASTIEN CRAMOISY, Ordinary Printer
 to the King, rue Saint Jacques, at the Storks.
 M. D. C. XL.
-WITH PRIVILEGE OF THE KING.",False,typographic,3,none,none,False,"roman, majuscule roman",,
+WITH PRIVILEGE OF THE KING.",False,typographic,6,none,none,False,"roman, majuscule roman",,,
 ustc-63,1640,Paris,,FRENCH,,J.-L. de Vaulézard,"TRAICTE'
 OV VSAGE DV
 QVADRANT
@@ -2617,7 +2617,7 @@ Ruë S. Iacques, au Globe Celeste.
 M. DC. XXXX.",,,,,6039095,https://gallica.bnf.fr/ark:/12148/bpt6k8720784z,https://i.imgur.com/8Fkg96H.jpeg,,,"IN PARIS;
 For the Author.
 Rue St. Jacques, at the Celestial Globe.
-M. DC. XXXX.",False,typographic,3,none,none,True,"roman, italics, majuscule roman",,
+M. DC. XXXX.",False,typographic,6,none,none,True,"roman, italics, majuscule roman",,,
 ustc-20,1641,Paris,,FRENCH,,,"LE
 COVRS
 DE MATHEMATIQVE,
@@ -2650,7 +2650,7 @@ AVEC PRIVILEGE DV ROI.",,,,,6029597,https://search.proquest.com/docview/20903130
 At FRANCOIS PELICAN, St. Jacques street, near
 the College of Clermont, at the sign of the Pelican.
 M. DC. XXXXI.
-WITH PRIVILEGE OF THE KING.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
+WITH PRIVILEGE OF THE KING.",False,typographic,5,none,woodcut,True,"roman, majuscule roman",,,
 ustc-19,1644,Paris,,FRENCH,,François Viète,"L'ALGEBRE
 EFFECTIONS
 Geometriques, & par-
@@ -2695,7 +2695,7 @@ Alliott, at the Palace, near the Chapel
 St. Michael, & at the Widow M.
 rez St. Jacques street in Gloue.
 M. DC X L V.
-Ane'e Premulieu in Son.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,,
+Ane'e Premulieu in Son.",False,typographic,7,none,woodcut,True,"roman, majuscule roman",,,
 ustc-53,1646,Paris,,FRENCH,,François Le Gendre,"TRAICTE
 ARITHMETIQVE',
 CONTENANT TOVTES
@@ -2732,7 +2732,7 @@ At CARDIN BESONGNE, at the top of the
 ascent of the Holy Chapel, at the Red
 Roses.
 M. DC. XLVI.
-With the King's Privilege.",False,typographic,4,none,none,False,"roman, italics, majuscule roman",,
+With the King's Privilege.",False,typographic,6,none,none,False,"roman, italics, majuscule roman",,,
 ustc-17,1647,Paris,,FRENCH,,,"NOVVELLE
 ARITHMÉTIQVE
 POVR LES FINANCES.
@@ -2769,7 +2769,7 @@ From the Printing House of I EAN B R V N E T,
 new street Saint Louys, at the Royal
 Cannon, 1647.
 And sold at the Author's, at the two
-Globes, near the Augustins.",False,typographic,3,none,none,True,"roman, majuscule roman",,
+Globes, near the Augustins.",False,typographic,5,none,none,True,"roman, majuscule roman",,,
 Pisa 1658,1658,Pisa,,LATIN,,Giovanni Alfonso Borelli,"EVCLIDES
 RESTITUTUS,
 Sive,
@@ -2799,7 +2799,7 @@ nova, firmiorique Methodo promuntur",,secondary,Giovanni Alfonso Borelli,Francis
 1658.
 Superiorum permissu.",,,,,,https://www.google.com/books/edition/Euclides_restitutus_sive_Prisca_geometri/Dz8PAAAAQAAJ,https://i.imgur.com/vGMPNIM.png,,,"Pisis, from the Workshop of Francis Honophus.
 1658.
-With the permission of superiors.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
+With the permission of superiors.",False,typographic,5,none,woodcut,True,"roman, majuscule roman",,,
 Amsterdam 1660a,1660,Amsterdam,,LATIN,,Gerrit Janszoon Vos,"GERARDI IOANNIS VOSSII
 DE
 UNIVERSAE MATHESIOS
@@ -2822,7 +2822,7 @@ MATHEMATICORUM",,secondary,Gerardus Joannes Vossius,Ioannes Blaeu,Jan Blaeu,,"AM
 Ex Typographeio IOANNIS BLAEV.
 MDC LX.",,,,,,https://www.google.com/books/edition/De_universae_mathesios_natura_et_constit/ih9mAAAAcAAJ,https://i.imgur.com/SsMLnEh.png,,,"AMSTERDAM,
 From the Printing House of IOANNIS BLAEV.
-1660.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
+1660.",False,typographic,5,none,woodcut,True,"roman, majuscule roman",,,
 ustc-42,1660,Paris,,FRENCH,,Jean Leurechon,"LES
 RECREATIONS
 MATHEMATIQVES
@@ -2861,7 +2861,7 @@ M. DC. LX.",,,,,,https://gallica.bnf.fr/ark:/12148/bpt6k8720498z,https://i.imgur
 At Cardin Besongne, at the Palace
 in the Gallery of prisoners,
 Vermilion Roses.
-M. DC. LX.",False,typographic,3,none,none,True,"roman, italics, majuscule roman",,
+M. DC. LX.",False,typographic,5,none,none,True,"roman, italics, majuscule roman",,,
 Paris 1661,1661,Paris,,FRENCH,,R. P. Bourdín,"LE COVRS
 DE
 MATHÉMATIQVE,
@@ -2904,8 +2904,8 @@ At Simon Benard's, St. Jacques street, at the image
 of Our Lady of Faith, opposite the R. R.
 Jesuit Fathers.
 M. DC. LXI.
-With the King's Privilege.",False,typographic,3,none,none,False,"roman, majuscule roman, italics",,
-Le Mans 1663,1663,Le Mans,,FRENCH,,Roland Fréart,"LA PERSPECTIVE D’EVCLIDE, TRADVITE EN FRANÇOIS SVR LE TEXTE GREC, ORIGINAL DE L’AVTHEVR, Et demonstrée PAR ROL. FRÉART DE CHANTELOV SIEVR DE CHAM-BRAY.","THE PERSPECTIVE OF EUCLID, TRANSLATED INTO FRENCH ON THE GREEK TEXT, ORIGINAL OF THE AUTHOR, And demonstrated BY ROL. FRÉART DE CHANTELOU LORD OF CHAM-BRAY.",LA PERSPECTIVE D’EVCLIDE,ROL. FRÉART DE CHANTELOV SIEVR DE CHAM-BRAY,,,,EVCLIDE,,,,,,,,"TRADVITE, demonstrée","FRANÇOIS, GREC",EN FRANÇOIS,,,,,,,,,ai,"TRADVITE EN FRANÇOIS SVR LE TEXTE GREC, ORIGINAL DE L’AVTHEVR",Et demonstrée,,,secondary,Roland Fréart,IACQVES YSAMBART,IACQVES YSAMBART,,"AV MANS. De l’Imprimerie de IACQVES YSAMBART Marchand Libraire, et Imprimeur, demeurant au Pont-neuf, à l’Enseigne du Sainct Esprit. M. DC. LXIII.",,Quarto,Optica,,,https://www.google.com/books/edition/La_perspective_d_Euclide_traduite_en_fra/_pzn2kW9CAcC,https://i.imgur.com/aGbXkB9.png,,,"AV MANS. From the Printing House of JACQUES YSAMBART, Merchant Bookseller, and Printer, residing at the Pont-neuf, at the Sign of the Holy Spirit. M. DC. LXIII.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
+With the King's Privilege.",False,typographic,8,none,none,False,"roman, majuscule roman, italics",,,
+Le Mans 1663,1663,Le Mans,,FRENCH,,Roland Fréart,"LA PERSPECTIVE D’EVCLIDE, TRADVITE EN FRANÇOIS SVR LE TEXTE GREC, ORIGINAL DE L’AVTHEVR, Et demonstrée PAR ROL. FRÉART DE CHANTELOV SIEVR DE CHAM-BRAY.","THE PERSPECTIVE OF EUCLID, TRANSLATED INTO FRENCH ON THE GREEK TEXT, ORIGINAL OF THE AUTHOR, And demonstrated BY ROL. FRÉART DE CHANTELOU LORD OF CHAM-BRAY.",LA PERSPECTIVE D’EVCLIDE,ROL. FRÉART DE CHANTELOV SIEVR DE CHAM-BRAY,,,,EVCLIDE,,,,,,,,"TRADVITE, demonstrée","FRANÇOIS, GREC",EN FRANÇOIS,,,,,,,,,ai,"TRADVITE EN FRANÇOIS SVR LE TEXTE GREC, ORIGINAL DE L’AVTHEVR",Et demonstrée,,,secondary,Roland Fréart,IACQVES YSAMBART,IACQVES YSAMBART,,"AV MANS. De l’Imprimerie de IACQVES YSAMBART Marchand Libraire, et Imprimeur, demeurant au Pont-neuf, à l’Enseigne du Sainct Esprit. M. DC. LXIII.",,Quarto,Optica,,,https://www.google.com/books/edition/La_perspective_d_Euclide_traduite_en_fra/_pzn2kW9CAcC,https://i.imgur.com/aGbXkB9.png,,,"AV MANS. From the Printing House of JACQUES YSAMBART, Merchant Bookseller, and Printer, residing at the Pont-neuf, at the Sign of the Holy Spirit. M. DC. LXIII.",False,typographic,5,none,woodcut,True,"roman, majuscule roman",,,
 Bologna 1663,1663,Bologna,,ITALIAN,,Giovanni Alfonso Borelli,"EVCLIDE
 RINNOVATO,
 OVERO
@@ -2937,7 +2937,7 @@ in quello di Pisa.",,,,,,,,"e dall’istesso Autore di nuovo
 reuisito, e corretto.",,"RINNOVATO, , Volgarizzato",Volgarizzato,,,,,,,,"Gl’ antichi Elementi della Geometria, ",,ai,"Gl’ antichi Elementi della Geometria, ridotti à maggior breuità, e facilità",,"In cui con nuovo, e più sicuro modo si dimostra
 il trattato delle Proporzioni",,secondary,Giovanni Alfonso Borelli,Gio. Battista Ferroni,,,"IN BOLOGNA, M.DC.LXIII.
 Presso Gio. Battista Ferroni, Con licenza de’ Superiori.",,,,,,https://www.google.com/books/edition/Euclide_rinnouato_ouero_gl_antichi_eleme/Si8r71waAW8C,https://i.imgur.com/qiTn2Vj.png,,,"IN BOLOGNA, M.DC.LXIII.
-At Gio. Battista Ferroni, With permission of the Superiors.",False,typographic,4,none,none,False,"roman, italics, majuscule roman",,
+At Gio. Battista Ferroni, With permission of the Superiors.",False,typographic,6,none,none,False,"roman, italics, majuscule roman",,,
 Turin 1671,1671,Turin,,LATIN,,D. Guarino Guarino,"EVCLIDES ADAVCTVS
 ET METHODICVS
 MATHEMATICAE UNIVERSALIS
@@ -2973,7 +2973,7 @@ MATHEMATICAE UNIVERSALIS","Quae ne dum propositionum dependentiam, sed & rerum o
 Typis Bartholomaei Zapatae Bibliopolae S. R. C.
 Superiorum permissu.",,,,,,https://www.google.com/books/edition/Evclides_Adavctvs_Et_Methodicvs_Mathemat/BXVpAAAAcAAJ,https://i.imgur.com/sOqU7fW.png,,,"AUGUSTA OF THE TAURINI, 1671.
 Printed by Bartholomaeus Zapata, Bookseller of the Holy Roman Church.
-With permission of the superiors.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
+With permission of the superiors.",False,typographic,6,none,woodcut,True,"roman, majuscule roman",,,
 Amsterdam 1672,1672,Amsterdam,,DUTCH,,Georg Mohr,"EUCLIDES DANICUS,
 Bestaende in twee Deelen:
 Het eerste Deel: Handeldt van de Meetkonstige
@@ -3001,7 +3001,7 @@ Werckstucken, begrepen in de ses eerste Boecken Euclidis","Het tweede Deel: Geef
 Werckstucken te maecken, als van Snijding, Raecking, Deeling, Perspectie en Sonnewijssers",secondary,Georg Mohr,Jacob van Velsen,,,"’t AMSTERDAM,
 Gedruckt by Jacob van Velsen, voor de Autheur, welke geen Exemplaren voor de zijne erkent, als die hy selver met zijn handt
 onderteaeckent heeft; 1672.",,,,,,https://www.google.com/books/edition/Euclides_danicus/9SRcAAAAcAAJ,https://i.imgur.com/SzEC3yF.png,,,"’t AMSTERDAM,
-Printed by Jacob van Velsen, for the Author, who recognizes no copies as his own, except those he has signed with his own hand; 1672.",False,typographic,4,none,woodcut,True,"roman, majuscule roman, italics",,
+Printed by Jacob van Velsen, for the Author, who recognizes no copies as his own, except those he has signed with his own hand; 1672.",False,typographic,6,none,woodcut,True,"roman, majuscule roman, italics",,,
 Valencia 1673,1673,Valencia,,LATIN,,José Zaragoza,"EVCLIDES
 NOVO-ANTIQUVS
 SINGVLARI METHOD O,
@@ -3040,7 +3040,7 @@ SINGVLARI METHOD O, ILLVSTRATVS",,,,secondary,José Zaragoza,Hieronymus Villagra
 M.DC.LXXIII.
 Cum Superiorum licentia.",,,,,,https://www.google.com/books/edition/Euclides_novo_antiquus_singulari_methodo/jnuBFEIHGMgC,,,,"At the house of Hieronymus Villagrasa. In the Year of Our Lord
 1673.
-With the permission of the superiors.",,,,,,,,,
+With the permission of the superiors.",,,,,,,,,,
 Florence 1674,1674,Florence,,ITALIAN,,Vincenzo Viviani,"QVINTO LIBRO
 DEGLI ELEMENTI
 D’EVCLIDE,
@@ -3090,7 +3090,7 @@ I Ragguali dell’ultime Opere loro, con altro, che dall’Indice si manifesta."
 M. DC. LXXIV.
 Con licenza de’ Sup.",,,,,,https://www.google.com/books/edition/Qvinto_libro_degli_Elementi_d_Evclide/WvhJAAAAMAAJ,https://i.imgur.com/qbZow1k.png,,,"IN FLORENCE, At the Condotta.
 M. DC. LXXIV.
-With permission of the Sup.",False,typographic,4,none,none,False,"roman, majuscule roman, italics",,,contemporary
+With permission of the Sup.",False,typographic,7,none,none,False,"roman, majuscule roman, italics",,,contemporary
 Paris 1675,1675,Paris,,FRENCH,,Jean Prestet,"ELEMENS
 DES
 MATHEMATIQUES
@@ -3125,7 +3125,7 @@ At André Pralard, Bookseller, rue Saint Jacques,
 at the Occasion.
 M. DC. LXXV.
 (1675)
-With the King's Privilege.  ",False,typographic,4,none,woodcut,True,"roman, majuscule roman, italics",,
+With the King's Privilege.  ",False,typographic,7,none,woodcut,True,"roman, majuscule roman, italics",,,
 London 1678a,1678,London,,LATIN,,Nikolaus Kauffman,"EUCLIDIS
 ELEMENTA GEOMETRICA
 Novo Ordine ac Methodo
@@ -3156,7 +3156,7 @@ Magnitudinum Ortus ex genuinis Principiis, & ortarum Affectiones ex ipsa Genesi 
 Typis J. M., impensis Joh. Martyn, ad Insigne Campanae, in Coemeterio D. Pauli,
 1678.",,,,,,https://www.google.com/books/edition/Euclidis_Elementa_geometrica_novo_ordine/vQHKXlJUaqMC,https://i.imgur.com/FqLvB5M.png,,https://i.imgur.com/5VwPwXi.png,"LONDON,
 Printed by J. M., for Joh. Martyn, at the Sign of the Bell, in St. Paul's Churchyard,
-1678.",False,typographic,4,line,none,False,"roman, majuscule roman, italics",,
+1678.",False,typographic,6,line,none,False,"roman, majuscule roman, italics",,,
 Rome 1679,1679,Rome,,LATIN,,Giovanni Alfonso Borelli,"EVCLIDES
 RESTITUTUS
 Denuo
@@ -3186,7 +3186,7 @@ proponuntur.",,"Apollonij Elementa conica, aequè Archimedis opera breviore meth
 Ex Typographia Mascardi, 1679
 Superiorum permissu.",,,,,,https://www.google.com/books/edition/Euclides_restitutus_denu%C3%B2_limatus_siue/8n07S9c7y6wC,https://i.imgur.com/18yhsZ8.png,https://i.imgur.com/VNXefBV.png,,"ROME,
 From the Mascardi Press, 1679
-With the permission of the superiors.",False,typographic,3,none,none,True,"roman, majuscule roman",,,ancient
+With the permission of the superiors.",False,typographic,5,none,none,True,"roman, majuscule roman",,,ancient
 Rome 1680,1680,Rome,,ITALIAN,,Vitale Giordano da Bitonto,"EVCLIDE
 RESTITVTO
 OVVERO
@@ -3222,7 +3222,7 @@ dal suo antico Autore.",secondary,Vitale Giordano da Bitonto,Angelo Bernabò,,,"
 M. DC. LXXX.
 Con Licenza de' Superiori.",,,,,,https://www.google.com/books/edition/Euclide_restituto_ouero_Gli_antichi_elem/0ZcD53GpCKoC,https://i.imgur.com/3s04P1Y.png,,,"IN ROME, For Angelo Bernabò.
 M. DC. LXXX.
-With License of the Superiors.",True,typographic,4,none,copperplate,True,"roman, majuscule roman",,
+With License of the Superiors.",True,typographic,8,none,copperplate,True,"roman, majuscule roman",,,
 The Hague 1683,1683,The Hague,,FRENCH,,Antoine Arnauld,"NOUVEAUX ELEMENS
 DE
 GEOMETRIE,
@@ -3245,7 +3245,7 @@ Where there is an entirely new Treatise on Proportions, & many other considerabl
 De nouvelles mesures des Angles, dont on ne s’étoit point encore avisé :
 Et de nouvelles manières de trouver & de démontrer la proportion des Lignes.",,"Où il y a un Traité tout nouveau des Proportions, & beaucoup d’autres changements considérables.",,secondary,Antoine Arnauld,Henry van Bulderen,,,"A LA HAYE,
 Chez Henry van Bulderen, Marchand Libraire, dans le Pooten.",,,,,,https://www.google.com/books/edition/Nouveaux_elemens_de_geometrie_contenant/NUFK3UiXrZwC,https://i.imgur.com/MxPeygK.png,,,"AT THE HAGUE,
-At Henry van Bulderen, Bookseller, in the Pooten.",False,typographic,3,none,none,True,"roman, majuscule roman, italics",,
+At Henry van Bulderen, Bookseller, in the Pooten.",False,typographic,6,none,none,True,"roman, majuscule roman, italics",,,
 Paris 1685,1685,Paris,,FRENCH,,Bernard Lamy,"LES
 ELEMENS
 DE
@@ -3284,7 +3284,7 @@ AVEC PRIVILEGE DU ROY.",,,,,,https://www.google.com/books/edition/Les_%C3%A9l%C3
 At ANDRE PRALARD's, St. Jacques Street,
 at the Occasion.
 M. DC. LXXXV.
-WITH THE KING'S PRIVILEGE.",False,typographic,4,none,none,True,"roman, majuscule roman, italics",,,ancient
+WITH THE KING'S PRIVILEGE.",False,typographic,6,none,none,True,"roman, majuscule roman, italics",,,ancient
 Paris 1689,1689,Paris,,FRENCH,,Jean Prestet,"[Vol. 1] NOUVEAUX ELEMENS
 DES
 MATHEMATIQUES
@@ -3369,7 +3369,7 @@ At ANDRE PRALARD, Saint Jacques street,
 at the Occasion.
 M. DC. LXXXIX.
 (1689)
-WITH THE KING'S PRIVILEGE.",True,typographic,4,none,woodcut,True,"roman, majuscule roman",,
+WITH THE KING'S PRIVILEGE.",True,typographic,8,none,woodcut,True,"roman, majuscule roman",,,
 Venice 1491,1491,Venice,,LATIN,,,?,"[Part 1]: These are the works of Boethius: which are contained in this volume.
 [Part 2]: Here begins the table on the books of Boethius on the consolation of philosophy according to the order of the alphabet.",,,,,,,,,"Boetii, Boetij",,,,,,,,,,,,,,,,mia,,,,,secondary,,Joannem et Gregorium de gregorijs,Giovanni and Gregorio De Gregori,"[Part 1] Uenetijs Impressum Boetij opus per Joannem et Gregorium de gregorijs fratres foelici exitu ad finem vsque perductum accuratissimeque emendatum Anno humane restaurationis. 1492. die.
 18. Augusti. Augustino Barbadico Serenissimo Uenetiarum principe Rem pu. tenente.
@@ -3405,11 +3405,11 @@ studies at Paris. Enhanced by the Academy
 with the exposition of the Astronomical Ring
 by Jacques Lefèvre,
 and the Geometry of
-Euclid of Megara.",TEXtus De Sphera Iohannis de Sacro bosco,,,,,Euclidis,Megarensis,,Boni Latensis,,,,,"adiecta, edito, illustratus",,,,,studentium Philosophice Parisiensis,,,,"",,mia,Cum additione (quantum necessarium est) adiecta: Nouo commentario nuper edito Ad vtilitatem studentium Philosophice Parisiensis,,Compositione Anuli Astronomici Boni Latensis,Geometria Euclidis Megarensis,secondary,Johannes de Sacrobosco,,,"Impressum Parisii in pago diui Jacobi ad insigne sancti Georgii Anno christi siderum conditoris 1500 prima septembris Per impressorem vvolgangum hopylium Cui hec sententia semper firma mente sedet: Non viribus aut velocitatibus aut celeritate corporum res magne geruntur: sed Consilio, Sententia, et auctoritate.",,,Folio,Geometria (extract),,,https://gallica.bnf.fr/ark:/12148/bpt6k87102661?rk=21459;2,https://i.imgur.com/ZVhRfnb.jpeg,,,,False,standard,1,woodcut,woodcut,True,roman,,,contemporary
+Euclid of Megara.",TEXtus De Sphera Iohannis de Sacro bosco,,,,,Euclidis,Megarensis,,Boni Latensis,,,,,"adiecta, edito, illustratus",,,,,studentium Philosophice Parisiensis,,,,,,mia,Cum additione (quantum necessarium est) adiecta: Nouo commentario nuper edito Ad vtilitatem studentium Philosophice Parisiensis,,Compositione Anuli Astronomici Boni Latensis,Geometria Euclidis Megarensis,secondary,Johannes de Sacrobosco,,,"Impressum Parisii in pago diui Jacobi ad insigne sancti Georgii Anno christi siderum conditoris 1500 prima septembris Per impressorem vvolgangum hopylium Cui hec sententia semper firma mente sedet: Non viribus aut velocitatibus aut celeritate corporum res magne geruntur: sed Consilio, Sententia, et auctoritate.",,,Folio,Geometria (extract),,,https://gallica.bnf.fr/ark:/12148/bpt6k87102661?rk=21459;2,https://i.imgur.com/ZVhRfnb.jpeg,,,,False,standard,1,woodcut,woodcut,True,roman,,,contemporary
 Paris 1507,1507,Paris,,LATIN,,Johannes de Sacrobosco,TEXtus De Sphera Iohannis de Sacrobosco Cum additione (quan-tum necessarium est) adiecta: Nouo commentario nuper edito Ad vtil-itatem studentium Philosophice Parisiensis. Academie illustratus Cum Compositione Anuli Astronomici Boni Latensis. Et Geometria Euclidis Megarensis.,Text of the Sphere by Johannes de Sacrobosco With an addition (as much as necessary) appended: A newly published commentary For the benefit of students of Philosophy at the University of Paris. Illustrated with the Composition of the Astronomical Ring of Bonetus Latensis. And the Geometry of Euclid of Megara.,TEXtus De Sphera Iohannis de Sacrobosco,,,,,Euclidis,Megarensis,,Boni Latensis,,,,,"adiecta, illustratus",,,,,studentium Philosophice Parisiensis,,,,Geometria Euclidis Megarensis,,mia,TEXtus De Sphera Iohannis de Sacrobosco Cum additione (quan-tum necessarium est) adiecta: Nouo commentario nuper edito Ad vtil-itatem studentium Philosophice Parisiensis,,Compositione Anuli Astronomici Boni Latensis,Geometria Euclidis Megarensis,secondary,Johannes de Sacrobosco,Henrici Stephani,Henri Estienne,Impressum Parisij in oicina Henrici stephani e regione Sc-hole decretorum sita. Anno Christi siderum conditoris 1507. Decimo die Nouembris.,,,Folio,Geometria,,,https://www.google.com/books/edition/Textus_de_Sphera_Joannis_de_Sacrobosco_C/QUId66p1OPkC,https://i.imgur.com/Vm5XuIj.png,,,,False,standard,2,woodcut,woodcut,False,"roman, blackletter",,,contemporary
 Paris 1511,1511,Paris,,LATIN,,Johannes de Sacrobosco,"TEXtus De Sphera Johannis de Sacrobosco Cum additione (quan-
 tum necessarium est) adiecta: Nouo commentario nuper edito Ad vtil-itatem studentium Philosophice Parisiensis. Academie illustratus cum Compositione Anuli Astronomici Boni Latensis. Et Geometria Euclidis Megarensis.",Text of the Sphere by Johannes de Sacrobosco With an addition (as much as necessary) appended: A new commentary recently published For the benefit of students of Philosophy at the University of Paris. Illustrated with the Composition of the Astronomical Ring by Bonis of Lates. And the Geometry of Euclid of Megara.,TEXtus De Sphera Johannis de Sacrobosco,,,,,Euclidis,Megarensis,,Boni Latensis,,,,,"adiecta, illustratus",,,,,studentium Philosophice Parisiensis,,,,Geometria Euclidis Megarensis,,mia,"Cum additione (quan-
-tum necessarium est) adiecta: Nouo commentario nuper edito Ad vtil-itatem studentium Philosophice Parisiensis",,Compositione Anuli Astronomici Boni Latensis,Geometria Euclidis Megarensis,secondary,Johannes de Sacrobosco,Henrici Stephani,Henri Estienne,Impressum Parisij in oicina Henrici stephani e regione Sc-hole decretorum sita. Anno Christi siderum conditoris 1511. Decimo die Nouembris.,,,Folio,Geometria,,,https://www.google.com/books/edition/Textus_De_Sphera_Johannis_de_Sacrobosco/uc5eRAGMC3kC,https://i.imgur.com/jxJU06L.png,,,,False,standard,1,woodcut,woodcut,False,blackletter,,,contemporary
+tum necessarium est) adiecta: Nouo commentario nuper edito Ad vtil-itatem studentium Philosophice Parisiensis",,Compositione Anuli Astronomici Boni Latensis,Geometria Euclidis Megarensis,secondary,Johannes de Sacrobosco,Henrici Stephani,Henri Estienne,Impressum Parisij in oicina Henrici stephani e regione Sc-hole decretorum sita. Anno Christi siderum conditoris 1511. Decimo die Nouembris.,,,Folio,Geometria,,,https://www.google.com/books/edition/Textus_De_Sphera_Johannis_de_Sacrobosco/uc5eRAGMC3kC,https://i.imgur.com/jxJU06L.png,,,,False,standard,2,woodcut,woodcut,False,blackletter,,,contemporary
 Paris 1516a,1516,Paris,,LATIN,,Johannes de Sacrobosco,Textus De Sphera Joannis de Sacrobosco. Cum additione (quan-tum necessarium est) adjecta: Nouo commentario nuper edito. Ad vtil-itatem studentium Philosophice Parisiensis. Academie illustratus cum Compositione Anuli Astronomici Boneti Latensis. Et Geometria Eu-clidis Megarensis.,The Sphere of John of Sacrobosco. With an addition (as much as necessary) appended: A newly published commentary. Illustrated for the benefit of students of Philosophy at the University of Paris. With the Composition of the Astronomical Ring of Bonetus Latensis. And the Geometry of Euclid of Megara.,Textus De Sphera Joannis de Sacrobosco,,,,,Eu-clidis,Megarensis,,Boneti Latensis,,,,,illustratus,,,,,studentium Philosophice Parisiensis,,,,Geometria Eu-clidis Megarensis,,mia,Cum additione (quan-tum necessarium est) adjecta: Nouo commentario nuper edito. Ad vtil-itatem studentium Philosophice Parisiensis,,Compositione Anuli Astronomici Boneti Latensis,Geometria Eu-clidis Megarensis,secondary,Johannes de Sacrobosco,Henrici Stephani,Henri Estienne,"Impressum Parisijs in oicina Henrici Stephani e regione
 Schole decretorum sita. Anno Christi siderum conditoris 1516. Dec-imo die Maij.",,,Folio,Geometria,,,https://www.google.com/books/edition/Textus_De_sphera_Ioannis_de_Sacrobosco_C/3ZjHsWErlIMC,https://i.imgur.com/62pgtYa.png,,,,False,standard,2,woodcut,woodcut,False,"roman, blackletter",,,contemporary
 Paris 1521,1521,Paris,,LATIN,,Johannes de Sacrobosco,"TEXTVS  DE  SPHÆRA  IOANNIS  DE  SACROBOSCO:
@@ -3426,7 +3426,7 @@ Paris 1531,1531,Paris,,LATIN,,Johannes de Sacrobosco,"TEXTVS  DE  SPHAERA  IOANN
 INTRODVCTORIA ADDITIONE (quantum necessarium est) commentarióque, ad vtilitatem studentium Philosophiæ Parisiensis Academiæ illustratus. Cum compositione Annuli astronomici Boneti Latensis: Et Geometria Euclidis Megarensis.","TEXT OF THE SPHERE BY JOHN OF SACROBOSCO:
 ILLUSTRATED WITH AN INTRODUCTORY ADDITION (as much as necessary) and commentary, for the benefit of students of Philosophy at the Parisian Academy. With the composition of the Astronomical Ring by Bonetus Latensis: And the Geometry of Euclid of Megara.",TEXTVS  DE  SPHAERA  IOANNIS  DE  SACROBOSCO,,,,,Euclidis,Megarensis,,Boneti Latensis,,,,,illustratus,,,,,studentium Philosophiæ Parisiensis,,,,Geometria Euclidis Megarensis,,mia,"INTRODVCTORIA ADDITIONE (quantum necessarium est) commentarióque, ad vtilitatem studentium Philosophiæ Parisiensis Academiæ illustratus",,compositione Annuli astronomici Boneti Latensis,Geometria Euclidis Megarensis,secondary,Johannes de Sacrobosco,Simon Colinæus,Simon de Colines,"PARISIIS, EX AEDIBVS SIMONIS COLINAEI, Anno à
 Christo nato, tricesimoprimo supra sesquimillesimum, pridie Nonas Februarij.",PARISIIS Vænit apud Simonem Colinæum. 1531,,Folio,Geometria,,,https://www.google.com/books/edition/Textvs_De_Sphaera_Ioannis_De_Sacrobosco/xEVbAAAAcAAJ,https://i.imgur.com/rqpgmdy.png,,,"PARIS
-Published by Simon de Colines. 1531",False,standard,2,woodcut,woodcut,False,"roman, majuscule roman",,,contemporary
+Published by Simon de Colines. 1531",False,standard,4,woodcut,woodcut,False,"roman, majuscule roman",,,contemporary
 Paris 1534,1534,Paris,,LATIN,,Johannes de Sacrobosco,"TEXTVS  DE  SPHAERA  IOANNIS  DE  SACROBOSCO:
 INTRODVCTORIA ADDITIONE (QVANtum necessarium est) commentarióque, ad vtilitatem studentium Philosophiæ Parisiensis Academiæ illustratus. Cum compositione Annuli astronomici Boneti Latensis: Et Geometria Euclidis Megarensis.","TEXT OF THE SPHERE BY JOHN OF SACROBOSCO:
 ILLUSTRATED WITH AN INTRODUCTORY ADDITION (As much as necessary) and commentary, for the benefit of students of Philosophy at the University of Paris. With the composition of the Astronomical Ring by Bonetus of Latis: And the Geometry of Euclid of Megara.",TEXTVS  DE  SPHAERA  IOANNIS  DE  SACROBOSCO,,,,,Euclidis,Megarensis,,Boneti Latensis,,,,,illustratus,,,,,studentium Philosophiæ Parisiensis,,,,Geometria Euclidis Megarensis,,mia,"INTRODVCTORIA ADDITIONE (QVANtum necessarium est) commentarióque, ad vtilitatem studentium Philosophiæ Parisiensis Academiæ illustratus",,compositione Annuli astronomici Boneti Latensis,Geometria Euclidis Megarensis,secondary,Johannes de Sacrobosco,Simon Colinæus,Simon de Colines,"PARISIIS, EX AEDIBVS SIMONIS COLINAEI, Anno à
@@ -3437,13 +3437,13 @@ INTRODVCTORIA ADditione (quantum necessarium est) commen-tarióque, ad vtilitate
 ILLUSTRATED WITH AN INTRODUCTORY ADDITION (as much as necessary) and commentary, for the benefit of students of Philosophy at the University of Paris. With the composition of the astronomical ring by Bonetus of Lattes: And the Geometry of Euclid of Megara.",TEXTVS  DE  SPHAERA  IOANNIS  DE  SACROBOSCO,,,,,Euclidis,Megarensis,,Boneti Latensis,,,,,illustratus,,,,,studentium Philosophiæ Parisiensis,,,,Geometria Euclidis Megarensis,,mia,"INTRODVCTORIA ADditione (quantum necessarium est) commen-tarióque, ad vtilitatem studentium Philosophiæ Parisiensis Academiæ illustratus",,compositione Annuli astronomici Boneti Latensis,Geometria Euclidis Megarensis,secondary,Johannes de Sacrobosco,Simon Colinæus,Simon de Colines,"PARISIIS, EX AEDIBVS SIMONIS COLInæi, Anno
 à Christo nato, tricesimooctauo supra sesquimillesimum, tertio Idus Martias.",PARISIIS Vænit apud Simonem Colinæum. 1538,,Folio,Geometria,,,https://www.google.com/books/edition/Textus_de_Sphaera_Ioannis_de_SacroBosco/qOrWa5NQZvAC,https://i.imgur.com/BpiuQMt.png,,,"PARIS
 Published by Simon de Colines.
-1538",False,standard,2,none,woodcut,False,"roman, majuscule roman",,,contemporary
+1538",False,standard,3,none,woodcut,False,"roman, majuscule roman",,,contemporary
 Basel 1546a,1546,Basel,,DUTCH,LATIN,,"ANITII MANLII SEVERINI BOETHI IN OMNIBVS PHILO-
-SOPHIAE PARTIBVS INTER LAtinos & Græcos autores principis OPERA, quæ extant, omnia, non solum liberalium disciplinarum, sed maiorum facultatum studiosis etiam utilissima. sine quibus Aristoteles in præcipuis locis intellegi non potest. Quare summi uiri rectè censebant, uerè studiosum non esse in cuius bibliotheca hic autor non erat. Porrò, infinitis locis non aliquot uoces, sed longas periodos quæ in prioribus æditionibus desiderabantur, emendauimus, adiuti praesidio uetustissimorum manuscriptorum exemplarium, & auxilio doctissimorum uirorum: Inter quos in omni literarum genere summus uir HENRICHVS LORITVS GLAREANVS Arithmeticam & Musicam demonstrationibus & figuris auctiorem redditam suo pristino nitori restituit, cui exemplar aureum uenerandæque uetustatis fuit ex monasterio S. Georgij. Et MARTIANVS ROTA opus de tota differendi ratione, hoc est, organum, Dialecticæ & Rhetoricæ studiosis necessarium, illustrauit. Et huius autoris uitam certis coniecturis, cum ex alijs, tum ex Boëthi monumentis collectam, bona fide descripsit.","THE WORKS OF ANICIUS MANLIUS SEVERINUS BOETHIUS, THE FOREMOST AUTHOR IN ALL PARTS OF PHILOSOPHY AMONG LATIN AND GREEK AUTHORS, which are extant, all of them, not only most useful to students of the liberal disciplines, but also to those of the higher faculties. Without which, Aristotle cannot be understood in the principal places. Therefore, the greatest men rightly judged that one was not truly a student in whose library this author was not present. Furthermore, in countless places, we have corrected not just some words, but long periods that were missing in previous editions, aided by the support of the oldest manuscript copies, and the assistance of the most learned men: Among whom, in every kind of literature, the greatest man HENRICHUS LORITUS GLAREANUS restored Arithmetic and Music, made more complete with demonstrations and figures, to their former splendor, for which an exemplar of golden and venerable antiquity was from the monastery of St. George. And MARTIANUS ROTA illustrated the work on the entire method of differentiating, that is, the organ, necessary for students of Dialectic and Rhetoric. And he faithfully described the life of this author, collected with certain conjectures, both from others and from Boethius's own monuments.",,,,,,,,,"Aristoteles, HENRICHVS LORITVS GLAREANVS, MARTIANVS ROTA",,,"Porrò, infinitis locis non aliquot uoces, sed longas periodos quæ in prioribus æditionibus desiderabantur, emendauimus, adiuti praesidio uetustissimorum manuscriptorum exemplarium, & auxilio doctissimorum uirorum",,"emendauimus, redditam, illustrauit, descripsit",LATINOS & Græcos,,,uerè studiosum non esse in cuius bibliotheca hic autor non erat,"non solum liberalium disciplinarum, sed maiorum facultatum studiosis etiam utilissima",,,,,,ai,,,,,secondary,,Henrichum Petrum,Henrichum Petrum,BASILEAE PER HENRICHVM PETRVM MENSE MARTIO. ANNO M. D. XLVI.,BASILEAE APVD HENRICHVM PETRVM.,,Folio,Geometria,,,https://www.google.com/books/edition/Anitii_Manlii_Severini_Boethi_in_omnibvs/DaBBAAAAcAAJ,https://i.imgur.com/5m3QPfz.png,,,BASLE WITH HENRY PETER.,False,typographic,3,none,woodcut,True,"roman, majuscule roman",,,"contemporary, ancient"
+SOPHIAE PARTIBVS INTER LAtinos & Græcos autores principis OPERA, quæ extant, omnia, non solum liberalium disciplinarum, sed maiorum facultatum studiosis etiam utilissima. sine quibus Aristoteles in præcipuis locis intellegi non potest. Quare summi uiri rectè censebant, uerè studiosum non esse in cuius bibliotheca hic autor non erat. Porrò, infinitis locis non aliquot uoces, sed longas periodos quæ in prioribus æditionibus desiderabantur, emendauimus, adiuti praesidio uetustissimorum manuscriptorum exemplarium, & auxilio doctissimorum uirorum: Inter quos in omni literarum genere summus uir HENRICHVS LORITVS GLAREANVS Arithmeticam & Musicam demonstrationibus & figuris auctiorem redditam suo pristino nitori restituit, cui exemplar aureum uenerandæque uetustatis fuit ex monasterio S. Georgij. Et MARTIANVS ROTA opus de tota differendi ratione, hoc est, organum, Dialecticæ & Rhetoricæ studiosis necessarium, illustrauit. Et huius autoris uitam certis coniecturis, cum ex alijs, tum ex Boëthi monumentis collectam, bona fide descripsit.","THE WORKS OF ANICIUS MANLIUS SEVERINUS BOETHIUS, THE FOREMOST AUTHOR IN ALL PARTS OF PHILOSOPHY AMONG LATIN AND GREEK AUTHORS, which are extant, all of them, not only most useful to students of the liberal disciplines, but also to those of the higher faculties. Without which, Aristotle cannot be understood in the principal places. Therefore, the greatest men rightly judged that one was not truly a student in whose library this author was not present. Furthermore, in countless places, we have corrected not just some words, but long periods that were missing in previous editions, aided by the support of the oldest manuscript copies, and the assistance of the most learned men: Among whom, in every kind of literature, the greatest man HENRICHUS LORITUS GLAREANUS restored Arithmetic and Music, made more complete with demonstrations and figures, to their former splendor, for which an exemplar of golden and venerable antiquity was from the monastery of St. George. And MARTIANUS ROTA illustrated the work on the entire method of differentiating, that is, the organ, necessary for students of Dialectic and Rhetoric. And he faithfully described the life of this author, collected with certain conjectures, both from others and from Boethius's own monuments.",,,,,,,,,"Aristoteles, HENRICHVS LORITVS GLAREANVS, MARTIANVS ROTA",,,"Porrò, infinitis locis non aliquot uoces, sed longas periodos quæ in prioribus æditionibus desiderabantur, emendauimus, adiuti praesidio uetustissimorum manuscriptorum exemplarium, & auxilio doctissimorum uirorum",,"emendauimus, redditam, illustrauit, descripsit",LATINOS & Græcos,,,uerè studiosum non esse in cuius bibliotheca hic autor non erat,"non solum liberalium disciplinarum, sed maiorum facultatum studiosis etiam utilissima",,,,,,ai,,,,,secondary,,Henrichum Petrum,Henrichum Petrum,BASILEAE PER HENRICHVM PETRVM MENSE MARTIO. ANNO M. D. XLVI.,BASILEAE APVD HENRICHVM PETRVM.,,Folio,Geometria,,,https://www.google.com/books/edition/Anitii_Manlii_Severini_Boethi_in_omnibvs/DaBBAAAAcAAJ,https://i.imgur.com/5m3QPfz.png,,,BASLE WITH HENRY PETER.,False,typographic,6,none,woodcut,True,"roman, majuscule roman",,,"contemporary, ancient"
 Strasbourg 1572,1572,Strasbourg,,LATIN,,Conrad Dasypodius,"SPHAERICAE DOCTRINÆ PROPOSITIONES GRÆCÆ ET
 LATInæ: nunc primùm per M. Cunradum Dasypodium in lucem editæ. quorum authores sequens indicat pagina.","PROPOSITIONS OF SPHERICAL DOCTRINE IN GREEK AND
-LATIN: now first published by M. Cunradus Dasypodius. The following page indicates their authors.",SPHAERICAE DOCTRINÆ PROPOSITIONES GRÆCÆ ET LATInæ,M. Cunradum Dasypodium,,,,,,,,,,,,editæ,"GRÆCÆ, LATInæ",,,,,,,,,,"mia (no content desc, additional content)",,,nunc primùm per M. Cunradum Dasypodium in lucem editæ,,secondary,Conrad Dasypodius,Christianus Mylius,Christian Mehl,,Cum priuilegio Cæsareæ Maiestatis ad sexennium: & Regis Galliæ ad septennium. ARGENTORATI Excudebat Christianus Mylius. M. D. LXXII.,,Octavo,Phaenomena (enunciations),,,https://www.google.com/books/edition/Sphaericae_doctrinae_propositiones_graec/w71aAAAAcAAJ,https://i.imgur.com/ubhW8Pa.png,,,With the privilege of the Imperial Majesty for six years: & of the King of France for seven years. STRASBOURG Printed by Christian Mylius. 1572.,False,typographic,3,none,woodcut,True,"roman, italics, majuscule roman",,
-Rome 1591,1591,Rome,,LATIN,,Guiseppe Auria,"EVCLIDIS PHAENOMENA Post Zamberti: & Maurolyci edi-tionem, nunc tandem de VATICANA. BIBLIOTHECA deprompta. Scholijs antiquis: & figuris optimis illustrata: & de Græca lingua in Latinam conuersa. A IOSEPHO. AVRIA. NEAPOLITANO His ad-ditæ sunt Maurolyci breues aliquot annotationes. AD. ILLVSTRISS. ET. REVERENDISS. D.M. ANTONIVM. COLVMNAM. S.R.E. CARD. EPISCOPVM. PRAENESTINVM ET. BIBLIOTHE-CARIVM. APOSTOL.","EUCLID'S PHENOMENA After Zamberti: & Maurolycus edition, now finally from the VATICAN. LIBRARY retrieved. With ancient scholia: & best illustrations: & translated from the Greek language into Latin. BY JOSEPH. AURIA. OF NAPLES To these are added some brief annotations by Maurolycus. TO. THE MOST ILLUSTRIOUS. AND. MOST REVEREND. LORD ANTONIUS. COLUMNA. S.R.E. CARDINAL. BISHOP. OF PRAENESTE AND. APOSTOLIC. LIBRARIAN.",EVCLIDIS PHAENOMENA,A IOSEPHO. AVRIA. NEAPOLITANO,,,,EVCLIDIS,,,"Zamberti, Maurolyci",AD. ILLVSTRISS. ET. REVERENDISS. D.M. ANTONIVM. COLVMNAM. S.R.E. CARD. EPISCOPVM. PRAENESTINVM ET. BIBLIOTHE-CARIVM. APOSTOL.,,"Post Zamberti: & Maurolyci edi-tionem, nunc tandem de VATICANA. BIBLIOTHECA deprompta. Scholijs antiquis: & figuris optimis illustrata: & de Græca lingua in Latinam conuersa. A IOSEPHO. AVRIA. NEAPOLITANO His ad-ditæ sunt Maurolyci breues aliquot annotationes.",,"illustrata, conuersa",de Græca lingua in Latinam conuersa,,,,,,,,,,ai,"Post Zamberti: & Maurolyci edi-tionem, nunc tandem de VATICANA. BIBLIOTHECA deprompta",Scholijs antiquis: & figuris optimis illustrata: & de Græca lingua in Latinam conuersa,A IOSEPHO. AVRIA. NEAPOLITANO His ad-ditæ sunt Maurolyci breues aliquot annotationes,,secondary,Guiseppe Auria,Ioannem Martinellum,Giovanni Martinelli,,ROMÆ. Apud Ioannem Martinellum. M. D. XCI. SVPE-RIORVM. PERMISSV,,Quarto,Phaenomena,,https://www.ustc.ac.uk/editions/828485,https://books.google.com/books?id=h8uujuoLtc4C&pg=PP5#v=onepage&q&f=false,https://i.imgur.com/rbYgWT7.png,,,ROME. At John Martinelli's. 1591. WITH PERMISSION OF THE SUPERIORS.,False,typographic,4,none,woodcut,True,"roman, majuscule roman",,,contemporary
+LATIN: now first published by M. Cunradus Dasypodius. The following page indicates their authors.",SPHAERICAE DOCTRINÆ PROPOSITIONES GRÆCÆ ET LATInæ,M. Cunradum Dasypodium,,,,,,,,,,,,editæ,"GRÆCÆ, LATInæ",,,,,,,,,,"mia (no content desc, additional content)",,,nunc primùm per M. Cunradum Dasypodium in lucem editæ,,secondary,Conrad Dasypodius,Christianus Mylius,Christian Mehl,,Cum priuilegio Cæsareæ Maiestatis ad sexennium: & Regis Galliæ ad septennium. ARGENTORATI Excudebat Christianus Mylius. M. D. LXXII.,,Octavo,Phaenomena (enunciations),,,https://www.google.com/books/edition/Sphaericae_doctrinae_propositiones_graec/w71aAAAAcAAJ,https://i.imgur.com/ubhW8Pa.png,,,With the privilege of the Imperial Majesty for six years: & of the King of France for seven years. STRASBOURG Printed by Christian Mylius. 1572.,False,typographic,5,none,woodcut,True,"roman, italics, majuscule roman",,,
+Rome 1591,1591,Rome,,LATIN,,Guiseppe Auria,"EVCLIDIS PHAENOMENA Post Zamberti: & Maurolyci edi-tionem, nunc tandem de VATICANA. BIBLIOTHECA deprompta. Scholijs antiquis: & figuris optimis illustrata: & de Græca lingua in Latinam conuersa. A IOSEPHO. AVRIA. NEAPOLITANO His ad-ditæ sunt Maurolyci breues aliquot annotationes. AD. ILLVSTRISS. ET. REVERENDISS. D.M. ANTONIVM. COLVMNAM. S.R.E. CARD. EPISCOPVM. PRAENESTINVM ET. BIBLIOTHE-CARIVM. APOSTOL.","EUCLID'S PHENOMENA After Zamberti: & Maurolycus edition, now finally from the VATICAN. LIBRARY retrieved. With ancient scholia: & best illustrations: & translated from the Greek language into Latin. BY JOSEPH. AURIA. OF NAPLES To these are added some brief annotations by Maurolycus. TO. THE MOST ILLUSTRIOUS. AND. MOST REVEREND. LORD ANTONIUS. COLUMNA. S.R.E. CARDINAL. BISHOP. OF PRAENESTE AND. APOSTOLIC. LIBRARIAN.",EVCLIDIS PHAENOMENA,A IOSEPHO. AVRIA. NEAPOLITANO,,,,EVCLIDIS,,,"Zamberti, Maurolyci",AD. ILLVSTRISS. ET. REVERENDISS. D.M. ANTONIVM. COLVMNAM. S.R.E. CARD. EPISCOPVM. PRAENESTINVM ET. BIBLIOTHE-CARIVM. APOSTOL.,,"Post Zamberti: & Maurolyci edi-tionem, nunc tandem de VATICANA. BIBLIOTHECA deprompta. Scholijs antiquis: & figuris optimis illustrata: & de Græca lingua in Latinam conuersa. A IOSEPHO. AVRIA. NEAPOLITANO His ad-ditæ sunt Maurolyci breues aliquot annotationes.",,"illustrata, conuersa",de Græca lingua in Latinam conuersa,,,,,,,,,,ai,"Post Zamberti: & Maurolyci edi-tionem, nunc tandem de VATICANA. BIBLIOTHECA deprompta",Scholijs antiquis: & figuris optimis illustrata: & de Græca lingua in Latinam conuersa,A IOSEPHO. AVRIA. NEAPOLITANO His ad-ditæ sunt Maurolyci breues aliquot annotationes,,secondary,Guiseppe Auria,Ioannem Martinellum,Giovanni Martinelli,,ROMÆ. Apud Ioannem Martinellum. M. D. XCI. SVPE-RIORVM. PERMISSV,,Quarto,Phaenomena,,https://www.ustc.ac.uk/editions/828485,https://books.google.com/books?id=h8uujuoLtc4C&pg=PP5#v=onepage&q&f=false,https://i.imgur.com/rbYgWT7.png,,,ROME. At John Martinelli's. 1591. WITH PERMISSION OF THE SUPERIORS.,False,typographic,6,none,woodcut,True,"roman, majuscule roman",,,contemporary
 Rome 1593,1593,Rome,,LATIN,,Antonio Possevino,"[Vol. 1]: ANTONII POSSEVINI SOCIETATIS IESV BIBLIO-THECA SELECTA Qua agitur DE RATIONE STVDIORVM In
 Historia, In Disciplinis, In Salute omnium procuranda.
 [Vol. 2]: ANTONII POSSEVINI SOCIETATIS IESV BIBLIO-THECAE SELECTAE Pars Secunda. QVA AGITVR DE RATIONE
@@ -3452,18 +3452,18 @@ History, In Disciplines, In the Promotion of the Welfare of All.
 [Vol. 2]: ANTONII POSSEVINI OF THE SOCIETY OF JESUS SELECT LIBRARY Second Part. IN WHICH IS DISCUSSED THE METHOD
 OF STUDIES In the Faculties, which are indicated on the following page.",,,,,,,,,,,,,,,,,,,,,,,,,ai,,,,,secondary,Antonio Possevino,Typographia Apostolica Vaticana,Typographia Apostolica Vaticana,,"[Vol. 1] Cum Diplomate CLEMENTIS VIII. PONT. MAX. ROMÆ Ex Typographia APOSTOLICA VATICANA. M. D. XCIII.
 [Vol. 2] Superiorum Permissu, Vna cum CLEMENTIS VIII. PONT. MAX. Priuilegio ad decennium. ROMÆ, Ex Typographia APOSTOLICA VATICANA. M. D. XCIII.",,Folio,Introductio harmonica; Sectio canonis,,,https://www.google.com/books/edition/Antonii_Possevini_Iudicium_De_Nuae_milit/KN4lGxsgUJgC,https://i.imgur.com/bY7ol5g.png,https://i.imgur.com/QfPQ5Ff.png,,"[Vol. 1] With the Diploma of CLEMENT VIII. SUPREME PONTIFF. ROME From the APOSTOLIC VATICAN Press. 1593.
-[Vol. 2] With the Permission of the Superiors, Together with the Privilege of CLEMENT VIII. SUPREME PONTIFF for a decade. ROME, From the APOSTOLIC VATICAN Press. 1593.",False,typographic,4,none,woodcut,True,"roman, majuscule roman, italics",,
+[Vol. 2] With the Permission of the Superiors, Together with the Privilege of CLEMENT VIII. SUPREME PONTIFF for a decade. ROME, From the APOSTOLIC VATICAN Press. 1593.",False,typographic,6,none,woodcut,True,"roman, majuscule roman, italics",,,
 Venice 1603,1603,Venice,,LATIN,,Antonio Possevino,"[Vol. 1]: ANTONII POSSEVINI Mantuani, Societatis Iesu BIBLIO-THECA SELECTA DE RATIONE STVDIORVM, Ad Disciplinas,
 & ad Salutem omnium gentium procurandam. RECOGNITA NO-VISSIME AB EODEM, ET AVCTA, & in duos Tomos distributa. TRIPLEX  ADDITVS  INDEX.  ALTER  LIBRORVM,  ALTER
 Capitum vniuscuiusq. Libri, vt vniuersa ipsorum materia statim incurrat in oculos. TERTIVS Verborum, & Rerum. Quid autem in quolibet Tomo contineatur, Vide post Epistolam Dedicatoriam AD CLEMENTEM VIII. PONT. MAX. Concessu Superiorum, Cum Priuilegijs.
 [Vol. 2]: ANTONII POSSEVINI SOCIETATIS IESV BIBLIO-THECAE SELECTÆ DE RATIONE STVDIORVM In Facultatibus,
 quæ in pagina sequenti indicantur. TOMVS SECVNDVS.","[Vol. 1]: ANTONII POSSEVINI of Mantua, Society of Jesus SELECT LIBRARY ON THE METHOD OF STUDIES, For the Disciplines, & for the Salvation of all nations to be procured. RECENTLY REVIEWED BY THE SAME, AND ENLARGED, & distributed into two Volumes. A TRIPLE INDEX ADDED. ONE OF BOOKS, ANOTHER Of the Chapters of each Book, so that the entire content of them immediately catches the eye. THE THIRD Of Words, & Things. What is contained in each Volume, See after the Dedicatory Letter TO CLEMENT VIII. PONT. MAX. With the Permission of the Superiors, With Privileges.
-[Vol. 2]: ANTONII POSSEVINI OF THE SOCIETY OF JESUS SELECT LIBRARY ON THE METHOD OF STUDIES In the Faculties, which are indicated on the following page. SECOND VOLUME.",,,,,,,,,,AD CLEMENTEM VIII. PONT. MAX.,,"RECOGNITA NO-VISSIME AB EODEM, ET AVCTA, & in duos Tomos distributa.","Concessu Superiorum, Cum Priuilegijs.",,,,,,ad Salutem omnium gentium procurandam.,,,,,,ai,,,,,secondary,Antonio Possevino,Altobello Salicato,Altobello Salicato,,"[both volumes] VENETIIS, M DC III. Apud Altobellum Sali-catium.",,Folio,Introductio harmonica; Sectio canonis,,,https://www.google.com/books/edition/Antonii_Posseuini_Mantuani_societatis_Ie/VaQWEWVlgHYC,https://i.imgur.com/RAljP4w.png,,,"[both volumes] VENICE, 1603. At Altobellus Sali-catius.",True,typographic,4,none,woodcut,True,"roman, majuscule roman, italics",,
+[Vol. 2]: ANTONII POSSEVINI OF THE SOCIETY OF JESUS SELECT LIBRARY ON THE METHOD OF STUDIES In the Faculties, which are indicated on the following page. SECOND VOLUME.",,,,,,,,,,AD CLEMENTEM VIII. PONT. MAX.,,"RECOGNITA NO-VISSIME AB EODEM, ET AVCTA, & in duos Tomos distributa.","Concessu Superiorum, Cum Priuilegijs.",,,,,,ad Salutem omnium gentium procurandam.,,,,,,ai,,,,,secondary,Antonio Possevino,Altobello Salicato,Altobello Salicato,,"[both volumes] VENETIIS, M DC III. Apud Altobellum Sali-catium.",,Folio,Introductio harmonica; Sectio canonis,,,https://www.google.com/books/edition/Antonii_Posseuini_Mantuani_societatis_Ie/VaQWEWVlgHYC,https://i.imgur.com/RAljP4w.png,,,"[both volumes] VENICE, 1603. At Altobellus Sali-catius.",True,typographic,8,none,woodcut,True,"roman, majuscule roman, italics",,,
 Basel 1570,1570,Basel,,DUTCH,LATIN,,"ANITII MANLII SEVERINI BOETHI, PHILOSOPHORVM
 ET THEOLOGORVM PRINCIPIS OPERA omnia, quorum alia antè impressa, nunc denuò per doctos uiros recognita: alia, quæ hactenus latuerunt, nunc primùm emendatiss. in lucem prodeunt. In quibus præter uniuersæ philosophiæ exactissimam doctrinam, pluri-morum in diuinis mysteriorum, & diiciliorum locorum in Platone, Aristotele alijsque Græcis & Latinis autoribus luculentissimæ expli-cationes reperiuntur. PRAETEREA IAM ACCESSERVNT, Ioannis Murmelij in v. Lib. De Consolatione Philosophiæ commentaria. Et in eosdem Rodolphi Agricolæ Enarrationes. Item, Gilberti Porretæ, Episcopi Pictauiensis in IIII. Lib. de Trinitate commentarij, antè nun-quam æditi.  Præter reliquos doctiss. uiros, HENRICVS LORITVS
 GLAREANVS, Arithmeticam & Musicam demonstrationibus & figuris auctiorem redditam, suo pristino nitori restituit: Cui exemplar aureum uenerandæque uetustatis fuit ex monasterio S. Georgij. Et MAR-TIANVS ROTA, opus de tota differendi ratione, hoc est, organum, Dialecticæ & Rhetoricæ studiosis necessarium, illustrauit. Et huius autoris uitam, cùm ex alijs, tum ex Boëthi munumentis collectam, bona fide descripsit.","THE COMPLETE WORKS OF ANICIUS MANLIUS SEVERINUS BOETHIUS, PRINCE OF PHILOSOPHERS
 AND THEOLOGIANS, some of which were previously printed, now newly reviewed by learned men: others, which have remained hidden until now, are now for the first time published in a most corrected form. In which, besides the most exact doctrine of universal philosophy, the most splendid explanations of many divine mysteries, and the more difficult passages in Plato, Aristotle, and other Greek and Latin authors are found. FURTHERMORE, THERE HAVE NOW BEEN ADDED, the commentaries of Johannes Murmelius on the five books of The Consolation of Philosophy. And the Explanations on the same by Rodolphus Agricola. Also, the commentaries of Gilbert Porreta, Bishop of Poitiers, on the four books on the Trinity, never before published. Besides other most learned men, HENRICUS LORITUS
-GLAREANUS, has restored Arithmetic and Music, made more complete with demonstrations and figures, to their former splendor: For whom a golden example of venerable antiquity was from the monastery of St. George. And MARTIANUS ROTA, has illustrated the work on the entire method of differentiating, that is, the organ, necessary for students of Dialectics and Rhetoric. And he has faithfully described the life of this author, collected from both other sources and Boethius's own monuments.",,,,,,,,,"Platone, Aristotele, Ioannis Murmelij, Rodolphi Agricolæ, Gilberti Porretæ, HENRICVS LORITVS GLAREANVS, MAR-TIANVS ROTA",,,"alia antè impressa, nunc denuò per doctos uiros recognita: alia, quæ hactenus latuerunt, nunc primùm emendatiss. in lucem prodeunt.",,"recognita, prodeunt, illustrauit, descripsit","in Platone, Aristotele alijsque Græcis & Latinis autoribus",,,,Dialecticæ & Rhetoricæ studiosis,,,,,,ai,,,,,secondary,,Henricpetra,Henricpetra,"BASILEAE, EX OFFICINA HENRICPETRINA, MENSE MARTIO, ANNO M D LXX.","Cum Cæs. Maiest. Gratia & Priuilegio. BASILEAE, EX OFFICINA HENRICPETRINA.",,Folio,Geometria,,,https://www.google.com/books/edition/Anitii_Manlii_Severini_Boethi_Philosopho/BKRoAAAAcAAJ,https://i.imgur.com/fhLGoxB.png,,,"With the Grace & Privilege of the Imperial Majesty. BASEL, FROM THE HENRICPETRINA PRESS.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,,"contemporary, ancient"
+GLAREANUS, has restored Arithmetic and Music, made more complete with demonstrations and figures, to their former splendor: For whom a golden example of venerable antiquity was from the monastery of St. George. And MARTIANUS ROTA, has illustrated the work on the entire method of differentiating, that is, the organ, necessary for students of Dialectics and Rhetoric. And he has faithfully described the life of this author, collected from both other sources and Boethius's own monuments.",,,,,,,,,"Platone, Aristotele, Ioannis Murmelij, Rodolphi Agricolæ, Gilberti Porretæ, HENRICVS LORITVS GLAREANVS, MAR-TIANVS ROTA",,,"alia antè impressa, nunc denuò per doctos uiros recognita: alia, quæ hactenus latuerunt, nunc primùm emendatiss. in lucem prodeunt.",,"recognita, prodeunt, illustrauit, descripsit","in Platone, Aristotele alijsque Græcis & Latinis autoribus",,,,Dialecticæ & Rhetoricæ studiosis,,,,,,ai,,,,,secondary,,Henricpetra,Henricpetra,"BASILEAE, EX OFFICINA HENRICPETRINA, MENSE MARTIO, ANNO M D LXX.","Cum Cæs. Maiest. Gratia & Priuilegio. BASILEAE, EX OFFICINA HENRICPETRINA.",,Folio,Geometria,,,https://www.google.com/books/edition/Anitii_Manlii_Severini_Boethi_Philosopho/BKRoAAAAcAAJ,https://i.imgur.com/fhLGoxB.png,,,"With the Grace & Privilege of the Imperial Majesty. BASEL, FROM THE HENRICPETRINA PRESS.",False,typographic,6,none,woodcut,True,"roman, majuscule roman",,,"contemporary, ancient"
 Cologne 1607a,1607,Cologne,,LATIN,,Antonio Possevino,"[Vol. 1]: ANTONII POSSEVINI MANTVANI SOCIETATIS IESV BIBLIOTHECA SELECTA DE RATIONE STVDIORVM, Ad Dis-
 ciplinas, & ad Salutem omnium gentium procurandam. RECOGNITA NOVISSIME AB EODEM, ET AVCTA, & in duos Tomos distributa. TRIPLEX ADDITVS INDEX. ALTER Librorum, ALTER Capitum,
 TERTIVS Verborum, et Rerum. Quid autem in quolibet Tomo contineatur, Vide post Epist. Dedicatoriam. PERMISSV AVCTORIS NVNC PRIMVM IN GERMANIA EDITA
@@ -3473,9 +3473,9 @@ quæ in pagina sequenti indicantur, TOMVS SECVNDVS.","[Vol. 1]: ANTONII POSSEVIN
 Maies
 [Vol. 2] COLONIAE AGRIPPINAE, Apud Ioannem Gymnicum sub Monocerote. ANNO M. DC. VII. Cum gratia & Priuileg. S. Cæs. Maiest.",,Folio,Introductio harmonica; Sectio canonis,,,https://www.google.com/books/edition/Antonii_Possevini_Mantvani_Societatis_Ie/yqWtNTuCDvgC,https://i.imgur.com/dSNzUxh.png,,,"[Vol. 1] COLOGNE At John Gymnic under the Unicorn. 1607. With the grace and privilege of the Holy Roman
 Majesty
-[Vol. 2] COLOGNE, At John Gymnic under the Unicorn. YEAR 1607. With the grace & Privilege of the Holy Roman Majesty.",False,standard,3,woodcut,woodcut,True,"roman, majuscule roman",,
-Leipzig 1607,1607,Leipzig,,LATIN,,Christoph Meurer,"EVCLIDIS OPTICA & CATOPTRICA, Cum Programmate CHRISTOPHORI MEURERI D. Mathematum Professoris.","EUCLID'S OPTICS & CATOPTRICS, With the Program of CHRISTOPHORUS MEURER, D. Professor of Mathematics.",EVCLIDIS OPTICA & CATOPTRICA,CHRISTOPHORI MEURERI,,D. Mathematum Professoris,,,,,,,,,,,,,,,,,,,,,ai,,,Cum Programmate CHRISTOPHORI MEURERI D. Mathematum Professoris,,secondary,Christoph Meurerus,Abraham Lamberg,Abraham Lamberg,,"LIPSIAE, Excudebat Abraham Lamberg, An. 1607.",,Octavo,Optica; Catoptrica (enunciations),no copies according to EiP,-,,,,,"LIPSIAE, Printed by Abraham Lamberg, An. 1607.",,,,,,,,,
-Rome 1609,1609,Rome,,LATIN,,Guiseppe Auria,"EVCLIDIS PHAENOMENA Post Zamberti, & Maurolyci edi-tionem, nunc tandem de VATICANA BIBLIOTHECA deprompta: Scholijs antiquis, & figuris optimis illustrata: & de Græca lingua in Latinam conuersa. A IOSEPHO AVRIA NEAPOLITANO His addita sunt Maurolyci breues aliquot annotationes. AD SERENISSIMVM FRANCISCVM MARIAM VRBINI DVCEM VI. &c.","EUCLID'S PHENOMENA After the edition of Zamberti & Maurolycus, now finally drawn from the VATICAN LIBRARY: Illustrated with ancient scholia & excellent figures: and translated from the Greek language into Latin. BY JOSEPH AURIA OF NAPLES To these are added some brief annotations by Maurolycus. TO THE MOST SERENE FRANCIS MARY, DUKE OF URBINO VI. &c.",EVCLIDIS PHAENOMENA,A IOSEPHO AVRIA NEAPOLITANO,,,,EVCLIDIS,,,"Zamberti, Maurolyci",AD SERENISSIMVM FRANCISCVM MARIAM VRBINI DVCEM VI. &c.,,"Post Zamberti, & Maurolyci edi-tionem, nunc tandem de VATICANA BIBLIOTHECA deprompta: Scholijs antiquis, & figuris optimis illustrata: & de Græca lingua in Latinam conuersa.",,"illustrata, conuersa",de Græca lingua in Latinam conuersa,,,,,,,,,,ai,,,His addita sunt Maurolyci breues aliquot annotationes,,secondary,Guiseppe Auria,Ioannis Martinelli,Giovanni Martinelli,,"ROMAE, Sumptibus Ioannis Martinelli. Apud Iacobum Mascardum. M. DC. IX. SVPERIORVM PERMISSV.",,Quarto,Phaenomena,,-,https://www.google.com/books/edition/Euclidis_Phaenomena_post_Zamberti_Maurol/WX-ohGuA9lcC,https://i.imgur.com/T1QkdF2.png,,,"IN ROME, At the expense of Ioannis Martinelli. At Iacobus Mascardus. 1609. WITH PERMISSION OF THE SUPERIORS.",False,typographic,4,none,woodcut,True,"roman, majuscule roman, italics",,,contemporary
+[Vol. 2] COLOGNE, At John Gymnic under the Unicorn. YEAR 1607. With the grace & Privilege of the Holy Roman Majesty.",False,standard,5,woodcut,woodcut,True,"roman, majuscule roman",,,
+Leipzig 1607,1607,Leipzig,,LATIN,,Christoph Meurer,"EVCLIDIS OPTICA & CATOPTRICA, Cum Programmate CHRISTOPHORI MEURERI D. Mathematum Professoris.","EUCLID'S OPTICS & CATOPTRICS, With the Program of CHRISTOPHORUS MEURER, D. Professor of Mathematics.",EVCLIDIS OPTICA & CATOPTRICA,CHRISTOPHORI MEURERI,,D. Mathematum Professoris,,,,,,,,,,,,,,,,,,,,,ai,,,Cum Programmate CHRISTOPHORI MEURERI D. Mathematum Professoris,,secondary,Christoph Meurerus,Abraham Lamberg,Abraham Lamberg,,"LIPSIAE, Excudebat Abraham Lamberg, An. 1607.",,Octavo,Optica; Catoptrica (enunciations),no copies according to EiP,-,,,,,"LIPSIAE, Printed by Abraham Lamberg, An. 1607.",,,,,,,,,,
+Rome 1609,1609,Rome,,LATIN,,Guiseppe Auria,"EVCLIDIS PHAENOMENA Post Zamberti, & Maurolyci edi-tionem, nunc tandem de VATICANA BIBLIOTHECA deprompta: Scholijs antiquis, & figuris optimis illustrata: & de Græca lingua in Latinam conuersa. A IOSEPHO AVRIA NEAPOLITANO His addita sunt Maurolyci breues aliquot annotationes. AD SERENISSIMVM FRANCISCVM MARIAM VRBINI DVCEM VI. &c.","EUCLID'S PHENOMENA After the edition of Zamberti & Maurolycus, now finally drawn from the VATICAN LIBRARY: Illustrated with ancient scholia & excellent figures: and translated from the Greek language into Latin. BY JOSEPH AURIA OF NAPLES To these are added some brief annotations by Maurolycus. TO THE MOST SERENE FRANCIS MARY, DUKE OF URBINO VI. &c.",EVCLIDIS PHAENOMENA,A IOSEPHO AVRIA NEAPOLITANO,,,,EVCLIDIS,,,"Zamberti, Maurolyci",AD SERENISSIMVM FRANCISCVM MARIAM VRBINI DVCEM VI. &c.,,"Post Zamberti, & Maurolyci edi-tionem, nunc tandem de VATICANA BIBLIOTHECA deprompta: Scholijs antiquis, & figuris optimis illustrata: & de Græca lingua in Latinam conuersa.",,"illustrata, conuersa",de Græca lingua in Latinam conuersa,,,,,,,,,,ai,,,His addita sunt Maurolyci breues aliquot annotationes,,secondary,Guiseppe Auria,Ioannis Martinelli,Giovanni Martinelli,,"ROMAE, Sumptibus Ioannis Martinelli. Apud Iacobum Mascardum. M. DC. IX. SVPERIORVM PERMISSV.",,Quarto,Phaenomena,,-,https://www.google.com/books/edition/Euclidis_Phaenomena_post_Zamberti_Maurol/WX-ohGuA9lcC,https://i.imgur.com/T1QkdF2.png,,,"IN ROME, At the expense of Ioannis Martinelli. At Iacobus Mascardus. 1609. WITH PERMISSION OF THE SUPERIORS.",False,typographic,6,none,woodcut,True,"roman, majuscule roman, italics",,,contemporary
 Arnhem 1620,1620,Arnhem,,LATIN,,Juan Alfonso of Molina,"NOVA REPERTA
 GEOMETRICA
 IOHANNIS ALFONSI
@@ -3503,16 +3503,16 @@ GEOMETRICA",NICOLAO IANSONIO,,Arnh. Geldro.,,Euclidea,,,,,,"Euclidea Elementa no
 Veneunt apud IOHANNEM IANSONIUM
 Typographum. Anno M. DC. XX.",,,,,,https://www.google.com/books/edition/Nova_reperta_geometrica/3t9hYk3GkSwC,https://i.imgur.com/ZOGlNOm.png,,,"ARNHEMII,
 Sold by JOHANNES JANSONIUS
-Printer. Year 1620.",False,typographic,4,none,none,False,"roman, majuscule roman, italics",,
+Printer. Year 1620.",False,typographic,7,none,none,False,"roman, majuscule roman, italics",,,
 Paris 1625,1625,Paris,,GREEK,LATIN,Claude Hardy,"ΕΥΚΛΕΙΔΟΥ ΔΕΔΟΜΕΝΑ. ΚΑΙ ΜΑΡΙΝΟΥ ΦΙΛΟΣΟΦΟΥ ΕΙΣ ΔΕΔΟΜΕΝΑ ΕΥΚΛΕΙΔΟΥ ΥΠΟΜΝΗΜΑ. EVCLIDIS
 DATA. OPVS AD VETERVM GEOMETRIÆ Autorum Archimedis, Apollonij, Pappi, Eutocij, cæterorúmque non modo lectionem, sed ad Geometricæ quoque Analyseos instaurationem planè necessar-ium, & à multis diu desideratum. CLAVDIVS HARDY SEBAST. FIL. in supremâ Parisiensi Curiâ Aduocatus, è Regis Christianissimi Bibliothecâ Græcè nunc primùm edidit, Latinè vertit, scholijsq; illus-trauit. Adiectus est ex eadem Bibliothecâ MARINI PHILOSOPHI Commentarius Græcè & Latinè, quo Dati natura, Datorúmque Eu-clideorum vtilitates explicantur.","EUCLID'S DATA. AND MARINUS THE PHILOSOPHER'S COMMENTARY ON EUCLID'S DATA. EUCLID'S
 DATA. A WORK ESSENTIAL NOT ONLY FOR THE READING OF THE ANCIENT GEOMETRY AUTHORS ARCHIMEDES, APOLLONIUS, PAPPUS, EUTOCIUS, AND OTHERS, BUT ALSO FOR THE RESTORATION OF GEOMETRIC ANALYSIS, LONG DESIRED BY MANY. CLAUDIUS HARDY, SON OF SEBASTIAN, ADVOCATE IN THE SUPREME PARISIAN COURT, HAS NOW FOR THE FIRST TIME PUBLISHED IT IN GREEK FROM THE LIBRARY OF THE MOST CHRISTIAN KING, TRANSLATED IT INTO LATIN, AND ILLUSTRATED IT WITH NOTES. APPENDED IS THE COMMENTARY OF MARINUS THE PHILOSOPHER FROM THE SAME LIBRARY IN GREEK AND LATIN, IN WHICH THE NATURE OF THE GIVEN AND THE USES OF EUCLID'S DATA ARE EXPLAINED.",ΕΥΚΛΕΙΔΟΥ ΔΕΔΟΜΕΝΑ.,CLAVDIVS HARDY SEBAST. FIL.,,"in supremâ Parisiensi Curiâ Aduocatus, è Regis Christianissimi Bibliothecâ Græcè nunc primùm edidit, Latinè vertit, scholijsq; illus-trauit.",,"ΕΥΚΛΕΙΔΟΥ, Euclideorum",,,"Archimedis, Apollonij, Pappi, Eutocij",,,,,"edidit, vertit, illus-trauit","Græcè, Latinè",,,,,,,,,,ai,,,ΚΑΙ ΜΑΡΙΝΟΥ ΦΙΛΟΣΟΦΟΥ ΕΙΣ ΔΕΔΟΜΕΝΑ ΕΥΚΛΕΙΔΟΥ ΥΠΟΜΝΗΜΑ,"Adiectus est ex eadem Bibliothecâ MARINI PHILOSOPHI Commentarius Græcè & Latinè, quo Dati natura, Datorúmque Eu-clideorum vtilitates explicantur",secondary,Claude Hardy,Melchioris Mondiere,Melchioris Mondiere,,"LVTETIÆ  PARISIORVM,  Impensis  MELCHIORIS
 MONDIERE, in insulæ Palatinæ vico Harlæo, ad insigne Viperarum. Anno M D C XXV. Cum Priuilegio Regis Christianissimi.",,Quarto,Data,,,https://www.google.com/books/edition/Data/mGkz3qjgqg0C,https://i.imgur.com/VUnC4UH.png,,,"LUTETIAE  OF PARIS,  At the expense of MELCHIOR
-MONDIERE, in the Palatine island, Harlay street, at the sign of the Vipers. Year 1625. With the Privilege of the Most Christian King.",False,typographic,4,none,none,True,"roman, majuscule roman, italics",,,ancient
+MONDIERE, in the Palatine island, Harlay street, at the sign of the Vipers. Year 1625. With the Privilege of the Most Christian King.",False,typographic,7,none,none,True,"roman, majuscule roman, italics",,,ancient
 Paris 1626b,1626,Paris,,LATIN,,,"Theodosii, Menelai et Mavrolyci sphærica. Ad D. D. De Frenicle, in omni genere litteraturæ versatißimum","Theodosius, Menelaus, and Maurolycus on Spherics. To D. D. De Frenicle, most versed in every kind of literature",,,,,,,,,"Theodosii, Menelai, Mavrolyci","Ad D. D. De Frenicle, in omni genere litteraturæ versatißimum",,,,,,,,,,,,,,,ai,,,,,secondary,,Rob. Stephani,Rob. Stephani,,"Lutetiae, ex oicina Rob. Stephani. M. DC. XXVI. Cum privilegio regis",,Sextodecimo,Phaenomena,Paris 1626a in EiP; no copies according to EiP,-,,,,,"Paris, from the workshop of Rob. Estienne. 1626. With the privilege of the king",,,,,,,,,,"ancient, contemporary"
 Amsterdam 1652,1652,Amsterdam,,LATIN,,Marcus Meibom,"ANTIQVÆ MVSICÆ AVCTORES SEPTEM. GRÆCE ET
 LATINE. MARCVS MEIBOMIVS Restiuit ac Notis explicavit.","ANCIENT MUSIC AUTHORS SEVEN. IN GREEK AND
 LATIN. MARCUS MEIBOMIUS Restored and Explained with Notes.",ANTIQVÆ MVSICÆ AVCTORES SEPTEM.,MARCVS MEIBOMIVS,,,,,,,,,,Restiuit ac Notis explicavit.,,"Restiuit, explicavit","GRÆCE ET
 LATINE",,,,,,,,,,ai,"GRÆCE ET
-LATINE",,,,secondary,Marcus Meibom,Ludovicum Elzevirium,Ludovicum Elzevirium,,"AMSTELODAMI, Apud Ludovicum Elzevirium, M DC LII.",2,Quarto,Introductio harmonica; Sectio canonis,,,https://www.google.com/books/edition/Antiquae_musicae_auctores_septem/QdsPAAAAQAAJ,https://i.imgur.com/127A0R0.png,,,"AMSTERDAM, By Louis Elzevir, 1652.",False,typographic,3,none,woodcut,True,"roman, majuscule roman",,
-Cambridge 1657,1657,Cambridge,,LATIN,,Isaac Barrow,"EUCLIDIS DATA succinctè demonstrata: Unà cum Emendation-ibus quibusdam & Additionibus ad Elementa EUCLIDIS nuper edita. Operâ Mri. IS. BARROVV, CANTABRIGIENSIS Coll. Trin. Soc.","EUCLID'S DATA succinctly demonstrated: Together with certain Corrections & Additions to the Elements of EUCLID recently published. By the work of Mr. IS. BARROW, of Trinity College, Cambridge.",EUCLIDIS DATA,IS. BARROVV,,Mri.,CANTABRIGIENSIS Coll. Trin. Soc.,EUCLIDIS,,,,,,,,demonstrata,,,,,,,,,,,mia,succinctè demonstrata,,Unà cum Emendation-ibus quibusdam & Additionibus ad Elementa EUCLIDIS nuper edita,,secondary,,,,"CANTABRIGIÆ; Ex oicina JOANN. FIELD, celeber-rimæ Academiæ Typographi. Impensis Guilielmi Nealand Bibliopolæ. ANNO DOM. 1657.",,,,Data,,-,https://www.google.com/books/edition/Euclidis_Data_succinct%C3%A8_demonstrata_un/YcllAAAAcAAJ,https://i.imgur.com/McR1PMM.png,,,,False,typographic,4,none,none,True,"roman, majuscule roman, italics",,
+LATINE",,,,secondary,Marcus Meibom,Ludovicum Elzevirium,Ludovicum Elzevirium,,"AMSTELODAMI, Apud Ludovicum Elzevirium, M DC LII.",2,Quarto,Introductio harmonica; Sectio canonis,,,https://www.google.com/books/edition/Antiquae_musicae_auctores_septem/QdsPAAAAQAAJ,https://i.imgur.com/127A0R0.png,,,"AMSTERDAM, By Louis Elzevir, 1652.",False,typographic,7,none,woodcut,True,"roman, majuscule roman",,,
+Cambridge 1657,1657,Cambridge,,LATIN,,Isaac Barrow,"EUCLIDIS DATA succinctè demonstrata: Unà cum Emendation-ibus quibusdam & Additionibus ad Elementa EUCLIDIS nuper edita. Operâ Mri. IS. BARROVV, CANTABRIGIENSIS Coll. Trin. Soc.","EUCLID'S DATA succinctly demonstrated: Together with certain Corrections & Additions to the Elements of EUCLID recently published. By the work of Mr. IS. BARROW, of Trinity College, Cambridge.",EUCLIDIS DATA,IS. BARROVV,,Mri.,CANTABRIGIENSIS Coll. Trin. Soc.,EUCLIDIS,,,,,,,,demonstrata,,,,,,,,,,,mia,succinctè demonstrata,,Unà cum Emendation-ibus quibusdam & Additionibus ad Elementa EUCLIDIS nuper edita,,secondary,,,,"CANTABRIGIÆ; Ex oicina JOANN. FIELD, celeber-rimæ Academiæ Typographi. Impensis Guilielmi Nealand Bibliopolæ. ANNO DOM. 1657.",,,,Data,,-,https://www.google.com/books/edition/Euclidis_Data_succinct%C3%A8_demonstrata_un/YcllAAAAcAAJ,https://i.imgur.com/McR1PMM.png,,,,False,typographic,7,none,none,True,"roman, majuscule roman, italics",,,
