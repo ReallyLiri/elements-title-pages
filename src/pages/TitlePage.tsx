@@ -194,7 +194,7 @@ function TitlePage() {
                 onChange={(e) => setSearchText(e.target.value)}
               />
             </Row>
-            <NoteLine gap={0.5}>
+            <NoteLine gap={0.5} noWrap noWrapAlsoOnMobile>
               <IoWarning /> Highlighted features were partially identified using
               an LLM and may not be accurate.
             </NoteLine>

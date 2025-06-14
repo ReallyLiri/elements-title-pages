@@ -4,9 +4,9 @@ import { FiltersGroup } from "./FiltersGroup";
 import { useFilter } from "../../contexts/FilterContext";
 import { ScrollbarStyle } from "../common";
 import RangeSlider from "../tps/filters/RangeSlider";
-import { NAVBAR_HEIGHT } from "../layout/Navigation.tsx";
 import { FilterButton } from "../layout/FilterButton.tsx";
 import { itemProperties } from "../../constants/itemProperties.ts";
+import { NAVBAR_HEIGHT } from "../layout/routes.ts";
 
 const Pane = styled.div`
   display: flex;

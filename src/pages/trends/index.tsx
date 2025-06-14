@@ -35,7 +35,7 @@ export function Trends() {
         setWindowSize={setWindowSize}
       />
 
-      <NoteLine gap={0.5}>
+      <NoteLine gap={0.5} noWrap noWrapAlsoOnMobile>
         <IoWarning /> Features were partially identified using an LLM and may
         not be accurate.
       </NoteLine>
