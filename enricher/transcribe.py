@@ -8,21 +8,12 @@ from tools import openai_client, write_csv, read_csv, strip_surrounding_quotes
 #file_path = "../public/docs/EiP.csv"
 file_path = "../public/docs/EiP-secondary.csv"
 
-_EXTRACT_FEATURES = False
-_MERGE_FEATURES = True
+_EXTRACT_FEATURES = True
+_MERGE_FEATURES = False
 
 entries, fieldnames = read_csv(file_path)
 for field in [
-    "has_red",
-    "tp_design",
     "num_of_types",
-    "frame_type",
-    "engraving",
-    "printer_device",
-    "hour_glass",
-    "font_types",
-    "has_calligraphic_features",
-    "calligraphic_features",
 ]:
     if field not in fieldnames:
         fieldnames.append(field)
@@ -42,38 +33,26 @@ for i in tqdm(range(len(entries)), desc="Processing entries"):
                     {
                         "role": "user",
                         "content": [
-                            {"type": "text", "text": """
-You are an AI agent designed to extract structured metadata from historical title pages of translations of Euclid’s Elements.
+                            {
+                                "type": "text",
+                                "text": """
+You are an AI agent designed to analyze historical title pages of books, such as translations of Euclid’s Elements.
 
-You will be given a scanned image of an original title page.
+You will be given a scanned image of a printed title page from the 16th–18th century.
 
-Your task is to extract specific features from the image and return them as a JSON object.
-Return only a valid JSON. Do not include any other output.
+Your task is to count how many distinct **type sets** appear on the page. A new type set should be counted when:
+- The typeface (e.g. Roman, Gothic, Italic, Blackletter) changes.
+- The **size** changes within the same typeface.
 
-Output format:
+Ignore ink quality, wear, or minor variations due to print artifacts. Do not include seals, borders, or handwriting.
+
+Return only a valid JSON in the format:
 {
-    "has_red": boolean,
-    "tp_design": <oneof "typographic", "custom", "standard">,
-    "num_of_types": integer,
-    "frame_type": <oneof "none", "woodcut", "line">,
-    "engraving": <oneof "none", "woodcut", "copperplate">,
-    "printer_device": boolean, 
-    "hour_glass": boolean,
-    "font_types": [list of strings from: "italics", "roman", "majuscule roman", "blackletter"],
-    "calligraphic_features": string
+    "num_of_types": <integer>
 }
-
-With the following definitions:
-- "has_red": true if the title page text contains any red ink, false otherwise. Ignore any background colors or stamps.
-- "tp_design": the design of the title page, one of "typographic" (if it is a typographic only title page), "custom" (Unique, handcrafted designs tailored specifically for the book), or "standard" (Common, reused templates employed by a printer across multiple works).
-- "num_of_types": the number of different typefaces used in the title page. Consider different font sizes as different typefaces.
-- "frame_type": the type of frame used in the title page, one of "none" (no frame), "woodcut" (a woodcut frame), or "line" (a line frame).
-- "engraving": the type of engraving used in the title page, one of "none" (no engraving), "woodcut" (a woodcut engraving), or "copperplate" (a copperplate engraving).
-- "printer_device": true if the title page contains any printer's device, false otherwise.
-- "hour_glass": true if the title page is formatted in an hourglass or a top-only hourglass shape, false otherwise.
-- "font_types": a list of typefaces used in the title page, from the following options: "italics", "roman", "majuscule roman", "blackletter". If no typefaces are used, return an empty list.
-- "calligraphic_features": a description of calligraphic features present in the title page, if any. If no calligraphic features are present, return an empty string. Ignore any handwritten text that was not part of the original print.
-                         """.strip()},
+Do not include any additional commentary or explanation.
+                    """.strip()
+                            },
                             {
                                 "type": "image_url",
                                 "image_url": {
@@ -109,4 +88,5 @@ With the following definitions:
             print(f"Error processing features for {entry['key']}: {e}")
             continue
 
-write_csv(entries, file_path, fieldnames)
+if _MERGE_FEATURES:
+    write_csv(entries, file_path, fieldnames)
