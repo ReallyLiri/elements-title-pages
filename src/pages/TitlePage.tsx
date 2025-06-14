@@ -81,7 +81,26 @@ function TitlePage() {
     return filteredItems.filter((item) => {
       const title = item.title?.toLowerCase() || "";
       const imprint = item.imprint?.toLowerCase() || "";
-      return title.includes(searchLower) || imprint.includes(searchLower);
+      return (
+        title
+          .replaceAll("\n", " ")
+          .replaceAll("  ", " ")
+          .replaceAll("-", "")
+          .includes(searchLower) ||
+        imprint
+          .replaceAll("\n", " ")
+          .replaceAll("  ", " ")
+          .replaceAll("-", "")
+          .includes(searchLower) ||
+        item.authors?.some((author) =>
+          author.toLowerCase().includes(searchLower),
+        ) ||
+        item.cities.some((city) => city.toLowerCase().includes(searchLower)) ||
+        item.languages.some((lang) =>
+          lang.toLowerCase().includes(searchLower),
+        ) ||
+        item.year.toLowerCase().includes(searchLower)
+      );
     });
   }, [filteredItems, searchText, titlePagesModeOn]);
 
