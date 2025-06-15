@@ -132,7 +132,13 @@ function TitlePage() {
   }, [handleScroll, handleKeyDown]);
 
   return (
-    <Container style={{ position: "relative", margin: "2rem 0" }}>
+    <Container
+      style={{
+        position: "relative",
+        margin: "2rem 0",
+        minHeight: "calc(100vh - 6rem)",
+      }}
+    >
       {showScrollTop && (
         <ScrollToTopButton onClick={scrollToTop} title="Scroll to top">
           ↑
@@ -231,7 +237,7 @@ function TitlePage() {
           </Text>
         )}
       </Row>
-      <Text size={1}>
+      <Text size={1} style={{ marginTop: "auto" }}>
         À la Croisée des Hyperliens, chez le scribe fatigué et son félin
         passivement investi, MMXXV.
       </Text>
