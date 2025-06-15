@@ -39,6 +39,12 @@ export function Trends() {
         <IoWarning /> Features were partially identified using an LLM and may
         not be accurate.
       </NoteLine>
+      {groupBy.isArray && (
+        <NoteLine gap={0.5} noWrap noWrapAlsoOnMobile>
+          When multiple categories apply to a single edition, fractional values
+          are used to ensure the total count remains accurate.
+        </NoteLine>
+      )}
 
       <TrendsBarChart
         chartData={chartData}
