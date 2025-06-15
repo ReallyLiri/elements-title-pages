@@ -41,6 +41,9 @@ export const getStableColor = (input: string): string => {
   if (input === "Other") {
     return "#757575";
   }
+  if (Number.isInteger(parseInt(input))) {
+    input = `${input}-${input}`;
+  }
 
   let hash = 0;
   const multiplier = 53;

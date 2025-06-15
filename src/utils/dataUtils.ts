@@ -170,6 +170,18 @@ function parseInstitutions(institutions: string) {
     .map((lang) => startCase(lang.toLowerCase()));
 }
 
+function mapOtherName(s: string): string {
+  switch (s) {
+    case "contemporary":
+      return "Contemporary scholars";
+    case "ancient":
+      return "Other ancient scholars by name";
+    case "ancient general":
+      return "Ancient scholars as a group";
+  }
+  return startCase(s.toLowerCase());
+}
+
 export const loadEditionsData = (
   setItems: Dispatch<SetStateAction<Item[]>>,
   setFloatingCity = false,
@@ -224,9 +236,18 @@ export const loadEditionsData = (
                       ? parseInt(raw["volumesCount"] as string)
                       : null,
                     class: raw["wClass"] as string | null,
-                    hasTitle: (hasTitleImage ? "Yes" : "No") as "Yes" | "No",
+                    hasTitle:
+                      Boolean(raw["tp_url"]) &&
+                      Boolean(raw["title"]) &&
+                      raw["title"] !== "?"
+                        ? "Yes"
+                        : Boolean(raw["title"]) && raw["title"] !== "?"
+                          ? "Yes (no digital facsimile)"
+                          : "No",
                     colorInTitle: hasTitleImage
-                      ? toYesNo(raw["has_red"] as string)
+                      ? raw["has_red"] === "True"
+                        ? "Black and Red"
+                        : "Black"
                       : null,
                     titlePageDesign: hasTitleImage
                       ? startCase(
@@ -267,7 +288,8 @@ export const loadEditionsData = (
                     otherNamesClassification:
                       (raw["other_names_classification"] as string | null)
                         ?.split(", ")
-                        .map((s) => startCase(s.toLowerCase()))
+                        .map((s) => mapOtherName(s))
+                        .concat(raw["EUCLID REF"] ? ["Euclid"] : [])
                         .filter(Boolean) ?? [],
                     hasIntendedAudience:
                       raw["EXPLICIT RECIPIENT"] || raw["EXPLICIT RECIPIENT 2"]

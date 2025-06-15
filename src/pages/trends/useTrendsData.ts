@@ -78,17 +78,21 @@ export function useTrendsData() {
   const groupByOptions = useMemo(() => {
     const options: GroupByOption[] = [{ key: "", label: "None" }];
 
-    Object.entries(itemProperties).forEach(([key, config]) => {
-      if (!config.notGroupable) {
-        options.push({
-          key: key as keyof Item,
-          label: config.displayName || key,
-          isArray: (config.isArray || false) && !config.groupByJoinArray,
-          origIsArray: config.isArray || false,
-          isTitlePageImageFeature: config.isTitlePageImageFeature,
-        });
-      }
-    });
+    Object.entries(itemProperties)
+      .sort(([, a], [, b]) => {
+        return a.displayName.localeCompare(b.displayName);
+      })
+      .forEach(([key, config]) => {
+        if (!config.notGroupable) {
+          options.push({
+            key: key as keyof Item,
+            label: config.displayName || key,
+            isArray: (config.isArray || false) && !config.groupByJoinArray,
+            origIsArray: config.isArray || false,
+            isTitlePageImageFeature: config.isTitlePageImageFeature,
+          });
+        }
+      });
 
     return options;
   }, []);

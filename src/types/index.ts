@@ -42,7 +42,7 @@ export type Item = {
   languages: string[];
   authors: string[];
   imageUrl: string | null;
-  hasTitle: YesNoBool;
+  hasTitle: string;
   title: string;
   titleEn: string | null;
   imprint: string | null;
@@ -56,7 +56,7 @@ export type Item = {
   additionalContent: string[];
   volumesCount: number | null;
   class: string | null;
-  colorInTitle: YesNoBool | null;
+  colorInTitle: string | null;
   titlePageDesign: string | null;
   titlePageNumberOfTypes: number | null;
   titlePageFrameType: string | null;

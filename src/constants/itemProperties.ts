@@ -78,7 +78,7 @@ export const itemProperties: {
     groupByJoinArray: true,
   },
   elementsBooks: {
-    displayName: "Elements Books",
+    displayName: "Elements Books (ranges)",
     isArray: true,
     notFilterable: true,
     customCompareFn: ((a: Range | string, b: Range | string) => {
@@ -93,7 +93,13 @@ export const itemProperties: {
   elementsBooksExpanded: {
     displayName: "Elements Books",
     isArray: true,
-    notGroupable: true,
+    customCompareFn: ((a: string, b: string): number => {
+      if (a === "None") return 1;
+      if (b === "None") return -1;
+      const numA = parseInt(a);
+      const numB = parseInt(b);
+      return numA - numB;
+    }) as (a: unknown, b: unknown) => number,
   },
   format: {
     displayName: "Edition Format",
@@ -105,9 +111,9 @@ export const itemProperties: {
     isArray: true,
   },
   class: { displayName: "Wardhaugh Class" },
-  hasTitle: { displayName: "Has Title Page Image" },
+  hasTitle: { displayName: "Has Title Page" },
   colorInTitle: {
-    displayName: "Colors in Title Page",
+    displayName: "Colors on Title Page",
     isTitlePageImageFeature: true,
   },
   titlePageDesign: {
@@ -115,62 +121,69 @@ export const itemProperties: {
     isTitlePageImageFeature: true,
   },
   titlePageNumberOfTypes: {
-    displayName: "Title Page Number of Types",
+    displayName: "Number of Font Types on Title Page",
     isTitlePageImageFeature: true,
+    customCompareFn: ((a: string | null, b: string | null): number => {
+      if (a?.includes("Digital")) {
+        return 1;
+      }
+      if (b?.includes("Digital")) {
+        return -1;
+      }
+      const aNum = parseInt(a || "0");
+      const bNum = parseInt(b || "0");
+      return aNum - bNum;
+    }) as (a: unknown, b: unknown) => number,
   },
   titlePageFrameType: {
-    displayName: "Title Page Frame Type",
+    displayName: "Frame Type of Title Page",
     isTitlePageImageFeature: true,
   },
   titlePageEngraving: {
     displayName: "Title Page Engraving",
     isTitlePageImageFeature: true,
   },
-  hasPrintersDevice: {
-    displayName: "Title Page has Printer's Device",
-    isTitlePageImageFeature: true,
-  },
   fontTypes: {
-    displayName: "Title Page Font Types",
+    displayName: "Font Types Present on Title Page",
     isTitlePageImageFeature: true,
     isArray: true,
   },
   otherNamesClassification: {
-    displayName: "Other Educational Authorities",
+    displayName: "Other Educational Authorities Mentioned on Title Page",
     isArray: true,
     notFilterable: true,
   },
   hasIntendedAudience: {
-    displayName: "Has Intended Audience",
+    displayName: "Intended Audience Mentioned on Title Page",
     notFilterable: true,
   },
   hasPatronageDedication: {
-    displayName: "Has Patronage Dedication",
+    displayName: "Patronage Dedication Present on Title Page",
     notFilterable: true,
   },
   hasAdapterAttribution: {
-    displayName: "Has Adapter Attribution",
+    displayName: "Adapter Attribution Present on Title Page",
     notFilterable: true,
   },
   hasAdapterDescription: {
-    displayName: "Has Adapter Description",
+    displayName: "Adapter Description Present on Title Page",
     notFilterable: true,
   },
   hasPublishingPrivileges: {
-    displayName: "Has Publishing Privileges",
+    displayName: "Publishing Privileges Present on Title Page",
     notFilterable: true,
   },
   hasGreekDesignation: {
-    displayName: "Has Greek Designation",
+    displayName: "Greek Designation Present on Title Page",
     notFilterable: true,
   },
   explicitLanguageReferences: {
-    displayName: "Explicit Language References",
+    displayName: "Explicit Language References on Title Page",
     isArray: true,
     notFilterable: true,
   },
   institutions: {
-    displayName: "Institutions",
+    displayName: "Institutions Mentioned on Title Page",
     isArray: true,
     notFilterable: true,
   },
