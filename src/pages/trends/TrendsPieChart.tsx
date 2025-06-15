@@ -41,7 +41,9 @@ export function TrendsPieChart({ pieChartData, groupBy }: TrendsPieChartProps) {
               cy="50%"
               outerRadius="70%"
               labelLine={true}
-              label={({ name, percent }) => `${name}: ${Number.isInteger(percent) ? percent : parseFloat(percent.toFixed(2))}%`}
+              label={({ name, percent }) =>
+                `${name}: ${Number.isInteger(percent) ? percent : parseFloat(percent.toFixed(2))}%`
+              }
             >
               {pieChartData.map((entry) => (
                 <Cell key={entry.name} fill={getStableColor(entry.name)} />
@@ -52,19 +54,45 @@ export function TrendsPieChart({ pieChartData, groupBy }: TrendsPieChartProps) {
                 backgroundColor: SEA_COLOR,
                 border: `1px solid ${MARKER_3}`,
                 borderRadius: "8px",
+                padding: "10px",
               }}
               itemStyle={{ color: "#ffffff" }}
               formatter={(value, name) => {
                 const entry = pieChartData.find((item) => item.name === name);
+                const color = getStableColor(name as string);
                 return [
-                  `${name}: ${Number.isInteger(value) ? value : parseFloat(Number(value).toFixed(2))} (${entry?.percent ? (Number.isInteger(entry.percent) ? entry.percent : parseFloat(entry.percent.toFixed(2))) : 0}%)`,
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <span
+                      style={{
+                        display: "inline-block",
+                        width: "12px",
+                        height: "12px",
+                        backgroundColor: color,
+                        marginRight: "8px",
+                        borderRadius: "2px",
+                      }}
+                    />
+                    <span>
+                      {name}:{" "}
+                      {Number.isInteger(value)
+                        ? value
+                        : parseFloat(Number(value).toFixed(2))}{" "}
+                      (
+                      {entry?.percent
+                        ? Number.isInteger(entry.percent)
+                          ? entry.percent
+                          : parseFloat(entry.percent.toFixed(2))
+                        : 0}
+                      %)
+                    </span>
+                  </div>,
                   <span style={{ display: "flex", alignItems: "center" }}>
                     <span
                       style={{
                         display: "inline-block",
-                        width: "10px",
-                        height: "10px",
-                        backgroundColor: getStableColor(name as string),
+                        width: "12px",
+                        height: "12px",
+                        backgroundColor: color,
                         marginRight: "8px",
                         borderRadius: "2px",
                       }}
@@ -80,7 +108,25 @@ export function TrendsPieChart({ pieChartData, groupBy }: TrendsPieChartProps) {
               align="right"
               formatter={(value) => {
                 const entry = pieChartData.find((item) => item.name === value);
-                return `${value}: ${entry?.value ? (Number.isInteger(entry.value) ? entry.value : parseFloat(Number(entry.value).toFixed(2))) : 0} (${entry?.percent ? (Number.isInteger(entry.percent) ? entry.percent : parseFloat(entry.percent.toFixed(2))) : 0}%)`;
+                return (
+                  <span style={{ display: "flex", alignItems: "center" }}>
+                    <span>
+                      {value}:{" "}
+                      {entry?.value
+                        ? Number.isInteger(entry.value)
+                          ? entry.value
+                          : parseFloat(Number(entry.value).toFixed(2))
+                        : 0}{" "}
+                      (
+                      {entry?.percent
+                        ? Number.isInteger(entry.percent)
+                          ? entry.percent
+                          : parseFloat(entry.percent.toFixed(2))
+                        : 0}
+                      %)
+                    </span>
+                  </span>
+                );
               }}
             />
           </PieChart>
