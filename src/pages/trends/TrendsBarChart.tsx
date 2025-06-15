@@ -147,7 +147,11 @@ export function TrendsBarChart({
                           <span style={{ marginRight: "8px" }}>
                             {entry.name}:
                           </span>
-                          <span>{entry.value}</span>
+                          <span>
+                            {Number.isInteger(entry.value) 
+                              ? entry.value 
+                              : parseFloat(Number(entry.value).toFixed(2))}
+                          </span>
                         </div>
                       );
                     })}

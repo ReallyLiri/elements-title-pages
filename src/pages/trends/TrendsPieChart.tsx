@@ -41,7 +41,7 @@ export function TrendsPieChart({ pieChartData, groupBy }: TrendsPieChartProps) {
               cy="50%"
               outerRadius="70%"
               labelLine={true}
-              label={({ name, percent }) => `${name}: ${percent}%`}
+              label={({ name, percent }) => `${name}: ${Number.isInteger(percent) ? percent : parseFloat(percent.toFixed(2))}%`}
             >
               {pieChartData.map((entry) => (
                 <Cell key={entry.name} fill={getStableColor(entry.name)} />
@@ -57,7 +57,7 @@ export function TrendsPieChart({ pieChartData, groupBy }: TrendsPieChartProps) {
               formatter={(value, name) => {
                 const entry = pieChartData.find((item) => item.name === name);
                 return [
-                  `${name}: ${value} (${entry?.percent}%)`,
+                  `${name}: ${Number.isInteger(value) ? value : parseFloat(Number(value).toFixed(2))} (${entry?.percent ? (Number.isInteger(entry.percent) ? entry.percent : parseFloat(entry.percent.toFixed(2))) : 0}%)`,
                   <span style={{ display: "flex", alignItems: "center" }}>
                     <span
                       style={{
@@ -80,7 +80,7 @@ export function TrendsPieChart({ pieChartData, groupBy }: TrendsPieChartProps) {
               align="right"
               formatter={(value) => {
                 const entry = pieChartData.find((item) => item.name === value);
-                return `${value}: ${entry?.value} (${entry?.percent}%)`;
+                return `${value}: ${entry?.value ? (Number.isInteger(entry.value) ? entry.value : parseFloat(Number(entry.value).toFixed(2))) : 0} (${entry?.percent ? (Number.isInteger(entry.percent) ? entry.percent : parseFloat(entry.percent.toFixed(2))) : 0}%)`;
               }}
             />
           </PieChart>
