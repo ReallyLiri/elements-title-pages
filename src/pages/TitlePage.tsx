@@ -60,6 +60,12 @@ function TitlePage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (!titlePagesModeOn && mode === "texts") {
+      setMode("images");
+    }
+  }, [mode, setMode, titlePagesModeOn]);
+
   const handleScroll = useCallback(() => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     setShowScrollTop(scrollTop > 200);
