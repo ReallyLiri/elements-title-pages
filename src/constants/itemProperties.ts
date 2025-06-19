@@ -32,6 +32,7 @@ export type ItemProperty = {
   isArray?: boolean;
   customCompareFn?: (a: unknown, b: unknown) => number;
   isTitlePageImageFeature?: boolean;
+  isTitlePageTextFeature?: boolean;
   groupByJoinArray?: boolean;
   notFilterable?: boolean;
   notGroupable?: boolean;
@@ -152,39 +153,48 @@ export const itemProperties: {
     displayName: "Other Educational Authorities Mentioned on Title Page",
     isArray: true,
     notFilterable: true,
+    isTitlePageTextFeature: true,
   },
   hasIntendedAudience: {
     displayName: "Intended Audience Mentioned on Title Page",
     notFilterable: true,
+    isTitlePageTextFeature: true,
   },
   hasPatronageDedication: {
     displayName: "Patronage Dedication Present on Title Page",
     notFilterable: true,
+    isTitlePageTextFeature: true,
   },
   hasAdapterAttribution: {
     displayName: "Adapter Attribution Present on Title Page",
     notFilterable: true,
+    isTitlePageTextFeature: true,
   },
   hasAdapterDescription: {
     displayName: "Adapter Description Present on Title Page",
     notFilterable: true,
+    isTitlePageTextFeature: true,
   },
   hasPublishingPrivileges: {
     displayName: "Publishing Privileges Present on Title Page",
     notFilterable: true,
+    isTitlePageTextFeature: true,
   },
   hasGreekDesignation: {
     displayName: "Greek Designation Present on Title Page",
     notFilterable: true,
+    isTitlePageTextFeature: true,
   },
   explicitLanguageReferences: {
     displayName: "Explicit Language References on Title Page",
     isArray: true,
     notFilterable: true,
+    isTitlePageTextFeature: true,
   },
   institutions: {
     displayName: "Institutions Mentioned on Title Page",
     isArray: true,
     notFilterable: true,
+    isTitlePageTextFeature: true,
   },
 };

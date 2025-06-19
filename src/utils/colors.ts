@@ -35,7 +35,11 @@ export const getStableColor = (input: string): string => {
   if (input === "Yes") {
     input = "true";
   }
-  if (["No Digital Facsimile", "Uncategorized", "None"].includes(input)) {
+  if (
+    ["No Digital Facsimile", "Uncategorized", "None", "No Title Page"].includes(
+      input,
+    )
+  ) {
     return "#9f9f9f";
   }
   if (input === "Other") {

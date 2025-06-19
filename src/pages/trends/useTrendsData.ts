@@ -11,6 +11,7 @@ export type GroupByOption = {
   isArray?: boolean;
   origIsArray?: boolean;
   isTitlePageImageFeature?: boolean;
+  isTitlePageTextFeature?: boolean;
 };
 
 export type TimeWindow = {
@@ -55,7 +56,9 @@ function countItem(
     if (strVal === "") {
       strVal = groupBy.isTitlePageImageFeature
         ? "No Digital Facsimile"
-        : "Uncategorized";
+        : groupBy.isTitlePageTextFeature
+          ? "No Title Page"
+          : "Uncategorized";
     }
     addValue(strVal, 1);
   }
@@ -90,6 +93,7 @@ export function useTrendsData() {
             isArray: (config.isArray || false) && !config.groupByJoinArray,
             origIsArray: config.isArray || false,
             isTitlePageImageFeature: config.isTitlePageImageFeature,
+            isTitlePageTextFeature: config.isTitlePageTextFeature,
           });
         }
       });

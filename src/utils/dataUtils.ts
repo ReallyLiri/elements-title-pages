@@ -199,10 +199,9 @@ export const loadEditionsData = (
             complete: (result) => {
               const items = (result.data as Record<string, unknown>[])
                 .map((raw) => {
-                  const hasTitleImage =
-                    Boolean(raw["tp_url"]) &&
-                    Boolean(raw["title"]) &&
-                    raw["title"] !== "?";
+                  const hasTitle =
+                    Boolean(raw["title"]) && raw["title"] !== "?";
+                  const hasTitleImage = Boolean(raw["tp_url"]) && hasTitle;
                   return {
                     key: raw["key"] as string,
                     year: raw["year"] as string,
@@ -285,35 +284,48 @@ export const loadEditionsData = (
                           )?.toLowerCase(),
                         )
                       : null,
-                    otherNamesClassification:
-                      (raw["other_names_classification"] as string | null)
-                        ?.split(", ")
-                        .map((s) => mapOtherName(s))
-                        .concat(raw["EUCLID REF"] ? ["Euclid"] : [])
-                        .filter(Boolean) ?? [],
-                    hasIntendedAudience:
-                      raw["EXPLICIT RECIPIENT"] || raw["EXPLICIT RECIPIENT 2"]
+                    otherNamesClassification: hasTitle
+                      ? ((raw["other_names_classification"] as string | null)
+                          ?.split(", ")
+                          .map((s) => mapOtherName(s))
+                          .concat(raw["EUCLID REF"] ? ["Euclid"] : [])
+                          .filter(Boolean) ?? [])
+                      : null,
+                    hasIntendedAudience: hasTitle
+                      ? raw["EXPLICIT RECIPIENT"] || raw["EXPLICIT RECIPIENT 2"]
                         ? "Yes"
-                        : "No",
-                    hasPatronageDedication:
-                      raw["PATRON REF"] || raw["IMPRINT DEDICATION"]
+                        : "No"
+                      : null,
+                    hasPatronageDedication: hasTitle
+                      ? raw["PATRON REF"] || raw["IMPRINT DEDICATION"]
                         ? "Yes"
-                        : "No",
-                    hasAdapterAttribution:
-                      raw["AUTHOR NAME"] || raw["AUTHOR NAME 2"] ? "Yes" : "No",
-                    hasPublishingPrivileges:
-                      raw["PRIVILEGES"] || raw["IMPRINT PRIVILEGES"]
+                        : "No"
+                      : null,
+                    hasAdapterAttribution: hasTitle
+                      ? raw["AUTHOR NAME"] || raw["AUTHOR NAME 2"]
                         ? "Yes"
-                        : "No",
-                    hasGreekDesignation: raw["GREEK IN NON GREEK BOOKS"]
-                      ? "Yes"
-                      : "No",
-                    explicitLanguageReferences: parseExplicitLanguages(
-                      `${raw["EXPLICITLY STATED: TRANSLATED FROM"] || ""}, ${raw["EXPLICITLY STATED: TRANSLATED TO"] || ""}`,
-                    ),
-                    institutions: parseInstitutions(
-                      (raw["INSTITUTIONS"] as string | null) || "",
-                    ),
+                        : "No"
+                      : null,
+                    hasPublishingPrivileges: hasTitle
+                      ? raw["PRIVILEGES"] || raw["IMPRINT PRIVILEGES"]
+                        ? "Yes"
+                        : "No"
+                      : null,
+                    hasGreekDesignation: hasTitle
+                      ? raw["GREEK IN NON GREEK BOOKS"]
+                        ? "Yes"
+                        : "No"
+                      : null,
+                    explicitLanguageReferences: hasTitle
+                      ? parseExplicitLanguages(
+                          `${raw["EXPLICITLY STATED: TRANSLATED FROM"] || ""}, ${raw["EXPLICITLY STATED: TRANSLATED TO"] || ""}`,
+                        )
+                      : null,
+                    institutions: hasTitle
+                      ? parseInstitutions(
+                          (raw["INSTITUTIONS"] as string | null) || "",
+                        )
+                      : null,
                     features: Object.keys(FeatureToColumnName).reduce(
                       (acc, feature) => {
                         acc[feature as Feature] = FeatureToColumnName[

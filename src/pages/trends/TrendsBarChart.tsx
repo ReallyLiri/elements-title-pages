@@ -31,6 +31,7 @@ const lastValuesInSort = [
   "uncategorized",
   "no digital facsimile",
   "none",
+  "no title page",
 ];
 
 export function TrendsBarChart({
@@ -148,8 +149,8 @@ export function TrendsBarChart({
                             {entry.name}:
                           </span>
                           <span>
-                            {Number.isInteger(entry.value) 
-                              ? entry.value 
+                            {Number.isInteger(entry.value)
+                              ? entry.value
                               : parseFloat(Number(entry.value).toFixed(2))}
                           </span>
                         </div>
