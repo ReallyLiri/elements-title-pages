@@ -33,6 +33,8 @@ export type Range = {
   end: number;
 };
 
+type YesNoBool = "Yes" | "No";
+
 export type Item = {
   key: string;
   year: string;
@@ -40,6 +42,7 @@ export type Item = {
   languages: string[];
   authors: string[];
   imageUrl: string | null;
+  hasTitle: string;
   title: string;
   titleEn: string | null;
   imprint: string | null;
@@ -53,6 +56,14 @@ export type Item = {
   additionalContent: string[];
   volumesCount: number | null;
   class: string | null;
+  colorInTitle: string | null;
+  titlePageDesign: string | null;
+  titlePageNumberOfTypes: number | null;
+  titlePageFrameType: string | null;
+  titlePageEngraving: string | null;
+  hasPrintersDevice: YesNoBool | null;
+  fontTypes: string[];
+  calligraphicFeatures: string | null;
 };
 
 export type RadioProps = {

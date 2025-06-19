@@ -1,4 +1,5 @@
 import Select from "react-select";
+import { TOOLTIP_FEATURES_HIGHLIGHT } from "../../map/MapTooltips.tsx";
 
 type OptionLabelProps = {
   option: string;
@@ -6,7 +7,10 @@ type OptionLabelProps = {
 };
 
 const OptionLabel = ({ option, tooltip }: OptionLabelProps) => (
-  <span data-tooltip-id="features" data-tooltip-content={tooltip}>
+  <span
+    data-tooltip-id={TOOLTIP_FEATURES_HIGHLIGHT}
+    data-tooltip-content={tooltip}
+  >
     {option}
   </span>
 );

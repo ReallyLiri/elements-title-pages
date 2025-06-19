@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { LAND_COLOR, MARKER_4, MARKER_5, PANE_COLOR } from "../utils/colors.ts";
 import {
   CATALOGUE_ROUTE,
+  NAVBAR_HEIGHT,
   TITLE_PAGES_ROUTE,
 } from "../components/layout/routes.ts";
 import { FaDraftingCompass } from "react-icons/fa";
 import { GiHolySymbol } from "react-icons/gi";
 import { ReactNode, useEffect, useState } from "react";
-import { NAVBAR_HEIGHT } from "../components/layout/Navigation.tsx";
 import { css } from "@emotion/react";
 import { EIP_URL, MACTUTOR_URL } from "../constants";
 import { TbMathMaxMin } from "react-icons/tb";
@@ -258,10 +258,11 @@ function Home() {
               <a href={EIP_URL} target="_blank" rel="noopener noreferrer">
                 Euclid in print (1482–1703) catalog
               </a>
-              , supplemented with references from scholarship, USTC, the BnF collection, and Google Books. The
-              distinction between edition, reimpression, version and the
-              classification of a book as a translation of Elements or "other"
-              is not always clear and can be challenged.
+              , supplemented with references from scholarship, USTC, the BnF
+              collection, and Google Books. The distinction between edition,
+              reimpression, version and the classification of a book as a
+              translation of Elements or "other" is not always clear and can be
+              challenged.
             </div>
           }
         />
@@ -297,11 +298,11 @@ function Home() {
           imageOnLeft={false}
           text={
             <div>
-              The experiment involved segmenting the title page's text into distinct
-              elements to identify patterns and variations. The transcription
-              and segmentation of the title pages were done partly by an LLM and
-              partly by automated processes. As a result, the data may contain
-              some unusual errors but also fewer human mistakes and
+              The experiment involved segmenting the title page's text into
+              distinct elements to identify patterns and variations. The
+              transcription and segmentation of the title pages were done partly
+              by an LLM and partly by automated processes. As a result, the data
+              may contain some unusual errors but also fewer human mistakes and
               inconsistencies. The hands-on work with multiple models was part
               of the experience I aimed to gain from this exploration.
             </div>

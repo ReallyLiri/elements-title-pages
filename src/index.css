@@ -46,3 +46,15 @@ body {
 .reactour__close-button {
   color: black;
 }
+
+.basic-multi-select {
+  z-index: 11;
+}
+
+.recharts-sector:focus {
+  outline: none !important;
+}
+
+.recharts-sector {
+  outline: none !important;
+}

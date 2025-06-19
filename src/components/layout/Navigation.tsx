@@ -1,19 +1,13 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
-import {
-  CATALOGUE_ROUTE,
-  HOME_ROUTE,
-  MAP_ROUTE,
-  TITLE_PAGES_ROUTE,
-} from "./routes.ts";
+import { HOME_ROUTE, NAVBAR_HEIGHT } from "./routes.ts";
 import { MARKER_5 } from "../../utils/colors.ts";
 import { useLayoutEffect } from "react";
 import { BsBoundingBoxCircles } from "react-icons/bs";
 import { FilterButton } from "./FilterButton";
-import { MACTUTOR_URL } from "../../constants";
-import { FaExternalLinkAlt } from "react-icons/fa";
-
-export const NAVBAR_HEIGHT = 60;
+import MobileNavigation from "./MobileNavigation";
+import { NavItems } from "./NavItem";
+import { useIsMobile } from "./isMobile.ts";
 
 const Placeholder = styled.div`
   height: ${NAVBAR_HEIGHT}px;
@@ -34,28 +28,6 @@ const NavContent = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-`;
-
-const NavItems = styled.ul`
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: 2rem;
-`;
-
-const NavItem = styled.li<{ active: boolean }>`
-  a {
-    text-decoration: none;
-    color: ${({ active }) => (active ? "#ffffff" : "#aaaaaa")};
-    font-weight: ${({ active }) => (active ? "bold" : "normal")};
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: white;
-    }
-  }
 `;
 
 const VerticalLine = styled.div`
@@ -84,18 +56,28 @@ const FixedFilterButtonContainer = styled.div`
   z-index: 90;
 `;
 
-const StyledExternalIcon = styled(FaExternalLinkAlt)`
-  font-size: 0.8rem;
-  margin-left: 0.5rem;
-`;
-
 function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  if (isMobile) {
+    return (
+      <>
+        <MobileNavigation />
+        <Placeholder />
+        {location.pathname !== HOME_ROUTE && (
+          <FixedFilterButtonContainer>
+            <FilterButton />
+          </FixedFilterButtonContainer>
+        )}
+      </>
+    );
+  }
 
   return (
     <>
@@ -106,26 +88,7 @@ function Navigation() {
           </SiteTitle>
           <StyledBoxIcon onClick={() => navigate(HOME_ROUTE)} />
           <VerticalLine />
-          <NavItems>
-            <NavItem active={location.pathname === HOME_ROUTE}>
-              <Link to={HOME_ROUTE}>Home</Link>
-            </NavItem>
-            <NavItem active={location.pathname === CATALOGUE_ROUTE}>
-              <Link to={CATALOGUE_ROUTE}>Catalogue</Link>
-            </NavItem>
-            <NavItem active={location.pathname === TITLE_PAGES_ROUTE}>
-              <Link to={TITLE_PAGES_ROUTE}>Editions Gallery</Link>
-            </NavItem>
-            <NavItem active={location.pathname === MAP_ROUTE}>
-              <Link to={MAP_ROUTE}>Map</Link>
-            </NavItem>
-            <div />
-            <NavItem active={false}>
-              <Link to={MACTUTOR_URL} target="_blank" rel="noreferrer noopener">
-                MacTutor Index Graph <StyledExternalIcon />
-              </Link>
-            </NavItem>
-          </NavItems>
+          <NavItems mobile={false} />
         </NavContent>
       </NavContainer>
       <Placeholder />

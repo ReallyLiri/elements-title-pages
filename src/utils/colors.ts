@@ -30,3 +30,40 @@ export const ButtonStyle = css`
   padding: 0.4rem;
   cursor: pointer;
 `;
+
+export const getStableColor = (input: string): string => {
+  if (input === "Yes") {
+    input = "true";
+  }
+  if (
+    ["No Digital Facsimile", "Uncategorized", "None", "No Title Page"].includes(
+      input,
+    )
+  ) {
+    return "#9f9f9f";
+  }
+  if (input === "Other") {
+    return "#757575";
+  }
+  if (Number.isInteger(parseInt(input))) {
+    input = `${input}-${input}`;
+  }
+
+  let hash = 0;
+  const multiplier = 53;
+
+  for (let i = 0; i < input.length; i++) {
+    hash = input.charCodeAt(i) + hash * multiplier;
+    hash = (hash << 5) + hash + input.charCodeAt(i);
+    hash = (hash << 5) + hash + input.charCodeAt(i);
+    hash = (hash << 5) + hash + input.charCodeAt(i);
+  }
+
+  const h = Math.abs(hash + 200) % 360;
+
+  const s = 60 + (Math.abs(hash >> 8) % 20);
+
+  const l = 55 + (Math.abs(hash >> 16) % 15);
+
+  return `hsl(${h}, ${s}%, ${l}%)`;
+};

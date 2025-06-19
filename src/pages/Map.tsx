@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Point } from "react-simple-maps";
 import styled from "@emotion/styled";
 import { isEmpty } from "lodash";
@@ -23,9 +23,10 @@ import { Timeline } from "../components/map/Timeline";
 import { HeatLegend } from "../components/map/HeatMap";
 import { useTour } from "@reactour/tour";
 import { useFilter } from "../contexts/FilterContext";
-import { NAVBAR_HEIGHT } from "../components/layout/Navigation.tsx";
 import ItemModal from "../components/tps/modal/ItemModal.tsx";
 import { CityDetails } from "../components/map/CityDetails.tsx";
+import { NAVBAR_HEIGHT } from "../components/layout/routes.ts";
+import { useIsMobile } from "../components/layout/isMobile.ts";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -61,6 +62,10 @@ const ControlsRow = styled.div`
   gap: 1rem;
   align-items: center;
   justify-content: flex-end;
+  @media (max-width: 768px) {
+    width: 100vw;
+    gap: 8px;
+  }
 `;
 
 const MapSection = styled.div`
@@ -105,6 +110,7 @@ const Pane = styled.div<{
 
 const Map = () => {
   const { height } = useWindowSize();
+  const isMobile = useIsMobile();
   const { cities, filteredItems, filterOpen, setFilterOpen } = useFilter();
   const [zoom, setZoom] = useLocalStorage<number>("zoom", 1);
   const {
@@ -117,13 +123,10 @@ const Map = () => {
     "map-position",
     DEFAULT_POSITION,
   );
-  const [selectedCity, setSelectedCity] = useLocalStorage<string | undefined>(
-    "map-selected-city",
-    undefined,
-  );
-  const [selectedRecordKey, setSelectedRecordId] = useLocalStorage<
+  const [selectedCity, setSelectedCity] = useState<string | undefined>();
+  const [selectedRecordKey, setSelectedRecordId] = useState<
     string | undefined
-  >("map-selected-record", undefined);
+  >();
   const [toured, setToured] = useLocalStorage<boolean>("map-toured", false);
   const { setIsOpen: setTourOpen } = useTour();
 
@@ -180,7 +183,9 @@ const Map = () => {
                 cities={cities}
                 data={itemsByCity}
                 selectedCity={selectedCity}
-                setSelectedCity={setSelectedCity}
+                setSelectedCity={(selected) =>
+                  !isMobile && setSelectedCity(selected)
+                }
               />
             }
           />

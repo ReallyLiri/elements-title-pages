@@ -47,7 +47,7 @@ const parseBooks = (
   for (const entry of entries) {
     const match = entry.match(/^"?Elements\s+(.+?)"?$/i);
     if (!match) {
-      additionalContent.push(entry);
+      additionalContent.push(startCase(entry.toLowerCase()));
       continue;
     }
 
@@ -90,6 +90,98 @@ const parseBooks = (
 const ifEmpty = <T>(arr: T[], defaultValue: T[]): T[] =>
   arr.length === 0 ? defaultValue : arr;
 
+const toYesNo = (value: string): "Yes" | "No" => {
+  return value === "True" ? "Yes" : "No";
+};
+
+function parseExplicitLanguages(langs: string) {
+  return langs
+    .split(/, | et | en | & /)
+    .map((input) => {
+      const normalized = input
+        .replaceAll("-", "")
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+      const rules = [
+        {
+          match:
+            /latin|latina|latino|latine|latein|latijn|latinum|latinit|la tine|latijnsche/,
+          lang: "Latin",
+        },
+        { match: /greek|graec|græc|grec|griech/, lang: "Greek" },
+        { match: /fran[çc]ois|francois|french/, lang: "French" },
+        { match: /italien|italian|italiana|thoscana|toscana/, lang: "Italian" },
+        {
+          match: /spanish|espanol|española|traduzidas|castellano|hispanice/,
+          lang: "Spanish",
+        },
+        { match: /german|teutsch|teutscher|deutsch/, lang: "German" },
+        {
+          match: /nederduyts|nederduytse|neerduid|neerduyts|neerdvyt|niderland/,
+          lang: "Dutch",
+        },
+        { match: /arabic/, lang: "Arabic" },
+        { match: /english|englishe/, lang: "English" },
+        {
+          match: /romance|vulgar|volgar|vvlgare|vernacul|en nostre langve/,
+          lang: "general-vernacular",
+        },
+      ];
+
+      for (const { match, lang } of rules) {
+        if (match.test(normalized)) return lang;
+      }
+
+      return normalized ? "Other" : "";
+    })
+    .filter(Boolean)
+    .map((lang) => startCase(lang.toLowerCase()));
+}
+
+function parseInstitutions(institutions: string) {
+  return institutions
+    .split(/, | et | en | & /)
+    .map((input) => {
+      const normalized = input
+        .replaceAll("-", "")
+        .replaceAll("\n", "")
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+      const rules = [
+        {
+          match:
+            /\b(?:compagnie|compañia|la\s*compania)\s+de\s+(?:jesus|iesvs|jesvs)|\b(?:soc\.?|soci[eé]t\.?|societate|societ\.)\s*(?:jesu|iesv|jesv)|\b(?:societatis)(?:\s+(?:jesu|iesv))?(?:\s+gymnasio)?\b|\bsociety of jesus\b|\bjesuite\b|\bpanormitano.*sicili\b|\bherbipolitano.*franconi\b|\bgymnasio.*(?:jesu|iesv|jesv)\b/,
+          label: "Jesuits",
+        },
+      ];
+
+      for (const { match, label } of rules) {
+        if (match.test(normalized)) return label;
+      }
+
+      return normalized ? "Other" : "";
+    })
+    .filter(Boolean)
+    .map((lang) => startCase(lang.toLowerCase()));
+}
+
+function mapOtherName(s: string): string {
+  switch (s) {
+    case "contemporary":
+      return "Contemporary scholars";
+    case "ancient":
+      return "Other ancient scholars by name";
+    case "ancient general":
+      return "Ancient scholars as a group";
+  }
+  return startCase(s.toLowerCase());
+}
+
 export const loadEditionsData = (
   setItems: Dispatch<SetStateAction<Item[]>>,
   setFloatingCity = false,
@@ -107,6 +199,9 @@ export const loadEditionsData = (
             complete: (result) => {
               const items = (result.data as Record<string, unknown>[])
                 .map((raw) => {
+                  const hasTitle =
+                    Boolean(raw["title"]) && raw["title"] !== "?";
+                  const hasTitleImage = Boolean(raw["tp_url"]) && hasTitle;
                   return {
                     key: raw["key"] as string,
                     year: raw["year"] as string,
@@ -124,7 +219,9 @@ export const loadEditionsData = (
                       (raw["author (normalized)"] as string | null)?.split(
                         ", ",
                       ) || [],
-                    imageUrl: raw["tp_url"] as string | null,
+                    imageUrl: (raw["tp_url"] || raw["tp_url_alt"]) as
+                      | string
+                      | null,
                     title: raw["title"] as string,
                     titleEn: raw["title_EN"] as string | null,
                     imprint: raw["imprint"] as string | null,
@@ -138,6 +235,97 @@ export const loadEditionsData = (
                       ? parseInt(raw["volumesCount"] as string)
                       : null,
                     class: raw["wClass"] as string | null,
+                    hasTitle:
+                      Boolean(raw["tp_url"]) &&
+                      Boolean(raw["title"]) &&
+                      raw["title"] !== "?"
+                        ? "Yes"
+                        : Boolean(raw["title"]) && raw["title"] !== "?"
+                          ? "Yes (no digital facsimile)"
+                          : "No",
+                    colorInTitle: hasTitleImage
+                      ? raw["has_red"] === "True"
+                        ? "Black and Red"
+                        : "Black"
+                      : null,
+                    titlePageDesign: hasTitleImage
+                      ? startCase(
+                          (raw["tp_design"] as string | null)?.toLowerCase(),
+                        )
+                      : null,
+                    titlePageNumberOfTypes: hasTitleImage
+                      ? raw["num_of_types"]
+                        ? parseInt(raw["num_of_types"] as string)
+                        : null
+                      : null,
+                    titlePageFrameType: hasTitleImage
+                      ? startCase(
+                          (raw["frame_type"] as string | null)?.toLowerCase(),
+                        )
+                      : null,
+                    titlePageEngraving: hasTitleImage
+                      ? startCase(
+                          (raw["engraving"] as string | null)?.toLowerCase(),
+                        )
+                      : null,
+                    hasPrintersDevice: hasTitleImage
+                      ? toYesNo(raw["printer_device"] as string)
+                      : null,
+                    fontTypes: hasTitleImage
+                      ? (raw["font_types"] as string | null)
+                          ?.split(", ")
+                          .map((type) => startCase(type.toLowerCase()))
+                          .filter(Boolean) || []
+                      : [],
+                    calligraphicFeatures: hasTitleImage
+                      ? startCase(
+                          (
+                            raw["calligraphic_features"] as string | null
+                          )?.toLowerCase(),
+                        )
+                      : null,
+                    otherNamesClassification: hasTitle
+                      ? ((raw["other_names_classification"] as string | null)
+                          ?.split(", ")
+                          .map((s) => mapOtherName(s))
+                          .concat(raw["EUCLID REF"] ? ["Euclid"] : [])
+                          .filter(Boolean) ?? [])
+                      : null,
+                    hasIntendedAudience: hasTitle
+                      ? raw["EXPLICIT RECIPIENT"] || raw["EXPLICIT RECIPIENT 2"]
+                        ? "Yes"
+                        : "No"
+                      : null,
+                    hasPatronageDedication: hasTitle
+                      ? raw["PATRON REF"] || raw["IMPRINT DEDICATION"]
+                        ? "Yes"
+                        : "No"
+                      : null,
+                    hasAdapterAttribution: hasTitle
+                      ? raw["AUTHOR NAME"] || raw["AUTHOR NAME 2"]
+                        ? "Yes"
+                        : "No"
+                      : null,
+                    hasPublishingPrivileges: hasTitle
+                      ? raw["PRIVILEGES"] || raw["IMPRINT PRIVILEGES"]
+                        ? "Yes"
+                        : "No"
+                      : null,
+                    hasGreekDesignation: hasTitle
+                      ? raw["GREEK IN NON GREEK BOOKS"]
+                        ? "Yes"
+                        : "No"
+                      : null,
+                    explicitLanguageReferences: hasTitle
+                      ? parseExplicitLanguages(
+                          `${raw["EXPLICITLY STATED: TRANSLATED FROM"] || ""}, ${raw["EXPLICITLY STATED: TRANSLATED TO"] || ""}`,
+                        )
+                      : null,
+                    institutions: hasTitle
+                      ? parseInstitutions(
+                          (raw["INSTITUTIONS"] as string | null) || "",
+                        )
+                      : null,
                     features: Object.keys(FeatureToColumnName).reduce(
                       (acc, feature) => {
                         acc[feature as Feature] = FeatureToColumnName[
@@ -187,27 +375,6 @@ export const loadEditionsData = (
     })
     .catch((error) => console.error("Error reading CSV:", error));
 };
-
-export const extract = (items: Item[], property: keyof Item) =>
-  items
-    .reduce((acc, item) => {
-      if (item[property]) {
-        if (Array.isArray(item[property])) {
-          item[property].forEach((value) => {
-            if (!acc.includes(value)) {
-              acc.push(value);
-            }
-          });
-        } else {
-          const value = item[property] as string;
-          if (!acc.includes(value)) {
-            acc.push(value);
-          }
-        }
-      }
-      return acc;
-    }, [] as string[])
-    .sort();
 
 export const loadCitiesAsync = async (): Promise<Record<string, Point>> => {
   const response = await fetch(CSV_PATH_CITIES);

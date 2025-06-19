@@ -21,6 +21,10 @@ const StyledRangeSlider = styled(RangeSlider)`
     color: black;
     background-color: ${TRANSPARENT_WHITE};
   }
+  @media (max-width: 768px) {
+    width: 40vw;
+    gap: 0;
+  }
 `;
 
 const RangeWrapper = styled.div`

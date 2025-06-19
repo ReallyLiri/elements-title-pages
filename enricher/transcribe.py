@@ -1,44 +1,92 @@
 import base64
+import json
 
-from tools import openai_client, write_csv
+from tqdm import tqdm
 
-path = "/Users/liri/Downloads/"
+from tools import openai_client, write_csv, read_csv, strip_surrounding_quotes
 
-entries = []
+#file_path = "../public/docs/EiP.csv"
+file_path = "../public/docs/EiP-secondary.csv"
 
-def encode_image(image_path):
-    with open(image_path, "rb") as f:
-        return base64.b64encode(f.read()).decode("utf-8")
+_EXTRACT_FEATURES = False
+_MERGE_FEATURES = True
 
-for i in range(1, 38):
-    try:
-        image_data = encode_image(f"{path}a{i}.JPEG")
-        print(f"Processing image {i}")
-        response = openai_client.chat.completions.create(
-            model="gpt-4o",
-            messages=[
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "text", "text": "Please transcribe the text in this image. Keep the original formatting, whitespace, line breaks (even at the middle of a sentence) and punctuation as much as possible. Ignore handwriting, library markings and printer's device or other illustrations. Only return the transcription of the text in the image."},
-                        {
-                            "type": "image_url",
-                            "image_url": {
-                                "url": f"data:image/png;base64,{image_data}"
+entries, fieldnames = read_csv(file_path)
+for field in [
+    "num_of_types",
+]:
+    if field not in fieldnames:
+        fieldnames.append(field)
+
+for i in tqdm(range(len(entries)), desc="Processing entries"):
+    entry = entries[i]
+    if not entry["tp_url"]:
+        continue
+    out_path = f'out/{entry["key"].replace("/", "_")}.json'
+    if _EXTRACT_FEATURES:
+        try:
+            response = openai_client.chat.completions.create(
+                model="gpt-4o",
+                max_tokens=None,
+                temperature=0,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": """
+You are an AI agent designed to analyze historical title pages of books, such as translations of Euclid’s Elements.
+
+You will be given a scanned image of a printed title page from the 16th–18th century.
+
+Your task is to count how many distinct **type sets** appear on the page. A new type set should be counted when:
+- The typeface (e.g. Roman, Gothic, Italic, Blackletter) changes.
+- The **size** changes within the same typeface.
+
+Ignore ink quality, wear, or minor variations due to print artifacts. Do not include seals, borders, or handwriting.
+
+Return only a valid JSON in the format:
+{
+    "num_of_types": <integer>
+}
+Do not include any additional commentary or explanation.
+                    """.strip()
                             },
-                        },
-                    ],
-                }
-            ],
-        )
-        if len(response.choices) != 1:
-            print("!!! Unexpected response from OpenAI", response)
-        if response.choices[0].finish_reason != 'stop':
-            print("!!! OpenAI did not finish processing the request", response)
-        entries.append({
-            "transcription": response.choices[0].message.content.strip()
-        })
-    except Exception as e:
-        print("!!! Error querying OpenAI", e)
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": entry["tp_url"],
+                                },
+                            },
+                        ],
+                    }
+                ],
+            )
+            if len(response.choices) != 1:
+                print("!!! Unexpected response from OpenAI", response)
+            if response.choices[0].finish_reason != 'stop':
+                print("!!! OpenAI did not finish processing the request", response)
+            with open(out_path, "w") as f:
+                f.write(response.choices[0].message.content.strip())
+        except Exception as e:
+            print("!!! Error querying OpenAI", e)
 
-write_csv(entries, f"transcriptions.csv", ["transcription"])
+    if _MERGE_FEATURES:
+        with open(out_path, "r") as f:
+            features = f.read().replace("```json", "").replace("```", "").strip()
+        try:
+            features_dict = json.loads(features)
+            for key, value in features_dict.items():
+                entries[i][key] = (
+                    ", ".join([strip_surrounding_quotes(v) for v in value])
+                    if isinstance(value, list)
+                    else strip_surrounding_quotes(value)
+                    if isinstance(value, str)
+                    else value)
+        except Exception as e:
+            print(f"Error processing features for {entry['key']}: {e}")
+            continue
+
+if _MERGE_FEATURES:
+    write_csv(entries, file_path, fieldnames)

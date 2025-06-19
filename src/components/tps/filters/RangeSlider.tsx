@@ -117,7 +117,7 @@ export const RangeSlider = ({
   }, [value]);
 
   return (
-    <Row justifyStart noWrap className={className}>
+    <Row justifyStart noWrap noWrapAlsoOnMobile className={className}>
       {name && <div>{name}:</div>}
       <ValueInput
         type="number"

@@ -36,6 +36,9 @@ const StyledDiv = styled.div`
   svg {
     margin-bottom: 2px;
   }
+  @media (max-width: 768px) {
+    gap: 6px;
+  }
 `;
 
 export const MapControls = ({
