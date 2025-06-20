@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
-import { HOME_ROUTE, NAVBAR_HEIGHT } from "./routes.ts";
+import { HOME_ROUTE, NAVBAR_HEIGHT, PRESENTATION_ROUTE } from "./routes.ts";
 import { MARKER_5 } from "../../utils/colors.ts";
 import { useLayoutEffect } from "react";
 import { BsBoundingBoxCircles } from "react-icons/bs";
@@ -61,6 +61,8 @@ function Navigation() {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
+  const noFilterRoutes = [HOME_ROUTE, PRESENTATION_ROUTE];
+
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
@@ -70,7 +72,7 @@ function Navigation() {
       <>
         <MobileNavigation />
         <Placeholder />
-        {location.pathname !== HOME_ROUTE && (
+        {!noFilterRoutes.includes(location.pathname) && (
           <FixedFilterButtonContainer>
             <FilterButton />
           </FixedFilterButtonContainer>
@@ -92,7 +94,7 @@ function Navigation() {
         </NavContent>
       </NavContainer>
       <Placeholder />
-      {location.pathname !== HOME_ROUTE && (
+      {!noFilterRoutes.includes(location.pathname) && (
         <FixedFilterButtonContainer>
           <FilterButton />
         </FixedFilterButtonContainer>

@@ -58,3 +58,11 @@ body {
 .recharts-sector {
   outline: none !important;
 }
+
+.rpv-thumbnail__container-background-color {
+  background-color: black !important;
+}
+
+.rpv-core__inner-page {
+  background-color: black !important;
+}
