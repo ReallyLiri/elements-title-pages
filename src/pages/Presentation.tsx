@@ -21,6 +21,7 @@ const Presentation = () => {
   return (
     <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
       <Viewer
+        theme="dark"
         pageLayout={pageLayout}
         defaultScale={SpecialZoomLevel.PageFit}
         fileUrl="/presentation/presentation-jun-25.pdf"
