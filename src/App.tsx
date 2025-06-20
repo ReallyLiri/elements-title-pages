@@ -18,9 +18,11 @@ import {
   TITLE_PAGES_ROUTE,
   CATALOGUE_ROUTE,
   TRENDS_ROUTE,
+  PRESENTATION_ROUTE,
 } from "./components/layout/routes.ts";
 import Catalogue from "./pages/Catalogue.tsx";
 import Trends from "./pages/Trends.tsx";
+import Presentation from "./pages/Presentation.tsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -30,6 +32,7 @@ function App() {
         <Route path={TITLE_PAGES_ROUTE} element={<TitlePage />} />
         <Route path={CATALOGUE_ROUTE} element={<Catalogue />} />
         <Route path={TRENDS_ROUTE} element={<Trends />} />
+        <Route path={PRESENTATION_ROUTE} element={<Presentation />} />
         <Route
           path={MAP_ROUTE}
           element={
