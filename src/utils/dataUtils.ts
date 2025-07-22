@@ -41,8 +41,8 @@ const parseBooks = (
 
   const entries = booksRaw
     .split(";")
-    .map((e) => e.trim())
-    .filter((e) => e && !/enunciations/i.test(e));
+    .map((e) => e.replaceAll("(enunciations)", "").trim())
+    .filter((e) => e);
 
   for (const entry of entries) {
     const match = entry.match(/^"?Elements\s+(.+?)"?$/i);
