@@ -16,20 +16,19 @@ import {
   Row,
   ScrollbarStyle,
   ScrollToTopButton,
-  Text,
 } from "../components/common";
 import ItemModal from "../components/tps/modal/ItemModal";
-import { ItemTypes, NO_AUTHOR, NO_CITY, NO_YEAR } from "../constants";
+import { NO_AUTHOR, NO_CITY, NO_YEAR } from "../constants";
 import { joinArr } from "../utils/util.ts";
 import { FaBookReader } from "react-icons/fa";
-import { MARKER_4, SEA_COLOR } from "../utils/colors.ts";
-import { isEmpty } from "lodash";
+import { SEA_COLOR } from "../utils/colors.ts";
 import { authorDisplayName } from "../utils/dataUtils.ts";
 import {
   TOOLTIP_BOOK_TYPE,
   TOOLTIP_WCLASS,
 } from "../components/map/MapTooltips.tsx";
 import { HelpTip } from "../components/map/Filter.tsx";
+import { Stats } from "../components/Stats.tsx";
 
 const TableContainer = styled.div`
   ${ScrollbarStyle};
@@ -155,34 +154,14 @@ const StyledHelpTip = styled(HelpTip)`
   margin: 0;
 `;
 
-const Highlight = styled.span`
-  color: ${MARKER_4};
-`;
-
 function Catalogue() {
-  const { filteredItems, filters } = useFilter();
+  const { filteredItems } = useFilter();
   const [sorting, setSorting] = useState<SortingState>([
     { id: "year", desc: false },
   ]);
   const [columnResizeMode] = useState<ColumnResizeMode>("onChange");
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
-
-  const { authorsCount, languagesCount, citiesCount } = useMemo(() => {
-    const authorsSet = new Set<string>();
-    const citiesSet = new Set<string>();
-    const languagesSet = new Set<string>();
-    filteredItems.forEach((item) => {
-      item.authors?.forEach((author) => authorsSet.add(author));
-      item.cities?.forEach((city) => citiesSet.add(city));
-      item.languages?.forEach((language) => languagesSet.add(language));
-    });
-    return {
-      authorsCount: authorsSet.size,
-      citiesCount: citiesSet.size,
-      languagesCount: languagesSet.size,
-    };
-  }, [filteredItems]);
 
   const handleScroll = () => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -342,10 +321,6 @@ function Catalogue() {
     sortDescFirst: false,
   });
 
-  const types = isEmpty(filters["type"])
-    ? Object.values(ItemTypes)
-    : filters["type"]?.map((a) => a.label);
-
   return (
     <Container style={{ width: "100%" }}>
       {showScrollTop && (
@@ -354,15 +329,7 @@ function Catalogue() {
         </ScrollToTopButton>
       )}
 
-      <Row>
-        <Text size={1}>
-          Listing <Highlight>{filteredItems.length}</Highlight>{" "}
-          {types && joinArr(types)} editions, by{" "}
-          <Highlight>{authorsCount}</Highlight> authors, in{" "}
-          <Highlight>{languagesCount}</Highlight> languages, from{" "}
-          <Highlight>{citiesCount}</Highlight> cities.
-        </Text>
-      </Row>
+      <Stats />
 
       <TableContainer>
         <StyledTable>
