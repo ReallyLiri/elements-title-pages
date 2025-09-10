@@ -25,6 +25,7 @@ import { IoWarning } from "react-icons/io5";
 import styled from "@emotion/styled";
 import Switch from "react-switch";
 import { LAND_COLOR, MARKER_3 } from "../utils/colors.ts";
+import { Stats } from "../components/Stats.tsx";
 
 const NoteLine = styled(Row)`
   opacity: 0.8;
@@ -145,6 +146,7 @@ function TitlePage() {
         </ScrollToTopButton>
       )}
       <Column minWidth="min(820px, 90%)">
+        <Stats />
         <Row gap={0.5}>
           Title Pages Experiment View{" "}
           <Switch

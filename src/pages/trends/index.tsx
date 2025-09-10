@@ -5,6 +5,7 @@ import { TrendsControls } from "./TrendsControls";
 import { TrendsPieChart } from "./TrendsPieChart";
 import { useTrendsData } from "./useTrendsData";
 import { IoWarning } from "react-icons/io5";
+import { Stats } from "../../components/Stats.tsx";
 
 const NoteLine = styled(Row)`
   opacity: 0.8;
@@ -26,6 +27,7 @@ export function Trends() {
   return (
     <Container>
       <Text size={1.5}>Editions Trends Over Time</Text>
+      <Stats verb="Analyzing" />
 
       <TrendsControls
         groupByOptions={groupByOptions}

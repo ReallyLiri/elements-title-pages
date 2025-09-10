@@ -14,8 +14,16 @@ import { openScan } from "../../../utils/dataUtils.ts";
 import ItemModal from "../modal/ItemModal.tsx";
 import { NO_AUTHOR, NO_CITY, NO_YEAR } from "../../../constants";
 import { joinArr } from "../../../utils/util.ts";
+import styled from "@emotion/styled";
 
 const HighlightedText = lazy(() => import("./HighlightedText.tsx"));
+
+const NoTitlePage = styled.div`
+  flex: 1;
+  text-align: center;
+  color: darkgray;
+  margin-top: calc(50% - 2.5rem);
+`;
 
 const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -87,11 +95,13 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
                       </div>
                     }
                   >
-                    <HighlightedText
-                      text={item.title}
-                      features={features || []}
-                      mapping={item.features}
-                    />
+                    {item.title && (
+                      <HighlightedText
+                        text={item.title}
+                        features={features || []}
+                        mapping={item.features}
+                      />
+                    )}
                     {item.imprint && (
                       <>
                         <hr style={{ opacity: 0.3 }} />
@@ -101,6 +111,9 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
                           mapping={item.features}
                         />
                       </>
+                    )}
+                    {!item.title && (
+                      <NoTitlePage>This edition has no title page.</NoTitlePage>
                     )}
                   </Suspense>
                 )}
