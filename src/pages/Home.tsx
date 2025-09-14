@@ -271,7 +271,7 @@ function Home() {
           onClick={() => navigate(CATALOGUE_ROUTE)}
           icon={<GiHolySymbol />}
           color={MARKER_5}
-          imageSrc="https://i.imgur.com/rumIeIz.jpeg"
+          imageSrc="/tps/Paris 1622_tp.jpeg"
           imageOnLeft={true}
           text={
             <div>
