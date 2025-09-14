@@ -405,7 +405,5 @@ export function openScan(item: Item) {
 }
 
 export function openImage(item: Item) {
-  return window
-    .open(item.imageUrl?.replace("i.imgur.com", "rimgo.catsarch.com"), "_blank")
-    ?.focus();
+  return window.open(item.imageUrl, "_blank")?.focus();
 }
