@@ -9,9 +9,12 @@ Bamberg,49.8910,10.8869,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Ho
 Basel,47.5072,7.5363,Old Swiss Confederacy,Old Swiss Confederacy,Old Swiss Confederacy,Old Swiss Confederacy,Old Swiss Confederacy,Switzerland
 Beijing,50.7,22.7,Ming Dynasty,Ming Dynasty,Ming Dynasty,Qing Dynasty,Qing Dynasty,China
 Bologna,44.3999,11.3333,Papal States,Papal States,Papal States,Papal States,Papal States,Italy
+Bordeaux,44.8378,-0.5792,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,France
 Brussels,50.8333,4.3333,Habsburg Netherlands,Habsburg Netherlands,Habsburg Netherlands,Spanish Netherlands,Spanish Netherlands,Belgium
 Cambridge,52.2053,0.1195,England,England,England,England,England,United Kingdom
 Cologne,50.9333,6.95,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Germany
+Delft,52.0116,4.3571,Habsburg Netherlands,Habsburg Netherlands,Dutch Republic,Dutch Republic,Dutch Republic,Netherlands
+Dijon,47.3220,5.0415,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,France
 Douai,50.3667,3.0167,Habsburg Netherlands,Habsburg Netherlands,Spanish Netherlands,Spanish Netherlands,Spanish Netherlands,France
 Ferrara,44.8333,11.3333,Papal States,Papal States,Papal States,Papal States,Papal States,Italy
 Florence,43.7667,11.25,Florence,Florence,Grand Duchy of Tuscany,Grand Duchy of Tuscany,Grand Duchy of Tuscany,Italy
@@ -43,13 +46,17 @@ Padua,45.4064,11.8768,Republic of Venice,Republic of Venice,Republic of Venice,R
 Paris,48.8566,2.3508,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,France
 Pesaro,43.7167,12.9167,Papal States,Papal States,Papal States,Papal States,Papal States,Italy
 Pisa,43.7167,10.4,Grand Duchy of Tuscany,Grand Duchy of Tuscany,Grand Duchy of Tuscany,Grand Duchy of Tuscany,Grand Duchy of Tuscany,Italy
+Pont-à-Mousson,48.8833,6.1167,Duchy of Lorraine,Duchy of Lorraine,Duchy of Lorraine,Duchy of Lorraine,Duchy of Lorraine,France
+Reims,49.2583,4.0317,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,France
 Rome,41.8944,12.4833,Papal States,Papal States,Papal States,Papal States,Papal States,Italy
 Rotterdam,51.7225,4.47917,Habsburg Netherlands,Habsburg Netherlands,Dutch Republic,Dutch Republic,Dutch Republic,Netherlands
 Rouen,49.4431,1.0993,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,France
+Salamanca,40.9667,-5.6667,Castile,Castile,Spain,Spain,Spain,Spain
 Seville,37.3889,-5.9833,Castile,Castile,Spain,Spain,Spain,Spain
 Siena,43.3333,11.3333,Republic of Siena,Republic of Siena,Duchy of Florence,Duchy of Florence,Grand Duchy of Tuscany,Italy
 Strasbourg,48.5833,7.75,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,France
 The Hague,52.0833,4.0,Habsburg Netherlands,Habsburg Netherlands,Dutch Republic,Dutch Republic,Dutch Republic,Netherlands
+Toulouse,43.6045,1.4440,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,France
 Tours,47.3941,0.6848,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,Kingdom of France,France
 Turin,45.0703,7.6869,Duchy of Savoy,Duchy of Savoy,Duchy of Savoy,Duchy of Savoy,Duchy of Savoy,Italy
 Urbino,43.4263,12.4360,Duchy of Urbino,Duchy of Urbino,Duchy of Urbino,Duchy of Urbino,Duchy of Urbino,Italy
@@ -59,4 +66,5 @@ Venice,45.4219,12.3266,Republic of Venice,Republic of Venice,Republic of Venice,
 Vicenza,45.5455,11.5470,Republic of Venice,Republic of Venice,Republic of Venice,Republic of Venice,Republic of Venice,Italy
 Vienna,48.2083,16.375,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Austria
 Wittenberg,51.5,12.6667,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Germany
-Würzburg,49.7833,9.8667,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Germany
+Würzburg,49.7833,9.8667,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Holy Roman Empire,Germany,
+Zurich,47.3769,8.5417,Old Swiss Confederacy,Old Swiss Confederacy,Old Swiss Confederacy,Old Swiss Confederacy,Old Swiss Confederacy,Switzerland
