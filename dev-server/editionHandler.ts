@@ -45,6 +45,7 @@ const addEditionToCsv = (edition: EditionRequestBody): void => {
     "author (normalized)": edition["author (normalized)"],
     title: edition.title,
     title_EN: edition.title_EN || "",
+    type: edition.type,
     "publisher (normalized)": edition["publisher (normalized)"],
     imprint: edition.imprint,
     imprint_EN: edition.imprint_EN || "",

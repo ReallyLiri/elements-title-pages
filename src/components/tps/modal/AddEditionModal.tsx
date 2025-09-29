@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Modal, ModalClose, ModalContent } from "./ModalComponents";
 import { addEdition, AddEditionRequest } from "../../../api/editionApi";
@@ -153,6 +153,26 @@ const SuccessMessage = styled.div`
   border-radius: 4px;
 `;
 
+const LAST_KEY_STORAGE_KEY = "addEditionModal_lastKey";
+
+const getSuggestedKey = (): string => {
+  const lastKey = localStorage.getItem(LAST_KEY_STORAGE_KEY);
+  if (!lastKey) return "";
+
+  const match = lastKey.match(/^(.+)-(\d+)$/);
+  if (match) {
+    const [, text, counter] = match;
+    const newCounter = parseInt(counter, 10) + 1;
+    return `${text}-${newCounter}`;
+  }
+
+  return lastKey;
+};
+
+const saveLastKey = (key: string): void => {
+  localStorage.setItem(LAST_KEY_STORAGE_KEY, key);
+};
+
 interface AddEditionModalProps {
   onClose: () => void;
 }
@@ -179,6 +199,17 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  useEffect(() => {
+    const suggestedKey = getSuggestedKey();
+    if (suggestedKey) {
+      setFormData((prev) => ({
+        ...prev,
+        key: suggestedKey,
+        tp_url: `/tps/${suggestedKey}_tp.png`,
+      }));
+    }
+  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -219,6 +250,7 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
 
     try {
       await addEdition(formData);
+      saveLastKey(formData.key);
       setSuccess(`Edition "${formData.key}" added successfully!`);
       setTimeout(() => {
         onClose();
@@ -382,7 +414,7 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
               <FormField className="full-width">
                 <Label>Title Page URL</Label>
                 <Input
-                  type="url"
+                  type="text"
                   name="tp_url"
                   value={formData.tp_url}
                   onChange={handleInputChange}
