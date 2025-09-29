@@ -374,21 +374,21 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
               </FormField>
 
               <FormField className="full-width">
-                <Label>Title (English)</Label>
-                <TextArea
-                  name="title_EN"
-                  value={formData.title_EN}
-                  onChange={handleInputChange}
-                />
-              </FormField>
-
-              <FormField className="full-width">
                 <Label className="required">Imprint</Label>
                 <TextArea
                   name="imprint"
                   value={formData.imprint}
                   onChange={handleInputChange}
                   required
+                />
+              </FormField>
+
+              <FormField className="full-width">
+                <Label>Title (English)</Label>
+                <TextArea
+                  name="title_EN"
+                  value={formData.title_EN}
+                  onChange={handleInputChange}
                 />
               </FormField>
 
