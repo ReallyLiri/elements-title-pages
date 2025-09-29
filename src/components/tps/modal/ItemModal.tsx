@@ -22,6 +22,7 @@ import {
 import { LAND_COLOR } from "../../../utils/colors.ts";
 import { joinArr } from "../../../utils/util.ts";
 import { NO_AUTHOR } from "../../../constants";
+import { NotesEditor } from "./NotesEditor.tsx";
 
 const HighlightedText = lazy(() => import("../features/HighlightedText.tsx"));
 
@@ -227,6 +228,7 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
             ))}
           {!features && <ItemInfo item={item} />}
         </ModalTextContainer>
+        {import.meta.env.DEV && <NotesEditor item={item} />}
       </ModalContent>
     </Modal>
   );

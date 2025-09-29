@@ -64,6 +64,7 @@ export type Item = {
   hasPrintersDevice: YesNoBool | null;
   fontTypes: string[];
   calligraphicFeatures: string | null;
+  notes: string | null;
 };
 
 export type RadioProps = {

@@ -35,7 +35,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@types/connect": "^3.4.38",
     "@types/lodash": "^4.17.17",
+    "@types/node": "^24.5.2",
     "@types/papaparse": "^5.3.16",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.5",

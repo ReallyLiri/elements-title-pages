@@ -284,6 +284,7 @@ export const loadEditionsData = (
                           )?.toLowerCase(),
                         )
                       : null,
+                    notes: raw["notes"] as string | null,
                     otherNamesClassification: hasTitle
                       ? ((raw["other_names_classification"] as string | null)
                           ?.split(", ")
@@ -405,5 +406,5 @@ export function openScan(item: Item) {
 }
 
 export function openImage(item: Item) {
-  return window.open(item.imageUrl, "_blank")?.focus();
+  return window.open(item.imageUrl!, "_blank")?.focus();
 }
