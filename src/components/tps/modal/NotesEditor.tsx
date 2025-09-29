@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { FaSave, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { Item } from "../../../types";
 import { LAND_COLOR } from "../../../utils/colors.ts";
-import { saveNote } from "../../../utils/notesApi.ts";
+import { saveNote } from "../../../api/notesApi.ts";
 
 const NotesSection = styled.div`
   margin-top: 1rem;

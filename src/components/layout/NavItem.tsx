@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
-import { FaExternalLinkAlt } from "react-icons/fa";
+import { FaExternalLinkAlt, FaPlus } from "react-icons/fa";
 import { css } from "@emotion/react";
 import {
   CATALOGUE_ROUTE,
@@ -10,6 +10,8 @@ import {
   TRENDS_ROUTE,
 } from "./routes.ts";
 import { MACTUTOR_URL } from "../../constants";
+import { useState } from "react";
+import { AddEditionModal } from "../tps/modal/AddEditionModal.tsx";
 
 const StyledNavItem = styled.li<{ active: boolean; mobile: boolean }>`
   a {
@@ -38,6 +40,42 @@ const StyledNavItem = styled.li<{ active: boolean; mobile: boolean }>`
 const StyledExternalIcon = styled(FaExternalLinkAlt)`
   font-size: 0.8rem;
   margin-left: 0.5rem;
+`;
+
+const DevButton = styled.button<{ mobile: boolean }>`
+  background: #7f8c8d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background: #6c7b7d;
+  }
+
+  ${({ mobile }) =>
+    mobile &&
+    css`
+      width: 100%;
+      justify-content: center;
+      margin-top: 0.5rem;
+    `};
+`;
+
+const DevNavItem = styled.li<{ mobile: boolean }>`
+  ${({ mobile }) =>
+    mobile &&
+    css`
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #555;
+    `};
 `;
 
 interface NavItemProps {
@@ -88,46 +126,61 @@ const NavList = styled.ul<{ mobile: boolean }>`
 
 export const NavItems = ({ mobile }: { mobile: boolean }) => {
   const location = useLocation();
+  const [showCreateModal, setShowCreateModal] = useState(false);
+
   return (
-    <NavList mobile={mobile}>
-      <NavItem
-        to={HOME_ROUTE}
-        active={location.pathname === HOME_ROUTE}
-        mobile={mobile}
-      >
-        Home
-      </NavItem>
-      <NavItem
-        to={CATALOGUE_ROUTE}
-        active={location.pathname === CATALOGUE_ROUTE}
-        mobile={mobile}
-      >
-        Catalogue
-      </NavItem>
-      <NavItem
-        to={TITLE_PAGES_ROUTE}
-        active={location.pathname === TITLE_PAGES_ROUTE}
-        mobile={mobile}
-      >
-        Editions Gallery
-      </NavItem>
-      <NavItem
-        to={TRENDS_ROUTE}
-        active={location.pathname === TRENDS_ROUTE}
-        mobile={mobile}
-      >
-        Explorer
-      </NavItem>
-      <NavItem
-        to={MAP_ROUTE}
-        active={location.pathname === MAP_ROUTE}
-        mobile={mobile}
-      >
-        Map
-      </NavItem>
-      <NavItem to={MACTUTOR_URL} active={false} external mobile={mobile}>
-        MacTutor Index Graph
-      </NavItem>
-    </NavList>
+    <>
+      <NavList mobile={mobile}>
+        <NavItem
+          to={HOME_ROUTE}
+          active={location.pathname === HOME_ROUTE}
+          mobile={mobile}
+        >
+          Home
+        </NavItem>
+        <NavItem
+          to={CATALOGUE_ROUTE}
+          active={location.pathname === CATALOGUE_ROUTE}
+          mobile={mobile}
+        >
+          Catalogue
+        </NavItem>
+        <NavItem
+          to={TITLE_PAGES_ROUTE}
+          active={location.pathname === TITLE_PAGES_ROUTE}
+          mobile={mobile}
+        >
+          Editions Gallery
+        </NavItem>
+        <NavItem
+          to={TRENDS_ROUTE}
+          active={location.pathname === TRENDS_ROUTE}
+          mobile={mobile}
+        >
+          Explorer
+        </NavItem>
+        <NavItem
+          to={MAP_ROUTE}
+          active={location.pathname === MAP_ROUTE}
+          mobile={mobile}
+        >
+          Map
+        </NavItem>
+        <NavItem to={MACTUTOR_URL} active={false} external mobile={mobile}>
+          MacTutor Index Graph
+        </NavItem>
+        {import.meta.env.DEV && (
+          <DevNavItem mobile={mobile}>
+            <DevButton mobile={mobile} onClick={() => setShowCreateModal(true)}>
+              <FaPlus />
+              Add Edition
+            </DevButton>
+          </DevNavItem>
+        )}
+      </NavList>
+      {showCreateModal && (
+        <AddEditionModal onClose={() => setShowCreateModal(false)} />
+      )}
+    </>
   );
 };

@@ -2,6 +2,10 @@ import { defineConfig, Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import { isNotesRequest, handleNotesRequest } from "./dev-server/notesHandler";
+import {
+  isEditionRequest,
+  handleEditionRequest,
+} from "./dev-server/editionHandler";
 import type { ViteDevServer } from "vite";
 import type { Connect } from "vite";
 import type { IncomingMessage, ServerResponse } from "http";
@@ -18,6 +22,8 @@ function devApiPlugin(): Plugin {
         ) => {
           if (isNotesRequest(req)) {
             await handleNotesRequest(req, res);
+          } else if (isEditionRequest(req)) {
+            await handleEditionRequest(req, res);
           } else {
             next();
           }
