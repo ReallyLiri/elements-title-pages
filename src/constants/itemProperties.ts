@@ -122,7 +122,7 @@ export const itemProperties: {
     isTitlePageImageFeature: true,
   },
   titlePageNumberOfTypes: {
-    displayName: "Number of Font Types on Title Page",
+    displayName: "Number of Types on Title Page",
     isTitlePageImageFeature: true,
     customCompareFn: ((a: string | null, b: string | null): number => {
       if (a?.includes("Digital")) {
@@ -145,7 +145,7 @@ export const itemProperties: {
     isTitlePageImageFeature: true,
   },
   fontTypes: {
-    displayName: "Font Types Present on Title Page",
+    displayName: "Types Present on Title Page",
     isTitlePageImageFeature: true,
     isArray: true,
   },
