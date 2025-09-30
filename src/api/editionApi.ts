@@ -1,14 +1,14 @@
 export interface AddEditionRequest {
-  key: string;
-  year: string;
-  city: string;
-  language: string;
-  "author (normalized)": string;
-  title: string;
+  key?: string;
+  year?: string;
+  city?: string;
+  language?: string;
+  "author (normalized)"?: string;
+  title?: string;
   title_EN?: string;
-  type: "elements" | "secondary";
-  "publisher (normalized)": string;
-  imprint: string;
+  type?: "elements" | "secondary";
+  "publisher (normalized)"?: string;
+  imprint?: string;
   imprint_EN?: string;
   ustc_id?: string;
   scan_url?: string;

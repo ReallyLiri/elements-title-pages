@@ -223,26 +223,12 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
   };
 
   const isFormValid = () => {
-    return (
-      formData.key.trim() &&
-      formData.year.trim() &&
-      formData.city.trim() &&
-      formData.language.trim() &&
-      formData["author (normalized)"].trim() &&
-      formData.title.trim() &&
-      formData.type &&
-      formData["publisher (normalized)"].trim() &&
-      formData.imprint.trim()
-    );
+    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!isFormValid()) {
-      setError("Please fill in all required fields");
-      return;
-    }
 
     setIsSubmitting(true);
     setError(null);
@@ -273,18 +259,17 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
           <form onSubmit={handleSubmit}>
             <FormGrid>
               <FormField>
-                <Label className="required">Key</Label>
+                <Label>Key</Label>
                 <Input
                   type="text"
                   name="key"
                   value={formData.key}
                   onChange={handleInputChange}
-                  required
                 />
               </FormField>
 
               <FormField>
-                <Label className="required">Year</Label>
+                <Label>Year</Label>
                 <Input
                   type="number"
                   name="year"
@@ -292,39 +277,35 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
                   max={1750}
                   value={formData.year}
                   onChange={handleInputChange}
-                  required
                 />
               </FormField>
 
               <FormField>
-                <Label className="required">City</Label>
+                <Label>City</Label>
                 <Input
                   type="text"
                   name="city"
                   value={formData.city}
                   onChange={handleInputChange}
-                  required
                 />
               </FormField>
 
               <FormField>
-                <Label className="required">Language</Label>
+                <Label>Language</Label>
                 <Input
                   type="text"
                   name="language"
                   value={formData.language}
                   onChange={handleInputChange}
-                  required
                 />
               </FormField>
 
               <FormField>
-                <Label className="required">Type</Label>
+                <Label>Type</Label>
                 <Select
                   name="type"
                   value={formData.type}
                   onChange={handleInputChange}
-                  required
                 >
                   <option value="secondary">Secondary</option>
                   <option value="elements">Elements</option>
@@ -342,44 +323,40 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
               </FormField>
 
               <FormField className="full-width">
-                <Label className="required">Author (Normalized)</Label>
+                <Label>Author (Normalized)</Label>
                 <Input
                   type="text"
                   name="author (normalized)"
                   value={formData["author (normalized)"]}
                   onChange={handleInputChange}
-                  required
                 />
               </FormField>
 
               <FormField className="full-width">
-                <Label className="required">Publisher (Normalized)</Label>
+                <Label>Publisher (Normalized)</Label>
                 <Input
                   type="text"
                   name="publisher (normalized)"
                   value={formData["publisher (normalized)"]}
                   onChange={handleInputChange}
-                  required
                 />
               </FormField>
 
               <FormField className="full-width">
-                <Label className="required">Title</Label>
+                <Label>Title</Label>
                 <TextArea
                   name="title"
                   value={formData.title}
                   onChange={handleInputChange}
-                  required
                 />
               </FormField>
 
               <FormField className="full-width">
-                <Label className="required">Imprint</Label>
+                <Label>Imprint</Label>
                 <TextArea
                   name="imprint"
                   value={formData.imprint}
                   onChange={handleInputChange}
-                  required
                 />
               </FormField>
 
