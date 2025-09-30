@@ -263,7 +263,7 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
   };
 
   return (
-    <Modal onClick={onClose}>
+    <Modal>
       <ModalContent onClick={(e) => e.stopPropagation()} hasImage={false}>
         <ModalClose title="Close" onClick={onClose}>
           ✕
