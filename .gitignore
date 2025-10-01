@@ -28,3 +28,5 @@ credentials.json
 out
 
 __pycache__
+
+pdf/docs
