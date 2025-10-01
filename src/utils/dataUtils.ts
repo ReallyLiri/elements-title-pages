@@ -272,9 +272,7 @@ export function normalizeAncientPersona(name: string): string | null {
   )
     return "Christopher Clavius";
 
-  if (contains("cleomedes")) return "Cleomedes";
-
-  if (contains("cleonidis")) return "Cleonides";
+  if (contains("cleomedes", "cleonidis")) return "Cleomedes";
 
   if (
     contains(
