@@ -55,146 +55,159 @@ function parseRangeIfNeeded(a: Range | string): Range {
 export const itemProperties: {
   [key: string]: ItemProperty;
 } = {
-  type: {
-    displayName: "Book Classification",
+  ...{
+    type: {
+      displayName: "Book Classification",
+    },
+    languages: {
+      displayName: "Languages",
+      isArray: true,
+      groupByJoinArray: true,
+    },
+    cities: {
+      displayName: "Cities",
+      isArray: true,
+      customCompareFn: ((a: string, b: string) => {
+        if (a === FLOATING_CITY) return -1;
+        if (b === FLOATING_CITY) return 1;
+        return a.localeCompare(b, undefined, { sensitivity: "base" });
+      }) as (a: unknown, b: unknown) => number,
+      groupByJoinArray: true,
+    },
+    authors: {
+      displayName: "Authors",
+      isArray: true,
+      groupByJoinArray: true,
+    },
+    elementsBooks: {
+      displayName: "Elements Books (ranges)",
+      isArray: true,
+      notFilterable: true,
+      customCompareFn: ((a: Range | string, b: Range | string) => {
+        const rangeA: Range = parseRangeIfNeeded(a);
+        const rangeB: Range = parseRangeIfNeeded(b);
+        if (rangeA.start === rangeB.start) {
+          return rangeA.end - rangeB.end;
+        }
+        return rangeA.start - rangeB.start;
+      }) as (a: unknown, b: unknown) => number,
+    },
+    elementsBooksExpanded: {
+      displayName: "Elements Books",
+      isArray: true,
+      customCompareFn: ((a: string, b: string): number => {
+        if (a === "None") return 1;
+        if (b === "None") return -1;
+        const numA = parseInt(a);
+        const numB = parseInt(b);
+        return numA - numB;
+      }) as (a: unknown, b: unknown) => number,
+    },
+    format: {
+      displayName: "Edition Format",
+      customCompareFn: formatCompare as (a: unknown, b: unknown) => number,
+    },
+    volumesCount: { displayName: "Number of Volumes" },
+    additionalContent: {
+      displayName: "Additional Content",
+      isArray: true,
+    },
+    class: { displayName: "Wardhaugh Class" },
+    hasTitle: { displayName: "Has Title Page" },
+    colorInTitle: {
+      displayName: "Colors on Title Page",
+      isTitlePageImageFeature: true,
+    },
+    titlePageDesign: {
+      displayName: "Title Page Design",
+      isTitlePageImageFeature: true,
+    },
+    titlePageNumberOfTypes: {
+      displayName: "Number of Types on Title Page",
+      isTitlePageImageFeature: true,
+      customCompareFn: ((a: string | null, b: string | null): number => {
+        if (a?.includes("Digital")) {
+          return 1;
+        }
+        if (b?.includes("Digital")) {
+          return -1;
+        }
+        const aNum = parseInt(a || "0");
+        const bNum = parseInt(b || "0");
+        return aNum - bNum;
+      }) as (a: unknown, b: unknown) => number,
+    },
+    titlePageFrameType: {
+      displayName: "Frame Type of Title Page",
+      isTitlePageImageFeature: true,
+    },
+    titlePageEngraving: {
+      displayName: "Title Page Engraving",
+      isTitlePageImageFeature: true,
+    },
+    fontTypes: {
+      displayName: "Types Present on Title Page",
+      isTitlePageImageFeature: true,
+      isArray: true,
+    },
+    otherNamesClassification: {
+      displayName: "Other Educational Authorities Mentioned on Title Page",
+      isArray: true,
+      notFilterable: true,
+      isTitlePageTextFeature: true,
+    },
+    hasIntendedAudience: {
+      displayName: "Intended Audience Mentioned on Title Page",
+      notFilterable: true,
+      isTitlePageTextFeature: true,
+    },
+    hasPatronageDedication: {
+      displayName: "Patronage Dedication Present on Title Page",
+      notFilterable: true,
+      isTitlePageTextFeature: true,
+    },
+    hasAdapterAttribution: {
+      displayName: "Adapter Attribution Present on Title Page",
+      notFilterable: true,
+      isTitlePageTextFeature: true,
+    },
+    hasAdapterDescription: {
+      displayName: "Adapter Description Present on Title Page",
+      notFilterable: true,
+      isTitlePageTextFeature: true,
+    },
+    hasPublishingPrivileges: {
+      displayName: "Publishing Privileges Present on Title Page",
+      notFilterable: true,
+      isTitlePageTextFeature: true,
+    },
+    hasGreekDesignation: {
+      displayName: "Greek Designation Present on Title Page",
+      notFilterable: true,
+      isTitlePageTextFeature: true,
+    },
+    explicitLanguageReferences: {
+      displayName: "Explicit Language References on Title Page",
+      isArray: true,
+      notFilterable: true,
+      isTitlePageTextFeature: true,
+    },
+    institutions: {
+      displayName: "Institutions Mentioned on Title Page",
+      isArray: true,
+      notFilterable: true,
+      isTitlePageTextFeature: true,
+    },
   },
-  languages: {
-    displayName: "Languages",
-    isArray: true,
-    groupByJoinArray: true,
-  },
-  cities: {
-    displayName: "Cities",
-    isArray: true,
-    customCompareFn: ((a: string, b: string) => {
-      if (a === FLOATING_CITY) return -1;
-      if (b === FLOATING_CITY) return 1;
-      return a.localeCompare(b, undefined, { sensitivity: "base" });
-    }) as (a: unknown, b: unknown) => number,
-    groupByJoinArray: true,
-  },
-  authors: {
-    displayName: "Authors",
-    isArray: true,
-    groupByJoinArray: true,
-  },
-  elementsBooks: {
-    displayName: "Elements Books (ranges)",
-    isArray: true,
-    notFilterable: true,
-    customCompareFn: ((a: Range | string, b: Range | string) => {
-      const rangeA: Range = parseRangeIfNeeded(a);
-      const rangeB: Range = parseRangeIfNeeded(b);
-      if (rangeA.start === rangeB.start) {
-        return rangeA.end - rangeB.end;
+  ...(import.meta.env.DEV
+    ? {
+        tp_study_corpus: {
+          displayName: "Title Page Study Corpus",
+        },
+        otherNames: {
+          displayName: "Mentioned Educational Authority in Title Page",
+          isArray: true,
+        },
       }
-      return rangeA.start - rangeB.start;
-    }) as (a: unknown, b: unknown) => number,
-  },
-  elementsBooksExpanded: {
-    displayName: "Elements Books",
-    isArray: true,
-    customCompareFn: ((a: string, b: string): number => {
-      if (a === "None") return 1;
-      if (b === "None") return -1;
-      const numA = parseInt(a);
-      const numB = parseInt(b);
-      return numA - numB;
-    }) as (a: unknown, b: unknown) => number,
-  },
-  format: {
-    displayName: "Edition Format",
-    customCompareFn: formatCompare as (a: unknown, b: unknown) => number,
-  },
-  volumesCount: { displayName: "Number of Volumes" },
-  additionalContent: {
-    displayName: "Additional Content",
-    isArray: true,
-  },
-  class: { displayName: "Wardhaugh Class" },
-  hasTitle: { displayName: "Has Title Page" },
-  colorInTitle: {
-    displayName: "Colors on Title Page",
-    isTitlePageImageFeature: true,
-  },
-  titlePageDesign: {
-    displayName: "Title Page Design",
-    isTitlePageImageFeature: true,
-  },
-  titlePageNumberOfTypes: {
-    displayName: "Number of Types on Title Page",
-    isTitlePageImageFeature: true,
-    customCompareFn: ((a: string | null, b: string | null): number => {
-      if (a?.includes("Digital")) {
-        return 1;
-      }
-      if (b?.includes("Digital")) {
-        return -1;
-      }
-      const aNum = parseInt(a || "0");
-      const bNum = parseInt(b || "0");
-      return aNum - bNum;
-    }) as (a: unknown, b: unknown) => number,
-  },
-  titlePageFrameType: {
-    displayName: "Frame Type of Title Page",
-    isTitlePageImageFeature: true,
-  },
-  titlePageEngraving: {
-    displayName: "Title Page Engraving",
-    isTitlePageImageFeature: true,
-  },
-  fontTypes: {
-    displayName: "Types Present on Title Page",
-    isTitlePageImageFeature: true,
-    isArray: true,
-  },
-  otherNamesClassification: {
-    displayName: "Other Educational Authorities Mentioned on Title Page",
-    isArray: true,
-    notFilterable: true,
-    isTitlePageTextFeature: true,
-  },
-  hasIntendedAudience: {
-    displayName: "Intended Audience Mentioned on Title Page",
-    notFilterable: true,
-    isTitlePageTextFeature: true,
-  },
-  hasPatronageDedication: {
-    displayName: "Patronage Dedication Present on Title Page",
-    notFilterable: true,
-    isTitlePageTextFeature: true,
-  },
-  hasAdapterAttribution: {
-    displayName: "Adapter Attribution Present on Title Page",
-    notFilterable: true,
-    isTitlePageTextFeature: true,
-  },
-  hasAdapterDescription: {
-    displayName: "Adapter Description Present on Title Page",
-    notFilterable: true,
-    isTitlePageTextFeature: true,
-  },
-  hasPublishingPrivileges: {
-    displayName: "Publishing Privileges Present on Title Page",
-    notFilterable: true,
-    isTitlePageTextFeature: true,
-  },
-  hasGreekDesignation: {
-    displayName: "Greek Designation Present on Title Page",
-    notFilterable: true,
-    isTitlePageTextFeature: true,
-  },
-  explicitLanguageReferences: {
-    displayName: "Explicit Language References on Title Page",
-    isArray: true,
-    notFilterable: true,
-    isTitlePageTextFeature: true,
-  },
-  institutions: {
-    displayName: "Institutions Mentioned on Title Page",
-    isArray: true,
-    notFilterable: true,
-    isTitlePageTextFeature: true,
-  },
+    : {}),
 };

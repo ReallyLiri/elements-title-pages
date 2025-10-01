@@ -170,6 +170,273 @@ function parseInstitutions(institutions: string) {
     .map((lang) => startCase(lang.toLowerCase()));
 }
 
+function stripDiacritics(str: string): string {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+export function normalizeAncientPersona(name: string): string | null {
+  const contains = (...opts: string[]) => opts.some((n) => name.includes(n));
+
+  if (
+    contains(
+      "archimedes",
+      "archimede",
+      "archimedis",
+      "archimede.",
+      "archimede",
+      "d'archimedes",
+      "archimedes",
+      "archimed",
+      "archimede",
+      "archimede",
+      "archimedes",
+    ) ||
+    contains("archimede", "d’archimedes", "d'archimedes", "archimede") ||
+    /ἀρχιμήδη|αρχιμηδη|archimede/.test(name)
+  )
+    return "Archimedes";
+
+  if (contains("avtolyci", "autolyc", "autolycus"))
+    return "Autolycus of Pitane";
+
+  if (contains("alexander aphrodiseus", "alexander aphrodis", "aphrodisias"))
+    return "Alexander of Aphrodisias";
+
+  if (contains("apollonij", "apollonius", "apollonio"))
+    return "Apollonius of Perga";
+
+  if (contains("aristarchi sami", "aristarchus", "aristarco"))
+    return "Aristarchus of Samos";
+
+  if (
+    contains(
+      "aristote",
+      "aristotele",
+      "aristoteleam",
+      "aristoteles",
+      "aristotelis",
+      "d’aristote",
+      "d'aristote",
+      "πλατωνος",
+    ) ||
+    /ἀριστοτε/.test(name)
+  )
+    return "Aristotle";
+
+  if (contains("athenagorae philosophi", "athenagoras"))
+    return "Athenagoras of Athens";
+
+  if (contains("barlaam")) return "Barlaam of Seminara";
+
+  if (
+    contains(
+      "zamberti",
+      "zamberto",
+      "bartholomaei zamberti",
+      "bartholomæi zamberti",
+      "bartholamæi zamberti",
+    )
+  )
+    return "Bartholomeo Zamberti";
+
+  if (
+    contains("batholomaeo veneto", "batholomæo veneto", "à bartholomæo veneto")
+  )
+    return "Bartolomeo Veneto";
+
+  if (contains("boetii", "boetij", "boethius", "boetius")) return "Boethius";
+
+  if (contains("boneti latensis", "boni latensis")) return "Bonetus Latensis";
+
+  if (
+    contains(
+      "campane",
+      "campani",
+      "campani galli transalpini",
+      "campani galli",
+      "campani ",
+    )
+  )
+    return "Campanus of Novara";
+
+  if (contains("candallae", "fr. flussatis candallae", "flussas"))
+    return "François de Foix de Candalle";
+
+  if (
+    contains(
+      "christophoro clavio",
+      "r.p. christophori clauij",
+      "clavius",
+      "clauij",
+    )
+  )
+    return "Christopher Clavius";
+
+  if (contains("cleomedes")) return "Cleomedes";
+
+  if (contains("cleonidis")) return "Cleonides";
+
+  if (
+    contains(
+      "commandine",
+      "federici commandini",
+      "federici commandini",
+      "federici commandini",
+      "fededici commandini",
+      "commandini",
+    )
+  )
+    return "Federico Commandino";
+
+  if (contains("copernican")) return "Nicolaus Copernicus";
+
+  if (contains("galileo", "del galileo", "galilei")) return "Galileo Galilei";
+
+  if (contains("torricelli")) return "Evangelista Torricelli";
+
+  if (contains("eutocij", "eutocius")) return "Eutocius of Ascalon";
+
+  if (
+    contains(
+      "françois viete",
+      "mr. viete",
+      "de l'illustre f. viete",
+      "viete",
+      "viète",
+    )
+  )
+    return "François Viète";
+
+  if (contains("fabrice mordente", "mordente")) return "Fabrizio Mordente";
+
+  if (contains("galenus")) return "Galen";
+
+  if (contains("gilberti porretae", "porretae")) return "Gilbert de la Porrée";
+
+  if (
+    contains(
+      "henrichvs loritvs glareanvs",
+      "henricvs loritvs glareanvs",
+      "glareanus",
+    )
+  )
+    return "Henricus Glareanus";
+
+  if (
+    contains(
+      "heronis alexandrini",
+      "heronis alexandrini",
+      "heronis alexandrini".replace("i", "i"),
+    ) ||
+    contains("heronis alexandrini", "heronis alexandrini")
+  )
+    // resilience
+    return "Hero of Alexandria";
+  if (contains("ηρωνος αλεξανδρεως", "ηρωνος", "αλεξανδρεως"))
+    return "Hero of Alexandria";
+
+  if (
+    contains("hypsiclis alexandrini", "hypsiclis", "hypsiclem", "hypsi. alex.")
+  )
+    return "Hypsicles of Alexandria";
+
+  if (contains("iacobi peletarii cenom.", "peletarii", "peletier"))
+    return "Jacques Peletier";
+
+  if (contains("isaaci monachi")) return "Isaac Argyros";
+
+  if (contains("isidorvm", "isidore")) return "Isidore of Seville";
+
+  if (contains("ioannis murmelij", "murmelij", "murmelius"))
+    return "Johannes Murmellius";
+
+  if (contains("john dee", "m. i. dee", "i. dee", "dee of london"))
+    return "John Dee";
+
+  if (contains("marinus", "marini dialectici")) return "Marinus of Neapolis";
+
+  if (contains("martianvs rota")) return "Martianus Rota";
+
+  if (contains("maurolyci", "mavrolyci", "maurolico"))
+    return "Francesco Maurolico";
+
+  if (contains("menelai", "menelaus")) return "Menelaus of Alexandria";
+
+  if (contains("nicephori", "nicephorus")) return "Nicephorus";
+
+  if (contains("procli", "proclus", "πρόκλου")) return "Proclus";
+
+  if (contains("pappi mechanici", "pappi", "pappus"))
+    return "Pappus of Alexandria";
+
+  if (
+    contains(
+      "platone",
+      "platus",
+      "πλάτων",
+      "πλατων",
+      "πλάτωνος",
+      "plato",
+      "γλάπτων",
+    )
+  )
+    return "Plato";
+
+  if (contains("pythagorean", "pytagorean", "πυθαγόρας", "γυπαγόρας"))
+    return "Pythagoras";
+
+  if (contains("robert hves", "robert hues")) return "Robert Hues";
+
+  // Rhazes
+  if (contains("rhazes")) return "Abu Bakr al-Razi";
+
+  if (contains("rodolphi agricolae")) return "Rodolphus Agricola";
+
+  if (contains("stevin")) return "Simon Stevin";
+
+  if (contains("sacrobosco")) return "Johannes de Sacrobosco";
+
+  if (contains("scipio vegius")) return "Scipione Vizzani";
+
+  if (contains("theodosii", "theodosij")) return "Theodosius of Bithynia";
+
+  if (
+    contains(
+      "theonis alexandrini",
+      "theonis",
+      "theon",
+      "θεωνος",
+      "θεῶνος",
+      "θέωνος",
+    )
+  )
+    return "Theon of Alexandria";
+
+  if (contains("timeus", "timaeus")) return "Timaeus of Locri";
+
+  if (contains("zamberti")) return "Bartholomeo Zamberti";
+
+  return null;
+}
+
+function parseOtherNames(otherNames: string) {
+  return otherNames
+    .split(",")
+    .map((s) =>
+      stripDiacritics(s)
+        .replaceAll("\n", "")
+        .replace(/\s*-\s*/, "")
+        .replace(/[()]/g, "")
+        .replace(/\u017F/g, "s") // long s → s (e.g., Monſieur)
+        .replace(/[’‘`´]/g, "'") // unify apostrophes
+        .toLowerCase()
+        .trim(),
+    )
+    .filter(Boolean)
+    .map(normalizeAncientPersona)
+    .filter(Boolean);
+}
+
 function mapOtherName(s: string): string {
   switch (s) {
     case "contemporary":
@@ -245,6 +512,14 @@ export const loadEditionsData = (
                           : raw["title"] !== "?"
                             ? "No"
                             : "Unknown",
+
+                    tp_study_corpus:
+                      Number(raw["year"]) <= 1700 &&
+                      raw["language"] !== "CHINESE" &&
+                      raw["title"] &&
+                      raw["title"] !== "?"
+                        ? "Yes"
+                        : "No",
                     colorInTitle: hasTitleImage
                       ? raw["has_red"] === "True"
                         ? "Black and Red"
@@ -327,6 +602,11 @@ export const loadEditionsData = (
                     institutions: hasTitle
                       ? parseInstitutions(
                           (raw["INSTITUTIONS"] as string | null) || "",
+                        )
+                      : null,
+                    otherNames: hasTitle
+                      ? parseOtherNames(
+                          (raw["OTHER NAMES"] as string | null) || "",
                         )
                       : null,
                     features: Object.keys(FeatureToColumnName).reduce(
