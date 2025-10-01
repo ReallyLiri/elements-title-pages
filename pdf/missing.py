@@ -2,6 +2,7 @@
 
 import csv
 import os
+import re
 from urllib.parse import urlparse
 from collections import defaultdict
 
@@ -10,6 +11,35 @@ CSV_FILES = [
     'public/docs/EiP-secondary.csv'
 ]
 PDF_OUTPUT_DIR = 'pdf/docs'
+GOOGLE_BOOKS_PATTERN = r'/books/edition/([^/]+)/([^/?]+)'
+GOOGLE_BOOKS_DOWNLOAD_URL = 'https://{netloc}/books/download/{name}.pdf?id={book_id}&output=pdf'
+
+
+def convert_google_books_url(url):
+    if not url:
+        return None
+
+    parsed = urlparse(url)
+    if 'google' not in parsed.netloc:
+        return None
+
+    match = re.search(GOOGLE_BOOKS_PATTERN, url)
+    if not match:
+        return None
+
+    name, book_id = match.groups()
+    return GOOGLE_BOOKS_DOWNLOAD_URL.format(netloc=parsed.netloc, name=name, book_id=book_id)
+
+
+def convert_books_url(url):
+    if not url:
+        return None
+
+    parsed = urlparse(url)
+    if 'google' in parsed.netloc:
+        return convert_google_books_url(url)
+
+    return None
 
 
 def get_domain(url):
@@ -51,7 +81,9 @@ def main():
 
                 if not os.path.exists(pdf_path):
                     domain = get_domain(scan_url)
-                    missing_by_domain[domain].append(f"{key} :: {scan_url}")
+                    download_url = convert_books_url(scan_url)
+                    display_url = download_url if download_url else scan_url
+                    missing_by_domain[domain].append(f"{key} :: {display_url}")
 
     for domain in sorted(missing_by_domain.keys()):
         print(f"\n{domain}:")
