@@ -43,6 +43,11 @@ export const FiltersGroup = ({
             .sort(
               config.customCompareFn ||
                 ((a, b) => {
+                  if (field === "authors") {
+                    return authorDisplayName(a as string).localeCompare(
+                      authorDisplayName(b as string),
+                    );
+                  }
                   if (typeof a === "string" && typeof b === "string") {
                     return a.localeCompare(b);
                   }

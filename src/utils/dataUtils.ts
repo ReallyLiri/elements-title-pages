@@ -391,11 +391,52 @@ export const loadCitiesAsync = async (): Promise<Record<string, Point>> => {
 
 export const authorDisplayName = (author: string) => {
   author = author.replace("(?)", "").replace("?", "").trim();
-  const parts = author.split(" ");
-  if (parts.length == 1) {
-    return author;
+  const parts = author.split(/\s+/).filter(Boolean);
+  if (parts.length === 1) return author;
+
+  const separators = [
+    "de",
+    "la",
+    "del",
+    "della",
+    "di",
+    "da",
+    "do",
+    "dos",
+    "das",
+    "du",
+    "van",
+    "von",
+    "der",
+    "den",
+    "ter",
+    "ten",
+    "op",
+    "af",
+    "al",
+    "le",
+    "el",
+    "of",
+  ];
+  const lowerParts = parts.map((p) => p.toLowerCase());
+
+  let sepIndex = -1;
+  for (let i = 1; i < lowerParts.length; i++) {
+    if (separators.includes(lowerParts[i])) {
+      sepIndex = i;
+      break;
+    }
   }
-  return `${parts.slice(1).join(" ").trim()}, ${parts[0]}`;
+
+  if (sepIndex !== -1) {
+    const lastName = parts.slice(sepIndex).join(" ").trim();
+    const firstNames = parts.slice(0, sepIndex).join(" ").trim();
+    return `${lastName}, ${firstNames}`;
+  } else {
+    const lastName = parts[parts.length - 1];
+    const firstNames = parts.slice(0, -1).join(" ").trim();
+    return `${lastName}, ${firstNames}`;
+  }
 };
 
 export function openScan(item: Item) {

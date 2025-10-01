@@ -153,6 +153,35 @@ const SuccessMessage = styled.div`
   border-radius: 4px;
 `;
 
+const RadioGroup = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+`;
+
+const RadioOption = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+`;
+
+const FileInput = styled.input`
+  padding: 0.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  background-color: #fafafa;
+  color: black;
+
+  &:focus {
+    outline: none;
+    border-color: #74b9ff;
+    background-color: white;
+  }
+`;
+
 const LAST_KEY_STORAGE_KEY = "addEditionModal_lastKey";
 
 const getSuggestedKey = (): string => {
@@ -199,6 +228,8 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [useImageUpload, setUseImageUpload] = useState(false);
 
   useEffect(() => {
     const suggestedKey = getSuggestedKey();
@@ -222,6 +253,30 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
     setSuccess(null);
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setSelectedFile(file);
+    setError(null);
+    setSuccess(null);
+  };
+
+  const handleImageUploadToggle = (useUpload: boolean) => {
+    setUseImageUpload(useUpload);
+    if (useUpload) {
+      setFormData((prev) => ({ ...prev, tp_url: "" }));
+    } else {
+      setSelectedFile(null);
+      if (formData.key) {
+        setFormData((prev) => ({
+          ...prev,
+          tp_url: `/tps/${formData.key}_tp.png`,
+        }));
+      }
+    }
+    setError(null);
+    setSuccess(null);
+  };
+
   const isFormValid = () => {
     return true;
   };
@@ -229,13 +284,35 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-
     setIsSubmitting(true);
     setError(null);
     setSuccess(null);
 
     try {
-      await addEdition(formData);
+      const finalFormData = { ...formData };
+
+      if (useImageUpload && selectedFile) {
+        const uploadFormData = new FormData();
+        uploadFormData.append("file", selectedFile);
+        uploadFormData.append("key", formData.key);
+
+        const uploadResponse = await fetch("/api/upload-image", {
+          method: "POST",
+          body: uploadFormData,
+        });
+
+        if (!uploadResponse.ok) {
+          throw new Error(
+            `Failed to upload image: ${uploadResponse.status} ${uploadResponse.statusText}`,
+          );
+        }
+
+        const uploadResult = await uploadResponse.json();
+        finalFormData.tp_url = uploadResult.path;
+      }
+
+      await addEdition(finalFormData);
+
       saveLastKey(formData.key);
       setSuccess(`Edition "${formData.key}" added successfully!`);
       setTimeout(() => {
@@ -389,13 +466,42 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
               </FormField>
 
               <FormField className="full-width">
-                <Label>Title Page URL</Label>
-                <Input
-                  type="text"
-                  name="tp_url"
-                  value={formData.tp_url}
-                  onChange={handleInputChange}
-                />
+                <Label>Title Page</Label>
+                <RadioGroup>
+                  <RadioOption>
+                    <input
+                      type="radio"
+                      name="imageOption"
+                      checked={!useImageUpload}
+                      onChange={() => handleImageUploadToggle(false)}
+                    />
+                    URL
+                  </RadioOption>
+                  <RadioOption>
+                    <input
+                      type="radio"
+                      name="imageOption"
+                      checked={useImageUpload}
+                      onChange={() => handleImageUploadToggle(true)}
+                    />
+                    Upload Image
+                  </RadioOption>
+                </RadioGroup>
+                {useImageUpload ? (
+                  <FileInput
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                  />
+                ) : (
+                  <Input
+                    type="text"
+                    name="tp_url"
+                    value={formData.tp_url}
+                    onChange={handleInputChange}
+                    placeholder="Enter title page URL"
+                  />
+                )}
               </FormField>
 
               <FormField className="full-width">

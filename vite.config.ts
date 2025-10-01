@@ -6,6 +6,10 @@ import {
   isEditionRequest,
   handleEditionRequest,
 } from "./dev-server/editionHandler";
+import {
+  isImageUploadRequest,
+  handleImageUploadRequest,
+} from "./dev-server/imageUploadHandler";
 import type { ViteDevServer } from "vite";
 import type { Connect } from "vite";
 import type { IncomingMessage, ServerResponse } from "http";
@@ -22,6 +26,8 @@ function devApiPlugin(): Plugin {
         ) => {
           if (isNotesRequest(req)) {
             await handleNotesRequest(req, res);
+          } else if (isImageUploadRequest(req)) {
+            await handleImageUploadRequest(req, res);
           } else if (isEditionRequest(req)) {
             await handleEditionRequest(req, res);
           } else {
