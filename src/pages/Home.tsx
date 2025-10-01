@@ -223,7 +223,7 @@ function Home() {
           title="The Project"
           icon={<FaDraftingCompass />}
           color={PANE_COLOR}
-          imageSrc="/frontpiece.png"
+          imageSrc="/frontispiece.png"
           imageOnLeft={true}
           text={
             <div>

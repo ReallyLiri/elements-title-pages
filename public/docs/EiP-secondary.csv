@@ -1,4 +1,4 @@
-key,year,city,city 2,language,language 2,author (normalized),title,title_EN,BASE CONTENT,AUTHOR NAME,AUTHOR NAME 2,AUTHOR DESCRIPTION,AUTHOR DESCRIPTION 2,EUCLID REF,EUCLID DESCRIPTION,EUCLID DESCRIPTION 2,OTHER NAMES,PATRON REF,EDITION INFO 2,EDITION INFO,PRIVILEGES,VERBS,EXPLICITLY STATED: TRANSLATED FROM,EXPLICITLY STATED: TRANSLATED TO,RECIPIENT VERBS,EXPLICIT RECIPIENT 2,EXPLICIT RECIPIENT,GREEK IN NON GREEK BOOKS,INNOVATION,INSTITUTIONS,ELEMENTS DESIGNATION,invalid transcription,tagger,CONTENT DESC,CONTENT DESC 2,ADDITIONAL CONTENT,ADDITIONAL CONTENT 2,type,author (orig),publisher (orig),publisher (normalized),colophon,imprint,imprint_EN,volumesCount,format,books,notes,ustc_id,scan_url,tp_url,tp_url_alt,frontpiece_url,has_red,tp_design,num_of_types,frame_type,engraving,printer_device,font_types,has_calligraphic_features,calligraphic_features,other_names_classification
+key,year,city,city 2,language,language 2,author (normalized),title,title_EN,BASE CONTENT,AUTHOR NAME,AUTHOR NAME 2,AUTHOR DESCRIPTION,AUTHOR DESCRIPTION 2,EUCLID REF,EUCLID DESCRIPTION,EUCLID DESCRIPTION 2,OTHER NAMES,PATRON REF,EDITION INFO 2,EDITION INFO,PRIVILEGES,VERBS,EXPLICITLY STATED: TRANSLATED FROM,EXPLICITLY STATED: TRANSLATED TO,RECIPIENT VERBS,EXPLICIT RECIPIENT 2,EXPLICIT RECIPIENT,GREEK IN NON GREEK BOOKS,INNOVATION,INSTITUTIONS,ELEMENTS DESIGNATION,invalid transcription,tagger,CONTENT DESC,CONTENT DESC 2,ADDITIONAL CONTENT,ADDITIONAL CONTENT 2,type,author (orig),publisher (orig),publisher (normalized),colophon,imprint,imprint_EN,volumesCount,format,books,notes,ustc_id,scan_url,tp_url,tp_url_alt,frontispiece_url,has_red,tp_design,num_of_types,frame_type,engraving,printer_device,font_types,has_calligraphic_features,calligraphic_features,other_names_classification
 1496,1496,,,LATIN,,Jacques Lefèvre d'Étaples,?,,,,,,,,,,,,,,,,,,,,,,,,,,mia,,,,,secondary,Jacques Lefèvre d'Étaples,,,,,,,,,In hoc opere contenta Arithmetica decem libris demonstrata ; Musica libris demonstrata quattuor ; Epitome i[n] libros arithmeticos diui Seuerini Boetij ; Rithmimachie ludus q[ui] [et] pugna nu[m]ero[rum] appellat[ur],,https://www.loc.gov/item/27001435/,,,,,,,,,,,,,
 Mainz 1611/1612,1611/1612,Mainz,,LATIN,,Christopher Clavius,"[General title page]: CHRISTOPHORI CLAVII BAMBERGENSIS E Societate IESV OPERA MATHEMATICA V. Tomis distributa. Ab auctore nunc denuo correcta, et plurimis locis aucta. Ad Reverendiss. et Illustriss. Principem ac Dominum, D. JOANNEM GODEFRIDVM EPISCOpum Bambergensem &c.
 [Additional title page for vol. 1]: CHRISTOPHORI CLAVII BAMBER-GENSIS E SOCIETATE IESV, OPERVM MATHEMATICORVM
@@ -3162,7 +3162,7 @@ Magnitudinum Ortus ex genuinis Principiis, & ortarum Affectiones ex ipsa Genesi 
 Typis J. M., impensis Joh. Martyn, ad Insigne Campanae, in Coemeterio D. Pauli,
 1678.","LONDON,
 Printed by J. M., for Joh. Martyn, at the Sign of the Bell, in St. Paul's Churchyard,
-1678.",,,,,,https://www.google.com/books/edition/Euclidis_Elementa_geometrica_novo_ordine/vQHKXlJUaqMC,/tps/London 1678a_tp.png,,/tps/London 1678a_frontpiece.png,False,typographic,6,line,none,False,"roman, majuscule roman, italics",,,
+1678.",,,,,,https://www.google.com/books/edition/Euclidis_Elementa_geometrica_novo_ordine/vQHKXlJUaqMC,/tps/London 1678a_tp.png,,/tps/London 1678a_frontispiece.png,False,typographic,6,line,none,False,"roman, majuscule roman, italics",,,
 Rome 1679,1679,Rome,,LATIN,,Giovanni Alfonso Borelli,"EVCLIDES
 RESTITUTUS
 Denuo
@@ -3809,7 +3809,7 @@ From the press of Pierre Des-Hayes,
 Rue de la Harpe, at the Red Rose.
 
 1643.
-WITH PRIVILEGE.",,,,,,https://www.google.com/books/edition/La_pratiqve_dv_trait_a_prevves_de_Mr_Des/I0XHrF9qUTsC,/tps/MorisS-4-1_tp.png,,"/tps/MorisS-4-1_frontpiece.png,/tps/MorisS-4-1_frontpiece.png",,,,,,,,,,
+WITH PRIVILEGE.",,,,,,https://www.google.com/books/edition/La_pratiqve_dv_trait_a_prevves_de_Mr_Des/I0XHrF9qUTsC,/tps/MorisS-4-1_tp.png,,"/tps/MorisS-4-1_frontispiece.png,/tps/MorisS-4-1_frontispiece.png",,,,,,,,,,
 MorisS-4-2,1643,Paris,,FRENCH,,Abraham Bosse,"LA
 MANIERE
 VNIVERSELLE
@@ -3845,7 +3845,7 @@ From the press of Pierre Des-Hayes,
 Rue de la Harpe, at the Red Rose.
 
 1643.
-WITH PRIVILEGE.",,,,,,https://www.google.com/books/edition/La_maniere_universelle_de_Mr_Desargues_p/IQJfAAAAcAAJ,/tps/MorisS-4-2_tp.png,,"/tps/MorisS-4-2_frontpiece.png,/tps/MorisS-4-2_frontpiece.png",,,,,,,,,,
+WITH PRIVILEGE.",,,,,,https://www.google.com/books/edition/La_maniere_universelle_de_Mr_Desargues_p/IQJfAAAAcAAJ,/tps/MorisS-4-2_tp.png,,"/tps/MorisS-4-2_frontispiece.png,/tps/MorisS-4-2_frontispiece.png",,,,,,,,,,
 MorisS-4-3,1645,Paris,,FRENCH,,Abraham Bosse,"TRAICTE’
 DES MANIERES
 DE
@@ -3886,7 +3886,7 @@ At the house of the said Bosse, on the Île du Palais,
 at the Red Rose, opposite the Leather Market.
 
 1645.
-WITH PRIVILEGE OF THE KING.",,,,,,https://www.google.com/books/edition/La_maniere_universelle_de_Mr_Desargues_p/IQJfAAAAcAAJ,/tps/MorisS-4-3_tp.png,,/tps/MorisS-4-3_frontpiece.png,,,,,,,,,,
+WITH PRIVILEGE OF THE KING.",,,,,,https://www.google.com/books/edition/La_maniere_universelle_de_Mr_Desargues_p/IQJfAAAAcAAJ,/tps/MorisS-4-3_tp.png,,/tps/MorisS-4-3_frontispiece.png,,,,,,,,,,
 MorisS-4-4,1648,Paris,,FRENCH,,Abraham Bosse,"MANIERE
 VNIVERSELLE
 DE
@@ -3928,7 +3928,7 @@ AVEC PRIVILEGE DV ROY.","IN PARIS,
 From the press of Pierre Des-Hayes.
 
 1648.
-WITH PRIVILEGE OF THE KING.",,,,,,https://www.google.com/books/edition/Mani%C3%A8re_universelle_de_Mr_Desargues_pou/vBN7cDViLn0C,/tps/MorisS-4-4_tp.png,,/tps/MorisS-4-4_frontpiece.png,,,,,,,,,,
+WITH PRIVILEGE OF THE KING.",,,,,,https://www.google.com/books/edition/Mani%C3%A8re_universelle_de_Mr_Desargues_pou/vBN7cDViLn0C,/tps/MorisS-4-4_tp.png,,/tps/MorisS-4-4_frontispiece.png,,,,,,,,,,
 MorisS-4-5,1653,Paris,,FRENCH,,Abraham Bosse,"MOYEN VNIVERSEL
 DE PRATIQUER LA
 PERSPECTIVE
@@ -3963,7 +3963,7 @@ on the quay facing that
 of the Leather Market.
 
 1653.
-WITH PRIVILEGE OF THE KING.",,,,,,https://www.google.com/books/edition/Moyen_universel_de_pratiquer_la_perspect/fwFfAAAAcAAJ,/tps/MorisS-4-5_tp.png,,"/tps/MorisS-4-5_frontpiece.png,/tps/MorisS-4-5_frontpiece.png",,,,,,,,,,
+WITH PRIVILEGE OF THE KING.",,,,,,https://www.google.com/books/edition/Moyen_universel_de_pratiquer_la_perspect/fwFfAAAAcAAJ,/tps/MorisS-4-5_tp.png,,"/tps/MorisS-4-5_frontispiece.png,/tps/MorisS-4-5_frontispiece.png",,,,,,,,,,
 MorisS-4-6,1659,Paris,,FRENCH,,Abraham Bosse,"REPRESENTATIONS
 GEOMETRALES
 De plusieurs parties de Bastiments
@@ -4056,7 +4056,7 @@ on the quay facing that of the
 Leather Market.
 
 1663.
-WITH PRIVILEGE.",,,,,,https://www.google.com/books/edition/TRAIT%C3%89_DES_MANIERES_DE_DESSINER_LES_ORD/qcfUah_pXLkC,/tps/MorisS-4-7_tp.png,,/tps/MorisS-4-7_frontpiece.png,,,,,,,,,,
+WITH PRIVILEGE.",,,,,,https://www.google.com/books/edition/TRAIT%C3%89_DES_MANIERES_DE_DESSINER_LES_ORD/qcfUah_pXLkC,/tps/MorisS-4-7_tp.png,,/tps/MorisS-4-7_frontispiece.png,,,,,,,,,,
 MorisS-5-1,1638,Paris,,LATIN,,Ismaël Boulliau,"DE
 NATVRA
 LVCIS.
@@ -5820,7 +5820,7 @@ at the sign of the Bonne Foy, before Saint Yves.
 
 1638.
 
-WITH THE KING’S PRIVILEGE.",,,,,,https://www.google.com/books/edition/La_perspective_curieuse_ou_magie_artific/r1T-rypHaRgC,/tps/MorisS-24-1_tp.png,,/tps/MorisS-24-1_frontpiece.png,,,,,,,,,,
+WITH THE KING’S PRIVILEGE.",,,,,,https://www.google.com/books/edition/La_perspective_curieuse_ou_magie_artific/r1T-rypHaRgC,/tps/MorisS-24-1_tp.png,,/tps/MorisS-24-1_frontispiece.png,,,,,,,,,,
 MorisS-24-2,1641,Paris,,FRENCH,,"Jean François Niceron, Antonio Maria Cospi","L’INTERPRETATION
 DES CHIFFRES,
 OV
@@ -5937,7 +5937,7 @@ rue Saint-Jacques, at the sign of the Columns of Hercules.
 
 1646.
 
-WITH THE KING’S PRIVILEGE.",,,,,,https://www.google.com/books/edition/Thaumaturgus_opticus_seu_admiranda_optic/-V1fAAAAcAAJ,/tps/MorisS-24-3_tp.png,,/tps/MorisS-24-3_frontpiece.png,,,,,,,,,,
+WITH THE KING’S PRIVILEGE.",,,,,,https://www.google.com/books/edition/Thaumaturgus_opticus_seu_admiranda_optic/-V1fAAAAcAAJ,/tps/MorisS-24-3_tp.png,,/tps/MorisS-24-3_frontispiece.png,,,,,,,,,,
 MorisS-25-3,1665,Paris,,FRENCH,,Blaise Pascal,"TRAITÉ
 DV TRIANGLE
 ARITHMETIQVE,
@@ -6239,7 +6239,7 @@ Court of Aids, at the sign of the Crowned Good Faith.
 
 1676.
 
-WITH THE KING’S PRIVILEGE.",,,,,,https://www.google.com/books/edition/La_g%C3%A9om%C3%A9trie_fran%C3%A7oise/hOk2AAAAMAAJ,/tps/Beaulieu-1_tp.png,,/tps/Beaulieu-1_frontpiece.png,,,,,,,,,,
+WITH THE KING’S PRIVILEGE.",,,,,,https://www.google.com/books/edition/La_g%C3%A9om%C3%A9trie_fran%C3%A7oise/hOk2AAAAMAAJ,/tps/Beaulieu-1_tp.png,,/tps/Beaulieu-1_frontispiece.png,,,,,,,,,,
 Hardy-1,1643,Paris,,FRENCH,,Claude Hardy,"REFVTATION
 DV LIBELLE DE I. PVJOS,
 INTITVLE’
@@ -7167,7 +7167,7 @@ Endter des Jüngern Sel. Erben.
 Anno M. DC. LXXIII.","Nuremberg,
 Published by Johann Andreae and the heirs of Wolfgang
 Endter the Younger.
-1673.",,,,,,https://www.google.com/books/edition/Summa_Geometriae_Practicae/A8VZAAAAcAAJ,/tps/bib-38_tp.png,,/tps/bib-38_frontpiece.png,,,,,,,,,,
+1673.",,,,,,https://www.google.com/books/edition/Summa_Geometriae_Practicae/A8VZAAAAcAAJ,/tps/bib-38_tp.png,,/tps/bib-38_frontispiece.png,,,,,,,,,,
 bib-39,1564,Venice,,ITALIAN,,"Girolamo Maggi, Jacomo Fusti Castriotto","DELLA
 FORTIFICATIONE
 DELLE CITTÀ,
@@ -9185,7 +9185,7 @@ MDC.LXVIII.","CAMBRIDGE,
 Printed by John Field, Printer of the Most Renowned
 University.
 At the expense of Edward Story.
-1668.",,,,,,https://www.google.com/books/edition/P_Petri_Galtruchii_Mathematic%C3%A6_totius_c/7KY2AAAAMAAJ,/tps/bib-95_tp.png,,/tps/bib-95_frontpiece.png,,,,,,,,,,
+1668.",,,,,,https://www.google.com/books/edition/P_Petri_Galtruchii_Mathematic%C3%A6_totius_c/7KY2AAAAMAAJ,/tps/bib-95_tp.png,,/tps/bib-95_frontispiece.png,,,,,,,,,,
 bib-96,1675,Caen,,LATIN,,Pierre Gautruche,"P. PETRI
 GALTRUCHII,
 AURELIANENSIS,
@@ -9323,7 +9323,7 @@ PLEASANT PYROTECHNICS, recreational fireworks.
 Collected and set forth for general use from many renowned
 and reliable authors, both old and new, with appropriate figures,
 briefly, orderly, and clearly composed and compiled by
-Johann Sebastian Gruber, Major.",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,secondary,,,Christoph Riegel,,Nürnberg/verlegts Christoph Riegel. An. 1697.,"Nuremberg, published by Christoph Riegel, Anno 1697.",,,,,,https://www.google.com/books/edition/Neue_und_Gr%C3%BCndliche_Mathematische_Fried/wrZ_XvqxTjUC,/tps/bib-99_tp.png,,/tps/bib-99_frontpiece.png,,,,,,,,,,
+Johann Sebastian Gruber, Major.",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,secondary,,,Christoph Riegel,,Nürnberg/verlegts Christoph Riegel. An. 1697.,"Nuremberg, published by Christoph Riegel, Anno 1697.",,,,,,https://www.google.com/books/edition/Neue_und_Gr%C3%BCndliche_Mathematische_Fried/wrZ_XvqxTjUC,/tps/bib-99_tp.png,,/tps/bib-99_frontispiece.png,,,,,,,,,,
 bib-100,1674,Turin,,ITALIAN,,Guarino Guarini,"MODO
 DI MISVRARE
 LE FABRICHE
@@ -10650,7 +10650,7 @@ selbigen Sel. Erben.
 M. DC. LXVII.","Nuremberg,
 Published by Johann Andrea Endter,
 and Wolfgang Endter, his blessed heir.
-1667.",,,,,,https://www.google.com/books/edition/Geometriae_practicae_novae_auctae_libri/7pNmAAAAcAAJ,/tps/bib-135_tp.png,,/tps/bib-135_frontpiece.png,,,,,,,,,,
+1667.",,,,,,https://www.google.com/books/edition/Geometriae_practicae_novae_auctae_libri/7pNmAAAAcAAJ,/tps/bib-135_tp.png,,/tps/bib-135_frontispiece.png,,,,,,,,,,
 bib-136,1634,Leiden,,FRENCH,,Simon Stevin,"LES
 ŒUVRES
 Mathematiques
@@ -11027,7 +11027,7 @@ Cleric Regular.",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,secondary,,,Joseph Vannacci,,"ROMA
 ANNO MDCXC.
 SUPERIORUM PERMISSU.","Rome, Printed and published by Joseph Vannacci.
 Year 1690.
-With permission of the superiors.",,,,,,https://www.google.com/books/edition/Lexicon_Mathematicum/ZaNGAAAAcAAJ,/tps/bib-143_tp.png,,/tps/bib-143_frontpiece.png,,,,,,,,,,
+With permission of the superiors.",,,,,,https://www.google.com/books/edition/Lexicon_Mathematicum/ZaNGAAAAcAAJ,/tps/bib-143_tp.png,,/tps/bib-143_frontispiece.png,,,,,,,,,,
 bib-144,1668,Paris,,LATIN,,Girolamo Vitali,"LEXICON
 MATHEMATICUM
 ASTRONOMICUM GEOMETRICUM,
@@ -11063,7 +11063,7 @@ M. DC. LXVIII.
 Cum Licentiis","Paris,
 From the press of Ludovic Billaine, in the Royal Palace.
 1668.
-With permission.",,,,,,https://www.google.com/books/edition/Lexicon_mathematicum_astronomicum_geomet/ewMOAAAAQAAJ,/tps/bib-144_tp.png,,/tps/bib-144_frontpiece.png,,,,,,,,,,
+With permission.",,,,,,https://www.google.com/books/edition/Lexicon_mathematicum_astronomicum_geomet/ewMOAAAAQAAJ,/tps/bib-144_tp.png,,/tps/bib-144_frontispiece.png,,,,,,,,,,
 bib-145,1678,Madrid,,SPANISH,,José Zaragoza,"EVCLIDES
 NVEVO-ANTIGVO.
 GEOMETRIA ESPECVLATIVA,
