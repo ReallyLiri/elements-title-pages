@@ -9,11 +9,11 @@ import {
   ModalTitle,
   TextColumnsContainer,
 } from "./ModalComponents.tsx";
-import { lazy, Suspense } from "react";
-import { openImage } from "../../../utils/dataUtils.ts";
+import { lazy, Suspense, useState } from "react";
+import { openImage, authorDisplayName } from "../../../utils/dataUtils.ts";
 import styled from "@emotion/styled";
 import { HelpTip } from "../../map/Filter.tsx";
-import { FaBookReader } from "react-icons/fa";
+import { FaBookReader, FaQuoteLeft, FaCheck } from "react-icons/fa";
 import {
   TOOLTIP_EN_TRANSLATION,
   TOOLTIP_SCAN,
@@ -61,79 +61,142 @@ const NoTitlePage = styled.div`
   color: darkgray;
 `;
 
-const ItemInfo = ({ item, isRow }: { item: Item; isRow?: boolean }) => (
-  <ModalTextColumn isRow={isRow}>
-    <Row justifyStart>
-      <InfoTitle>Year: </InfoTitle>
-      {item.year || "s.d."}
-    </Row>
-    <Row justifyStart>
-      <InfoTitle>{item.authors.length > 1 ? "Authors:" : "Author:"}</InfoTitle>{" "}
-      {joinArr(item.authors) || NO_AUTHOR}
-    </Row>
-    <Row justifyStart>
-      <InfoTitle>{item.cities.length > 1 ? "Cities:" : "City:"}</InfoTitle>{" "}
-      {joinArr(item.cities)}
-    </Row>
-    <Row justifyStart>
-      <InfoTitle>
-        {item.languages.length > 1 ? "Languages:" : "Language:"}
-      </InfoTitle>{" "}
-      {joinArr(item.languages)}
-    </Row>
-    {item.scanUrl && (
-      <Row justifyStart>
-        <InfoTitle>Facsimile:</InfoTitle>
-        <StyledAnchor
-          href={item.scanUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-tooltip-id={TOOLTIP_SCAN}
-          data-tooltip-content="View Facsimile Online"
-          data-tooltip-place="bottom"
-        >
-          <FaBookReader />
-        </StyledAnchor>
-      </Row>
-    )}
+const CitationButton = styled.button<{ copied?: boolean }>`
+  background: none;
+  border: none;
+  color: ${({ copied }) => (copied ? "#28a745" : LAND_COLOR)};
+  cursor: pointer;
+  padding: 0.25rem;
+  margin-left: 0.5rem;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
 
-    {item.format && (
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  svg {
+    font-size: 0.8rem;
+  }
+`;
+
+const getAuthorLastName = (author: string) => {
+  const displayName = authorDisplayName(author);
+  return displayName.split(",")[0].trim();
+};
+
+const generateCitation = (item: Item) => {
+  const firstAuthor = item.authors[0];
+  if (!firstAuthor || firstAuthor === NO_AUTHOR) {
+    return `s.n. ${item.year || "s.d."}`;
+  }
+  const lastName = getAuthorLastName(firstAuthor);
+  return `${lastName} ${item.year || "s.d."}`;
+};
+
+const copyCitation = async (
+  item: Item,
+  setCopied: (copied: boolean) => void,
+) => {
+  const citation = generateCitation(item);
+  await navigator.clipboard.writeText(citation);
+  setCopied(true);
+  setTimeout(() => setCopied(false), 2000);
+};
+
+const ItemInfo = ({ item, isRow }: { item: Item; isRow?: boolean }) => {
+  const [copied, setCopied] = useState(false);
+
+  return (
+    <ModalTextColumn isRow={isRow}>
       <Row justifyStart>
-        <InfoTitle>Format:</InfoTitle> {item.format}
+        <InfoTitle>Year: </InfoTitle>
+        {item.year || "s.d."}
       </Row>
-    )}
-    {item.volumesCount && (
       <Row justifyStart>
-        <InfoTitle>Volumes:</InfoTitle> {item.volumesCount}
+        <InfoTitle>
+          {item.authors.length > 1 ? "Authors:" : "Author:"}
+        </InfoTitle>{" "}
+        {joinArr(item.authors) || NO_AUTHOR}
+        <CitationButton
+          copied={copied}
+          onClick={() => copyCitation(item, setCopied)}
+          title={
+            copied
+              ? "Copied to clipboard!"
+              : "Copy Chicago author-date in-text citation"
+          }
+        >
+          {copied ? <FaCheck /> : <FaQuoteLeft />}
+        </CitationButton>
       </Row>
-    )}
-    {item.elementsBooks && (
       <Row justifyStart>
-        <InfoTitle>Books:</InfoTitle>{" "}
-        {joinArr(
-          item.elementsBooks.map((range) =>
-            range.end === range.start
-              ? range.start.toString()
-              : `${range.start}-${range.end}`,
-          ),
-        )}
+        <InfoTitle>{item.cities.length > 1 ? "Cities:" : "City:"}</InfoTitle>{" "}
+        {joinArr(item.cities)}
       </Row>
-    )}
-    {item.class && (
-      <>
+      <Row justifyStart>
+        <InfoTitle>
+          {item.languages.length > 1 ? "Languages:" : "Language:"}
+        </InfoTitle>{" "}
+        {joinArr(item.languages)}
+      </Row>
+      {item.scanUrl && (
         <Row justifyStart>
-          <InfoTitle>Class:</InfoTitle> {item.class}
+          <InfoTitle>Facsimile:</InfoTitle>
+          <StyledAnchor
+            href={item.scanUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-tooltip-id={TOOLTIP_SCAN}
+            data-tooltip-content="View Facsimile Online"
+            data-tooltip-place="bottom"
+          >
+            <FaBookReader />
+          </StyledAnchor>
         </Row>
-      </>
-    )}
-    {item.additionalContent && item.additionalContent.length > 0 && (
-      <Row justifyStart>
-        <InfoTitle>Additional Content:</InfoTitle>{" "}
-        {joinArr(item.additionalContent)}
-      </Row>
-    )}
-  </ModalTextColumn>
-);
+      )}
+
+      {item.format && (
+        <Row justifyStart>
+          <InfoTitle>Format:</InfoTitle> {item.format}
+        </Row>
+      )}
+      {item.volumesCount && (
+        <Row justifyStart>
+          <InfoTitle>Volumes:</InfoTitle> {item.volumesCount}
+        </Row>
+      )}
+      {item.elementsBooks && (
+        <Row justifyStart>
+          <InfoTitle>Books:</InfoTitle>{" "}
+          {joinArr(
+            item.elementsBooks.map((range) =>
+              range.end === range.start
+                ? range.start.toString()
+                : `${range.start}-${range.end}`,
+            ),
+          )}
+        </Row>
+      )}
+      {item.class && (
+        <>
+          <Row justifyStart>
+            <InfoTitle>Class:</InfoTitle> {item.class}
+          </Row>
+        </>
+      )}
+      {item.additionalContent && item.additionalContent.length > 0 && (
+        <Row justifyStart>
+          <InfoTitle>Additional Content:</InfoTitle>{" "}
+          {joinArr(item.additionalContent)}
+        </Row>
+      )}
+    </ModalTextColumn>
+  );
+};
 
 const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
   return (
