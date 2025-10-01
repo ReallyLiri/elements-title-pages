@@ -219,9 +219,9 @@ export const loadEditionsData = (
                       (raw["author (normalized)"] as string | null)?.split(
                         ", ",
                       ) || [],
-                    imageUrl: (raw["tp_url"] || raw["tp_url_alt"]) as
-                      | string
-                      | null,
+                    imageUrl: (raw["tp_url"] ||
+                      raw["tp_url_alt"] ||
+                      raw["frontpiece_url"]) as string | null,
                     title: raw["title"] as string,
                     titleEn: raw["title_EN"] as string | null,
                     imprint: raw["imprint"] as string | null,
@@ -239,10 +239,12 @@ export const loadEditionsData = (
                       Boolean(raw["tp_url"]) &&
                       Boolean(raw["title"]) &&
                       raw["title"] !== "?"
-                        ? "Yes"
+                        ? "Yes, based on digital facsimile"
                         : Boolean(raw["title"]) && raw["title"] !== "?"
-                          ? "Yes (no digital facsimile)"
-                          : "No",
+                          ? "Yes, based on catalog long title"
+                          : raw["title"] !== "?"
+                            ? "No"
+                            : "Unknown",
                     colorInTitle: hasTitleImage
                       ? raw["has_red"] === "True"
                         ? "Black and Red"
