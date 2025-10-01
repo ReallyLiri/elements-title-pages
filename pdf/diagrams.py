@@ -58,11 +58,22 @@ def main():
     print(f"Found {len(pdf_files)} PDF files to process...")
 
     success_count = 0
+    skipped_count = 0
+    diagrams_base_dir = docs_dir / DIAGRAMS_DIR_NAME
+
     for pdf_file in pdf_files:
+        pdf_name = pdf_file.stem
+        diagram_dir = diagrams_base_dir / pdf_name
+
+        if diagram_dir.exists():
+            print(f"⏭ Skipping {pdf_file.name} - directory already exists: {diagram_dir}")
+            skipped_count += 1
+            continue
+
         if process_pdf(pdf_file):
             success_count += 1
 
-    print(f"\nProcessing complete! {success_count}/{len(pdf_files)} files processed successfully.")
+    print(f"\nProcessing complete! {success_count}/{len(pdf_files)} files processed successfully, {skipped_count} skipped.")
 
 
 if __name__ == "__main__":
