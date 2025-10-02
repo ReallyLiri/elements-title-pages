@@ -1,3 +1,4 @@
+import {authorDisplayName} from "../utils/dataUtils.ts";
 import { Row, Text } from "./common.ts";
 import { joinArr } from "../utils/util.ts";
 import { useFilter } from "../contexts/FilterContext.tsx";
@@ -23,7 +24,7 @@ export const Stats = ({ verb }: { verb?: string }) => {
     const citiesSet = new Set<string>();
     const languagesSet = new Set<string>();
     filteredItems.forEach((item) => {
-      item.authors?.forEach((author) => authorsSet.add(author));
+      item.authors?.forEach((author) => authorsSet.add(authorDisplayName(author)));
       item.cities?.forEach((city) => citiesSet.add(city));
       item.languages?.forEach((language) => languagesSet.add(language));
     });

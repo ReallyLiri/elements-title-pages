@@ -512,7 +512,7 @@ export const loadEditionsData = (
                             : "Unknown",
 
                     tp_study_corpus:
-                      Number(raw["year"]) <= 1700 &&
+                      (!Number(raw["year"]) || Number(raw["year"]) <= 1700) &&
                       type === "elements" &&
                       raw["language"] !== "CHINESE" &&
                       raw["title"] &&

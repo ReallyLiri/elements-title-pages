@@ -89,12 +89,20 @@ const getAuthorLastName = (author: string) => {
 };
 
 const generateCitation = (item: Item) => {
-  const firstAuthor = item.authors[0];
+ const year = item.year || "s.d.";
+ const firstAuthor = item.authors[0];
   if (!firstAuthor || firstAuthor === NO_AUTHOR) {
-    return `s.n. ${item.year || "s.d."}`;
+    return `s.n. ${year}`;
   }
-  const lastName = getAuthorLastName(firstAuthor);
-  return `${lastName} ${item.year || "s.d."}`;
+
+  const lastNames = item.authors.map((a) => getAuthorLastName(a))
+  if (lastNames.length === 1) {
+    return `${lastNames[0]} ${year}`;
+  }
+  if (lastNames.length > 3) {
+    return `${lastNames[0]} et al. ${year}`;
+  }
+  return `${lastNames.slice(0, lastNames.length - 1).join(", ")}, and ${lastNames[lastNames.length - 1]} ${year}`;
 };
 
 const copyCitation = async (
