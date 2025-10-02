@@ -205,9 +205,12 @@ export const itemProperties: {
           displayName: "Title Page Study Corpus",
         },
         otherNames: {
-          displayName: "Mentioned Educational Authority in Title Page",
+          displayName: "Educational Mentioned Authority on Title Page",
           isArray: true,
         },
+        tp_illustration: {
+          displayName: "Illustration on Title Page",
+        }
       }
     : {}),
 };

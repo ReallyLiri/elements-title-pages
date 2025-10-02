@@ -513,11 +513,13 @@ export const loadEditionsData = (
 
                     tp_study_corpus:
                       Number(raw["year"]) <= 1700 &&
+                      type === "elements" &&
                       raw["language"] !== "CHINESE" &&
                       raw["title"] &&
                       raw["title"] !== "?"
                         ? "Yes"
                         : "No",
+                    tp_illustration: raw["tp_illustration"] ? "Yes" : "No or uncatalogued",
                     colorInTitle: hasTitleImage
                       ? raw["has_red"] === "True"
                         ? "Black and Red"
