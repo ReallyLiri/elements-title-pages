@@ -49,7 +49,6 @@ const filterRecord = (
   range: [number, number],
   filters: Record<string, FilterValue[] | undefined>,
   filtersInclude: Record<string, boolean>,
-  maxYear: number,
 ): boolean => {
   const year = t.year ? parseInt(t.year.split("/")[0]) : null;
   if (
@@ -57,9 +56,6 @@ const filterRecord = (
     range[1] > 0 &&
     ((year && year < range[0]) || (year && year > range[1]))
   ) {
-    return false;
-  }
-  if (!t.year && range[1] < maxYear) {
     return false;
   }
   const fields = Object.keys(filters) as (keyof Item)[];
@@ -132,7 +128,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   const filteredItems = useMemo(
     () =>
       data.filter((t) =>
-        filterRecord(t, range, filters, filtersInclude, maxYear),
+        filterRecord(t, range, filters, filtersInclude),
       ),
     [data, range, filters, filtersInclude, maxYear],
   );

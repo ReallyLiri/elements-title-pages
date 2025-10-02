@@ -17,7 +17,7 @@ const csvPath = "public/docs/EiP.csv"
 const outputCsvPath = "./out/authors_and_cities.csv"
 
 // Expected values for title page study corpus
-const expectedNumOfRecords = 218
+const expectedNumOfRecords = 219
 const expectedNumOfUniqueAuthors = 97
 
 func normalizeAuthor(author string) string {
