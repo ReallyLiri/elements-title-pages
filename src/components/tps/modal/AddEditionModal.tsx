@@ -351,7 +351,7 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
                   type="number"
                   name="year"
                   min={1450}
-                  max={1750}
+                  //max={1750}
                   value={formData.year}
                   onChange={handleInputChange}
                 />
