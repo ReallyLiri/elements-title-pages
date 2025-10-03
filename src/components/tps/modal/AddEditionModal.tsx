@@ -294,7 +294,7 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
       if (useImageUpload && selectedFile) {
         const uploadFormData = new FormData();
         uploadFormData.append("file", selectedFile);
-        uploadFormData.append("key", formData.key);
+        uploadFormData.append("key", formData.key!);
 
         const uploadResponse = await fetch("/api/upload-image", {
           method: "POST",
@@ -313,7 +313,7 @@ export const AddEditionModal = ({ onClose }: AddEditionModalProps) => {
 
       await addEdition(finalFormData);
 
-      saveLastKey(formData.key);
+      saveLastKey(formData.key!);
       setSuccess(`Edition "${formData.key}" added successfully!`);
       setTimeout(() => {
         onClose();
