@@ -67,9 +67,13 @@
         for (const name of subfolders) {
             const opt = document.createElement("option");
             opt.value = name;
-            opt.textContent = name;
+
+            // If folder name matches pattern "Place_Year" or "Place-Year"
+            const parts = name.match(/^(.+?)[_-](\d{4})$/);
+            opt.textContent = parts ? `${parts[2]} ${parts[1]}` : name;
             folderSel.appendChild(opt);
         }
+
         folderSel.addEventListener("change", () => loadForSelection());
         msg.textContent = "";
         await loadForSelection();
@@ -90,7 +94,18 @@
     async function listSubfolders(parentPath) {
         const items = await readDir(parentPath);
         const dirs = items.filter(x => x.type === "dir").map(x => x.name);
-        dirs.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }));
+
+        // sort by extracted year (if present), else alphabetically
+        dirs.sort((a, b) => {
+            const getYear = n => {
+                const m = n.match(/(\d{4})/);
+                return m ? parseInt(m[1], 10) : Infinity;
+            };
+            const ya = getYear(a), yb = getYear(b);
+            if (ya !== yb) return ya - yb;
+            return a.localeCompare(b, undefined, { sensitivity: "base" });
+        });
+
         return dirs;
     }
 
