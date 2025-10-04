@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Repo Folder → Thumbnails</title>
+    <style>
+        body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+        .card { border: 1px solid #ddd; border-radius: 10px; padding: 8px; text-align: center; }
+        .card img { width: 100%; height: 120px; object-fit: cover; border-radius: 6px; }
+        .hint { color: #666; font-size: 0.9rem; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+<h1>Repo Folder → Thumbnails</h1>
+<p class="hint">Shows images from a public GitHub repo folder. Click any thumbnail to open full size.</p>
+
+<div id="grid" class="grid"></div>
+<p id="msg" class="hint"></p>
+
+<script>
+    const OWNER  = "ReallyLiri";
+    const REPO   = "elements-facsimile";
+    const PATH   = "docs/diagrams/Venice_1482/crops";
+    const BRANCH = "main";
+
+    const IMAGE_EXTS = [".png",".jpg",".jpeg",".gif",".webp",".bmp",".svg"];
+    const apiUrl = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${encodeURIComponent(PATH)}?ref=${encodeURIComponent(BRANCH)}`;
+
+    const grid = document.getElementById("grid");
+    const msg  = document.getElementById("msg");
+
+    async function loadImages() {
+        try {
+            msg.textContent = "Loading…";
+            const res = await fetch(apiUrl, { headers: { "Accept": "application/vnd.github+json" }});
+            if (!res.ok) throw new Error(`GitHub API error ${res.status}`);
+            const items = await res.json();
+
+            const files = (Array.isArray(items) ? items : [])
+                .filter(it => it.type === "file" && hasImageExt(it.name));
+
+            if (files.length === 0) {
+                msg.textContent = "No images found in that folder";
+                return;
+            }
+
+            msg.textContent = "";
+            files.forEach(f => {
+                const a = document.createElement("a");
+                a.href = `https://media.githubusercontent.com/media/${OWNER}/${REPO}/refs/heads/${encodeURIComponent(BRANCH)}/${f.path}`;
+                a.target = "_blank";
+                a.rel = "noopener";
+
+                const card = document.createElement("div");
+                card.className = "card";
+
+                const img = document.createElement("img");
+                img.loading = "lazy";
+                img.alt = f.name;
+                img.src = `https://media.githubusercontent.com/media/${OWNER}/${REPO}/refs/heads/${encodeURIComponent(BRANCH)}/${f.path}`;
+
+
+                const cap = document.createElement("div");
+                cap.style.marginTop = "6px";
+                cap.style.fontSize = "0.85rem";
+                cap.textContent = f.name;
+
+                card.appendChild(img);
+                card.appendChild(cap);
+                a.appendChild(card);
+                grid.appendChild(a);
+            });
+        } catch (e) {
+            console.error(e);
+            msg.textContent = "Failed to load. Check owner, repo, path, branch, or rate limits.";
+        }
+    }
+
+    function hasImageExt(name) {
+        const lower = name.toLowerCase();
+        return IMAGE_EXTS.some(ext => lower.endsWith(ext));
+    }
+
+    loadImages();
+</script>
+</body>
+</html>
