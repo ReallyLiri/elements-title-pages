@@ -255,6 +255,8 @@ export function normalizeAncientPersona(name: string): string | null {
       "campani galli transalpini",
       "campani galli",
       "campani ",
+      "campano",
+      "due Tradottioni"
     )
   )
     return "Campanus of Novara";
@@ -412,7 +414,7 @@ export function normalizeAncientPersona(name: string): string | null {
 
   if (contains("timeus", "timaeus")) return "Timaeus of Locri";
 
-  if (contains("zamberti")) return "Bartholomeo Zamberti";
+  if (contains("zamber", "due Tradottioni")) return "Bartholomeo Zamberti";
 
   return null;
 }
