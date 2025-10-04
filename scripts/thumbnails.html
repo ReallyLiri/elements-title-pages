@@ -6,40 +6,111 @@
     <title>Repo Folder → Thumbnails</title>
     <style>
         body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 20px; }
+        .controls { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+        select { padding: 6px 8px; border-radius: 8px; border: 1px solid #ddd; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
         .card { border: 1px solid #ddd; border-radius: 10px; padding: 8px; text-align: center; }
         .card img { width: 100%; height: 120px; object-fit: cover; border-radius: 6px; }
-        .hint { color: #666; font-size: 0.9rem; margin-bottom: 10px; }
+        .hint { color: #666; font-size: 0.9rem; margin-top: 4px; }
     </style>
 </head>
 <body>
 <h1>Repo Folder → Thumbnails</h1>
-<p class="hint">Shows images from a public GitHub repo folder. Click any thumbnail to open full size.</p>
+
+<div class="controls">
+    <label for="folder">Folder in <code>docs/diagrams</code>:</label>
+    <select id="folder"></select>
+    <span id="where" class="hint"></span>
+</div>
 
 <div id="grid" class="grid"></div>
 <p id="msg" class="hint"></p>
 
 <script>
+    // --- Repo config ---
     const OWNER  = "ReallyLiri";
     const REPO   = "elements-facsimile";
-    const PATH   = "docs/diagrams/Venice_1482/crops";
     const BRANCH = "main";
+    const BASE   = "docs/diagrams";   // parent to list
+    const PREFERRED_SUB = "crops";    // try this first if it exists
+    // --------------------
 
     const IMAGE_EXTS = [".png",".jpg",".jpeg",".gif",".webp",".bmp",".svg"];
-    const apiUrl = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${encodeURIComponent(PATH)}?ref=${encodeURIComponent(BRANCH)}`;
+    const API_BASE = `https://api.github.com/repos/${OWNER}/${REPO}/contents/`;
+    const RAW_BASES = [
+        `https://media.githubusercontent.com/media/${OWNER}/${REPO}/refs/heads/${encodeURIComponent(BRANCH)}/`,
+        `https://raw.githubusercontent.com/${OWNER}/${REPO}/${encodeURIComponent(BRANCH)}/`,
+    ];
 
     const grid = document.getElementById("grid");
     const msg  = document.getElementById("msg");
+    const folderSel = document.getElementById("folder");
+    const where = document.getElementById("where");
 
-    async function loadImages() {
+    const dirCache = new Map(); // path -> entries
+
+    init().catch(console.error);
+
+    async function init() {
+        msg.textContent = "Loading folders…";
+        const subfolders = await listSubfolders(BASE);
+        if (subfolders.length === 0) {
+            msg.textContent = "No subfolders under docs/diagrams";
+            return;
+        }
+        for (const name of subfolders) {
+            const opt = document.createElement("option");
+            opt.value = name;
+            opt.textContent = name;
+            folderSel.appendChild(opt);
+        }
+        folderSel.addEventListener("change", () => loadForSelection());
+        msg.textContent = "";
+        await loadForSelection();
+    }
+
+    async function loadForSelection() {
+        const chosen = folderSel.value;
+        if (!chosen) return;
+
+        let targetPath = `${BASE}/${chosen}`;
+        if (await dirExists(`${targetPath}/${PREFERRED_SUB}`)) {
+            targetPath = `${targetPath}/${PREFERRED_SUB}`;
+        }
+        where.textContent = `Showing: ${targetPath}`;
+        await loadImages(targetPath);
+    }
+
+    async function listSubfolders(parentPath) {
+        const items = await readDir(parentPath);
+        const dirs = items.filter(x => x.type === "dir").map(x => x.name);
+        dirs.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }));
+        return dirs;
+    }
+
+    async function dirExists(path) {
+        try { await readDir(path); return true; } catch { return false; }
+    }
+
+    async function readDir(path) {
+        if (dirCache.has(path)) return dirCache.get(path);
+        const url = `${API_BASE}${encodeURIComponent(path)}?ref=${encodeURIComponent(BRANCH)}`;
+        const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" }});
+        if (!res.ok) throw new Error(`GitHub API error ${res.status} for ${path}`);
+        const items = await res.json();
+        dirCache.set(path, items);
+        return items;
+    }
+
+    async function loadImages(path) {
+        grid.innerHTML = "";
+        msg.textContent = "Loading…";
+
         try {
-            msg.textContent = "Loading…";
-            const res = await fetch(apiUrl, { headers: { "Accept": "application/vnd.github+json" }});
-            if (!res.ok) throw new Error(`GitHub API error ${res.status}`);
-            const items = await res.json();
-
+            const items = await readDir(path);
             const files = (Array.isArray(items) ? items : [])
-                .filter(it => it.type === "file" && hasImageExt(it.name));
+                .filter(it => it.type === "file" && hasImageExt(it.name))
+                .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
 
             if (files.length === 0) {
                 msg.textContent = "No images found in that folder";
@@ -47,9 +118,8 @@
             }
 
             msg.textContent = "";
-            files.forEach(f => {
+            for (const f of files) {
                 const a = document.createElement("a");
-                a.href = `https://media.githubusercontent.com/media/${OWNER}/${REPO}/refs/heads/${encodeURIComponent(BRANCH)}/${f.path}`;
                 a.target = "_blank";
                 a.rel = "noopener";
 
@@ -59,8 +129,24 @@
                 const img = document.createElement("img");
                 img.loading = "lazy";
                 img.alt = f.name;
-                img.src = `https://media.githubusercontent.com/media/${OWNER}/${REPO}/refs/heads/${encodeURIComponent(BRANCH)}/${f.path}`;
 
+                // try media first, then raw on error
+                img.dataset.baseIndex = "0";
+                setImgSrc(img, f.path);
+
+                // keep anchor in sync with whichever base works
+                img.addEventListener("load", () => { a.href = img.src; });
+                img.addEventListener("error", () => {
+                    const next = Number(img.dataset.baseIndex) + 1;
+                    if (next < RAW_BASES.length) {
+                        img.dataset.baseIndex = String(next);
+                        setImgSrc(img, f.path);
+                    } else {
+                        // give up: show a tiny broken-state note
+                        img.replaceWith(document.createTextNode("⚠︎ failed to load"));
+                        a.removeAttribute("href");
+                    }
+                });
 
                 const cap = document.createElement("div");
                 cap.style.marginTop = "6px";
@@ -71,19 +157,21 @@
                 card.appendChild(cap);
                 a.appendChild(card);
                 grid.appendChild(a);
-            });
+            }
         } catch (e) {
             console.error(e);
-            msg.textContent = "Failed to load. Check owner, repo, path, branch, or rate limits.";
+            msg.textContent = "Failed to load. Verify branch, path, or rate limits.";
         }
+    }
+
+    function setImgSrc(img, relPath) {
+        img.src = RAW_BASES[Number(img.dataset.baseIndex)] + relPath;
     }
 
     function hasImageExt(name) {
         const lower = name.toLowerCase();
         return IMAGE_EXTS.some(ext => lower.endsWith(ext));
     }
-
-    loadImages();
 </script>
 </body>
 </html>
