@@ -8,10 +8,16 @@
         body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 20px; }
         .controls { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
         select { padding: 6px 8px; border-radius: 8px; border: 1px solid #ddd; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
-        .card { border: 1px solid #ddd; border-radius: 10px; padding: 8px; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+        .card { border: 1px solid #ddd; border-radius: 10px; padding: 8px; text-align: center; display: flex; flex-direction: column; gap: 6px; }
         .card img { width: 100%; height: 120px; object-fit: cover; border-radius: 6px; }
+        .meta { display: flex; gap: 6px; align-items: center; justify-content: space-between; }
+        .name { font-size: 0.82rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1 1 auto; }
+        .btn { font-size: 0.78rem; padding: 4px 8px; border: 1px solid #ddd; border-radius: 8px; background: #f8f8f8; cursor: pointer; }
+        .btn:active { transform: translateY(1px); }
         .hint { color: #666; font-size: 0.9rem; margin-top: 4px; }
+        .toast { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); background: #222; color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; opacity: 0; transition: opacity .2s ease; }
+        .toast.show { opacity: 1; }
     </style>
 </head>
 <body>
@@ -25,15 +31,14 @@
 
 <div id="grid" class="grid"></div>
 <p id="msg" class="hint"></p>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
-    // --- Repo config ---
     const OWNER  = "ReallyLiri";
     const REPO   = "elements-facsimile";
     const BRANCH = "main";
-    const BASE   = "docs/diagrams";   // parent to list
-    const PREFERRED_SUB = "crops";    // try this first if it exists
-    // --------------------
+    const BASE   = "docs/diagrams";
+    const PREFERRED_SUB = "crops";
 
     const IMAGE_EXTS = [".png",".jpg",".jpeg",".gif",".webp",".bmp",".svg"];
     const API_BASE = `https://api.github.com/repos/${OWNER}/${REPO}/contents/`;
@@ -46,8 +51,9 @@
     const msg  = document.getElementById("msg");
     const folderSel = document.getElementById("folder");
     const where = document.getElementById("where");
+    const toast = document.getElementById("toast");
 
-    const dirCache = new Map(); // path -> entries
+    const dirCache = new Map();
 
     init().catch(console.error);
 
@@ -119,9 +125,11 @@
 
             msg.textContent = "";
             for (const f of files) {
+                const rawUrl = RAW_BASES[0] + f.path;
                 const a = document.createElement("a");
                 a.target = "_blank";
                 a.rel = "noopener";
+                a.href = rawUrl;
 
                 const card = document.createElement("div");
                 card.className = "card";
@@ -129,12 +137,9 @@
                 const img = document.createElement("img");
                 img.loading = "lazy";
                 img.alt = f.name;
-
-                // try media first, then raw on error
                 img.dataset.baseIndex = "0";
                 setImgSrc(img, f.path);
 
-                // keep anchor in sync with whichever base works
                 img.addEventListener("load", () => { a.href = img.src; });
                 img.addEventListener("error", () => {
                     const next = Number(img.dataset.baseIndex) + 1;
@@ -142,19 +147,40 @@
                         img.dataset.baseIndex = String(next);
                         setImgSrc(img, f.path);
                     } else {
-                        // give up: show a tiny broken-state note
                         img.replaceWith(document.createTextNode("⚠︎ failed to load"));
                         a.removeAttribute("href");
                     }
                 });
 
-                const cap = document.createElement("div");
-                cap.style.marginTop = "6px";
-                cap.style.fontSize = "0.85rem";
-                cap.textContent = f.name;
+                const meta = document.createElement("div");
+                meta.className = "meta";
+
+                const name = document.createElement("div");
+                name.className = "name";
+                name.title = f.path;
+                name.textContent = f.name;
+
+                const copyBtn = document.createElement("button");
+                copyBtn.className = "btn";
+                copyBtn.type = "button";
+                copyBtn.textContent = "Copy";
+                copyBtn.title = "Click to copy repo path. Shift-click to copy full URL";
+
+                copyBtn.addEventListener("click", async (ev) => {
+                    ev.preventDefault();   // ✅ prevent link navigation
+                    ev.stopPropagation();  // ✅ stop event from bubbling to <a>
+
+                    const fullUrl = a.href || (RAW_BASES[0] + f.path);
+                    const text = ev.shiftKey ? fullUrl : f.path;
+                    const ok = await copyToClipboard(text);
+                    showToast(ok ? `Copied ${ev.shiftKey ? "URL" : "path"}!` : "Copy failed");
+                });
+
+                meta.appendChild(name);
+                meta.appendChild(copyBtn);
 
                 card.appendChild(img);
-                card.appendChild(cap);
+                card.appendChild(meta);
                 a.appendChild(card);
                 grid.appendChild(a);
             }
@@ -172,6 +198,36 @@
         const lower = name.toLowerCase();
         return IMAGE_EXTS.some(ext => lower.endsWith(ext));
     }
+
+    async function copyToClipboard(text) {
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(text);
+                return true;
+            }
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.left = "-9999px";
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            const ok = document.execCommand("copy");
+            document.body.removeChild(ta);
+            return ok;
+        } catch {
+            return false;
+        }
+    }
+
+    let toastTimer;
+    function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 1200);
+    }
 </script>
+
 </body>
 </html>
