@@ -322,7 +322,9 @@ const Diagrams = () => {
     });
   };
 
-  const filteredImages = sortImagesByPageNumber(filterImagesByPageRange(images));
+  const filteredImages = sortImagesByPageNumber(
+    filterImagesByPageRange(images),
+  );
 
   const getPageRange = () => {
     const pageNumbers = images
@@ -372,7 +374,7 @@ const Diagrams = () => {
             : error
               ? error
               : images.length === 0
-                ? "No diagrams detected"
+                ? "No diagrams detected."
                 : (() => {
                     const distinctPages = new Set(
                       images
@@ -426,13 +428,14 @@ const Diagrams = () => {
         )}
 
         <DiagramsGrid>
-          {!loading && !error && images.length === 0 && (
-            <NoResults>No diagrams found for this document.</NoResults>
-          )}
-
-          {!loading && !error && filteredImages.length === 0 && images.length > 0 && (
-            <NoResults>No diagrams found in the specified page range.</NoResults>
-          )}
+          {!loading &&
+            !error &&
+            filteredImages.length === 0 &&
+            images.length > 0 && (
+              <NoResults>
+                No diagrams found in the specified page range.
+              </NoResults>
+            )}
 
           {filteredImages.map((imageName) => {
             const imageInfo = parseImageName(imageName);
