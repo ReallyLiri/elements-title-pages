@@ -19,10 +19,12 @@ import {
   CATALOGUE_ROUTE,
   TRENDS_ROUTE,
   PRESENTATION_ROUTE,
+  DIAGRAMS_ROUTE,
 } from "./components/layout/routes.ts";
 import Catalogue from "./pages/Catalogue.tsx";
 import Trends from "./pages/Trends.tsx";
 import Presentation from "./pages/Presentation.tsx";
+import Diagrams from "./pages/Diagrams.tsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -33,6 +35,7 @@ function App() {
         <Route path={CATALOGUE_ROUTE} element={<Catalogue />} />
         <Route path={TRENDS_ROUTE} element={<Trends />} />
         <Route path={PRESENTATION_ROUTE} element={<Presentation />} />
+        <Route path={DIAGRAMS_ROUTE} element={<Diagrams />} />
         <Route
           path={MAP_ROUTE}
           element={

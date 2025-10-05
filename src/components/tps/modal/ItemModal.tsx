@@ -1,5 +1,5 @@
 import { Feature, Item } from "../../../types";
-import { Row, StyledImage } from "../../common.ts";
+import { StyledImage } from "../../common.ts";
 import {
   Modal,
   ModalClose,
@@ -9,20 +9,16 @@ import {
   ModalTitle,
   TextColumnsContainer,
 } from "./ModalComponents.tsx";
-import { lazy, Suspense, useState } from "react";
-import { openImage, authorDisplayName } from "../../../utils/dataUtils.ts";
+import { lazy, Suspense } from "react";
+import { openImage } from "../../../utils/dataUtils.ts";
 import styled from "@emotion/styled";
 import { HelpTip } from "../../map/Filter.tsx";
-import { FaBookReader, FaQuoteLeft, FaCheck } from "react-icons/fa";
 import {
   TOOLTIP_EN_TRANSLATION,
-  TOOLTIP_SCAN,
   TOOLTIP_TRANSCRIPTION,
 } from "../../map/MapTooltips.tsx";
-import { LAND_COLOR } from "../../../utils/colors.ts";
-import { joinArr } from "../../../utils/util.ts";
-import { NO_AUTHOR } from "../../../constants";
 import { NotesEditor } from "./NotesEditor.tsx";
+import { ItemInfo } from "./ItemInfo.tsx";
 
 const HighlightedText = lazy(() => import("../features/HighlightedText.tsx"));
 
@@ -31,12 +27,6 @@ type ItemModalProps = {
   features: Feature[] | null;
   onClose: () => void;
 };
-
-const InfoTitle = styled.div`
-  font-size: 0.8rem;
-  color: darkgray;
-  min-width: 4rem;
-`;
 
 const StyledHelpTip = styled(HelpTip)<{
   marginLeft?: string;
@@ -47,164 +37,11 @@ const StyledHelpTip = styled(HelpTip)<{
   z-index: 100;
 `;
 
-const StyledAnchor = styled.a`
-  font-size: 1rem;
-  svg {
-    color: ${LAND_COLOR};
-    margin-bottom: -2px;
-  }
-`;
-
 const NoTitlePage = styled.div`
   flex: 1;
   text-align: center;
   color: darkgray;
 `;
-
-const CitationButton = styled.button<{ copied?: boolean }>`
-  background: none;
-  border: none;
-  color: ${({ copied }) => (copied ? "#28a745" : LAND_COLOR)};
-  cursor: pointer;
-  padding: 0.25rem;
-  margin-left: 0.5rem;
-  border-radius: 3px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s ease;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-
-  svg {
-    font-size: 0.8rem;
-  }
-`;
-
-const getAuthorLastName = (author: string) => {
-  const displayName = authorDisplayName(author);
-  return displayName.split(",")[0].trim();
-};
-
-const generateCitation = (item: Item) => {
- const year = item.year || "s.d.";
- const firstAuthor = item.authors[0];
-  if (!firstAuthor || firstAuthor === NO_AUTHOR) {
-    return `s.n. ${year}`;
-  }
-
-  const lastNames = item.authors.map((a) => getAuthorLastName(a))
-  if (lastNames.length === 1) {
-    return `${lastNames[0]} ${year}`;
-  }
-  if (lastNames.length > 3) {
-    return `${lastNames[0]} et al. ${year}`;
-  }
-  return `${lastNames.slice(0, lastNames.length - 1).join(", ")}, and ${lastNames[lastNames.length - 1]} ${year}`;
-};
-
-const copyCitation = async (
-  item: Item,
-  setCopied: (copied: boolean) => void,
-) => {
-  const citation = generateCitation(item);
-  await navigator.clipboard.writeText(citation);
-  setCopied(true);
-  setTimeout(() => setCopied(false), 2000);
-};
-
-const ItemInfo = ({ item, isRow }: { item: Item; isRow?: boolean }) => {
-  const [copied, setCopied] = useState(false);
-
-  return (
-    <ModalTextColumn isRow={isRow}>
-      <Row justifyStart>
-        <InfoTitle>Year: </InfoTitle>
-        {item.year || "s.d."}
-      </Row>
-      <Row justifyStart>
-        <InfoTitle>
-          {item.authors.length > 1 ? "Authors:" : "Author:"}
-        </InfoTitle>{" "}
-        {joinArr(item.authors) || NO_AUTHOR}
-        <CitationButton
-          copied={copied}
-          onClick={() => copyCitation(item, setCopied)}
-          title={
-            copied
-              ? "Copied to clipboard!"
-              : "Copy Chicago author-date in-text citation"
-          }
-        >
-          {copied ? <FaCheck /> : <FaQuoteLeft />}
-        </CitationButton>
-      </Row>
-      <Row justifyStart>
-        <InfoTitle>{item.cities.length > 1 ? "Cities:" : "City:"}</InfoTitle>{" "}
-        {joinArr(item.cities)}
-      </Row>
-      <Row justifyStart>
-        <InfoTitle>
-          {item.languages.length > 1 ? "Languages:" : "Language:"}
-        </InfoTitle>{" "}
-        {joinArr(item.languages)}
-      </Row>
-      {item.scanUrl && (
-        <Row justifyStart>
-          <InfoTitle>Facsimile:</InfoTitle>
-          <StyledAnchor
-            href={item.scanUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-tooltip-id={TOOLTIP_SCAN}
-            data-tooltip-content="View Facsimile Online"
-            data-tooltip-place="bottom"
-          >
-            <FaBookReader />
-          </StyledAnchor>
-        </Row>
-      )}
-
-      {item.format && (
-        <Row justifyStart>
-          <InfoTitle>Format:</InfoTitle> {item.format}
-        </Row>
-      )}
-      {item.volumesCount && (
-        <Row justifyStart>
-          <InfoTitle>Volumes:</InfoTitle> {item.volumesCount}
-        </Row>
-      )}
-      {item.elementsBooks && (
-        <Row justifyStart>
-          <InfoTitle>Books:</InfoTitle>{" "}
-          {joinArr(
-            item.elementsBooks.map((range) =>
-              range.end === range.start
-                ? range.start.toString()
-                : `${range.start}-${range.end}`,
-            ),
-          )}
-        </Row>
-      )}
-      {item.class && (
-        <>
-          <Row justifyStart>
-            <InfoTitle>Class:</InfoTitle> {item.class}
-          </Row>
-        </>
-      )}
-      {item.additionalContent && item.additionalContent.length > 0 && (
-        <Row justifyStart>
-          <InfoTitle>Additional Content:</InfoTitle>{" "}
-          {joinArr(item.additionalContent)}
-        </Row>
-      )}
-    </ModalTextColumn>
-  );
-};
 
 const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
   return (
@@ -295,7 +132,9 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
                 )}
               </TextColumnsContainer>
             ) : (
-              <NoTitlePage>This edition has no title page.</NoTitlePage>
+              <NoTitlePage>
+                This edition has no title page or it is not available.
+              </NoTitlePage>
             ))}
           {!features && <ItemInfo item={item} />}
         </ModalTextContainer>

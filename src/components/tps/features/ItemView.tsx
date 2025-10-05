@@ -62,7 +62,7 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
           {item.title === "?" ? (
             <>
               <NoImageTile>
-                No title page
+                No title page available
                 <ExpandIcon title="Expand" onClick={() => setModalOpen(true)}>
                   ⤢
                 </ExpandIcon>
@@ -113,7 +113,9 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
                       </>
                     )}
                     {!item.title && (
-                      <NoTitlePage>This edition has no title page.</NoTitlePage>
+                      <NoTitlePage>
+                        This edition has no title page or it is not available.
+                      </NoTitlePage>
                     )}
                   </Suspense>
                 )}

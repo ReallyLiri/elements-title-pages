@@ -13,6 +13,13 @@ export const MAX_YEAR = 1705;
 export const MACTUTOR_URL = "https://mactutor-index.netlify.app";
 export const EIP_URL = "https://bibsoc.org.uk/euclid-print-1482-1703/";
 
+const FACSIMILE_REPO_SLUG = "ReallyLiri/elements-facsimile";
+export const GITHUB_API_BASE_URL = `https://api.github.com/repos/${FACSIMILE_REPO_SLUG}`;
+export const GITHUB_RAW_BASE_URL = `https://github.com/${FACSIMILE_REPO_SLUG}/raw/main`;
+export const DIAGRAMS_PATH_BASE = "docs/diagrams";
+export const DIAGRAMS_NONE_FILE = "none.txt";
+export const DIAGRAMS_CROPS_FOLDER = "crops";
+
 export const ItemTypes = {
   elements: "Elements",
   secondary: "Other",
@@ -80,7 +87,6 @@ export const FeaturesNotSelectedByDefault: Feature[] = [
   "Dedication in Imprint",
   "Adapter Attribution in Imprint",
   "Adapter Description in Imprint",
-
 ];
 
 export const FeatureToColor: Record<Feature, string> = {
@@ -143,8 +149,10 @@ export const FeatureToTooltip: Record<Feature, string> = {
   "Greek designation": "Greek designation of the book in non-Greek books.",
   Institutions:
     "Mentions of institutions, such as societies or universities, associated with the book.",
-  "Bound With": "Mentions of other works included in the book, such as 'Optics'.",
-  "Enriched With": "Mentions of additional content that is not part of the core text that enriches the text and makes it more understandable, accurate, or useful.",
+  "Bound With":
+    "Mentions of other works included in the book, such as 'Optics'.",
+  "Enriched With":
+    "Mentions of additional content that is not part of the core text that enriches the text and makes it more understandable, accurate, or useful.",
   "Date in Imprint":
     "The date of publication as it appears on the title page, typically in the form of a year.",
   "Publisher in Imprint":
