@@ -356,21 +356,8 @@ const Diagrams = () => {
     return images;
   };
 
-  const getVisibleImages = () => {
-    if (volumes.length > 0) {
-      return volumes
-        .filter((volume) => !collapsedVolumes.has(volume.key))
-        .flatMap((volume) => volume.images);
-    }
-    return images;
-  };
-
   const getAllFilteredImages = () => {
     return sortImagesByPageNumber(filterImagesByPageRange(getAllImages()));
-  };
-
-  const getVisibleFilteredImages = () => {
-    return sortImagesByPageNumber(filterImagesByPageRange(getVisibleImages()));
   };
 
   const clearPageFilter = () => {
@@ -443,7 +430,7 @@ const Diagrams = () => {
 
   const pageRange = getPageRange();
 
-  if (!editionKey || !item) {
+  if (!editionKey) {
     return (
       <Container>
         <DiagramsContainer>
@@ -464,10 +451,14 @@ const Diagrams = () => {
         </ScrollToTopButton>
       )}
       <DiagramsContainer>
-        <DocumentTitle>
-          {item.year || NO_YEAR} {joinArr(item.authors) || NO_AUTHOR},{" "}
-          {joinArr(item.cities) || NO_CITY}
-        </DocumentTitle>
+        {item ? (
+          <DocumentTitle>
+            {item.year || NO_YEAR} {joinArr(item.authors) || NO_AUTHOR},{" "}
+            {joinArr(item.cities) || NO_CITY}
+          </DocumentTitle>
+        ) : (
+          <DocumentTitle>Loading...</DocumentTitle>
+        )}
 
         {item && <ItemInfo item={item} showDiagramsLink={false} isRow />}
 
