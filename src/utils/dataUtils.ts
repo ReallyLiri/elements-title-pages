@@ -19,6 +19,7 @@ import {
 } from "../constants";
 import { Point } from "react-simple-maps";
 import { groupByMap } from "./util.ts";
+import { fetchDiagramDirectories } from "./githubApi";
 
 const parseBooks = (
   booksRaw: string | null,
@@ -447,19 +448,6 @@ function mapOtherName(s: string): string {
   return startCase(s.toLowerCase());
 }
 
-const fetchDiagramDirectories = async (): Promise<Set<string>> => {
-  try {
-    const response = await fetch('https://api.github.com/repos/ReallyLiri/elements-facsimile/contents/docs/diagrams');
-    const data = await response.json();
-    if (Array.isArray(data)) {
-      return new Set(data.filter(item => item.type === 'dir').map(item => item.name));
-    }
-    return new Set();
-  } catch (error) {
-    console.error('Error fetching diagram directories:', error);
-    return new Set();
-  }
-};
 
 export const loadEditionsData = (
   setItems: Dispatch<SetStateAction<Item[]>>,

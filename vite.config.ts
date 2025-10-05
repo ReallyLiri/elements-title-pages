@@ -10,6 +10,7 @@ import {
   isImageUploadRequest,
   handleImageUploadRequest,
 } from "./dev-server/imageUploadHandler";
+import { facsimileListingPlugin } from "./vite-plugins/facsimile-listing.js";
 import type { ViteDevServer } from "vite";
 import type { Connect } from "vite";
 import type { IncomingMessage, ServerResponse } from "http";
@@ -41,7 +42,7 @@ function devApiPlugin(): Plugin {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr(), devApiPlugin()],
+  plugins: [react(), svgr(), devApiPlugin(), facsimileListingPlugin()],
   define: {
     __DEV__: JSON.stringify(process.env.NODE_ENV === "development"),
   },

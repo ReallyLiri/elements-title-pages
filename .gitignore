@@ -29,4 +29,5 @@ out
 
 __pycache__
 
-pdf/docs
+public/docs/diagram-directories.json
+public/docs/diagrams

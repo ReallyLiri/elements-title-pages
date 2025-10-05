@@ -14,10 +14,8 @@ export const MACTUTOR_URL = "https://mactutor-index.netlify.app";
 export const EIP_URL = "https://bibsoc.org.uk/euclid-print-1482-1703/";
 
 const FACSIMILE_REPO_SLUG = "ReallyLiri/elements-facsimile";
-export const GITHUB_API_BASE_URL = `https://api.github.com/repos/${FACSIMILE_REPO_SLUG}`;
 export const GITHUB_RAW_BASE_URL = `https://github.com/${FACSIMILE_REPO_SLUG}/raw/main`;
 export const DIAGRAMS_PATH_BASE = "docs/diagrams";
-export const DIAGRAMS_NONE_FILE = "none.txt";
 export const DIAGRAMS_CROPS_FOLDER = "crops";
 
 export const ItemTypes = {

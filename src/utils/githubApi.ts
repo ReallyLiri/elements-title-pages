@@ -1,26 +1,14 @@
 import {
-  GITHUB_API_BASE_URL,
-  GITHUB_RAW_BASE_URL,
-  DIAGRAMS_PATH_BASE,
-  DIAGRAMS_NONE_FILE,
   DIAGRAMS_CROPS_FOLDER,
+  DIAGRAMS_PATH_BASE,
+  GITHUB_RAW_BASE_URL,
 } from "../constants";
-
-interface GitHubFile {
-  name: string;
-  type: string;
-  download_url?: string;
-}
 
 export interface DiagramsResult {
   images: string[];
   hasNoDiagrams: boolean;
   error?: string;
 }
-
-const buildApiUrl = (path: string): string => {
-  return `${GITHUB_API_BASE_URL}/contents/${path}`;
-};
 
 export const buildDiagramImageUrl = (
   key: string,
@@ -39,35 +27,17 @@ export const fetchDiagrams = async (key: string): Promise<DiagramsResult> => {
   }
 
   try {
-    const cropsUrl = buildApiUrl(
-      `${DIAGRAMS_PATH_BASE}/${key}/${DIAGRAMS_CROPS_FOLDER}`,
-    );
-    const cropsResponse = await fetch(cropsUrl);
+    const response = await fetch(`/docs/diagrams/${key}.json`);
 
-    if (!cropsResponse.ok) {
+    if (!response.ok) {
       return {
         images: [],
         hasNoDiagrams: true,
       };
     }
 
-    const cropsData = await cropsResponse.json();
-
-    if (Array.isArray(cropsData)) {
-      const jpgFiles = cropsData
-        .filter((file: GitHubFile) => file.name.endsWith(".jpg"))
-        .map((file: GitHubFile) => file.name);
-
-      return {
-        images: jpgFiles,
-        hasNoDiagrams: jpgFiles.length === 0,
-      };
-    }
-
-    return {
-      images: [],
-      hasNoDiagrams: true,
-    };
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error("Error fetching diagrams:", error);
     return {
@@ -75,5 +45,22 @@ export const fetchDiagrams = async (key: string): Promise<DiagramsResult> => {
       hasNoDiagrams: false,
       error: "Failed to load diagrams",
     };
+  }
+};
+
+export const fetchDiagramDirectories = async (): Promise<Set<string>> => {
+  try {
+    const response = await fetch('/docs/diagram-directories.json');
+
+    if (!response.ok) {
+      console.error('Failed to fetch diagram directories');
+      return new Set();
+    }
+
+    const directories = await response.json();
+    return new Set(directories);
+  } catch (error) {
+    console.error("Error fetching diagram directories:", error);
+    return new Set();
   }
 };
