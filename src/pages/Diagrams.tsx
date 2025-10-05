@@ -7,13 +7,8 @@ import { Item } from "../types";
 import { ItemInfo } from "../components/tps/modal/ItemInfo";
 import { NO_AUTHOR, NO_CITY, NO_YEAR } from "../constants";
 import { joinArr } from "../utils/util.ts";
-import { fetchDiagrams, buildDiagramImageUrl } from "../utils/diagrams.ts";
-import {
-  LAND_COLOR,
-  PANE_COLOR,
-  SEA_COLOR,
-  TRANSPARENT_WHITE,
-} from "../utils/colors.ts";
+import { buildDiagramImageUrl, fetchDiagrams } from "../utils/diagrams.ts";
+import { SEA_COLOR } from "../utils/colors.ts";
 
 const DiagramsContainer = styled.div`
   max-width: 80vw;
@@ -39,14 +34,12 @@ const DiagramsGrid = styled.div`
 const DiagramCard = styled.div`
   background-color: #eaeaea;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
   overflow: hidden;
   cursor: pointer;
   transition: box-shadow 0.3s;
-
-  &:hover {
-    box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.2);
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   img {
     background-color: #eaeaea;
@@ -127,6 +120,53 @@ const NoResults = styled.div`
   padding: 2rem;
 `;
 
+const FilterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+`;
+
+const FilterLabel = styled.label`
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+`;
+
+const FilterInput = styled.input`
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  width: 4rem;
+  background-color: white;
+  color: black;
+
+  &:focus {
+    outline: none;
+    border-color: ${SEA_COLOR};
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  }
+`;
+
+const FilterButton = styled.button`
+  padding: 0.25rem 0.75rem;
+  background-color: ${SEA_COLOR};
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #2563eb;
+  }
+`;
+
 interface ImageInfo {
   pageNumber: string;
   index: string;
@@ -171,6 +211,8 @@ const Diagrams = () => {
     imagePath: "",
     title: "",
   });
+  const [pageRangeFrom, setPageRangeFrom] = useState<string>("");
+  const [pageRangeTo, setPageRangeTo] = useState<string>("");
 
   useEffect(() => {
     if (editionKey && data.length > 0) {
@@ -235,6 +277,72 @@ const Diagrams = () => {
     }
   }, [modal.isOpen]);
 
+  const filterImagesByPageRange = (images: string[]): string[] => {
+    if (!pageRangeFrom && !pageRangeTo) {
+      return images;
+    }
+
+    const fromPage = pageRangeFrom ? parseInt(pageRangeFrom, 10) : null;
+    const toPage = pageRangeTo ? parseInt(pageRangeTo, 10) : null;
+
+    return images.filter((imageName) => {
+      const imageInfo = parseImageName(imageName);
+      const pageNum = parseInt(imageInfo.pageNumber, 10);
+
+      if (isNaN(pageNum)) return false;
+
+      if (fromPage && pageNum < fromPage) return false;
+      if (toPage && pageNum > toPage) return false;
+
+      return true;
+    });
+  };
+
+  const clearPageFilter = () => {
+    setPageRangeFrom("");
+    setPageRangeTo("");
+  };
+
+  const sortImagesByPageNumber = (images: string[]): string[] => {
+    return images.sort((a, b) => {
+      const imageInfoA = parseImageName(a);
+      const imageInfoB = parseImageName(b);
+
+      const pageA = parseInt(imageInfoA.pageNumber, 10);
+      const pageB = parseInt(imageInfoB.pageNumber, 10);
+
+      if (pageA !== pageB) {
+        return pageA - pageB;
+      }
+
+      const indexA = parseInt(imageInfoA.index, 10);
+      const indexB = parseInt(imageInfoB.index, 10);
+
+      return indexA - indexB;
+    });
+  };
+
+  const filteredImages = sortImagesByPageNumber(filterImagesByPageRange(images));
+
+  const getPageRange = () => {
+    const pageNumbers = images
+      .map((imageName) => parseImageName(imageName).pageNumber)
+      .filter((pageNumber) => pageNumber !== "")
+      .map((pageNumber) => parseInt(pageNumber, 10))
+      .filter((pageNum) => !isNaN(pageNum));
+
+    if (pageNumbers.length === 0) {
+      return { min: 1, max: 999 };
+    }
+
+    return {
+      min: Math.min(...pageNumbers),
+      max: Math.max(...pageNumbers),
+    };
+  };
+
+  const pageRange = getPageRange();
+
   if (!editionKey || !item) {
     return (
       <Container>
@@ -273,16 +381,60 @@ const Diagrams = () => {
                         )
                         .filter((pageNumber) => pageNumber !== ""),
                     ).size;
+                    const filteredCount = filteredImages.length;
+                    const filteredDistinctPages = new Set(
+                      filteredImages
+                        .map(
+                          (imageName) => parseImageName(imageName).pageNumber,
+                        )
+                        .filter((pageNumber) => pageNumber !== ""),
+                    ).size;
+
+                    if (pageRangeFrom || pageRangeTo) {
+                      return `${filteredCount} diagram${filteredCount === 1 ? "" : "s"} shown across ${filteredDistinctPages} page${filteredDistinctPages === 1 ? "" : "s"} (${images.length} total)`;
+                    }
+
                     return `${images.length} diagram${images.length === 1 ? "" : "s"} detected across ${distinctPages} page${distinctPages === 1 ? "" : "s"}`;
                   })()}
         </DocumentDescription>
+
+        {!loading && !error && images.length > 0 && (
+          <FilterContainer>
+            <FilterLabel>Filter by page range:</FilterLabel>
+            <FilterLabel>From:</FilterLabel>
+            <FilterInput
+              type="number"
+              value={pageRangeFrom}
+              onChange={(e) => setPageRangeFrom(e.target.value)}
+              placeholder={pageRange.min.toString()}
+              min={pageRange.min}
+              max={pageRange.max}
+            />
+            <FilterLabel>To:</FilterLabel>
+            <FilterInput
+              type="number"
+              value={pageRangeTo}
+              onChange={(e) => setPageRangeTo(e.target.value)}
+              placeholder={pageRange.max.toString()}
+              min={pageRange.min}
+              max={pageRange.max}
+            />
+            {(pageRangeFrom || pageRangeTo) && (
+              <FilterButton onClick={clearPageFilter}>Clear</FilterButton>
+            )}
+          </FilterContainer>
+        )}
 
         <DiagramsGrid>
           {!loading && !error && images.length === 0 && (
             <NoResults>No diagrams found for this document.</NoResults>
           )}
 
-          {images.map((imageName) => {
+          {!loading && !error && filteredImages.length === 0 && images.length > 0 && (
+            <NoResults>No diagrams found in the specified page range.</NoResults>
+          )}
+
+          {filteredImages.map((imageName) => {
             const imageInfo = parseImageName(imageName);
             const imagePath = buildDiagramImageUrl(editionKey!, imageName);
 

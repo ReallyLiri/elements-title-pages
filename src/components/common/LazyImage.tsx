@@ -37,6 +37,7 @@ interface LazyImageProps {
   placeholder?: string;
   className?: string;
   onClick?: () => void;
+  priority?: boolean;
 }
 
 export const LazyImage = ({
@@ -47,13 +48,20 @@ export const LazyImage = ({
   placeholder = "Loading...",
   className,
   onClick,
+  priority = false,
 }: LazyImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(priority);
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (priority) {
+      const img = new Image();
+      img.src = src;
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
@@ -64,7 +72,7 @@ export const LazyImage = ({
       },
       {
         threshold: 0.1,
-        rootMargin: "50px",
+        rootMargin: "200px",
       },
     );
 
@@ -73,7 +81,7 @@ export const LazyImage = ({
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [src, priority]);
 
   const handleLoad = () => {
     setIsLoaded(true);
@@ -105,6 +113,7 @@ export const LazyImage = ({
             onLoad={handleLoad}
             onError={handleError}
             style={{ opacity: isLoaded ? 1 : 0 }}
+            loading={priority ? "eager" : "lazy"}
           />
         </>
       )}
