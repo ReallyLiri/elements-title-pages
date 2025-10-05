@@ -210,7 +210,10 @@ export const itemProperties: {
         },
         tp_illustration: {
           displayName: "Illustration on Title Page",
-        }
+        },
+        diagrams_extracted: {
+          displayName: "Diagrams Extracted",
+        },
       }
     : {}),
 };

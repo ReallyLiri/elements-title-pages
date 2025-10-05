@@ -65,6 +65,18 @@ export type Item = {
   fontTypes: string[];
   calligraphicFeatures: string | null;
   notes: string | null;
+  tp_study_corpus: YesNoBool;
+  tp_illustration: string;
+  otherNamesClassification: string[] | null;
+  hasIntendedAudience: YesNoBool | null;
+  hasPatronageDedication: YesNoBool | null;
+  hasAdapterAttribution: YesNoBool | null;
+  hasPublishingPrivileges: YesNoBool | null;
+  hasGreekDesignation: YesNoBool | null;
+  explicitLanguageReferences: string[] | null;
+  institutions: string[] | null;
+  otherNames: string[] | null;
+  diagrams_extracted: boolean;
 };
 
 export type RadioProps = {

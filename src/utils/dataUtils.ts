@@ -417,7 +417,7 @@ export function normalizeAncientPersona(name: string): string | null {
   return null;
 }
 
-function parseOtherNames(otherNames: string) {
+function parseOtherNames(otherNames: string): string[] {
   return otherNames
     .split(",")
     .map((s) =>
@@ -426,13 +426,13 @@ function parseOtherNames(otherNames: string) {
         .replace(/\s*-\s*/, "")
         .replace(/[()]/g, "")
         .replace(/\u017F/g, "s") // long s → s (e.g., Monſieur)
-        .replace(/[’‘`´]/g, "'") // unify apostrophes
+        .replace(/[''`´]/g, "'") // unify apostrophes
         .toLowerCase()
         .trim(),
     )
     .filter(Boolean)
     .map(normalizeAncientPersona)
-    .filter(Boolean);
+    .filter((name): name is string => name !== null);
 }
 
 function mapOtherName(s: string): string {
@@ -447,6 +447,20 @@ function mapOtherName(s: string): string {
   return startCase(s.toLowerCase());
 }
 
+const fetchDiagramDirectories = async (): Promise<Set<string>> => {
+  try {
+    const response = await fetch('https://api.github.com/repos/ReallyLiri/elements-facsimile/contents/docs/diagrams');
+    const data = await response.json();
+    if (Array.isArray(data)) {
+      return new Set(data.filter(item => item.type === 'dir').map(item => item.name));
+    }
+    return new Set();
+  } catch (error) {
+    console.error('Error fetching diagram directories:', error);
+    return new Set();
+  }
+};
+
 export const loadEditionsData = (
   setItems: Dispatch<SetStateAction<Item[]>>,
   setFloatingCity = false,
@@ -454,8 +468,9 @@ export const loadEditionsData = (
   Promise.all([
     fetch(CSV_PATH_ELEMENTS).then((response) => response.text()),
     fetch(CSV_PATH_SECONDARY).then((response) => response.text()),
+    fetchDiagramDirectories(),
   ])
-    .then(([elementsText, secondaryText]) => {
+    .then(([elementsText, secondaryText, diagramDirectories]) => {
       const processData = (csvText: string, type: keyof typeof ItemTypes) => {
         return new Promise<Item[]>((resolve) => {
           Papa.parse(csvText, {
@@ -517,8 +532,8 @@ export const loadEditionsData = (
                       raw["language"] !== "CHINESE" &&
                       raw["title"] &&
                       raw["title"] !== "?"
-                        ? "Yes"
-                        : "No",
+                        ? ("Yes" as const)
+                        : ("No" as const),
                     tp_illustration: raw["tp_illustration"] ? "Yes" : "No or uncatalogued",
                     colorInTitle: hasTitleImage
                       ? raw["has_red"] === "True"
@@ -571,28 +586,28 @@ export const loadEditionsData = (
                       : null,
                     hasIntendedAudience: hasTitle
                       ? raw["EXPLICIT RECIPIENT"] || raw["EXPLICIT RECIPIENT 2"]
-                        ? "Yes"
-                        : "No"
+                        ? ("Yes" as const)
+                        : ("No" as const)
                       : null,
                     hasPatronageDedication: hasTitle
                       ? raw["PATRON REF"] || raw["IMPRINT DEDICATION"]
-                        ? "Yes"
-                        : "No"
+                        ? ("Yes" as const)
+                        : ("No" as const)
                       : null,
                     hasAdapterAttribution: hasTitle
                       ? raw["AUTHOR NAME"] || raw["AUTHOR NAME 2"]
-                        ? "Yes"
-                        : "No"
+                        ? ("Yes" as const)
+                        : ("No" as const)
                       : null,
                     hasPublishingPrivileges: hasTitle
                       ? raw["PRIVILEGES"] || raw["IMPRINT PRIVILEGES"]
-                        ? "Yes"
-                        : "No"
+                        ? ("Yes" as const)
+                        : ("No" as const)
                       : null,
                     hasGreekDesignation: hasTitle
                       ? raw["GREEK IN NON GREEK BOOKS"]
-                        ? "Yes"
-                        : "No"
+                        ? ("Yes" as const)
+                        : ("No" as const)
                       : null,
                     explicitLanguageReferences: hasTitle
                       ? parseExplicitLanguages(
@@ -634,6 +649,7 @@ export const loadEditionsData = (
                       },
                       {} as Partial<Record<Feature, string[]>>,
                     ),
+                    diagrams_extracted: diagramDirectories.has(raw["key"] as string),
                   };
                 })
                 .filter((item) => !!item.key);
