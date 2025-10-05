@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "@emotion/styled";
-import { Container, LazyImage } from "../components/common";
+import { Container, LazyImage, ScrollToTopButton } from "../components/common";
 import { useFilter } from "../contexts/FilterContext";
 import { Item } from "../types";
 import { ItemInfo } from "../components/tps/modal/ItemInfo";
@@ -239,6 +239,7 @@ const Diagrams = () => {
   const [collapsedVolumes, setCollapsedVolumes] = useState<Set<string>>(
     new Set(),
   );
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modal, setModal] = useState<ModalState>({
@@ -322,6 +323,11 @@ const Diagrams = () => {
     }
   }, [modal.isOpen]);
 
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const filterImagesByPageRange = (images: string[]): string[] => {
     if (!pageRangeFrom && !pageRangeTo) {
       return images;
@@ -384,6 +390,18 @@ const Diagrams = () => {
     });
   };
 
+  const handleScroll = () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    setShowScrollTop(scrollTop > 200);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   const sortImagesByPageNumber = (images: string[]): string[] => {
     return images.sort((a, b) => {
       const imageInfoA = parseImageName(a);
@@ -440,6 +458,11 @@ const Diagrams = () => {
 
   return (
     <>
+      {showScrollTop && (
+        <ScrollToTopButton onClick={scrollToTop} title="Scroll to top">
+          ↑
+        </ScrollToTopButton>
+      )}
       <DiagramsContainer>
         <DocumentTitle>
           {item.year || NO_YEAR} {joinArr(item.authors) || NO_AUTHOR},{" "}
@@ -475,14 +498,14 @@ const Diagrams = () => {
 
                     const volumeText =
                       volumes.length > 1
-                        ? ` across ${volumes.length} volumes`
+                        ? `, across ${volumes.length} volumes`
                         : "";
 
                     if (pageRangeFrom || pageRangeTo) {
-                      return `${filteredCount} diagram${filteredCount === 1 ? "" : "s"} shown across ${filteredDistinctPages} page${filteredDistinctPages === 1 ? "" : "s"} (${allImages.length} total${volumeText})`;
+                      return `${filteredCount.toLocaleString()} diagram${filteredCount === 1 ? "" : "s"} shown across ${filteredDistinctPages.toLocaleString()} distinct page${filteredDistinctPages === 1 ? "" : "s"} (${allImages.length} total${volumeText})`;
                     }
 
-                    return `${allImages.length} diagram${allImages.length === 1 ? "" : "s"} detected across ${distinctPages} page${distinctPages === 1 ? "" : "s"}${volumeText}`;
+                    return `${allImages.length.toLocaleString()} diagram${allImages.length === 1 ? "" : "s"} detected across ${distinctPages.toLocaleString()} distinct page${distinctPages === 1 ? "" : "s"}${volumeText}`;
                   })()}
         </DocumentDescription>
 
