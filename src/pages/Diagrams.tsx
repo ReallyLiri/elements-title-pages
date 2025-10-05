@@ -7,8 +7,12 @@ import { Item } from "../types";
 import { ItemInfo } from "../components/tps/modal/ItemInfo";
 import { NO_AUTHOR, NO_CITY, NO_YEAR } from "../constants";
 import { joinArr } from "../utils/util.ts";
-import { buildDiagramImageUrl, fetchDiagrams } from "../utils/diagrams.ts";
-import { SEA_COLOR } from "../utils/colors.ts";
+import {
+  buildDiagramImageUrl,
+  fetchDiagrams,
+  VolumeData,
+} from "../utils/diagrams.ts";
+import { LAND_COLOR, SEA_COLOR } from "../utils/colors.ts";
 
 const DiagramsContainer = styled.div`
   max-width: 80vw;
@@ -23,6 +27,33 @@ const DocumentTitle = styled.h2`
 
 const DocumentDescription = styled.p`
   color: #6b7280;
+`;
+
+const VolumeHeader = styled.h3`
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  margin: 2rem 0 1rem 0;
+  border-bottom: 2px solid ${SEA_COLOR};
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+const CollapseIcon = styled.span<{ isCollapsed: boolean }>`
+  font-size: 0.9rem;
+  color: ${LAND_COLOR};
+  transition: transform 0.2s;
+  transform: ${({ isCollapsed }) =>
+    isCollapsed ? "rotate(-90deg)" : "rotate(0deg)"};
+  user-select: none;
 `;
 
 const DiagramsGrid = styled.div`
@@ -204,6 +235,10 @@ const Diagrams = () => {
   const { data } = useFilter();
   const [item, setItem] = useState<Item | null>(null);
   const [images, setImages] = useState<string[]>([]);
+  const [volumes, setVolumes] = useState<VolumeData[]>([]);
+  const [collapsedVolumes, setCollapsedVolumes] = useState<Set<string>>(
+    new Set(),
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modal, setModal] = useState<ModalState>({
@@ -238,8 +273,12 @@ const Diagrams = () => {
 
       if (result.error) {
         setError(result.error);
+      } else if (result.volumes) {
+        setVolumes(result.volumes);
+        setImages([]);
       } else {
-        setImages(result.images);
+        setImages(result.images || []);
+        setVolumes([]);
       }
 
       setLoading(false);
@@ -248,11 +287,17 @@ const Diagrams = () => {
     loadDiagrams();
   }, [editionKey]);
 
-  const openImageModal = (imagePath: string, image: ImageInfo) => {
+  const openImageModal = (
+    imagePath: string,
+    image: ImageInfo,
+    volumeNumber?: number,
+  ) => {
     setModal({
       isOpen: true,
       imagePath,
-      title: `Page ${image.pageNumber} - Diagram #${image.index}`,
+      title: volumeNumber
+        ? `Volume ${volumeNumber} - Page ${image.pageNumber} - Diagram #${image.index}`
+        : `Page ${image.pageNumber} - Diagram #${image.index}`,
     });
   };
 
@@ -298,9 +343,45 @@ const Diagrams = () => {
     });
   };
 
+  const getAllImages = () => {
+    if (volumes.length > 0) {
+      return volumes.flatMap((volume) => volume.images);
+    }
+    return images;
+  };
+
+  const getVisibleImages = () => {
+    if (volumes.length > 0) {
+      return volumes
+        .filter((volume) => !collapsedVolumes.has(volume.key))
+        .flatMap((volume) => volume.images);
+    }
+    return images;
+  };
+
+  const getAllFilteredImages = () => {
+    return sortImagesByPageNumber(filterImagesByPageRange(getAllImages()));
+  };
+
+  const getVisibleFilteredImages = () => {
+    return sortImagesByPageNumber(filterImagesByPageRange(getVisibleImages()));
+  };
+
   const clearPageFilter = () => {
     setPageRangeFrom("");
     setPageRangeTo("");
+  };
+
+  const toggleVolumeCollapse = (volumeKey: string) => {
+    setCollapsedVolumes((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(volumeKey)) {
+        newSet.delete(volumeKey);
+      } else {
+        newSet.add(volumeKey);
+      }
+      return newSet;
+    });
   };
 
   const sortImagesByPageNumber = (images: string[]): string[] => {
@@ -322,12 +403,11 @@ const Diagrams = () => {
     });
   };
 
-  const filteredImages = sortImagesByPageNumber(
-    filterImagesByPageRange(images),
-  );
+  const filteredImages = getAllFilteredImages();
 
   const getPageRange = () => {
-    const pageNumbers = images
+    const allImages = getAllImages();
+    const pageNumbers = allImages
       .map((imageName) => parseImageName(imageName).pageNumber)
       .filter((pageNumber) => pageNumber !== "")
       .map((pageNumber) => parseInt(pageNumber, 10))
@@ -373,11 +453,12 @@ const Diagrams = () => {
             ? "Loading diagrams..."
             : error
               ? error
-              : images.length === 0
+              : getAllImages().length === 0
                 ? "No diagrams detected."
                 : (() => {
+                    const allImages = getAllImages();
                     const distinctPages = new Set(
-                      images
+                      allImages
                         .map(
                           (imageName) => parseImageName(imageName).pageNumber,
                         )
@@ -392,15 +473,20 @@ const Diagrams = () => {
                         .filter((pageNumber) => pageNumber !== ""),
                     ).size;
 
+                    const volumeText =
+                      volumes.length > 1
+                        ? ` across ${volumes.length} volumes`
+                        : "";
+
                     if (pageRangeFrom || pageRangeTo) {
-                      return `${filteredCount} diagram${filteredCount === 1 ? "" : "s"} shown across ${filteredDistinctPages} page${filteredDistinctPages === 1 ? "" : "s"} (${images.length} total)`;
+                      return `${filteredCount} diagram${filteredCount === 1 ? "" : "s"} shown across ${filteredDistinctPages} page${filteredDistinctPages === 1 ? "" : "s"} (${allImages.length} total${volumeText})`;
                     }
 
-                    return `${images.length} diagram${images.length === 1 ? "" : "s"} detected across ${distinctPages} page${distinctPages === 1 ? "" : "s"}`;
+                    return `${allImages.length} diagram${allImages.length === 1 ? "" : "s"} detected across ${distinctPages} page${distinctPages === 1 ? "" : "s"}${volumeText}`;
                   })()}
         </DocumentDescription>
 
-        {!loading && !error && images.length > 0 && (
+        {!loading && !error && getAllImages().length > 0 && (
           <FilterContainer>
             <FilterLabel>Filter by page range:</FilterLabel>
             <FilterLabel>From:</FilterLabel>
@@ -427,38 +513,97 @@ const Diagrams = () => {
           </FilterContainer>
         )}
 
-        <DiagramsGrid>
-          {!loading &&
-            !error &&
-            filteredImages.length === 0 &&
-            images.length > 0 && (
-              <NoResults>
-                No diagrams found in the specified page range.
-              </NoResults>
-            )}
-
-          {filteredImages.map((imageName) => {
-            const imageInfo = parseImageName(imageName);
-            const imagePath = buildDiagramImageUrl(editionKey!, imageName);
+        {volumes.length > 0 ? (
+          volumes.map((volume) => {
+            const volumeImages = sortImagesByPageNumber(
+              filterImagesByPageRange(volume.images),
+            );
+            const isCollapsed = collapsedVolumes.has(volume.key);
 
             return (
-              <DiagramCard
-                key={imageName}
-                onClick={() => openImageModal(imagePath, imageInfo)}
-              >
-                <LazyImage
-                  src={imagePath}
-                  alt={`${imageInfo.pageNumber} - Diagram ${imageInfo.index}`}
-                  height="12rem"
-                  placeholder="Loading diagram..."
-                />
-                <DiagramTitle>
-                  Page {imageInfo.pageNumber} <span>#{imageInfo.index}</span>
-                </DiagramTitle>
-              </DiagramCard>
+              <div key={volume.key}>
+                {volume.volume && (
+                  <VolumeHeader
+                    onClick={() => toggleVolumeCollapse(volume.key)}
+                  >
+                    <span>Volume {volume.volume}</span>
+                    <CollapseIcon isCollapsed={isCollapsed}>▼</CollapseIcon>
+                  </VolumeHeader>
+                )}
+                {!isCollapsed && (
+                  <DiagramsGrid>
+                    {volumeImages.length === 0 && volume.images.length > 0 && (
+                      <NoResults>
+                        No diagrams found in the specified page range for this
+                        volume.
+                      </NoResults>
+                    )}
+                    {volumeImages.map((imageName) => {
+                      const imageInfo = parseImageName(imageName);
+                      const imagePath = buildDiagramImageUrl(
+                        volume.key,
+                        imageName,
+                      );
+
+                      return (
+                        <DiagramCard
+                          key={`${volume.key}-${imageName}`}
+                          onClick={() =>
+                            openImageModal(imagePath, imageInfo, volume.volume)
+                          }
+                        >
+                          <LazyImage
+                            src={imagePath}
+                            alt={`${imageInfo.pageNumber} - Diagram ${imageInfo.index}`}
+                            height="12rem"
+                            placeholder="Loading diagram..."
+                          />
+                          <DiagramTitle>
+                            Page {imageInfo.pageNumber}{" "}
+                            <span>#{imageInfo.index}</span>
+                          </DiagramTitle>
+                        </DiagramCard>
+                      );
+                    })}
+                  </DiagramsGrid>
+                )}
+              </div>
             );
-          })}
-        </DiagramsGrid>
+          })
+        ) : (
+          <DiagramsGrid>
+            {!loading &&
+              !error &&
+              filteredImages.length === 0 &&
+              images.length > 0 && (
+                <NoResults>
+                  No diagrams found in the specified page range.
+                </NoResults>
+              )}
+
+            {filteredImages.map((imageName) => {
+              const imageInfo = parseImageName(imageName);
+              const imagePath = buildDiagramImageUrl(editionKey!, imageName);
+
+              return (
+                <DiagramCard
+                  key={imageName}
+                  onClick={() => openImageModal(imagePath, imageInfo)}
+                >
+                  <LazyImage
+                    src={imagePath}
+                    alt={`${imageInfo.pageNumber} - Diagram ${imageInfo.index}`}
+                    height="12rem"
+                    placeholder="Loading diagram..."
+                  />
+                  <DiagramTitle>
+                    Page {imageInfo.pageNumber} <span>#{imageInfo.index}</span>
+                  </DiagramTitle>
+                </DiagramCard>
+              );
+            })}
+          </DiagramsGrid>
+        )}
 
         <Modal isOpen={modal.isOpen} onClick={closeImageModal}>
           <ModalContent onClick={(e) => e.stopPropagation()}>

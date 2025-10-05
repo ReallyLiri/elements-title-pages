@@ -54,6 +54,32 @@ async function fetchWithRetry(url, retries = 3) {
   }
 }
 
+function groupDirectoriesByBase(directories) {
+  const grouped = {};
+
+  directories.forEach(dir => {
+    const volMatch = dir.match(/^(.+)_vol(\d+)$/);
+    if (volMatch) {
+      const [, baseKey, volNumber] = volMatch;
+      if (!grouped[baseKey]) {
+        grouped[baseKey] = [];
+      }
+      grouped[baseKey].push({ key: dir, volume: parseInt(volNumber) });
+    } else {
+      if (!grouped[dir]) {
+        grouped[dir] = [];
+      }
+      grouped[dir].push({ key: dir, volume: 1 });
+    }
+  });
+
+  Object.keys(grouped).forEach(baseKey => {
+    grouped[baseKey].sort((a, b) => a.volume - b.volume);
+  });
+
+  return grouped;
+}
+
 async function generateDiagramDirectories() {
   const outputPath = path.join(OUTPUT_DIR, "diagram-directories.json");
 
@@ -80,35 +106,63 @@ async function generateDiagramDirectories() {
   }
 }
 
-async function generateDiagramData(key) {
-  const outputPath = path.join(OUTPUT_DIR, "diagrams", `${key}.json`);
+async function generateDiagramData(baseKey, volumes) {
+  const outputPath = path.join(OUTPUT_DIR, "diagrams", `${baseKey}.json`);
 
   if (fs.existsSync(outputPath)) {
     return;
   }
 
   try {
-    const cropsUrl = `${GITHUB_API_BASE}/${DIAGRAMS_PATH}/${key}/crops`;
-    const cropsData = await fetchWithRetry(cropsUrl);
+    const volumeData = [];
 
-    if (Array.isArray(cropsData)) {
-      const images = cropsData
-        .filter((file) => file.name.endsWith(".jpg"))
-        .map((file) => file.name);
+    for (const volumeInfo of volumes) {
+      const cropsUrl = `${GITHUB_API_BASE}/${DIAGRAMS_PATH}/${volumeInfo.key}/crops`;
 
-      const result = { images, hasNoDiagrams: images.length === 0 };
+      try {
+        const cropsData = await fetchWithRetry(cropsUrl);
 
-      if (!fs.existsSync(path.dirname(outputPath))) {
-        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        if (Array.isArray(cropsData)) {
+          const images = cropsData
+            .filter((file) => file.name.endsWith(".jpg"))
+            .map((file) => file.name);
+
+          volumeData.push({
+            volume: volumes.length > 1 ? volumeInfo.volume : undefined,
+            key: volumeInfo.key,
+            images,
+            hasNoDiagrams: images.length === 0
+          });
+        }
+      } catch (volumeError) {
+        volumeData.push({
+          volume: volumes.length > 1 ? volumeInfo.volume : undefined,
+          key: volumeInfo.key,
+          images: [],
+          hasNoDiagrams: true
+        });
       }
 
-      fs.writeFileSync(outputPath, JSON.stringify(result, null, 2));
-      console.log(
-        `Generated diagrams data for ${key}: ${images.length} images`,
-      );
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
+
+    const result = volumes.length > 1 ? { volumes: volumeData } : volumeData[0];
+
+    if (!fs.existsSync(path.dirname(outputPath))) {
+      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+    }
+
+    fs.writeFileSync(outputPath, JSON.stringify(result, null, 2));
+
+    const totalImages = volumeData.reduce((sum, vol) => sum + vol.images.length, 0);
+    console.log(
+      `Generated diagrams data for ${baseKey}: ${totalImages} images across ${volumes.length} volume(s)`,
+    );
   } catch (error) {
-    const result = { images: [], hasNoDiagrams: true };
+    const result = volumes.length > 1
+      ? { volumes: volumes.map(v => ({ volume: v.volume, key: v.key, images: [], hasNoDiagrams: true })) }
+      : { images: [], hasNoDiagrams: true };
+
     if (!fs.existsSync(path.dirname(outputPath))) {
       fs.mkdirSync(path.dirname(outputPath), { recursive: true });
     }
@@ -127,23 +181,26 @@ async function generateAllDiagramData() {
   }
 
   const directories = JSON.parse(fs.readFileSync(directoriesPath, "utf8"));
-  const missingDirectories = directories.filter(dir => {
-    const outputPath = path.join(OUTPUT_DIR, "diagrams", `${dir}.json`);
+  const groupedDirectories = groupDirectoriesByBase(directories);
+
+  const missingBaseKeys = Object.keys(groupedDirectories).filter(baseKey => {
+    const outputPath = path.join(OUTPUT_DIR, "diagrams", `${baseKey}.json`);
     return !fs.existsSync(outputPath);
   });
 
-  if (missingDirectories.length === 0) {
+  if (missingBaseKeys.length === 0) {
     console.log("All diagram data files already exist, skipping...");
     return;
   }
 
   console.log(
-    `Generating diagram data for ${missingDirectories.length} of ${directories.length} directories...`,
+    `Generating diagram data for ${missingBaseKeys.length} of ${Object.keys(groupedDirectories).length} base entries...`,
   );
 
-  for (const dir of missingDirectories) {
-    await generateDiagramData(dir);
-    await new Promise((resolve) => setTimeout(resolve, 100));
+  for (const baseKey of missingBaseKeys) {
+    const volumes = groupedDirectories[baseKey];
+    await generateDiagramData(baseKey, volumes);
+    await new Promise((resolve) => setTimeout(resolve, 200));
   }
 }
 

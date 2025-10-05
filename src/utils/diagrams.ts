@@ -4,9 +4,17 @@ import {
   GITHUB_CONTENT_URL,
 } from "../constants";
 
-export interface DiagramsResult {
+export interface VolumeData {
+  volume?: number;
+  key: string;
   images: string[];
   hasNoDiagrams: boolean;
+}
+
+export interface DiagramsResult {
+  images?: string[];
+  hasNoDiagrams?: boolean;
+  volumes?: VolumeData[];
   error?: string;
 }
 
@@ -37,7 +45,15 @@ export const fetchDiagrams = async (key: string): Promise<DiagramsResult> => {
     }
 
     const data = await response.json();
-    return data;
+
+    if (data.volumes) {
+      return data;
+    } else {
+      return {
+        images: data.images || [],
+        hasNoDiagrams: data.hasNoDiagrams || false,
+      };
+    }
   } catch (error) {
     console.error("Error fetching diagrams:", error);
     return {
