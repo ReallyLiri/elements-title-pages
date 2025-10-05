@@ -57,7 +57,7 @@ export const LazyImage = ({
 
   useEffect(() => {
     if (priority) {
-      const img = new Image();
+      const img = document.createElement('img');
       img.src = src;
       return;
     }
