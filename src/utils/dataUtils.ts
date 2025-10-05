@@ -19,7 +19,7 @@ import {
 } from "../constants";
 import { Point } from "react-simple-maps";
 import { groupByMap } from "./util.ts";
-import { fetchDiagramDirectories } from "./githubApi";
+import { fetchDiagramDirectories } from "./diagrams.ts";
 
 const parseBooks = (
   booksRaw: string | null,
@@ -448,7 +448,6 @@ function mapOtherName(s: string): string {
   return startCase(s.toLowerCase());
 }
 
-
 export const loadEditionsData = (
   setItems: Dispatch<SetStateAction<Item[]>>,
   setFloatingCity = false,
@@ -522,7 +521,9 @@ export const loadEditionsData = (
                       raw["title"] !== "?"
                         ? ("Yes" as const)
                         : ("No" as const),
-                    tp_illustration: raw["tp_illustration"] ? "Yes" : "No or uncatalogued",
+                    tp_illustration: raw["tp_illustration"]
+                      ? "Yes"
+                      : "No or uncatalogued",
                     colorInTitle: hasTitleImage
                       ? raw["has_red"] === "True"
                         ? "Black and Red"
@@ -637,7 +638,9 @@ export const loadEditionsData = (
                       },
                       {} as Partial<Record<Feature, string[]>>,
                     ),
-                    diagrams_extracted: diagramDirectories.has(raw["key"] as string),
+                    diagrams_extracted: diagramDirectories.has(
+                      raw["key"] as string,
+                    ),
                   };
                 })
                 .filter((item) => !!item.key);

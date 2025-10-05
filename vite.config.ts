@@ -1,18 +1,18 @@
+import type { Connect, ViteDevServer } from "vite";
 import { defineConfig, Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
-import { isNotesRequest, handleNotesRequest } from "./dev-server/notesHandler";
+import { handleNotesRequest, isNotesRequest } from "./dev-server/notesHandler";
 import {
-  isEditionRequest,
   handleEditionRequest,
+  isEditionRequest,
 } from "./dev-server/editionHandler";
 import {
-  isImageUploadRequest,
   handleImageUploadRequest,
+  isImageUploadRequest,
 } from "./dev-server/imageUploadHandler";
+// @ts-expect-error js file
 import { facsimileListingPlugin } from "./vite-plugins/facsimile-listing.js";
-import type { ViteDevServer } from "vite";
-import type { Connect } from "vite";
 import type { IncomingMessage, ServerResponse } from "http";
 
 function devApiPlugin(): Plugin {
@@ -43,7 +43,4 @@ function devApiPlugin(): Plugin {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), svgr(), devApiPlugin(), facsimileListingPlugin()],
-  define: {
-    __DEV__: JSON.stringify(process.env.NODE_ENV === "development"),
-  },
 });

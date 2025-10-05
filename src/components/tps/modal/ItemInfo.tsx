@@ -9,7 +9,7 @@ import { joinArr } from "../../../utils/util";
 import { NO_AUTHOR } from "../../../constants";
 import { LAND_COLOR } from "../../../utils/colors";
 import { TOOLTIP_SCAN } from "../../map/MapTooltips";
-import { PiAngleBold } from "react-icons/pi";
+import { SiMaterialdesign } from "react-icons/si";
 
 const InfoTitle = styled.div`
   font-size: 0.8rem;
@@ -45,6 +45,15 @@ const CitationButton = styled.button<{ copied?: boolean }>`
   svg {
     font-size: 0.8rem;
   }
+`;
+
+const StyledDiagramIcon = styled(SiMaterialdesign)`
+  margin-left: 0.5rem;
+  color: white !important;
+  background-color: ${LAND_COLOR};
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
 `;
 
 const getAuthorLastName = (author: string) => {
@@ -142,9 +151,8 @@ export const ItemInfo = ({
               target="_blank"
               rel="noopener noreferrer"
               title="View Diagrams"
-              style={{ marginLeft: "0.5rem" }}
             >
-              <PiAngleBold />
+              <StyledDiagramIcon />
             </StyledAnchor>
           )}
         </Row>

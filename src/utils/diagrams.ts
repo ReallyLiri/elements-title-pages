@@ -1,7 +1,7 @@
 import {
   DIAGRAMS_CROPS_FOLDER,
   DIAGRAMS_PATH_BASE,
-  GITHUB_RAW_BASE_URL,
+  GITHUB_CONTENT_URL,
 } from "../constants";
 
 export interface DiagramsResult {
@@ -14,7 +14,7 @@ export const buildDiagramImageUrl = (
   key: string,
   imageName: string,
 ): string => {
-  return `${GITHUB_RAW_BASE_URL}/${DIAGRAMS_PATH_BASE}/${key}/${DIAGRAMS_CROPS_FOLDER}/${imageName}`;
+  return `${GITHUB_CONTENT_URL}/${DIAGRAMS_PATH_BASE}/${key}/${DIAGRAMS_CROPS_FOLDER}/${imageName}`;
 };
 
 export const fetchDiagrams = async (key: string): Promise<DiagramsResult> => {
@@ -50,10 +50,10 @@ export const fetchDiagrams = async (key: string): Promise<DiagramsResult> => {
 
 export const fetchDiagramDirectories = async (): Promise<Set<string>> => {
   try {
-    const response = await fetch('/docs/diagram-directories.json');
+    const response = await fetch("/docs/diagram-directories.json");
 
     if (!response.ok) {
-      console.error('Failed to fetch diagram directories');
+      console.error("Failed to fetch diagram directories");
       return new Set();
     }
 

@@ -225,3 +225,5 @@ export const LanguagesInfo = styled.div`
   color: lightgray;
   text-align: center;
 `;
+
+export { LazyImage } from "./common/LazyImage";

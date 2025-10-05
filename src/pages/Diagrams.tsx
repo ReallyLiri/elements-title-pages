@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "@emotion/styled";
-import { Container } from "../components/common";
+import { Container, LazyImage } from "../components/common";
 import { useFilter } from "../contexts/FilterContext";
 import { Item } from "../types";
 import { ItemInfo } from "../components/tps/modal/ItemInfo";
 import { NO_AUTHOR, NO_CITY, NO_YEAR } from "../constants";
 import { joinArr } from "../utils/util.ts";
-import { fetchDiagrams, buildDiagramImageUrl } from "../utils/githubApi";
+import { fetchDiagrams, buildDiagramImageUrl } from "../utils/diagrams.ts";
+import {
+  LAND_COLOR,
+  PANE_COLOR,
+  SEA_COLOR,
+  TRANSPARENT_WHITE,
+} from "../utils/colors.ts";
 
 const DiagramsContainer = styled.div`
   max-width: 80vw;
@@ -31,42 +37,31 @@ const DiagramsGrid = styled.div`
 `;
 
 const DiagramCard = styled.div`
-  background-color: white;
+  background-color: #eaeaea;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
   overflow: hidden;
   cursor: pointer;
   transition: box-shadow 0.3s;
 
   &:hover {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.2);
+  }
+
+  img {
+    background-color: #eaeaea;
   }
 `;
 
-const DiagramImage = styled.img`
-  width: 100%;
-  height: 12rem;
-  object-fit: cover;
-  background-color: #f3f4f6;
-`;
-
-const DiagramInfo = styled.div`
-  padding: 1rem;
-`;
-
-const DiagramTitle = styled.h3`
+const DiagramTitle = styled.div`
   font-size: 1.125rem;
   font-weight: 500;
-  color: #111827;
+  color: black;
   margin-bottom: 0.25rem;
-`;
-
-const DiagramDetails = styled.div`
-  font-size: 0.875rem;
-  color: #6b7280;
-
-  p {
-    margin: 0;
+  padding: 0.5rem;
+  span {
+    font-size: 0.8rem;
+    color: ${SEA_COLOR};
   }
 `;
 
@@ -135,7 +130,6 @@ const NoResults = styled.div`
 interface ImageInfo {
   pageNumber: string;
   index: string;
-  displayName: string;
 }
 
 interface ModalState {
@@ -155,20 +149,18 @@ const parseImageName = (filename: string): ImageInfo => {
     return {
       pageNumber,
       index,
-      displayName: `Page ${pageNumber} [#${index}]`,
     };
   }
 
   return {
     pageNumber: "",
     index: "",
-    displayName: filename,
   };
 };
 
 const Diagrams = () => {
   const [searchParams] = useSearchParams();
-  const key = searchParams.get("key");
+  const editionKey = searchParams.get("key");
   const { data } = useFilter();
   const [item, setItem] = useState<Item | null>(null);
   const [images, setImages] = useState<string[]>([]);
@@ -181,8 +173,8 @@ const Diagrams = () => {
   });
 
   useEffect(() => {
-    if (key && data.length > 0) {
-      const foundItem = data.find((item) => item.key === key);
+    if (editionKey && data.length > 0) {
+      const foundItem = data.find((item) => item.key === editionKey);
       setItem(foundItem || null);
       if (!foundItem) {
         setError("Edition not found");
@@ -190,17 +182,17 @@ const Diagrams = () => {
         return;
       }
     }
-  }, [key, data]);
+  }, [editionKey, data]);
 
   useEffect(() => {
     const loadDiagrams = async () => {
-      if (!key) {
+      if (!editionKey) {
         setError("No key provided");
         setLoading(false);
         return;
       }
 
-      const result = await fetchDiagrams(key);
+      const result = await fetchDiagrams(editionKey);
 
       if (result.error) {
         setError(result.error);
@@ -212,13 +204,13 @@ const Diagrams = () => {
     };
 
     loadDiagrams();
-  }, [key]);
+  }, [editionKey]);
 
-  const openImageModal = (imagePath: string, title: string) => {
+  const openImageModal = (imagePath: string, image: ImageInfo) => {
     setModal({
       isOpen: true,
       imagePath,
-      title,
+      title: `Page ${image.pageNumber} - Diagram #${image.index}`,
     });
   };
 
@@ -243,7 +235,7 @@ const Diagrams = () => {
     }
   }, [modal.isOpen]);
 
-  if (!key || !item) {
+  if (!editionKey || !item) {
     return (
       <Container>
         <DiagramsContainer>
@@ -273,7 +265,16 @@ const Diagrams = () => {
               ? error
               : images.length === 0
                 ? "No diagrams detected"
-                : `${images.length} diagram${images.length === 1 ? "" : "s"} detected`}
+                : (() => {
+                    const distinctPages = new Set(
+                      images
+                        .map(
+                          (imageName) => parseImageName(imageName).pageNumber,
+                        )
+                        .filter((pageNumber) => pageNumber !== ""),
+                    ).size;
+                    return `${images.length} diagram${images.length === 1 ? "" : "s"} detected across ${distinctPages} page${distinctPages === 1 ? "" : "s"}`;
+                  })()}
         </DocumentDescription>
 
         <DiagramsGrid>
@@ -283,21 +284,22 @@ const Diagrams = () => {
 
           {images.map((imageName) => {
             const imageInfo = parseImageName(imageName);
-            const imagePath = buildDiagramImageUrl(key!, imageName);
+            const imagePath = buildDiagramImageUrl(editionKey!, imageName);
 
             return (
               <DiagramCard
                 key={imageName}
-                onClick={() => openImageModal(imagePath, imageInfo.displayName)}
+                onClick={() => openImageModal(imagePath, imageInfo)}
               >
-                <DiagramImage src={imagePath} alt={imageInfo.displayName} />
-                <DiagramInfo>
-                  <DiagramTitle>{imageInfo.displayName}</DiagramTitle>
-                  <DiagramDetails>
-                    <p>Page: {imageInfo.pageNumber}</p>
-                    <p>Index: {imageInfo.index}</p>
-                  </DiagramDetails>
-                </DiagramInfo>
+                <LazyImage
+                  src={imagePath}
+                  alt={`${imageInfo.pageNumber} - Diagram ${imageInfo.index}`}
+                  height="12rem"
+                  placeholder="Loading diagram..."
+                />
+                <DiagramTitle>
+                  Page {imageInfo.pageNumber} <span>#{imageInfo.index}</span>
+                </DiagramTitle>
               </DiagramCard>
             );
           })}

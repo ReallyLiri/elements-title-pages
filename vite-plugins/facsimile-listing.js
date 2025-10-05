@@ -154,8 +154,5 @@ export function facsimileListingPlugin() {
       await generateDiagramDirectories();
       await generateAllDiagramData();
     },
-    async handleHotUpdate() {
-      return [];
-    },
   };
 }
