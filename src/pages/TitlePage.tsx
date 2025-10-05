@@ -88,8 +88,14 @@ function TitlePage() {
     return filteredItems.filter((item) => {
       const title = item.title?.toLowerCase() || "";
       const imprint = item.imprint?.toLowerCase() || "";
+      const titleEn = item.titleEn?.toLowerCase() || "";
       return (
         title
+          .replaceAll("\n", " ")
+          .replaceAll("  ", " ")
+          .replaceAll("-", "")
+          .includes(searchLower) ||
+        titleEn
           .replaceAll("\n", " ")
           .replaceAll("  ", " ")
           .replaceAll("-", "")
