@@ -102,16 +102,23 @@ export const itemProperties: {
       return numA - numB;
     }) as (a: unknown, b: unknown) => number,
   },
-  format: {
-    displayName: "Edition Format",
-    customCompareFn: formatCompare as (a: unknown, b: unknown) => number,
-  },
-  volumesCount: {displayName: "Number of Volumes"},
   additionalContent: {
     displayName: "Additional Content",
     isArray: true,
   },
   class: {displayName: "Wardhaugh Class"},
+  diagrams_extracted: {
+    displayName: "Diagrams Extracted",
+  },
+  study_corpora: {
+    displayName: "Study Corpus",
+    isArray: true,
+  },
+  format: {
+    displayName: "Edition Format",
+    customCompareFn: formatCompare as (a: unknown, b: unknown) => number,
+  },
+  volumesCount: {displayName: "Number of Volumes"},
   hasTitle: {displayName: "Has Title Page"},
   colorInTitle: {
     displayName: "Colors on Title Page",
@@ -148,6 +155,13 @@ export const itemProperties: {
     displayName: "Types Present on Title Page",
     isTitlePageImageFeature: true,
     isArray: true,
+  },
+  otherNames: {
+    displayName: "Educational Mentioned Authority on Title Page",
+    isArray: true,
+  },
+  tp_illustration: {
+    displayName: "Illustration on Title Page",
   },
   otherNamesClassification: {
     displayName: "Other Educational Authorities Mentioned on Title Page",
@@ -196,19 +210,5 @@ export const itemProperties: {
     isArray: true,
     notFilterable: true,
     isTitlePageTextFeature: true,
-  },
-  study_corpora: {
-    displayName: "Study Corpus",
-    isArray: true,
-  },
-  otherNames: {
-    displayName: "Educational Mentioned Authority on Title Page",
-    isArray: true,
-  },
-  tp_illustration: {
-    displayName: "Illustration on Title Page",
-  },
-  diagrams_extracted: {
-    displayName: "Diagrams Extracted",
   },
 };
