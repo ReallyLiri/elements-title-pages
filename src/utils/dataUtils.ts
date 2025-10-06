@@ -6,9 +6,9 @@ import {
   Item,
   Range,
 } from "../types";
-import { startCase, uniq } from "lodash";
+import {startCase, uniq} from "lodash";
 import Papa from "papaparse";
-import { Dispatch, SetStateAction } from "react";
+import {Dispatch, SetStateAction} from "react";
 import {
   CSV_PATH_CITIES,
   CSV_PATH_ELEMENTS,
@@ -17,9 +17,9 @@ import {
   FeatureToColumnName,
   ItemTypes,
 } from "../constants";
-import { Point } from "react-simple-maps";
-import { groupByMap } from "./util.ts";
-import { fetchDiagramDirectories } from "./diagrams.ts";
+import {Point} from "react-simple-maps";
+import {groupByMap} from "./util.ts";
+import {fetchDiagramDirectories} from "./diagrams.ts";
 
 const parseBooks = (
   booksRaw: string | null,
@@ -77,7 +77,7 @@ const parseBooks = (
         }
       } else if (singleMatch) {
         const num = parseInt(singleMatch[1], 10);
-        elementsBooks.push({ start: num, end: num });
+        elementsBooks.push({start: num, end: num});
         elementsBooksExpanded.push(num);
       } else {
         console.error(`Unrecognized book format: ${part}`);
@@ -85,7 +85,7 @@ const parseBooks = (
     }
   }
 
-  return { elementsBooks, elementsBooksExpanded, additionalContent };
+  return {elementsBooks, elementsBooksExpanded, additionalContent};
 };
 
 const ifEmpty = <T>(arr: T[], defaultValue: T[]): T[] =>
@@ -112,27 +112,27 @@ function parseExplicitLanguages(langs: string) {
             /latin|latina|latino|latine|latein|latijn|latinum|latinit|la tine|latijnsche/,
           lang: "Latin",
         },
-        { match: /greek|graec|græc|grec|griech/, lang: "Greek" },
-        { match: /fran[çc]ois|francois|french/, lang: "French" },
-        { match: /italien|italian|italiana|thoscana|toscana/, lang: "Italian" },
+        {match: /greek|graec|græc|grec|griech/, lang: "Greek"},
+        {match: /fran[çc]ois|francois|french/, lang: "French"},
+        {match: /italien|italian|italiana|thoscana|toscana/, lang: "Italian"},
         {
           match: /spanish|espanol|española|traduzidas|castellano|hispanice/,
           lang: "Spanish",
         },
-        { match: /german|teutsch|teutscher|deutsch/, lang: "German" },
+        {match: /german|teutsch|teutscher|deutsch/, lang: "German"},
         {
           match: /nederduyts|nederduytse|neerduid|neerduyts|neerdvyt|niderland/,
           lang: "Dutch",
         },
-        { match: /arabic/, lang: "Arabic" },
-        { match: /english|englishe/, lang: "English" },
+        {match: /arabic/, lang: "Arabic"},
+        {match: /english|englishe/, lang: "English"},
         {
           match: /romance|vulgar|volgar|vvlgare|vernacul|en nostre langve/,
           lang: "general-vernacular",
         },
       ];
 
-      for (const { match, lang } of rules) {
+      for (const {match, lang} of rules) {
         if (match.test(normalized)) return lang;
       }
 
@@ -161,7 +161,7 @@ function parseInstitutions(institutions: string) {
         },
       ];
 
-      for (const { match, label } of rules) {
+      for (const {match, label} of rules) {
         if (match.test(normalized)) return label;
       }
 
@@ -450,6 +450,26 @@ function mapOtherName(s: string): string {
   return startCase(s.toLowerCase());
 }
 
+function mapStudyCorpus(s: string): string {
+  switch (s) {
+    case "dh":
+      return "DH core texts";
+  }
+  return startCase(s.toLowerCase());
+}
+
+function parseStudyCorpora(raw: Record<string, unknown>, type: "elements" | "secondary"): string[] {
+  const studyCorpora: string[] = (raw["included_in_studies"] as string | null)?.split(", ").map((study: string): string => mapStudyCorpus(study)).filter(Boolean) || []
+  if ((!Number(raw["year"]) || Number(raw["year"]) <= 1700) &&
+    type === "elements" &&
+    raw["language"] !== "CHINESE" &&
+    raw["title"] &&
+    raw["title"] !== "?") {
+    studyCorpora.push("Title pages");
+  }
+  return studyCorpora
+}
+
 export const loadEditionsData = (
   setItems: Dispatch<SetStateAction<Item[]>>,
   setFloatingCity = false,
@@ -515,14 +535,7 @@ export const loadEditionsData = (
                             ? "No"
                             : "Unknown",
 
-                    tp_study_corpus:
-                      (!Number(raw["year"]) || Number(raw["year"]) <= 1700) &&
-                      type === "elements" &&
-                      raw["language"] !== "CHINESE" &&
-                      raw["title"] &&
-                      raw["title"] !== "?"
-                        ? ("Yes" as const)
-                        : ("No" as const),
+                    study_corpora: parseStudyCorpora(raw, type),
                     tp_illustration: raw["tp_illustration"]
                       ? "Yes"
                       : "No or uncatalogued",
@@ -533,8 +546,8 @@ export const loadEditionsData = (
                       : null,
                     titlePageDesign: hasTitleImage
                       ? startCase(
-                          (raw["tp_design"] as string | null)?.toLowerCase(),
-                        )
+                        (raw["tp_design"] as string | null)?.toLowerCase(),
+                      )
                       : null,
                     titlePageNumberOfTypes: hasTitleImage
                       ? raw["num_of_types"]
@@ -543,37 +556,37 @@ export const loadEditionsData = (
                       : null,
                     titlePageFrameType: hasTitleImage
                       ? startCase(
-                          (raw["frame_type"] as string | null)?.toLowerCase(),
-                        )
+                        (raw["frame_type"] as string | null)?.toLowerCase(),
+                      )
                       : null,
                     titlePageEngraving: hasTitleImage
                       ? startCase(
-                          (raw["engraving"] as string | null)?.toLowerCase(),
-                        )
+                        (raw["engraving"] as string | null)?.toLowerCase(),
+                      )
                       : null,
                     hasPrintersDevice: hasTitleImage
                       ? toYesNo(raw["printer_device"] as string)
                       : null,
                     fontTypes: hasTitleImage
                       ? (raw["font_types"] as string | null)
-                          ?.split(", ")
-                          .map((type) => startCase(type.toLowerCase()))
-                          .filter(Boolean) || []
+                      ?.split(", ")
+                      .map((type) => startCase(type.toLowerCase()))
+                      .filter(Boolean) || []
                       : [],
                     calligraphicFeatures: hasTitleImage
                       ? startCase(
-                          (
-                            raw["calligraphic_features"] as string | null
-                          )?.toLowerCase(),
-                        )
+                        (
+                          raw["calligraphic_features"] as string | null
+                        )?.toLowerCase(),
+                      )
                       : null,
                     notes: raw["notes"] as string | null,
                     otherNamesClassification: hasTitle
                       ? ((raw["other_names_classification"] as string | null)
-                          ?.split(", ")
-                          .map((s) => mapOtherName(s))
-                          .concat(raw["EUCLID REF"] ? ["Euclid"] : [])
-                          .filter(Boolean) ?? [])
+                        ?.split(", ")
+                        .map((s) => mapOtherName(s))
+                        .concat(raw["EUCLID REF"] ? ["Euclid"] : [])
+                        .filter(Boolean) ?? [])
                       : null,
                     hasIntendedAudience: hasTitle
                       ? raw["EXPLICIT RECIPIENT"] || raw["EXPLICIT RECIPIENT 2"]
@@ -602,24 +615,24 @@ export const loadEditionsData = (
                       : null,
                     explicitLanguageReferences: hasTitle
                       ? parseExplicitLanguages(
-                          `${raw["EXPLICITLY STATED: TRANSLATED FROM"] || ""}, ${raw["EXPLICITLY STATED: TRANSLATED TO"] || ""}`,
-                        )
+                        `${raw["EXPLICITLY STATED: TRANSLATED FROM"] || ""}, ${raw["EXPLICITLY STATED: TRANSLATED TO"] || ""}`,
+                      )
                       : null,
                     institutions: hasTitle
                       ? parseInstitutions(
-                          (raw["INSTITUTIONS"] as string | null) || "",
-                        )
+                        (raw["INSTITUTIONS"] as string | null) || "",
+                      )
                       : null,
                     otherNames: hasTitle
                       ? parseOtherNames(
-                          (raw["OTHER NAMES"] as string | null) || "",
-                        )
+                        (raw["OTHER NAMES"] as string | null) || "",
+                      )
                       : null,
                     features: Object.keys(FeatureToColumnName).reduce(
                       (acc, feature) => {
                         acc[feature as Feature] = FeatureToColumnName[
                           feature as Feature
-                        ]
+                          ]
                           .filter((column) => !!raw[column])
                           .map((column) => raw[column] as string)
                           .flatMap((text) =>
@@ -632,7 +645,7 @@ export const loadEditionsData = (
                             !raw["ELEMENTS DESIGNATION"] && type === "elements"
                               ? [raw["BASE CONTENT"] as string]
                               : raw["ELEMENTS DESIGNATION"] === "none" &&
-                                  type === "elements"
+                              type === "elements"
                                 ? []
                                 : acc[feature as Feature];
                         }
@@ -671,7 +684,7 @@ export const loadEditionsData = (
 export const loadCitiesAsync = async (): Promise<Record<string, Point>> => {
   const response = await fetch(CSV_PATH_CITIES);
   const data = await response.text();
-  const cities = Papa.parse<City>(data.trim(), { header: true }).data;
+  const cities = Papa.parse<City>(data.trim(), {header: true}).data;
   cities.push(FLOATING_CITY_ENTRY);
   return groupByMap(
     cities,

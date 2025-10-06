@@ -65,7 +65,7 @@ export type Item = {
   fontTypes: string[];
   calligraphicFeatures: string | null;
   notes: string | null;
-  tp_study_corpus: YesNoBool;
+  study_corpora: string[];
   tp_illustration: string;
   otherNamesClassification: string[] | null;
   hasIntendedAudience: YesNoBool | null;
