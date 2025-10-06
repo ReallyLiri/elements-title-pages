@@ -9,6 +9,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import styled from "@emotion/styled";
+import { SiMaterialdesign } from "react-icons/si";
 import { Item } from "../types";
 import { useFilter } from "../contexts/FilterContext";
 import {
@@ -206,6 +207,17 @@ function Catalogue() {
                 <FaBookReader style={{ color: SEA_COLOR }} />
               </a>
             )}
+            {info.row.original.diagrams_extracted && (
+              <a
+                href={`/diagrams?key=${info.row.original.key}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="View Diagrams"
+                >
+                <SiMaterialdesign style={{ color: SEA_COLOR }} />
+              </a>
+              )
+            }
           </Row>
         ),
         size: 60,
