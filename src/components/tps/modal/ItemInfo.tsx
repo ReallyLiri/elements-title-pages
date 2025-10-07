@@ -25,6 +25,12 @@ const StyledAnchor = styled.a`
   }
 `;
 
+const AnchorsRow = styled.div`
+  display: flex !important;
+  flex-direction: row;
+  gap: 0.5rem;
+`;
+
 const CitationButton = styled.button<{ copied?: boolean }>`
   background: none;
   border: none;
@@ -48,7 +54,6 @@ const CitationButton = styled.button<{ copied?: boolean }>`
 `;
 
 const StyledDiagramIcon = styled(SiMaterialdesign)`
-  margin-left: 0.5rem;
   color: white !important;
   background-color: ${LAND_COLOR};
   width: 20px;
@@ -132,29 +137,35 @@ export const ItemInfo = ({
         </InfoTitle>{" "}
         {joinArr(item.languages)}
       </Row>
-      {item.scanUrl && (
+      {item.scanUrl && item.scanUrl.length > 0 && (
         <Row justifyStart>
           <InfoTitle>Facsimile:</InfoTitle>
-          <StyledAnchor
-            href={item.scanUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <AnchorsRow
             data-tooltip-id={TOOLTIP_SCAN}
             data-tooltip-content="View Facsimile Online"
-            data-tooltip-place="bottom"
+            data-tooltip-place="left"
           >
-            <FaBookReader />
-          </StyledAnchor>
-          {showDiagramsLink && item.diagrams_extracted && (
-            <StyledAnchor
-              href={`/diagrams?key=${item.key}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="View Diagrams"
-            >
-              <StyledDiagramIcon />
-            </StyledAnchor>
-          )}
+            {item.scanUrl.map((url, index) => (
+              <StyledAnchor
+                key={index}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaBookReader />
+              </StyledAnchor>
+            ))}
+            {showDiagramsLink && item.diagrams_extracted && (
+              <StyledAnchor
+                href={`/diagrams?key=${item.key}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="View Diagrams"
+              >
+                <StyledDiagramIcon />
+              </StyledAnchor>
+            )}
+          </AnchorsRow>
         </Row>
       )}
 

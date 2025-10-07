@@ -47,7 +47,7 @@ export type Item = {
   titleEn: string | null;
   imprint: string | null;
   imprintEn: string | null;
-  scanUrl: string | null;
+  scanUrl: string[] | null;
   features: Partial<Record<Feature, string[]>>;
   type: string;
   format: string | null;
@@ -111,6 +111,13 @@ export type DottedLine = {
   uc_b2: string;
   uc_other: string;
   quality: string;
+};
+
+export type EditionCopy = {
+  key: string;
+  scan_url: string;
+  annotation: string;
+  vol: string;
 };
 
 export const FLOATING_CITY = "s.l.";

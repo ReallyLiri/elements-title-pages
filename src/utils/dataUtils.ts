@@ -1,6 +1,7 @@
 import {
   City,
   DottedLine,
+  EditionCopy,
   Feature,
   FLOATING_CITY,
   FLOATING_CITY_ENTRY,
@@ -12,6 +13,7 @@ import Papa from "papaparse";
 import { Dispatch, SetStateAction } from "react";
 import {
   CSV_PATH_CITIES,
+  CSV_PATH_COPIES,
   CSV_PATH_DOTTED_LINES,
   CSV_PATH_ELEMENTS,
   CSV_PATH_SECONDARY,
@@ -490,9 +492,10 @@ export const loadEditionsData = (
     fetch(CSV_PATH_SECONDARY).then((response) => response.text()),
     fetchDiagramDirectories(),
     loadDottedLinesAsync(),
+    loadCopiesAsync(),
   ])
     .then(
-      ([elementsText, secondaryText, diagramDirectories, dottedLinesMap]) => {
+      ([elementsText, secondaryText, diagramDirectories, dottedLinesMap, copiesMap]) => {
         const processData = (csvText: string, type: keyof typeof ItemTypes) => {
           return new Promise<Item[]>((resolve) => {
             Papa.parse(csvText, {
@@ -528,9 +531,14 @@ export const loadEditionsData = (
                       titleEn: raw["title_EN"] as string | null,
                       imprint: raw["imprint"] as string | null,
                       imprintEn: raw["imprint_EN"] as string | null,
-                      scanUrl:
-                        (raw["scan_url"] as string | null)?.split(";")[0] ||
-                        null,
+                      scanUrl: (() => {
+                        const originalUrls = raw["scan_url"]
+                          ? (raw["scan_url"] as string).split(";").filter(Boolean)
+                          : [];
+                        const copiesUrls = copiesMap[raw["key"] as string] || [];
+                        const allUrls = [...originalUrls, ...copiesUrls];
+                        return allUrls.length > 0 ? allUrls : null;
+                      })(),
                       type: ItemTypes[type],
                       format: raw["format"] as string | null,
                       ...parseBooks(raw["books"] as string | null),
@@ -790,6 +798,27 @@ const transformDottedLineCase = (caseCode: string): string => {
   return caseCode;
 };
 
+const loadCopiesAsync = async (): Promise<
+  Record<string, string[]>
+> => {
+  const response = await fetch(CSV_PATH_COPIES);
+  const data = await response.text();
+  const copies = Papa.parse<EditionCopy>(data.trim(), { header: true }).data;
+
+  const copiesMap: Record<string, string[]> = {};
+
+  copies.forEach((copy) => {
+    if (copy.key && copy.scan_url) {
+      if (!copiesMap[copy.key]) {
+        copiesMap[copy.key] = [];
+      }
+      copiesMap[copy.key].push(copy.scan_url);
+    }
+  });
+
+  return copiesMap;
+};
+
 const loadDottedLinesAsync = async (): Promise<
   Record<string, { cases: string[]; hasDiagrams: string }>
 > => {
@@ -882,10 +911,10 @@ export const authorDisplayName = (author: string) => {
 };
 
 export function openScan(item: Item) {
-  if (!item.scanUrl) {
+  if (!item.scanUrl || item.scanUrl.length === 0) {
     return;
   }
-  return window.open(item.scanUrl, "_blank")?.focus();
+  return window.open(item.scanUrl[0], "_blank")?.focus();
 }
 
 export function openImage(item: Item) {

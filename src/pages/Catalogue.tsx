@@ -214,16 +214,19 @@ function Catalogue() {
             >
               ⤢
             </ViewButton>
-            {info.row.original.scanUrl && (
-              <a
-                href={info.row.original.scanUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="View Facsimile Online"
-              >
-                <FaBookReader style={{ color: SEA_COLOR }} />
-              </a>
-            )}
+            {info.row.original.scanUrl && info.row.original.scanUrl.length > 0 &&
+              info.row.original.scanUrl.map((url, index) => (
+                <a
+                  key={index}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="View Facsimile Online"
+                >
+                  <FaBookReader style={{ color: SEA_COLOR }} />
+                </a>
+              ))
+            }
             {info.row.original.diagrams_extracted && (
               <a
                 href={`/diagrams?key=${info.row.original.key}`}

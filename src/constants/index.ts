@@ -4,6 +4,7 @@ export const CSV_PATH_ELEMENTS = "/docs/EiP.csv";
 export const CSV_PATH_SECONDARY = "/docs/EiP-secondary.csv";
 export const CSV_PATH_CITIES = "/docs/cities.csv";
 export const CSV_PATH_DOTTED_LINES = "/docs/dotted_lines.csv";
+export const CSV_PATH_COPIES = "/docs/copies.csv";
 
 export const TILE_HEIGHT = 400;
 export const TILE_WIDTH = 400;
