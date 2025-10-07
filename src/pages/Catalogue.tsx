@@ -1,6 +1,7 @@
 import { upperFirst } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import {
+  ColumnDef,
   ColumnResizeMode,
   createColumnHelper,
   flexRender,
@@ -350,7 +351,7 @@ function Catalogue() {
         ),
         size: 120,
       }),
-    ].filter(Boolean),
+    ].filter(Boolean) as ColumnDef<Item>[],
     [columnHelper, showOtherColumns, showElementsColumns],
   );
 
