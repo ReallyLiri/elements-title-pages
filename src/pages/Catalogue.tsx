@@ -291,7 +291,7 @@ function Catalogue() {
         cell: (info) => {
           let val = info.getValue() || "";
           val = upperFirst(val
-            .replaceAll("- ", "")
+            .replaceAll(/-\s+/gi, "")
             .replaceAll(/\[vol\. 1]:?\s*/gi, "")
             .replaceAll(/\[general title page]:?\s*/gi, "")
             .replace(/\.\s*$/g, "")
