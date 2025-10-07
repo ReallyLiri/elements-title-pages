@@ -77,6 +77,8 @@ export type Item = {
   institutions: string[] | null;
   otherNames: string[] | null;
   diagrams_extracted: boolean;
+  dotted_lines_cases: string[];
+  has_diagrams: string;
 };
 
 export type RadioProps = {
@@ -98,6 +100,17 @@ export type City = {
   city: string;
   lon: number;
   lat: number;
+};
+
+export type DottedLine = {
+  key: string;
+  type: string;
+  has_diagrams: string;
+  uc_b79_token: string;
+  uc_b10: string;
+  uc_b2: string;
+  uc_other: string;
+  quality: string;
 };
 
 export const FLOATING_CITY = "s.l.";

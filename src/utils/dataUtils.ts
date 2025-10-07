@@ -1,25 +1,27 @@
 import {
   City,
+  DottedLine,
   Feature,
   FLOATING_CITY,
   FLOATING_CITY_ENTRY,
   Item,
   Range,
 } from "../types";
-import {startCase, uniq} from "lodash";
+import { startCase, uniq } from "lodash";
 import Papa from "papaparse";
-import {Dispatch, SetStateAction} from "react";
+import { Dispatch, SetStateAction } from "react";
 import {
   CSV_PATH_CITIES,
+  CSV_PATH_DOTTED_LINES,
   CSV_PATH_ELEMENTS,
   CSV_PATH_SECONDARY,
   FeaturesToSplit,
   FeatureToColumnName,
   ItemTypes,
 } from "../constants";
-import {Point} from "react-simple-maps";
-import {groupByMap} from "./util.ts";
-import {fetchDiagramDirectories} from "./diagrams.ts";
+import { Point } from "react-simple-maps";
+import { groupByMap } from "./util.ts";
+import { fetchDiagramDirectories } from "./diagrams.ts";
 
 const parseBooks = (
   booksRaw: string | null,
@@ -77,7 +79,7 @@ const parseBooks = (
         }
       } else if (singleMatch) {
         const num = parseInt(singleMatch[1], 10);
-        elementsBooks.push({start: num, end: num});
+        elementsBooks.push({ start: num, end: num });
         elementsBooksExpanded.push(num);
       } else {
         console.error(`Unrecognized book format: ${part}`);
@@ -85,7 +87,7 @@ const parseBooks = (
     }
   }
 
-  return {elementsBooks, elementsBooksExpanded, additionalContent};
+  return { elementsBooks, elementsBooksExpanded, additionalContent };
 };
 
 const ifEmpty = <T>(arr: T[], defaultValue: T[]): T[] =>
@@ -112,27 +114,27 @@ function parseExplicitLanguages(langs: string) {
             /latin|latina|latino|latine|latein|latijn|latinum|latinit|la tine|latijnsche/,
           lang: "Latin",
         },
-        {match: /greek|graec|græc|grec|griech/, lang: "Greek"},
-        {match: /fran[çc]ois|francois|french/, lang: "French"},
-        {match: /italien|italian|italiana|thoscana|toscana/, lang: "Italian"},
+        { match: /greek|graec|græc|grec|griech/, lang: "Greek" },
+        { match: /fran[çc]ois|francois|french/, lang: "French" },
+        { match: /italien|italian|italiana|thoscana|toscana/, lang: "Italian" },
         {
           match: /spanish|espanol|española|traduzidas|castellano|hispanice/,
           lang: "Spanish",
         },
-        {match: /german|teutsch|teutscher|deutsch/, lang: "German"},
+        { match: /german|teutsch|teutscher|deutsch/, lang: "German" },
         {
           match: /nederduyts|nederduytse|neerduid|neerduyts|neerdvyt|niderland/,
           lang: "Dutch",
         },
-        {match: /arabic/, lang: "Arabic"},
-        {match: /english|englishe/, lang: "English"},
+        { match: /arabic/, lang: "Arabic" },
+        { match: /english|englishe/, lang: "English" },
         {
           match: /romance|vulgar|volgar|vvlgare|vernacul|en nostre langve/,
           lang: "general-vernacular",
         },
       ];
 
-      for (const {match, lang} of rules) {
+      for (const { match, lang } of rules) {
         if (match.test(normalized)) return lang;
       }
 
@@ -161,7 +163,7 @@ function parseInstitutions(institutions: string) {
         },
       ];
 
-      for (const {match, label} of rules) {
+      for (const { match, label } of rules) {
         if (match.test(normalized)) return label;
       }
 
@@ -257,7 +259,7 @@ export function normalizeAncientPersona(name: string): string | null {
       "campani galli",
       "campani ",
       "campano",
-      "due Tradottioni"
+      "due Tradottioni",
     )
   )
     return "Campanus of Novara";
@@ -458,16 +460,25 @@ function mapStudyCorpus(s: string): string {
   return startCase(s.toLowerCase());
 }
 
-function parseStudyCorpora(raw: Record<string, unknown>, type: "elements" | "secondary"): string[] {
-  const studyCorpora: string[] = (raw["included_in_studies"] as string | null)?.split(", ").map((study: string): string => mapStudyCorpus(study)).filter(Boolean) || []
-  if ((!Number(raw["year"]) || Number(raw["year"]) <= 1700) &&
+function parseStudyCorpora(
+  raw: Record<string, unknown>,
+  type: "elements" | "secondary",
+): string[] {
+  const studyCorpora: string[] =
+    (raw["included_in_studies"] as string | null)
+      ?.split(", ")
+      .map((study: string): string => mapStudyCorpus(study))
+      .filter(Boolean) || [];
+  if (
+    (!Number(raw["year"]) || Number(raw["year"]) <= 1700) &&
     type === "elements" &&
     raw["language"] !== "CHINESE" &&
     raw["title"] &&
-    raw["title"] !== "?") {
+    raw["title"] !== "?"
+  ) {
     studyCorpora.push("Title pages");
   }
-  return studyCorpora
+  return studyCorpora;
 }
 
 export const loadEditionsData = (
@@ -478,198 +489,209 @@ export const loadEditionsData = (
     fetch(CSV_PATH_ELEMENTS).then((response) => response.text()),
     fetch(CSV_PATH_SECONDARY).then((response) => response.text()),
     fetchDiagramDirectories(),
+    loadDottedLinesAsync(),
   ])
-    .then(([elementsText, secondaryText, diagramDirectories]) => {
-      const processData = (csvText: string, type: keyof typeof ItemTypes) => {
-        return new Promise<Item[]>((resolve) => {
-          Papa.parse(csvText, {
-            header: true,
-            skipEmptyLines: true,
-            complete: (result) => {
-              const items = (result.data as Record<string, unknown>[])
-                .map((raw) => {
-                  const hasTitle =
-                    Boolean(raw["title"]) && raw["title"] !== "?";
-                  const hasTitleImage = Boolean(raw["tp_url"]) && hasTitle;
-                  return {
-                    key: raw["key"] as string,
-                    year: raw["year"] as string,
-                    cities: ifEmpty(
-                      [raw["city"] as string, raw["city 2"] as string].filter(
-                        Boolean,
-                      ) as string[],
-                      setFloatingCity ? [FLOATING_CITY] : [],
-                    ),
-                    languages: [
-                      startCase((raw["language"] as string).toLowerCase()),
-                      startCase((raw["language 2"] as string).toLowerCase()),
-                    ].filter(Boolean) as string[],
-                    authors:
-                      (raw["author (normalized)"] as string | null)?.split(
-                        ", ",
-                      ) || [],
-                    imageUrl: (raw["tp_url"] ||
-                      raw["tp_url_alt"] ||
-                      raw["frontispiece_url"]) as string | null,
-                    title: raw["title"] as string,
-                    titleEn: raw["title_EN"] as string | null,
-                    imprint: raw["imprint"] as string | null,
-                    imprintEn: raw["imprint_EN"] as string | null,
-                    scanUrl:
-                      (raw["scan_url"] as string | null)?.split(";")[0] || null,
-                    type: ItemTypes[type],
-                    format: raw["format"] as string | null,
-                    ...parseBooks(raw["books"] as string | null),
-                    volumesCount: raw["volumesCount"]
-                      ? parseInt(raw["volumesCount"] as string)
-                      : null,
-                    class: raw["wClass"] as string | null,
-                    hasTitle:
-                      Boolean(raw["tp_url"]) &&
-                      Boolean(raw["title"]) &&
-                      raw["title"] !== "?"
-                        ? "Yes, based on digital facsimile"
-                        : Boolean(raw["title"]) && raw["title"] !== "?"
-                          ? "Yes, based on catalog long title"
-                          : raw["title"] !== "?"
-                            ? "No"
-                            : "Unknown",
+    .then(
+      ([elementsText, secondaryText, diagramDirectories, dottedLinesMap]) => {
+        const processData = (csvText: string, type: keyof typeof ItemTypes) => {
+          return new Promise<Item[]>((resolve) => {
+            Papa.parse(csvText, {
+              header: true,
+              skipEmptyLines: true,
+              complete: (result) => {
+                const items = (result.data as Record<string, unknown>[])
+                  .map((raw) => {
+                    const hasTitle =
+                      Boolean(raw["title"]) && raw["title"] !== "?";
+                    const hasTitleImage = Boolean(raw["tp_url"]) && hasTitle;
+                    return {
+                      key: raw["key"] as string,
+                      year: raw["year"] as string,
+                      cities: ifEmpty(
+                        [raw["city"] as string, raw["city 2"] as string].filter(
+                          Boolean,
+                        ) as string[],
+                        setFloatingCity ? [FLOATING_CITY] : [],
+                      ),
+                      languages: [
+                        startCase((raw["language"] as string).toLowerCase()),
+                        startCase((raw["language 2"] as string).toLowerCase()),
+                      ].filter(Boolean) as string[],
+                      authors:
+                        (raw["author (normalized)"] as string | null)?.split(
+                          ", ",
+                        ) || [],
+                      imageUrl: (raw["tp_url"] ||
+                        raw["tp_url_alt"] ||
+                        raw["frontispiece_url"]) as string | null,
+                      title: raw["title"] as string,
+                      titleEn: raw["title_EN"] as string | null,
+                      imprint: raw["imprint"] as string | null,
+                      imprintEn: raw["imprint_EN"] as string | null,
+                      scanUrl:
+                        (raw["scan_url"] as string | null)?.split(";")[0] ||
+                        null,
+                      type: ItemTypes[type],
+                      format: raw["format"] as string | null,
+                      ...parseBooks(raw["books"] as string | null),
+                      volumesCount: raw["volumesCount"]
+                        ? parseInt(raw["volumesCount"] as string)
+                        : null,
+                      class: raw["wClass"] as string | null,
+                      hasTitle:
+                        Boolean(raw["tp_url"]) &&
+                        Boolean(raw["title"]) &&
+                        raw["title"] !== "?"
+                          ? "Yes, based on digital facsimile"
+                          : Boolean(raw["title"]) && raw["title"] !== "?"
+                            ? "Yes, based on catalog long title"
+                            : raw["title"] !== "?"
+                              ? "No"
+                              : "Unknown",
 
-                    study_corpora: parseStudyCorpora(raw, type),
-                    tp_illustration: raw["tp_illustration"]
-                      ? "Yes"
-                      : "No or uncatalogued",
-                    colorInTitle: hasTitleImage
-                      ? raw["has_red"] === "True"
-                        ? "Black and Red"
-                        : "Black"
-                      : null,
-                    titlePageDesign: hasTitleImage
-                      ? startCase(
-                        (raw["tp_design"] as string | null)?.toLowerCase(),
-                      )
-                      : null,
-                    titlePageNumberOfTypes: hasTitleImage
-                      ? raw["num_of_types"]
-                        ? parseInt(raw["num_of_types"] as string)
-                        : null
-                      : null,
-                    titlePageFrameType: hasTitleImage
-                      ? startCase(
-                        (raw["frame_type"] as string | null)?.toLowerCase(),
-                      )
-                      : null,
-                    titlePageEngraving: hasTitleImage
-                      ? startCase(
-                        (raw["engraving"] as string | null)?.toLowerCase(),
-                      )
-                      : null,
-                    hasPrintersDevice: hasTitleImage
-                      ? toYesNo(raw["printer_device"] as string)
-                      : null,
-                    fontTypes: hasTitleImage
-                      ? (raw["font_types"] as string | null)
-                      ?.split(", ")
-                      .map((type) => startCase(type.toLowerCase()))
-                      .filter(Boolean) || []
-                      : [],
-                    calligraphicFeatures: hasTitleImage
-                      ? startCase(
-                        (
-                          raw["calligraphic_features"] as string | null
-                        )?.toLowerCase(),
-                      )
-                      : null,
-                    notes: raw["notes"] as string | null,
-                    otherNamesClassification: hasTitle
-                      ? ((raw["other_names_classification"] as string | null)
-                        ?.split(", ")
-                        .map((s) => mapOtherName(s))
-                        .concat(raw["EUCLID REF"] ? ["Euclid"] : [])
-                        .filter(Boolean) ?? [])
-                      : null,
-                    hasIntendedAudience: hasTitle
-                      ? raw["EXPLICIT RECIPIENT"] || raw["EXPLICIT RECIPIENT 2"]
-                        ? ("Yes" as const)
-                        : ("No" as const)
-                      : null,
-                    hasPatronageDedication: hasTitle
-                      ? raw["PATRON REF"] || raw["IMPRINT DEDICATION"]
-                        ? ("Yes" as const)
-                        : ("No" as const)
-                      : null,
-                    hasAdapterAttribution: hasTitle
-                      ? raw["AUTHOR NAME"] || raw["AUTHOR NAME 2"]
-                        ? ("Yes" as const)
-                        : ("No" as const)
-                      : null,
-                    hasPublishingPrivileges: hasTitle
-                      ? raw["PRIVILEGES"] || raw["IMPRINT PRIVILEGES"]
-                        ? ("Yes" as const)
-                        : ("No" as const)
-                      : null,
-                    hasGreekDesignation: hasTitle
-                      ? raw["GREEK IN NON GREEK BOOKS"]
-                        ? ("Yes" as const)
-                        : ("No" as const)
-                      : null,
-                    explicitLanguageReferences: hasTitle
-                      ? parseExplicitLanguages(
-                        `${raw["EXPLICITLY STATED: TRANSLATED FROM"] || ""}, ${raw["EXPLICITLY STATED: TRANSLATED TO"] || ""}`,
-                      )
-                      : null,
-                    institutions: hasTitle
-                      ? parseInstitutions(
-                        (raw["INSTITUTIONS"] as string | null) || "",
-                      )
-                      : null,
-                    otherNames: hasTitle
-                      ? parseOtherNames(
-                        (raw["OTHER NAMES"] as string | null) || "",
-                      )
-                      : null,
-                    features: Object.keys(FeatureToColumnName).reduce(
-                      (acc, feature) => {
-                        acc[feature as Feature] = FeatureToColumnName[
-                          feature as Feature
+                      study_corpora: parseStudyCorpora(raw, type),
+                      tp_illustration: raw["tp_illustration"]
+                        ? "Yes"
+                        : "No or uncatalogued",
+                      colorInTitle: hasTitleImage
+                        ? raw["has_red"] === "True"
+                          ? "Black and Red"
+                          : "Black"
+                        : null,
+                      titlePageDesign: hasTitleImage
+                        ? startCase(
+                            (raw["tp_design"] as string | null)?.toLowerCase(),
+                          )
+                        : null,
+                      titlePageNumberOfTypes: hasTitleImage
+                        ? raw["num_of_types"]
+                          ? parseInt(raw["num_of_types"] as string)
+                          : null
+                        : null,
+                      titlePageFrameType: hasTitleImage
+                        ? startCase(
+                            (raw["frame_type"] as string | null)?.toLowerCase(),
+                          )
+                        : null,
+                      titlePageEngraving: hasTitleImage
+                        ? startCase(
+                            (raw["engraving"] as string | null)?.toLowerCase(),
+                          )
+                        : null,
+                      hasPrintersDevice: hasTitleImage
+                        ? toYesNo(raw["printer_device"] as string)
+                        : null,
+                      fontTypes: hasTitleImage
+                        ? (raw["font_types"] as string | null)
+                            ?.split(", ")
+                            .map((type) => startCase(type.toLowerCase()))
+                            .filter(Boolean) || []
+                        : [],
+                      calligraphicFeatures: hasTitleImage
+                        ? startCase(
+                            (
+                              raw["calligraphic_features"] as string | null
+                            )?.toLowerCase(),
+                          )
+                        : null,
+                      notes: raw["notes"] as string | null,
+                      otherNamesClassification: hasTitle
+                        ? ((raw["other_names_classification"] as string | null)
+                            ?.split(", ")
+                            .map((s) => mapOtherName(s))
+                            .concat(raw["EUCLID REF"] ? ["Euclid"] : [])
+                            .filter(Boolean) ?? [])
+                        : null,
+                      hasIntendedAudience: hasTitle
+                        ? raw["EXPLICIT RECIPIENT"] ||
+                          raw["EXPLICIT RECIPIENT 2"]
+                          ? ("Yes" as const)
+                          : ("No" as const)
+                        : null,
+                      hasPatronageDedication: hasTitle
+                        ? raw["PATRON REF"] || raw["IMPRINT DEDICATION"]
+                          ? ("Yes" as const)
+                          : ("No" as const)
+                        : null,
+                      hasAdapterAttribution: hasTitle
+                        ? raw["AUTHOR NAME"] || raw["AUTHOR NAME 2"]
+                          ? ("Yes" as const)
+                          : ("No" as const)
+                        : null,
+                      hasPublishingPrivileges: hasTitle
+                        ? raw["PRIVILEGES"] || raw["IMPRINT PRIVILEGES"]
+                          ? ("Yes" as const)
+                          : ("No" as const)
+                        : null,
+                      hasGreekDesignation: hasTitle
+                        ? raw["GREEK IN NON GREEK BOOKS"]
+                          ? ("Yes" as const)
+                          : ("No" as const)
+                        : null,
+                      explicitLanguageReferences: hasTitle
+                        ? parseExplicitLanguages(
+                            `${raw["EXPLICITLY STATED: TRANSLATED FROM"] || ""}, ${raw["EXPLICITLY STATED: TRANSLATED TO"] || ""}`,
+                          )
+                        : null,
+                      institutions: hasTitle
+                        ? parseInstitutions(
+                            (raw["INSTITUTIONS"] as string | null) || "",
+                          )
+                        : null,
+                      otherNames: hasTitle
+                        ? parseOtherNames(
+                            (raw["OTHER NAMES"] as string | null) || "",
+                          )
+                        : null,
+                      features: Object.keys(FeatureToColumnName).reduce(
+                        (acc, feature) => {
+                          acc[feature as Feature] = FeatureToColumnName[
+                            feature as Feature
                           ]
-                          .filter((column) => !!raw[column])
-                          .map((column) => raw[column] as string)
-                          .flatMap((text) =>
-                            FeaturesToSplit[feature as Feature]
-                              ? uniq(text.split(", "))
-                              : [text],
-                          );
-                        if (feature === "Elements Designation") {
-                          acc[feature as Feature] =
-                            !raw["ELEMENTS DESIGNATION"] && type === "elements"
-                              ? [raw["BASE CONTENT"] as string]
-                              : raw["ELEMENTS DESIGNATION"] === "none" &&
+                            .filter((column) => !!raw[column])
+                            .map((column) => raw[column] as string)
+                            .flatMap((text) =>
+                              FeaturesToSplit[feature as Feature]
+                                ? uniq(text.split(", "))
+                                : [text],
+                            );
+                          if (feature === "Elements Designation") {
+                            acc[feature as Feature] =
+                              !raw["ELEMENTS DESIGNATION"] &&
                               type === "elements"
-                                ? []
-                                : acc[feature as Feature];
-                        }
-                        return acc;
-                      },
-                      {} as Partial<Record<Feature, string[]>>,
-                    ),
-                    diagrams_extracted: diagramDirectories.has(
-                      raw["key"] as string,
-                    ),
-                  };
-                })
-                .filter((item) => !!item.key);
-              resolve(items);
-            },
+                                ? [raw["BASE CONTENT"] as string]
+                                : raw["ELEMENTS DESIGNATION"] === "none" &&
+                                    type === "elements"
+                                  ? []
+                                  : acc[feature as Feature];
+                          }
+                          return acc;
+                        },
+                        {} as Partial<Record<Feature, string[]>>,
+                      ),
+                      diagrams_extracted: diagramDirectories.has(
+                        raw["key"] as string,
+                      ),
+                      dotted_lines_cases: dottedLinesMap[raw["key"] as string]
+                        ?.cases || ["Uncatalogued"],
+                      has_diagrams:
+                        dottedLinesMap[raw["key"] as string]?.hasDiagrams ||
+                        "Uncatalogued",
+                    };
+                  })
+                  .filter((item) => !!item.key);
+                resolve(items);
+              },
+            });
           });
-        });
-      };
+        };
 
-      return Promise.all([
-        processData(elementsText, "elements"),
-        processData(secondaryText, "secondary"),
-      ]);
-    })
+        return Promise.all([
+          processData(elementsText, "elements"),
+          processData(secondaryText, "secondary"),
+        ]);
+      },
+    )
     .then(([elementsItems, secondaryItems]) => {
       const allItems = [...elementsItems, ...secondaryItems];
       setItems(
@@ -684,12 +706,128 @@ export const loadEditionsData = (
 export const loadCitiesAsync = async (): Promise<Record<string, Point>> => {
   const response = await fetch(CSV_PATH_CITIES);
   const data = await response.text();
-  const cities = Papa.parse<City>(data.trim(), {header: true}).data;
+  const cities = Papa.parse<City>(data.trim(), { header: true }).data;
   cities.push(FLOATING_CITY_ENTRY);
   return groupByMap(
     cities,
     (city) => city.city,
     (city) => [city.lon, city.lat],
+  );
+};
+
+const transformDottedLineCase = (caseCode: string): string => {
+  const match = caseCode.match(/^b(\d+)(.*)$/);
+  if (!match) {
+    return caseCode;
+  }
+
+  const bookNum = parseInt(match[1], 10);
+  const suffix = match[2];
+
+  const romanNumerals = [
+    "",
+    "I",
+    "II",
+    "III",
+    "IV",
+    "V",
+    "VI",
+    "VII",
+    "VIII",
+    "IX",
+    "X",
+    "XI",
+    "XII",
+    "XIII",
+    "XIV",
+    "XV",
+    "XVI",
+  ];
+
+  if (bookNum > 16) {
+    const bookNumStr = match[1];
+    const firstDigit = parseInt(bookNumStr[0], 10);
+    const remainingDigits = parseInt(bookNumStr.slice(1), 10);
+
+    if (firstDigit <= 16 && remainingDigits <= 16) {
+      const firstRoman = romanNumerals[firstDigit];
+      const secondRoman = romanNumerals[remainingDigits];
+      return `${firstRoman}-${secondRoman}`;
+    }
+    return caseCode;
+  }
+
+  const romanBook = romanNumerals[bookNum];
+
+  if (!suffix) {
+    return romanBook || caseCode;
+  }
+
+  if (suffix === "m") {
+    return `${romanBook} throughout`;
+  }
+
+  if (suffix.startsWith("p")) {
+    const propNum = suffix.slice(1);
+    return `${romanBook}.${propNum}`;
+  }
+
+  if (suffix.startsWith("d")) {
+    const defNum = suffix.slice(1);
+    return `${romanBook}.Def.${defNum}`;
+  }
+
+  if (suffix.startsWith("cn")) {
+    const cnNum = suffix.slice(2);
+    return `${romanBook}.CN.${cnNum}`;
+  }
+
+  if (suffix.startsWith("post")) {
+    const postNum = suffix.slice(4);
+    return `${romanBook}.Post.${postNum}`;
+  }
+
+  return caseCode;
+};
+
+const loadDottedLinesAsync = async (): Promise<
+  Record<string, { cases: string[]; hasDiagrams: string }>
+> => {
+  const response = await fetch(CSV_PATH_DOTTED_LINES);
+  const data = await response.text();
+  const dottedLines = Papa.parse<DottedLine>(data.trim(), {
+    header: true,
+  }).data;
+
+  return groupByMap(
+    dottedLines,
+    (line) => line.key,
+    (line) => {
+      const cases: string[] = [];
+
+      Object.entries(line).forEach(([colName, value]) => {
+        if (colName.startsWith("uc_") && colName !== "uc_other" && value) {
+          const transformedCase = transformDottedLineCase(
+            colName.replace("uc_", ""),
+          );
+          cases.push(transformedCase);
+        }
+      });
+
+      if (line.uc_other) {
+        const otherCases = line.uc_other
+          .split(", ")
+          .map(transformDottedLineCase);
+        cases.push(...otherCases);
+      }
+
+      const hasDiagrams = line.has_diagrams || "False";
+
+      return {
+        cases,
+        hasDiagrams,
+      };
+    },
   );
 };
 

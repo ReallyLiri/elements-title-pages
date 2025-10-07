@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "@emotion/styled";
-import { Container, LazyImage, ScrollToTopButton } from "../components/common";
+import {
+  Container,
+  LazyImage,
+  Row,
+  ScrollToTopButton,
+} from "../components/common";
 import { useFilter } from "../contexts/FilterContext";
 import { Item } from "../types";
 import { ItemInfo } from "../components/tps/modal/ItemInfo";
 import { NO_AUTHOR, NO_CITY, NO_YEAR } from "../constants";
 import { joinArr } from "../utils/util.ts";
+import { dottedLinesCasesCompare } from "../constants/itemProperties";
 import {
   buildDiagramImageUrl,
   fetchDiagrams,
@@ -25,8 +31,9 @@ const DocumentTitle = styled.h2`
   font-weight: 600;
 `;
 
-const DocumentDescription = styled.p`
+const DocumentDescription = styled.div`
   color: #6b7280;
+  padding-bottom: 0.5rem;
 `;
 
 const VolumeHeader = styled.h3`
@@ -499,6 +506,24 @@ const Diagrams = () => {
                     return `${allImages.length.toLocaleString()} diagram${allImages.length === 1 ? "" : "s"} detected across ${distinctPages.toLocaleString()} distinct page${distinctPages === 1 ? "" : "s"}${volumeText}`;
                   })()}
         </DocumentDescription>
+
+        {item && (
+          <Row justifyStart>
+            {item.has_diagrams && item.has_diagrams !== "Uncatalogued" && (
+              <DocumentDescription>
+                <strong>Has Diagrams:</strong> {item.has_diagrams}
+              </DocumentDescription>
+            )}
+            {item.dotted_lines_cases && item.dotted_lines_cases.length > 0 && (
+              <DocumentDescription>
+                <strong>Dotted Lines Cases:</strong>{" "}
+                {[...item.dotted_lines_cases]
+                  .sort(dottedLinesCasesCompare)
+                  .join(", ")}
+              </DocumentDescription>
+            )}
+          </Row>
+        )}
 
         {!loading && !error && getAllImages().length > 0 && (
           <FilterContainer>
