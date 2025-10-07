@@ -5,4 +5,4 @@ bib 26-71 are from Raynaud, Dominique (ed.). 2015. Géométrie pratique: géomè
 bib 72-146 are from The Teaching of Elementary Geometry in the Seventeenth Century. Author(s): L. C. Karpinski and F. W. Kokomoor
 bib 147-157 are from Brioist, Pascal.. 2009. “ ‘Familiar Demonstrations in Geometry’: French and Italian Engineers and Euclid in the Sixteenth Century”. History of Science 47, no. 1: 1-26.
 bib 167-178 are from Oosterhoff, Richard. (2014). Idiotae, Mathematics, and Artisans: The Untutored Mind and the Discovery of Nature in the Fabrist Circle. Intellectual History Review. 24. 10.1080/17496977.2014.891180.
-bib 179- are "Manuals"
+bib 179-261 are "Manuals"
