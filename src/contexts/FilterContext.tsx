@@ -51,12 +51,10 @@ const filterRecord = (
   filtersInclude: Record<string, boolean>,
 ): boolean => {
   const year = t.year ? parseInt(t.year.split("/")[0]) : null;
-  if (
-    range[0] > 0 &&
-    range[1] > 0 &&
-    ((year && year < range[0]) || (year && year > range[1]))
-  ) {
-    return false;
+  if (range[0] > 0 && range[1] > 0) {
+    if (!year || year < range[0] || year > range[1]) {
+      return false;
+    }
   }
   const fields = Object.keys(filters) as (keyof Item)[];
   return fields.every((field) => {
