@@ -1,3 +1,4 @@
+import { upperFirst } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import {
   ColumnResizeMode,
@@ -60,6 +61,11 @@ const StyledTable = styled.table`
 
   td:has(.language-container) {
     white-space: normal;
+  }
+  
+  td:has(.short-title-container) {
+    white-space: nowrap;
+    max-width: 0;
   }
 
   thead {
@@ -156,7 +162,7 @@ const StyledHelpTip = styled(HelpTip)`
 `;
 
 function Catalogue() {
-  const { filteredItems } = useFilter();
+  const { filteredItems, filters } = useFilter();
   const [sorting, setSorting] = useState<SortingState>([
     { id: "year", desc: false },
   ]);
@@ -182,6 +188,16 @@ function Catalogue() {
   }, []);
 
   const columnHelper = createColumnHelper<Item>();
+
+  const showOtherColumns =
+    !filters?.type ||
+    filters.type.length === 0 ||
+    filters.type.some((item) => item.value === "Other");
+
+  const showElementsColumns =
+    !filters?.type ||
+    filters.type.length === 0 ||
+    filters.type.some((item) => item.value === "Elements");
 
   const columns = useMemo(
     () => [
@@ -269,12 +285,30 @@ function Catalogue() {
           return displayNameA.localeCompare(displayNameB);
         },
       }),
+      showOtherColumns && columnHelper.accessor("title", {
+        header: "Title",
+        cell: (info) => {
+          let val = info.getValue() || "";
+          val = upperFirst(val
+            .replaceAll("- ", "")
+            .replaceAll(/\[vol\. 1]:?\s*/gi, "")
+            .replaceAll(/\[general title page]:?\s*/gi, "")
+            .replace(/\.\s*$/g, "")
+            .trim()
+            .toLowerCase());
+          if (val === "?") {
+            val = "";
+          }
+          return (<div className="short-title-container">{val}</div>);
+        },
+        size: 160,
+      }),
       columnHelper.accessor("format", {
         header: "Format",
         cell: (info) => info.getValue(),
         size: 60,
       }),
-      columnHelper.accessor("elementsBooks", {
+      showElementsColumns && columnHelper.accessor("elementsBooks", {
         header: "Elements Books",
         enableSorting: false,
         cell: (info) =>
@@ -293,7 +327,7 @@ function Catalogue() {
         cell: (info) => info.getValue(),
         size: 40,
       }),
-      columnHelper.accessor("class", {
+      showElementsColumns && columnHelper.accessor("class", {
         header: () => (
           <Row gap={0.5}>
             W-Class <StyledHelpTip tooltipId={TOOLTIP_WCLASS} />
@@ -303,7 +337,7 @@ function Catalogue() {
         cell: (info) => info.getValue(),
         size: 120,
       }),
-      columnHelper.accessor("additionalContent", {
+      showElementsColumns && columnHelper.accessor("additionalContent", {
         header: "Additional Content",
         cell: (info) => joinArr(info.getValue()),
         size: 140,
@@ -316,8 +350,8 @@ function Catalogue() {
         ),
         size: 120,
       }),
-    ],
-    [columnHelper],
+    ].filter(Boolean),
+    [columnHelper, showOtherColumns, showElementsColumns],
   );
 
   const table = useReactTable({
