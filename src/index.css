@@ -28,9 +28,9 @@ body {
 @font-face {
   font-family: "Gothic";
   src:
-    url("/public/font/Chomsky.otf") format("otf"),
-    url("/public/font/Chomsky.woff") format("woff"),
-    url("/public/font/Chomsky.woff2") format("woff2");
+    url("/font/Chomsky.otf") format("otf"),
+    url("/font/Chomsky.woff") format("woff"),
+    url("/font/Chomsky.woff2") format("woff2");
 }
 
 .gothic {
