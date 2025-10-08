@@ -64,6 +64,7 @@ const ItemModal = ({ item, features, onClose }: ItemModalProps) => {
             <ModalTextColumn isImage>
               <StyledImage
                 large
+                clickable
                 src={item.imageUrl}
                 onClick={() => openImage(item)}
               />
