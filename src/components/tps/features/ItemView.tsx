@@ -130,7 +130,11 @@ const ItemView = memo(({ item, height, width, mode, features }: ItemProps) => {
       {mode === "images" &&
         (item.imageUrl ? (
           <ImageTile>
-            <StyledImage src={item.imageUrl} onClick={() => openScan(item)} />
+            <StyledImage
+              src={item.imageUrl}
+              onClick={() => openScan(item)}
+              clickable={!!item.scanUrl && item.scanUrl.length > 0}
+            />
             <ImageExpandIcon
               title="Expand"
               onClick={(e) => {

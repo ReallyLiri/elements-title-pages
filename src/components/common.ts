@@ -212,12 +212,12 @@ export const ImageTile = styled.div`
   align-items: start;
 `;
 
-export const StyledImage = styled.img<{ large?: boolean }>`
+export const StyledImage = styled.img<{ large?: boolean; clickable: boolean }>`
   ${Tile};
   width: min-content;
   max-height: ${({ large }) => (large ? "100%" : "90%")};
   max-width: ${({ large }) => (large ? "100%" : "90%")};
-  cursor: pointer;
+  cursor: ${({ clickable }) => (clickable ? "pointer" : "default")};
 `;
 
 export const LanguagesInfo = styled.div`
