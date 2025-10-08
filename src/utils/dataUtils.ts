@@ -495,7 +495,13 @@ export const loadEditionsData = (
     loadCopiesAsync(),
   ])
     .then(
-      ([elementsText, secondaryText, diagramDirectories, dottedLinesMap, copiesMap]) => {
+      ([
+        elementsText,
+        secondaryText,
+        diagramDirectories,
+        dottedLinesMap,
+        copiesMap,
+      ]) => {
         const processData = (csvText: string, type: keyof typeof ItemTypes) => {
           return new Promise<Item[]>((resolve) => {
             Papa.parse(csvText, {
@@ -533,9 +539,12 @@ export const loadEditionsData = (
                       imprintEn: raw["imprint_EN"] as string | null,
                       scanUrl: (() => {
                         const originalUrls = raw["scan_url"]
-                          ? (raw["scan_url"] as string).split(";").filter(Boolean)
+                          ? (raw["scan_url"] as string)
+                              .split(";")
+                              .filter(Boolean)
                           : [];
-                        const copiesUrls = copiesMap[raw["key"] as string] || [];
+                        const copiesUrls =
+                          copiesMap[raw["key"] as string] || [];
                         const allUrls = [...originalUrls, ...copiesUrls];
                         return allUrls.length > 0 ? allUrls : null;
                       })(),
@@ -798,9 +807,7 @@ const transformDottedLineCase = (caseCode: string): string => {
   return caseCode;
 };
 
-const loadCopiesAsync = async (): Promise<
-  Record<string, string[]>
-> => {
+const loadCopiesAsync = async (): Promise<Record<string, string[]>> => {
   const response = await fetch(CSV_PATH_COPIES);
   const data = await response.text();
   const copies = Papa.parse<EditionCopy>(data.trim(), { header: true }).data;

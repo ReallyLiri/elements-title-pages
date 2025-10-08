@@ -33,7 +33,9 @@ const addEditionToCsv = (edition: EditionRequestBody): void => {
   const parsed = loadCsvData(csvFile);
 
   if (edition.key) {
-    const existingIndex = parsed.data.findIndex((row) => row.key === edition.key);
+    const existingIndex = parsed.data.findIndex(
+      (row) => row.key === edition.key,
+    );
     if (existingIndex !== -1) {
       throw new Error(`Edition with key ${edition.key} already exists`);
     }

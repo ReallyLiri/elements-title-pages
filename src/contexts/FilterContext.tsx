@@ -124,10 +124,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   }, [data]);
 
   const filteredItems = useMemo(
-    () =>
-      data.filter((t) =>
-        filterRecord(t, range, filters, filtersInclude),
-      ),
+    () => data.filter((t) => filterRecord(t, range, filters, filtersInclude)),
     [data, range, filters, filtersInclude, maxYear],
   );
 

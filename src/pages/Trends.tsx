@@ -1,2 +1,2 @@
-import Trends from './trends/index';
+import Trends from "./trends/index";
 export default Trends;

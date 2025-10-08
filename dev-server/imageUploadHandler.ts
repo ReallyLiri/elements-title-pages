@@ -41,7 +41,8 @@ export const handleImageUploadRequest = async (
       return;
     }
 
-    const fileExtension = files.file.name.split('.').pop()?.toLowerCase() || 'png';
+    const fileExtension =
+      files.file.name.split(".").pop()?.toLowerCase() || "png";
     const filename = `${key}_tp.${fileExtension}`;
 
     saveImageFile(files.file.data, filename);
@@ -49,7 +50,7 @@ export const handleImageUploadRequest = async (
     sendJsonResponse(res, 201, {
       success: true,
       filename,
-      path: `/tps/${filename}`
+      path: `/tps/${filename}`,
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
