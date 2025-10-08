@@ -63,7 +63,7 @@ const StyledTable = styled.table`
   td:has(.language-container) {
     white-space: normal;
   }
-  
+
   td:has(.short-title-container) {
     white-space: nowrap;
     max-width: 0;
@@ -201,160 +201,170 @@ function Catalogue() {
     filters.type.some((item) => item.value === "Elements");
 
   const columns = useMemo(
-    () => [
-      columnHelper.accessor((row) => row, {
-        id: "actions",
-        header: "",
-        enableSorting: false,
-        cell: (info) => (
-          <Row gap={0.5} justifyStart>
-            <ViewButton
-              onClick={() => setSelectedItem(info.getValue())}
-              title="Full View"
-            >
-              ⤢
-            </ViewButton>
-            {info.row.original.scanUrl && info.row.original.scanUrl.length > 0 &&
-              info.row.original.scanUrl.map((url, index) => (
+    () =>
+      [
+        columnHelper.accessor((row) => row, {
+          id: "actions",
+          header: "",
+          enableSorting: false,
+          cell: (info) => (
+            <Row gap={0.5} justifyStart>
+              <ViewButton
+                onClick={() => setSelectedItem(info.getValue())}
+                title="Full View"
+              >
+                ⤢
+              </ViewButton>
+              {info.row.original.scanUrl &&
+                info.row.original.scanUrl.length > 0 &&
+                info.row.original.scanUrl.map((url, index) => (
+                  <a
+                    key={index}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View Facsimile Online"
+                  >
+                    <FaBookReader style={{ color: SEA_COLOR }} />
+                  </a>
+                ))}
+              {info.row.original.diagrams_extracted && (
                 <a
-                  key={index}
-                  href={url}
+                  href={`/diagrams?key=${info.row.original.key}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  title="View Facsimile Online"
+                  title="View Diagrams"
                 >
-                  <FaBookReader style={{ color: SEA_COLOR }} />
+                  <SiMaterialdesign style={{ color: SEA_COLOR }} />
                 </a>
-              ))
-            }
-            {info.row.original.diagrams_extracted && (
-              <a
-                href={`/diagrams?key=${info.row.original.key}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="View Diagrams"
-                >
-                <SiMaterialdesign style={{ color: SEA_COLOR }} />
-              </a>
-              )
-            }
-          </Row>
-        ),
-        size: 60,
-      }),
-      columnHelper.accessor("year", {
-        header: "Year",
-        cell: (info) => info.getValue() || NO_YEAR,
-        size: 10,
-        sortingFn: (rowA, rowB) => {
-          const yearA = rowA.original.year;
-          const yearB = rowB.original.year;
-          if (!yearA && !yearB) return 0;
-          if (!yearA) return 1;
-          if (!yearB) return -1;
-          return yearA.localeCompare(yearB);
-        },
-      }),
-      columnHelper.accessor("cities", {
-        header: "Cities",
-        cell: (info) => joinArr(info.getValue()) || NO_CITY,
-        size: 40,
-      }),
-      columnHelper.accessor("languages", {
-        header: "Languages",
-        cell: (info) => (
-          <div className="language-container">
-            {info.getValue().map((lang, i) => (
-              <LanguageSpan key={i}>{lang}</LanguageSpan>
-            ))}
-          </div>
-        ),
-        size: 100,
-      }),
-      columnHelper.accessor("authors", {
-        header: "Authors",
-        cell: (info) => joinArr(info.getValue()) || NO_AUTHOR,
-        size: 160,
-        sortingFn: (rowA, rowB) => {
-          const authorsA = rowA.original.authors || [];
-          const authorsB = rowB.original.authors || [];
+              )}
+            </Row>
+          ),
+          size: 88,
+        }),
+        columnHelper.accessor("year", {
+          header: "Year",
+          cell: (info) => info.getValue() || NO_YEAR,
+          size: 10,
+          sortingFn: (rowA, rowB) => {
+            const yearA = rowA.original.year;
+            const yearB = rowB.original.year;
+            if (!yearA && !yearB) return 0;
+            if (!yearA) return 1;
+            if (!yearB) return -1;
+            return yearA.localeCompare(yearB);
+          },
+        }),
+        columnHelper.accessor("cities", {
+          header: "Cities",
+          cell: (info) => joinArr(info.getValue()) || NO_CITY,
+          size: 40,
+        }),
+        columnHelper.accessor("languages", {
+          header: "Languages",
+          cell: (info) => (
+            <div className="language-container">
+              {info.getValue().map((lang, i) => (
+                <LanguageSpan key={i}>{lang}</LanguageSpan>
+              ))}
+            </div>
+          ),
+          size: 100,
+        }),
+        columnHelper.accessor("authors", {
+          header: "Authors",
+          cell: (info) => joinArr(info.getValue()) || NO_AUTHOR,
+          size: 160,
+          sortingFn: (rowA, rowB) => {
+            const authorsA = rowA.original.authors || [];
+            const authorsB = rowB.original.authors || [];
 
-          if (authorsA.length === 0 && authorsB.length === 0) return 0;
-          if (authorsA.length === 0) return 1;
-          if (authorsB.length === 0) return -1;
+            if (authorsA.length === 0 && authorsB.length === 0) return 0;
+            if (authorsA.length === 0) return 1;
+            if (authorsB.length === 0) return -1;
 
-          const displayNameA = authorDisplayName(authorsA[0]);
-          const displayNameB = authorDisplayName(authorsB[0]);
+            const displayNameA = authorDisplayName(authorsA[0]);
+            const displayNameB = authorDisplayName(authorsB[0]);
 
-          return displayNameA.localeCompare(displayNameB);
-        },
-      }),
-      showOtherColumns && columnHelper.accessor("title", {
-        header: "Title",
-        cell: (info) => {
-          let val = info.getValue() || "";
-          val = upperFirst(val
-            .replaceAll(/-\s+/gi, "")
-            .replaceAll(/\[vol\. 1]:?\s*/gi, "")
-            .replaceAll(/\[general title page]:?\s*/gi, "")
-            .replace(/\.\s*$/g, "")
-            .trim()
-            .toLowerCase());
-          if (val === "?") {
-            val = "";
-          }
-          return (<div className="short-title-container">{val}</div>);
-        },
-        size: 160,
-      }),
-      columnHelper.accessor("format", {
-        header: "Format",
-        cell: (info) => info.getValue(),
-        size: 60,
-      }),
-      showElementsColumns && columnHelper.accessor("elementsBooks", {
-        header: "Elements Books",
-        enableSorting: false,
-        cell: (info) =>
-          info
-            .getValue()
-            .map((range) =>
-              range.start === range.end
-                ? range.start
-                : `${range.start}-${range.end}`,
-            )
-            .join(", "),
-        size: 105,
-      }),
-      columnHelper.accessor("volumesCount", {
-        header: "Volumes",
-        cell: (info) => info.getValue(),
-        size: 40,
-      }),
-      showElementsColumns && columnHelper.accessor("class", {
-        header: () => (
-          <Row gap={0.5}>
-            W-Class <StyledHelpTip tooltipId={TOOLTIP_WCLASS} />
-          </Row>
-        ),
-        enableSorting: false,
-        cell: (info) => info.getValue(),
-        size: 120,
-      }),
-      showElementsColumns && columnHelper.accessor("additionalContent", {
-        header: "Additional Content",
-        cell: (info) => joinArr(info.getValue()),
-        size: 140,
-      }),
-      columnHelper.accessor("type", {
-        header: () => (
-          <Row gap={0.5}>
-            Classification <StyledHelpTip tooltipId={TOOLTIP_BOOK_TYPE} />
-          </Row>
-        ),
-        size: 120,
-      }),
-    ].filter(Boolean) as ColumnDef<Item>[],
+            return displayNameA.localeCompare(displayNameB);
+          },
+        }),
+        showOtherColumns &&
+          columnHelper.accessor("title", {
+            header: "Title",
+            cell: (info) => {
+              let val = info.getValue() || "";
+              val = upperFirst(
+                val
+                  .replaceAll(/-\s+/gi, "")
+                  .replaceAll(/\[vol\. 1]:?\s*/gi, "")
+                  .replaceAll(/\[general title page]:?\s*/gi, "")
+                  .replace(/\.\s*$/g, "")
+                  .trim()
+                  .toLowerCase(),
+              );
+              if (val === "?") {
+                val = "";
+              }
+              return (
+                <span className="short-title-container" title={val}>
+                  {val}
+                </span>
+              );
+            },
+            size: 160,
+          }),
+        columnHelper.accessor("format", {
+          header: "Format",
+          cell: (info) => info.getValue(),
+          size: 60,
+        }),
+        showElementsColumns &&
+          columnHelper.accessor("elementsBooks", {
+            header: "Elements Books",
+            enableSorting: false,
+            cell: (info) =>
+              info
+                .getValue()
+                .map((range) =>
+                  range.start === range.end
+                    ? range.start
+                    : `${range.start}-${range.end}`,
+                )
+                .join(", "),
+            size: 105,
+          }),
+        columnHelper.accessor("volumesCount", {
+          header: "Volumes",
+          cell: (info) => info.getValue(),
+          size: 40,
+        }),
+        showElementsColumns &&
+          columnHelper.accessor("class", {
+            header: () => (
+              <Row gap={0.5}>
+                W-Class <StyledHelpTip tooltipId={TOOLTIP_WCLASS} />
+              </Row>
+            ),
+            enableSorting: false,
+            cell: (info) => info.getValue(),
+            size: 120,
+          }),
+        showElementsColumns &&
+          columnHelper.accessor("additionalContent", {
+            header: "Additional Content",
+            cell: (info) => joinArr(info.getValue()),
+            size: 140,
+          }),
+        columnHelper.accessor("type", {
+          header: () => (
+            <Row gap={0.5}>
+              Classification <StyledHelpTip tooltipId={TOOLTIP_BOOK_TYPE} />
+            </Row>
+          ),
+          size: 120,
+        }),
+      ].filter(Boolean) as ColumnDef<Item>[],
     [columnHelper, showOtherColumns, showElementsColumns],
   );
 
