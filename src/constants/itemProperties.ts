@@ -1,4 +1,4 @@
-import { FLOATING_CITY, Range } from "../types";
+import {FilterGroup, FLOATING_CITY, Range} from "../types";
 
 const formatCompare = (a: string, b: string): number => {
   const order = [
@@ -74,7 +74,7 @@ export const dottedLinesCasesCompare = (a: string, b: string): number => {
       /^([IVX]+)(?:\.(.+?)(?:\.(\d+))?)?(?:\s+(.+))?$/,
     );
     if (!match)
-      return { book: 999, section: "", sectionOrder: 999, number: 999 };
+      return {book: 999, section: "", sectionOrder: 999, number: 999};
 
     const [, bookRoman, section, numberStr, remainder] = match;
     const book = romanToNumber(bookRoman);
@@ -118,6 +118,7 @@ export const dottedLinesCasesCompare = (a: string, b: string): number => {
 
 export type ItemProperty = {
   displayName: string;
+  filterGroup?: FilterGroup | "General";
   isArray?: boolean;
   customCompareFn?: (a: unknown, b: unknown) => number;
   isTitlePageImageFeature?: boolean;
@@ -132,7 +133,7 @@ function parseRangeIfNeeded(a: Range | string): Range {
     return a;
   }
   if (a === "None") {
-    return { start: 100, end: 100 };
+    return {start: 100, end: 100};
   }
   const parts = (a as string).split("-");
   return {
@@ -158,7 +159,7 @@ export const itemProperties: {
     customCompareFn: ((a: string, b: string) => {
       if (a === FLOATING_CITY) return -1;
       if (b === FLOATING_CITY) return 1;
-      return a.localeCompare(b, undefined, { sensitivity: "base" });
+      return a.localeCompare(b, undefined, {sensitivity: "base"});
     }) as (a: unknown, b: unknown) => number,
     groupByJoinArray: true,
   },
@@ -169,6 +170,7 @@ export const itemProperties: {
   },
   elementsBooks: {
     displayName: "Elements Books (ranges)",
+    filterGroup: "Elements",
     isArray: true,
     notFilterable: true,
     customCompareFn: ((a: Range | string, b: Range | string) => {
@@ -182,6 +184,7 @@ export const itemProperties: {
   },
   elementsBooksExpanded: {
     displayName: "Elements Books",
+    filterGroup: "Elements",
     isArray: true,
     customCompareFn: ((a: string, b: string): number => {
       if (a === "None") return 1;
@@ -193,14 +196,20 @@ export const itemProperties: {
   },
   additionalContent: {
     displayName: "Additional Content",
+    filterGroup: "Elements",
     isArray: true,
   },
-  class: { displayName: "Wardhaugh Class" },
+  class: {
+    displayName: "Wardhaugh Class",
+    filterGroup: "Elements",
+  },
   diagrams_extracted: {
     displayName: "Diagrams Extracted",
+    filterGroup: "Diagrams",
   },
   dotted_lines_cases: {
     displayName: "Dotted Lines Cases",
+    filterGroup: "Diagrams",
     isArray: true,
     customCompareFn: dottedLinesCasesCompare as (
       a: unknown,
@@ -209,6 +218,7 @@ export const itemProperties: {
   },
   has_diagrams: {
     displayName: "Has Diagrams",
+    filterGroup: "Diagrams",
   },
   study_corpora: {
     displayName: "Study Corpus",
@@ -216,20 +226,30 @@ export const itemProperties: {
   },
   format: {
     displayName: "Edition Format",
+    filterGroup: "Material",
     customCompareFn: formatCompare as (a: unknown, b: unknown) => number,
   },
-  volumesCount: { displayName: "Number of Volumes" },
-  hasTitle: { displayName: "Has Title Page" },
+  volumesCount: {
+    displayName: "Number of Volumes",
+    filterGroup: "Material",
+  },
+  hasTitle: {
+    displayName: "Has Title Page",
+    filterGroup: "Title Page",
+  },
   colorInTitle: {
     displayName: "Colors on Title Page",
+    filterGroup: "Title Page",
     isTitlePageImageFeature: true,
   },
   titlePageDesign: {
     displayName: "Title Page Design",
+    filterGroup: "Title Page",
     isTitlePageImageFeature: true,
   },
   titlePageNumberOfTypes: {
     displayName: "Number of Types on Title Page",
+    filterGroup: "Title Page",
     isTitlePageImageFeature: true,
     customCompareFn: ((a: string | null, b: string | null): number => {
       if (a?.includes("Digital")) {
@@ -245,68 +265,82 @@ export const itemProperties: {
   },
   titlePageFrameType: {
     displayName: "Frame Type of Title Page",
+    filterGroup: "Title Page",
     isTitlePageImageFeature: true,
   },
   titlePageEngraving: {
     displayName: "Title Page Engraving",
+    filterGroup: "Title Page",
     isTitlePageImageFeature: true,
   },
   fontTypes: {
     displayName: "Types Present on Title Page",
+    filterGroup: "Title Page",
     isTitlePageImageFeature: true,
     isArray: true,
   },
   otherNames: {
     displayName: "Educational Mentioned Authority on Title Page",
+    filterGroup: "Title Page",
     isArray: true,
   },
   tp_illustration: {
     displayName: "Illustration on Title Page",
+    filterGroup: "Title Page",
   },
   otherNamesClassification: {
     displayName: "Other Educational Authorities Mentioned on Title Page",
+    filterGroup: "Title Page",
     isArray: true,
     notFilterable: true,
     isTitlePageTextFeature: true,
   },
   hasIntendedAudience: {
     displayName: "Intended Audience Mentioned on Title Page",
+    filterGroup: "Title Page",
     notFilterable: true,
     isTitlePageTextFeature: true,
   },
   hasPatronageDedication: {
     displayName: "Patronage Dedication Present on Title Page",
+    filterGroup: "Title Page",
     notFilterable: true,
     isTitlePageTextFeature: true,
   },
   hasAdapterAttribution: {
     displayName: "Adapter Attribution Present on Title Page",
+    filterGroup: "Title Page",
     notFilterable: true,
     isTitlePageTextFeature: true,
   },
   hasAdapterDescription: {
     displayName: "Adapter Description Present on Title Page",
+    filterGroup: "Title Page",
     notFilterable: true,
     isTitlePageTextFeature: true,
   },
   hasPublishingPrivileges: {
     displayName: "Publishing Privileges Present on Title Page",
+    filterGroup: "Title Page",
     notFilterable: true,
     isTitlePageTextFeature: true,
   },
   hasGreekDesignation: {
     displayName: "Greek Designation Present on Title Page",
+    filterGroup: "Title Page",
     notFilterable: true,
     isTitlePageTextFeature: true,
   },
   explicitLanguageReferences: {
     displayName: "Explicit Language References on Title Page",
+    filterGroup: "Title Page",
     isArray: true,
     notFilterable: true,
     isTitlePageTextFeature: true,
   },
   institutions: {
     displayName: "Institutions Mentioned on Title Page",
+    filterGroup: "Title Page",
     isArray: true,
     notFilterable: true,
     isTitlePageTextFeature: true,

@@ -28,6 +28,13 @@ export type Feature =
   | "Adapter Attribution in Imprint"
   | "Adapter Description in Imprint";
 
+export type FilterGroup =
+  | "General"
+  | "Elements"
+  | "Title Page"
+  | "Material"
+  | "Diagrams";
+
 export type Range = {
   start: number;
   end: number;
