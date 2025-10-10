@@ -65,7 +65,17 @@ const filterRecord = (
     if (isEmpty(filterValues)) {
       return true;
     }
-    const fieldValue = t[field];
+    let fieldValue = t[field];
+    if (typeof fieldValue === "string") {
+      fieldValue = fieldValue.replace("(?)", "").replace("?", "").trim();
+    }
+    if (isArray(fieldValue)) {
+      fieldValue = fieldValue.map((v) =>
+        typeof v === "string"
+          ? v.replace("(?)", "").replace("?", "").trim()
+          : v,
+      ) as Item[keyof Item];
+    }
     if (filterValues?.every((v) => v === "Yes" || v === "No")) {
       if (isNil(fieldValue)) {
         return false;
