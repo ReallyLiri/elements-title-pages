@@ -1,0 +1,129 @@
+key,class,subclass,year,century,source,library_city,library,library_collection,shelfmark_no,folios,url
+ms_1,Greek manuscripts,Greek Cardinal Manuscripts,,9,Lee,Oxford,Bodleian,D'Orville,301,001-371,http://digital.bodleian.ox.ac.uk/inquire/p/06cfa3b7-2aad-465e-88ac-0ebe3f2b5d13
+ms_2,Greek manuscripts,Greek Cardinal Manuscripts,,9-12,Lee,Paris,BnF,Gr.,2466,001-241v,http://gallica.bnf.fr/ark:/12148/btv1b107229634/f5.image
+ms_3,Greek manuscripts,Greek Cardinal Manuscripts,,9,Lee,Vatican,Vaticana,Vat.gr.,0190,003-292,http://digi.vatlib.it/mss/detail/178321
+ms_4,Greek manuscripts,Greek Cardinal Manuscripts,,10,Lee,Firenze,Laurenziana,Plut.,28.03,001-189,http://opac.bmlonline.it/Record.htm?record=576912439419
+ms_5,Greek manuscripts,Greek Cardinal Manuscripts,,11,Lee,Bologna,BC dell'Archiginnasio,Fonds Principal,A 0018,001-136,http://badigit.comune.bologna.it/books/A18/scorri.asp?Id=1
+ms_6,Greek manuscripts,Greek Cardinal Manuscripts,,11,Lee,Bologna,BC dell'Archiginnasio,Fonds Principal,A 0019,036-316,http://badigit.comune.bologna.it/books/A19/scorri.asp?Id=1
+ms_7,Greek manuscripts,Greek Cardinal Manuscripts,,12,Lee,Wien,ÖNB,Phil.gr.,031,001-254,http://data.onb.ac.at/rec/AL00116256
+ms_8,Greek manuscripts,Greek Secondary manuscripts,,11,Lee,Istanbul,Topkapi Sarayi Müzesi Kütüphanesi,Fonds principal,001,003-63,
+ms_9,Greek manuscripts,Greek Secondary manuscripts,,12,Lee,Paris,BnF,Gr.,2344,017-366v,http://gallica.bnf.fr/ark:/12148/btv1b10723139w/f22.image.r=2344#
+ms_10,Greek manuscripts,Greek Secondary manuscripts,,13,Lee,Firenze,Laurenziana,Plut.,28.01,245-326v,http://teca.bmlonline.it/ImageViewer/servlet/ImageViewer?idr=TECA0000620182&keyworks=euclides
+ms_11,Greek manuscripts,Greek Secondary manuscripts,,13,Lee,Firenze,Laurenziana,Plut.,28.06,,http://teca.bmlonline.it/ImageViewer/servlet/ImageViewer?idr=TECA0000324726&keyworks=euclides
+ms_12,Greek manuscripts,Greek Secondary manuscripts,,13,Lee,Firenze,Laurenziana,Plut.,87.16,357r-383v,http://opac.bmlonline.it/Record.htm?record=789012450729
+ms_13,Greek manuscripts,Greek Secondary manuscripts,,13,Lee,Paris,BnF,Gr.,2345,006-239,http://gallica.bnf.fr/ark:/12148/btv1b11000284r/f10.image.r=2345
+ms_14,Greek manuscripts,Greek Secondary manuscripts,,13,Lee,Vaticano,Vaticana,Vat.gr.,192,003-95,http://digi.vatlib.it/mss/detail/Vat.gr.192
+ms_15,Greek manuscripts,Greek Secondary manuscripts,,13,Lee,Vaticano,Vaticana,Vat.gr.,207,118-146,http://digi.vatlib.it/mss/detail/Vat.gr.207
+ms_16,Greek manuscripts,Greek Secondary manuscripts,,14,Lee,Firenze,Laurenziana,Plut.,28.02,001-245,http://teca.bmlonline.it/ImageViewer/servlet/ImageViewer?idr=TECA0000620040&keyworks=euclides
+ms_17,Greek manuscripts,Greek Secondary manuscripts,,14,Lee,Firenze,Laurenziana,Plut.,28.08,,http://teca.bmlonline.it/ImageViewer/servlet/ImageViewer?idr=TECA0000327414&keyworks=euclides
+ms_18,Greek manuscripts,Greek Secondary manuscripts,,14,Lee,Modena,Biblioteca,Estense universitaria Fonds principal,α. T. 8. 21(Puntoni 142),002-215v,http://bibliotecaestense.beniculturali.it/info/img/mss/i-mo-beu-alfa.t.8.21.html
+ms_19,Greek manuscripts,Greek Secondary manuscripts,,14,Lee,Oxford,Bodleian,Auct.,F.6.23 (Misc.117),001-266,
+ms_20,Greek manuscripts,Greek Secondary manuscripts,,14,Lee,Oxford,Bodleian,Savile,13,001-315,
+ms_21,Greek manuscripts,Greek Secondary manuscripts,,14,Lee,Paris,BnF,Gr.,2342,001-96,
+ms_22,Greek manuscripts,Greek Secondary manuscripts,,14,Lee,Paris,BnF,Gr.,2373,037-106,http://gallica.bnf.fr/ark:/12148/btv1b10509305h/f79.image.r=2373
+ms_23,Greek manuscripts,Greek Secondary manuscripts,,14,Lee,Venezia,Marciana,Gr.Z.,300 (COLL.0634),001-265,
+ms_24,Greek manuscripts,Greek Secondary manuscripts,,14,Lee,Wien,ÖNB,Pihl.gr.,139,251-297v,
+ms_25,Greek manuscripts,Greek Secondary manuscripts,,15,Lee,Oxford,Bodleian,Auct.,F.3.16 (Misc.090),,
+ms_26,Greek manuscripts,Greek Secondary manuscripts,,15,Lee,Paris,BnF,Gr.,2346,001-166v,http://gallica.bnf.fr/ark:/12148/btv1b525065562/f2.image.r=2346
+ms_27,Greek manuscripts,Greek Secondary manuscripts,,15,Lee,Paris,BnF,Gr.,2531,130-363,http://gallica.bnf.fr/ark:/12148/btv1b10723459v/f135.image.r=2531
+ms_28,Greek manuscripts,Greek Secondary manuscripts,,15,Lee,Vatican,Vaticana,Ottob.gr.,310,001-123,http://digi.vatlib.it/mss/detail/Ott.gr.310
+ms_29,Greek manuscripts,Greek Secondary manuscripts,,15,Lee,Venezia,Marciana,Gr.Z.,301 (coll.0635),001-326v,
+ms_30,Greek manuscripts,Greek Secondary manuscripts,,15,Lee,Venezia,Marciana,Gr.Z.,302 (coll.0730),001-156v,
+ms_31,Greek manuscripts,Greek Secondary manuscripts,,15,Lee,Wien,ÖNB,Phil.gr.,062,050-203v,
+ms_32,Greek manuscripts,Greek Secondary manuscripts,,16,Lee,Paris,BnF,Gr.,2343,,
+ms_33,Greek manuscripts,Greek Secondary manuscripts,,16,Lee,Vaticano,Vaticana,Barb.gr.,244,001-231,http://digi.vatlib.it/mss/detail/Barb.gr.244
+ms_34,Greek manuscripts,Greek Secondary manuscripts,,,Lee,Escorial,Real Biblioteca,Fonds Principal,Phi.III.05 (Andrés 224),001-324v,
+ms_35,Greek manuscripts,Greek Secondary manuscripts,,,Lee,Vatican,Vaticana,Vat.gr.,204 (Scholia),199r-206v,http://digi.vatlib.it/view/MSS_Vat.gr.204
+ms_36,Arabic manuscripts,Ishāq-Thābit text,,,Lee,Copenhagen,,,81,,http://www.kb.dk/manus/ortsam/2009/okt/orientalia/object57581/en/#
+ms_37,Arabic manuscripts,Ishāq-Thābit text,1270,,Lee,Dublin,Chester Beatty Library,MS,3035,126ff. (I.39-XV),http://www.cbl.ie/cbl_image_gallery/search/detail.aspx?imageId=1429&ImageNumber=T0004847a&page=0
+ms_38,Arabic manuscripts,Ishāq-Thābit text,,13,Lee,Madrid,Real Biblioteca de San Lorenzo,Ar.,907,184ff (I-XV),
+ms_39,Arabic manuscripts,Ishāq-Thābit text,,,Lee,Oxford,BL,Huntington,435,221ff. (I.13-XV),
+ms_40,Arabic manuscripts,Ishāq-Thābit text,1238,,Lee,Oxford,BL,Thurston,11,212ff. (I-XV),
+ms_41,Arabic manuscripts,Ishāq-Thābit text,1607,,Lee,Rabat,Bibliothèque Générale,Al-Khizāna al-'Āmma,53,46-178 (I-V),
+ms_42,Arabic manuscripts,Ishāq-Thābit text,,,Lee,Rabat,,,1101,,
+ms_43,Arabic manuscripts,Ishāq-Thābit text,,15,Lee,Tehran,Majlis-I Shūrā,MS,200,226ff. (I-XV),
+ms_44,Arabic manuscripts,Ishāq-Thābit text,954,,Lee,Tehran,Malik,,3586,240ff.,
+ms_45,Arabic manuscripts,Ishāq-Thābit text,1042,,Lee,Uppsala,UB,O.Vet.,20,202ff.,
+ms_46,Latin Boethius manuscripts,Ma,1004,,Lee,Berne,Burgerbibliothek,Ms,87,f.9rv (excerpts of the Institutiones II.5-6 and extracts of Euclid [II.def.2; V.deff.]),http://www.e-codices.unifr.ch/en/list/one/bbb/0087
+ms_47,Latin Boethius manuscripts,Ma,,9,Lee,Berne,Burgerbibliothek,Ms,234,f.1r-53v,http://www.e-codices.unifr.ch/en/list/one/bbb/0234
+ms_48,Latin Boethius manuscripts,Ma,,10,Lee,Cambridge,Trinity,TC,R.15.14,f.81r-87r (excerpts of the Institutiones II.5-6 and extracts of Euclid),http://trin-sites-pub.trin.cam.ac.uk/james/viewpage.php?index=1165
+ms_49,Latin Boethius manuscripts,Ma,,10,Lee,Paris,BnF,Lat.,12963,,http://gallica.bnf.fr/ark:/12148/btv1b90767898.r=12963?rk=42918;4
+ms_50,Latin Boethius manuscripts,Ma,,10,Lee,Paris,BnF,Lat.,13048,f.59r-82r,http://gallica.bnf.fr/ark:/12148/btv1b10533305c.r=13048?rk=21459;2
+ms_51,Latin Boethius manuscripts,Ma,,10,Lee,Reims,Bibl.Mun.,Ms,975,f.33ff.,http://bvmm.irht.cnrs.fr/consult/consult.php?reproductionId=4772
+ms_52,Latin Boethius manuscripts,Ma,,10,Lee,St.Gallen,Stiftsbibliothek,Ms,199,p.115-374,http://www.e-codices.unifr.ch/en/list/one/csg/0199
+ms_53,Latin Boethius manuscripts,Mb,,10,Lee,Munich,BSB,Clm,13084,f.53v-54r,http://www.manuscripta-mediaevalia.de/dokumente/html/obj50010823
+ms_54,Latin Boethius manuscripts,Mb,,9,Lee,Vatican,Vatican,Palat.lat.,1564,f.79r-82r,http://digi.vatlib.it/view/MSS_Pal.lat.1564
+ms_55,Latin Boethius manuscripts,Mb,,9,Lee,Wolfenbütel,HAB,Cod.Guelf.,105 Gud.lat.,f.43r-45v,http://diglib.hab.de/mss/105-gud-lat/start.htm
+ms_56,Latin Boethius manuscripts,Mc,,10,Lee,Einsiedeln,Stiftsbibliothek,Cod.,358,"p.1-20, 23-37",http://www.e-codices.unifr.ch/en/list/one/sbe/0358
+ms_57,Latin Boethius manuscripts,Mc,,13,Lee,Florence,BLaur.,Plutei,29.19,f.1r-27r,http://mss.bmlonline.it/Catalogo.aspx?Shelfmark=Plut.29.19
+ms_58,Latin Boethius manuscripts,Mc,,11,Lee,Madrid,BN,Ms.,9088,f.130r-142r,http://bdh.bne.es/bnesearch/detalle/bdh0000042034
+ms_59,Latin Boethius manuscripts,Mc,,9,Lee,Munich,BSB,Clm,560,f.122r-149r,http://www.manuscripta-mediaevalia.de/dokumente/html/obj50007062
+ms_60,Latin Boethius manuscripts,Mc,,16,Lee,New York,CU,Plimpton,164,f.1r-15v (copy of Naples V A 13),http://ds.lib.berkeley.edu/PlimptonMS164_20
+ms_61,Latin Boethius manuscripts,Mc,,10,Lee,Oxford,BL,Douce,125,p.1-67,http://bodley30.bodley.ox.ac.uk:8180/luna/servlet/s/41j8bz
+ms_62,Latin Boethius manuscripts,Mc,,9,Lee,Paris,BnF,Lat.,13955,f.107r-123v,http://gallica.bnf.fr/ark:/12148/btv1b9066978w/f115.image.r=13955
+ms_63,Latin Boethius manuscripts,Mc,,9,Lee,Paris,BnF,Lat.,14080,"f.65r-72v, 80r-87v, 79r-v, 73r-77v",http://gallica.bnf.fr/ark:/12148/btv1b90778250/f69.item.r=14080
+ms_64,Latin Boethius manuscripts,Mc,,11,Lee,St.Gallen,Stiftsbibliothek,Ms,830,p.283-309,http://www.e-codices.unifr.ch/en/list/one/csg/0830
+ms_65,Latin Boethius manuscripts,Mc,,16,Lee,Vatican,Vatican,Lat.,3353,f.379r-383r (incomplete),http://digi.vatlib.it/view/MSS_Vat.lat.3353
+ms_66,Latin Boethius manuscripts,Mc,,16,Lee,Vatican,Vatican,Lat.,3906,f.189r (fragment),http://digi.vatlib.it/view/MSS_Vat.lat.3906
+ms_67,Latin Boethius manuscripts,Mc,,9,Lee,Vatican,Vatican,Regin.lat.,1023,f.16r (fragment),http://digi.vatlib.it/view/MSS_Reg.lat.1023
+ms_68,Latin Boethius manuscripts,Mc,,12,Lee,Wroclaw,BU,Rehdig,55,f.2r-26r,http://www.bibliotekacyfrowa.pl/dlibra/doccontent?id=42814
+ms_69,Latin Boethius manuscripts,Md,,11,Lee,London,BL,Harley,3595,f.57r-68r (Md),http://www.bl.uk/manuscripts/Viewer.aspx?ref=harley_ms_3595_f057r
+ms_70,Latin Boethius manuscripts,Md,,12,Lee,Munich,BSB,Clm,13021,f.194r-202r,http://daten.digitale-sammlungen.de/bsb00047475/image_393
+ms_71,Latin Boethius manuscripts,Md,,16,Lee,New York,CU,Plimpton,250,f.98r-129r (copy of Vat.lat.3123),http://ds.lib.berkeley.edu/PlimptonMS250_20
+ms_72,Latin Boethius manuscripts,Md,,12,Lee,Paris,BnF,Lat.,7185,f.62v-80r,http://gallica.bnf.fr/ark:/12148/btv1b9072601b/f76.item.r=7185
+ms_73,Latin Boethius manuscripts,Md,,12,Lee,Vatican,Vatican,Lat.,3123,f.65v-84r,http://digi.vatlib.it/mss/detail/Vat.lat.3123
+ms_74,Latin manuscripts,Early texts based upon the Greek,500,,Lee,Verona,Bibl.Capit.,MS,XL (38),331v-r; 326v-r; 341r-v; 338r-v; 336r-v; 343r-v (XI.24-25; XII.2-3.8; XIII.2-3.7.),
+ms_75,Latin manuscripts,Early texts based upon the Greek,,9,Lee,Munich,UB,MS,2o757,2ff,
+ms_76,Latin manuscripts,Greek-Latin Translation from the twelfth century,,13,Lee,Paris,BnF,Lat.,7373,"2r-167v; 173r-175v (I-XIII, XV); 167v-172v (abbreviated version of books 14 and 15)",
+ms_77,Latin manuscripts,Greek-Latin Translation from the twelfth century,,14,Lee,Firenze,BNC,Conv.soppr.,C I 448,1r-104v (incomplete; ends within X.48),
+ms_78,Latin manuscripts,An-Nayrizi's Commentary on Books I-X,,13-14,Lee,Madrid,BN,Ms.,10010,"13v-36v, 49v-50r",http://bdh.bne.es/bnesearch/detalle/bdh0000042244
+ms_79,Latin manuscripts,Version I (Adelard of Bath),,13,Lee,Bruges,SB,MS,529,1r-48v (I-VIII.25),
+ms_80,Latin manuscripts,Version I (Adelard of Bath),1300,14,Lee,London,BL,Burney,275,302r-308r (VII.3-VIII.25),http://www.bl.uk/manuscripts/FullDisplay.aspx?ref=Burney_MS_275&index=71
+ms_81,Latin manuscripts,Version I (Adelard of Bath),,12,Lee,Oxford,TC,MS,47,139r-180v (I-VIII.22),
+ms_82,Latin manuscripts,Version I (Adelard of Bath),,12,Lee,Paris,BnF,Lat.,16201,35r-82r (I-VIII.22),
+ms_83,Latin manuscripts,Hermann of Carinthia,,13,Lee,Paris,BnF,Lat.,16646,2r-108r (I-XII),http://gallica.bnf.fr/ark:/12148/btv1b9066077c.r=16646?rk=42918;4#
+ms_84,Latin manuscripts,Hermann of Carinthia,,12-13,Lee,Oxford,BL,Digby,174,160r-v (XI-XI.4); 160v-173v (XI.5-XIV.1),
+ms_85,Latin manuscripts,Gerard of Cremona,,13,Lee,Boulogne-sur-Mer,Bibliotheque de la Ville,MS,196,1r-144r (I-XV); 144r-147v (scholia I-XIX),http://bvmm.irht.cnrs.fr/sommaire/sommaire.php?reproductionId=20326
+ms_86,Latin manuscripts,Gerard of Cremona,,14,Lee,Bruges,SB,MS,521,1r-109v (I-XV); 109v-113v (scholia I-XVII),http://cabrio.bibliotheek.brugge.be/browse/webgaleries/MS521/index.html
+ms_87,Latin manuscripts,Gerard of Cremona,,15,Lee,Paris,BnF,Lat.,7216,1r-107v (I-XV); 107v-108r (scholia XVIII-XIX),http://gallica.bnf.fr/ark:/12148/btv1b90661821.r=7216?rk=21459;2
+ms_88,Latin manuscripts,Gerard of Cremona,,14-15,Lee,Paris,BnF,Lat.,7377B,1r-9r (scholia I-XVII),http://gallica.bnf.fr/ark:/12148/btv1b9066499b.r=7377b?rk=21459;2
+ms_89,Latin manuscripts,Gerard of Cremona,,16,Lee,Paris,BnF,Lat.,11247,"78r-91v (scholia IV-XVII, XX-XXII)",http://gallica.bnf.fr/ark:/12148/btv1b9066855j.r=11247?rk=42918;4
+ms_90,Latin manuscripts,Gerard of Cremona,,14,Lee,Vatican,Vatican,Lat.,7299,1r-136r (I-XV); 136r-141r (scholia I-XVII),
+ms_91,Latin manuscripts,Gerard of Cremona,,14,Lee,Vatican,Vatican,Regin.lat.,1268,"113v-142v (XI.5-XV), 142v-143r (scholia I-III); 144r-183v, 206r-207v",http://digi.vatlib.it/view/MSS_Reg.lat.1268
+ms_92,Latin manuscripts,Gerard of Cremona,,14,Lee,Vatican,Vatican,Rossiano,579,1r-126v (I-XV); 126v-130v (scholia I-XVII),
+ms_93,Latin manuscripts,Version II (Robert of Chester),,12-13,Lee,London,BL,Addit.,34018,1r-78v,
+ms_94,Latin manuscripts,Version II (Robert of Chester),,13,Lee,London,BL,Sloane,285,14v-65v (VI.5-XV.5),http://www.bl.uk/catalogues/illuminatedmanuscripts/ILLUMIN.ASP?Size=mid&IllID=7195
+ms_95,Latin manuscripts,Version II (Robert of Chester),,12,Lee,London,BL,Royal,15 A XXVII,1r-47r,http://www.bl.uk/catalogues/illuminatedmanuscripts/record.asp?MSID=7525&CollID=16&NStart=150127
+ms_96,Latin manuscripts,Version II (Robert of Chester),,13-14,Lee,Munich,BSB,Clm,14353,78r-93v (I-XI; proofs only up to IV.1),http://daten.digitale-sammlungen.de/0004/bsb00046572/images/
+ms_97,Latin manuscripts,Version II (Robert of Chester),,13,Lee,Oxford,BL,Auct.,F.5.28,ii r-xli v; 1r- 15r (I-XV); 74r,http://bodley30.bodley.ox.ac.uk:8180/luna/servlet/s/6p89o8
+ms_98,Latin manuscripts,Version II (Robert of Chester),,13,Lee,Paris,BnF,Lat.,7215,4r-105r (I-XV),http://gallica.bnf.fr/ark:/12148/btv1b9066183f.r=7215?rk=64378;0
+ms_99,Latin manuscripts,Version II (Robert of Chester),,13,Lee,Paris,BnF,Lat.,7374,"1r-13v, 109v-111r (I.1-I.46; intro to book 10)",http://gallica.bnf.fr/ark:/12148/btv1b90661947.r=7374?rk=21459;2
+ms_100,Latin manuscripts,Version II (Robert of Chester),,13,Lee,Paris,BnF,Lat.,16647,3r-92r (X.def.-XV end),http://gallica.bnf.fr/ark:/12148/btv1b10720896n.r=16647?rk=42918;4
+ms_101,Latin manuscripts,Mélanges of the Robert and the Boethius Texts,,12,Lee,Paris,BnF,Lat.,10257,1r-88r (I-XV); 164r-169v (I-III),http://gallica.bnf.fr/ark:/12148/btv1b90669532.r=10257?rk=128756;0
+ms_102,Latin manuscripts,Version III (Johannes de Tinemue),,13,Lee,Oxford,BL,D'Orville,70,23v-38r (VII.7-X.36),
+ms_103,Latin manuscripts,Version III (Johannes de Tinemue),,13,Lee,Paris,BnF,Lat.,16648,2r-58r (X-XV),http://gallica.bnf.fr/ark:/12148/btv1b9066076z.r=16648?rk=42918;4
+ms_104,Latin manuscripts,Commentary from the early thirteenth century,,13,Lee,Bonn,UB,S,73,1r-86r (I-XV),http://www.manuscripta-mediaevalia.de/dokumente/html/obj31275198
+ms_105,Latin manuscripts,Commentary from the early thirteenth century,,15,Lee,Paris,BnF,Lat.,7292,188r-210v (I-II.13),http://gallica.bnf.fr/ark:/12148/btv1b10721152w/f4.image.r=7292
+ms_106,Latin manuscripts,Commentary from the early thirteenth century,,13,Lee,Oxford,BL,Savile,19,1r-36v (I-V); 36v-156r (VI-XV),
+ms_107,Latin manuscripts,Campanus of Novara,,15,Lee,Berkeley,University of California,MS,UCB 79,2r-165v (I-XV),http://ds.lib.berkeley.edu/BANCMSUCB079_1
+ms_108,Latin manuscripts,Campanus of Novara,,15,Lee,Florence,BLaur.,Plut.,29.27,"1r-7v (I-II.4, enunciations only)",http://opac.bmlonline.it/Record.htm?record=581712430999
+ms_109,Latin manuscripts,Campanus of Novara,,15,Lee,Florence,BLaur.,San Marco,212,1r-132v (I-XV),http://opac.bmlonline.it/Record.htm?record=979212479749
+ms_110,Latin manuscripts,Campanus of Novara,,14,Lee,London,BL,Harely,5266,1r-126v (I-XV),http://www.bl.uk/manuscripts/FullDisplay.aspx?ref=Harley_MS_5266&index=0
+ms_111,Latin manuscripts,Campanus of Novara,,14,Lee,London,BL,Harley,5404,1r-139v (I-XII),http://www.bl.uk/manuscripts/Viewer.aspx?ref=harley_ms_5404_fs001r
+ms_112,Latin manuscripts,Campanus of Novara,,13,Lee,Madrid,BN,Ms.,8989,1r-89v (I-XV),http://bdh-rd.bne.es/viewer.vm?lang=en&id=0000088851&page=1
+ms_113,Latin manuscripts,Campanus of Novara,,14,Lee,Munich,BSB,Clm,14448,70r-100r (I-VI.32),http://daten.digitale-sammlungen.de/bsb00046456/image_1
+ms_114,Latin manuscripts,Campanus of Novara,,13-14,Lee,Munich,BSB,Clm,28209,1r-89v (I-XV),http://daten.digitale-sammlungen.de/bsb00107150/image_1
+ms_115,Latin manuscripts,Campanus of Novara,1300,,Lee,New York,CU,MS Plimpton,156,1r-164v (I-XV),http://ds.lib.berkeley.edu/PlimptonMS156_20
+ms_116,Latin manuscripts,Campanus of Novara,,15,Lee,New York,CU,MS Plimpton,157,1r-14v (I),http://ds.lib.berkeley.edu/PlimptonMS157_20
+ms_117,Latin manuscripts,Campanus of Novara,,14,Lee,New York,CU,MS Plimpton,158,1rv (II.3 end – II.7 beginning),http://ds.lib.berkeley.edu/PlimptonMS158_20
+ms_118,Latin manuscripts,Campanus of Novara,,14,Lee,New York,CU,MS Plimpton,160,"1r-16v; 17r-31v (I-III.29 beginning, III.8 end – V.12)",http://ds.lib.berkeley.edu/PlimptonMS160_20
+ms_119,Latin manuscripts,Campanus of Novara,,13,Lee,New York,CU,MS Plimpton,165,29v-140v (I-XV),http://ds.lib.berkeley.edu/PlimptonMS165_20
+ms_120,Latin manuscripts,Campanus of Novara,,13,Lee,Oxford,BL,Arch. Selden,B 13,3r-65v (I-XV),http://bodley30.bodley.ox.ac.uk:8180/luna/servlet/s/5g89d0
+ms_121,Latin manuscripts,Campanus of Novara,,15,Lee,Oxford,BL,Canon. misc.,554,1r-73r (I-VI),
+ms_122,Latin manuscripts,Campanus of Novara,,14,Lee,Oxford,BL,Digby,191,1r-66v (I-XV),
+ms_123,Latin manuscripts,Campanus of Novara,,14,Lee,Paris,BnF,Lat.,7366,51r-84v (I-VI.2),http://gallica.bnf.fr/ark:/12148/btv1b9067095m.r=7366?rk=64378;0
+ms_124,Latin manuscripts,Campanus of Novara,,13,Lee,Paris,BnF,Lat.,16197,2r-134v (I-XV),http://gallica.bnf.fr/ark:/12148/btv1b9067733x.r=16197?rk=21459;2
+ms_125,Latin manuscripts,Campanus of Novara,,14,Lee,Paris,BnF,Lat.,16198,2r-73v (I-XV),http://gallica.bnf.fr/ark:/12148/btv1b90671704.r=16198?rk=42918;4
+ms_126,Latin manuscripts,Campanus of Novara,,14,Lee,Vatican,Vatican,Palat.lat.,1351,1r-195v (I.3 end – XV),http://digi.vatlib.it/mss/detail/Pal.lat.1351
+ms_127,Latin manuscripts,Campanus of Novara,,15,Lee,Vatican,Vatican,Urb.lat.,506,2r-159v (I-XV),http://digi.vatlib.it/mss/detail/Urb.lat.506
+ms_128,Latin manuscripts,Campanus of Novara,,14,Lee,Vatican,Vatican,Urb.lat.,507,"1r-143r (I-X.3 beg., X-XV)",http://digi.vatlib.it/mss/detail/Urb.lat.507
