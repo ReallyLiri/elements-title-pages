@@ -8,7 +8,7 @@ import {
   Item,
   Range,
 } from "../types";
-import { startCase, uniq } from "lodash";
+import { isEmpty, startCase, uniq } from "lodash";
 import Papa from "papaparse";
 import { Dispatch, SetStateAction } from "react";
 import {
@@ -22,6 +22,11 @@ import {
   ItemTypes,
 } from "../constants";
 import { Point } from "react-simple-maps";
+import {
+  ElementsStatementCode,
+  parseElementsStatementCode,
+  toDisplay,
+} from "../types/elements_statment.ts";
 import { groupByMap } from "./util.ts";
 import { fetchDiagramDirectories } from "./diagrams.ts";
 
@@ -686,14 +691,40 @@ export const loadEditionsData = (
                         },
                         {} as Partial<Record<Feature, string[]>>,
                       ),
-                      diagrams_extracted: diagramDirectories.has(
-                        raw["key"] as string,
+                      diagrams_extracted: startCase(
+                        diagramDirectories.has(raw["key"] as string).toString(),
                       ),
-                      dotted_lines_cases: dottedLinesMap[raw["key"] as string]
-                        ?.cases || ["Uncatalogued"],
                       has_diagrams:
-                        dottedLinesMap[raw["key"] as string]?.hasDiagrams ||
-                        "Uncatalogued",
+                        startCase(
+                          dottedLinesMap[
+                            raw["key"] as string
+                          ]?.hasDiagrams.toString(),
+                        ) || "Uncatalogued",
+                      dotted_lines_cases: dottedLinesMap[
+                        raw["key"] as string
+                      ]?.all.map(toDisplay) || ["Uncatalogued"],
+                      dotted_lines_b79_cases: startCase(
+                        dottedLinesMap[
+                          raw["key"] as string
+                        ]?.hasBook7To9Token.toString(),
+                      ),
+                      dotted_lines_b10_case: startCase(
+                        dottedLinesMap[
+                          raw["key"] as string
+                        ]?.hasBook10Dotted.toString(),
+                      ),
+                      dotted_lines_b2_cases:
+                        dottedLinesMap[raw["key"] as string]?.book2Cases.map(
+                          toDisplay,
+                        ) || [],
+                      dotted_lines_geo_cases:
+                        dottedLinesMap[raw["key"] as string]?.geoCases.map(
+                          toDisplay,
+                        ) || [],
+                      dotted_lines_other_cases:
+                        dottedLinesMap[raw["key"] as string]?.otherCases.map(
+                          toDisplay,
+                        ) || [],
                     };
                   })
                   .filter((item) => !!item.key);
@@ -732,81 +763,6 @@ export const loadCitiesAsync = async (): Promise<Record<string, Point>> => {
   );
 };
 
-const transformDottedLineCase = (caseCode: string): string => {
-  const match = caseCode.match(/^b(\d+)(.*)$/);
-  if (!match) {
-    return caseCode;
-  }
-
-  const bookNum = parseInt(match[1], 10);
-  const suffix = match[2];
-
-  const romanNumerals = [
-    "",
-    "I",
-    "II",
-    "III",
-    "IV",
-    "V",
-    "VI",
-    "VII",
-    "VIII",
-    "IX",
-    "X",
-    "XI",
-    "XII",
-    "XIII",
-    "XIV",
-    "XV",
-    "XVI",
-  ];
-
-  if (bookNum > 16) {
-    const bookNumStr = match[1];
-    const firstDigit = parseInt(bookNumStr[0], 10);
-    const remainingDigits = parseInt(bookNumStr.slice(1), 10);
-
-    if (firstDigit <= 16 && remainingDigits <= 16) {
-      const firstRoman = romanNumerals[firstDigit];
-      const secondRoman = romanNumerals[remainingDigits];
-      return `${firstRoman}-${secondRoman}`;
-    }
-    return caseCode;
-  }
-
-  const romanBook = romanNumerals[bookNum];
-
-  if (!suffix) {
-    return romanBook || caseCode;
-  }
-
-  if (suffix === "m") {
-    return `${romanBook} throughout`;
-  }
-
-  if (suffix.startsWith("p")) {
-    const propNum = suffix.slice(1);
-    return `${romanBook}.${propNum}`;
-  }
-
-  if (suffix.startsWith("d")) {
-    const defNum = suffix.slice(1);
-    return `${romanBook}.Def.${defNum}`;
-  }
-
-  if (suffix.startsWith("cn")) {
-    const cnNum = suffix.slice(2);
-    return `${romanBook}.CN.${cnNum}`;
-  }
-
-  if (suffix.startsWith("post")) {
-    const postNum = suffix.slice(4);
-    return `${romanBook}.Post.${postNum}`;
-  }
-
-  return caseCode;
-};
-
 const loadCopiesAsync = async (): Promise<Record<string, string[]>> => {
   const response = await fetch(CSV_PATH_COPIES);
   const data = await response.text();
@@ -827,7 +783,18 @@ const loadCopiesAsync = async (): Promise<Record<string, string[]>> => {
 };
 
 const loadDottedLinesAsync = async (): Promise<
-  Record<string, { cases: string[]; hasDiagrams: string }>
+  Record<
+    string,
+    {
+      hasDiagrams: boolean;
+      hasBook7To9Token: boolean;
+      hasBook10Dotted: boolean;
+      book2Cases: ElementsStatementCode[];
+      geoCases: ElementsStatementCode[];
+      otherCases: ElementsStatementCode[];
+      all: ElementsStatementCode[];
+    }
+  >
 > => {
   const response = await fetch(CSV_PATH_DOTTED_LINES);
   const data = await response.text();
@@ -839,29 +806,32 @@ const loadDottedLinesAsync = async (): Promise<
     dottedLines,
     (line) => line.key,
     (line) => {
-      const cases: string[] = [];
-
-      Object.entries(line).forEach(([colName, value]) => {
-        if (colName.startsWith("uc_") && colName !== "uc_other" && value) {
-          const transformedCase = transformDottedLineCase(
-            colName.replace("uc_", ""),
-          );
-          cases.push(transformedCase);
-        }
-      });
-
-      if (line.uc_other) {
-        const otherCases = line.uc_other
-          .split(", ")
-          .map(transformDottedLineCase);
-        cases.push(...otherCases);
+      const hasDiagrams = !isEmpty(line.has_diagrams);
+      const hasBook7To9Token = !isEmpty(line.uc_b79_token);
+      const hasBook10Dotted = !isEmpty(line.uc_b10);
+      const book2Cases =
+        line.uc_b2?.split(", ").map(parseElementsStatementCode) || [];
+      const geoCases =
+        line.uc_geo_dotted?.split(", ").map(parseElementsStatementCode) || [];
+      const otherCases =
+        line.uc_other?.split(", ").map(parseElementsStatementCode) || [];
+      const all =
+        [...book2Cases, ...geoCases, ...otherCases].filter(Boolean) || [];
+      if (hasBook7To9Token) {
+        all.unshift(parseElementsStatementCode("b79"));
+      }
+      if (hasBook10Dotted) {
+        all.unshift(parseElementsStatementCode("b10"));
       }
 
-      const hasDiagrams = line.has_diagrams || "False";
-
       return {
-        cases,
         hasDiagrams,
+        hasBook7To9Token,
+        hasBook10Dotted,
+        book2Cases,
+        geoCases,
+        otherCases,
+        all,
       };
     },
   );

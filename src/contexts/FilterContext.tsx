@@ -30,6 +30,8 @@ type FilterContextType = {
   setRange: React.Dispatch<React.SetStateAction<[number, number]>>;
   filterOpen: boolean;
   setFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  includeUndated: boolean;
+  setIncludeUndated: React.Dispatch<React.SetStateAction<boolean>>;
   minYear: number;
   maxYear: number;
 };
@@ -49,10 +51,14 @@ const filterRecord = (
   range: [number, number],
   filters: Record<string, FilterValue[] | undefined>,
   filtersInclude: Record<string, boolean>,
+  includeUndated: boolean,
 ): boolean => {
   const year = t.year ? parseInt(t.year.split("/")[0]) : null;
   if (range[0] > 0 && range[1] > 0) {
-    if (!year || year < range[0] || year > range[1]) {
+    if (!year) {
+      return includeUndated;
+    }
+    if (year < range[0] || year > range[1]) {
       return false;
     }
   }
@@ -65,7 +71,17 @@ const filterRecord = (
     if (isEmpty(filterValues)) {
       return true;
     }
-    const fieldValue = t[field];
+    let fieldValue = t[field];
+    if (typeof fieldValue === "string") {
+      fieldValue = fieldValue.replace("(?)", "").replace("?", "").trim();
+    }
+    if (isArray(fieldValue)) {
+      fieldValue = fieldValue.map((v) =>
+        typeof v === "string"
+          ? v.replace("(?)", "").replace("?", "").trim()
+          : v,
+      ) as Item[keyof Item];
+    }
     if (filterValues?.every((v) => v === "Yes" || v === "No")) {
       if (isNil(fieldValue)) {
         return false;
@@ -110,6 +126,10 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     "filters-open",
     false,
   );
+  const [includeUndated, setIncludeUndated] = useLocalStorage<boolean>(
+    "include-undated",
+    true,
+  );
 
   useEffect(() => {
     loadEditionsData(setData, true);
@@ -124,8 +144,11 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   }, [data]);
 
   const filteredItems = useMemo(
-    () => data.filter((t) => filterRecord(t, range, filters, filtersInclude)),
-    [data, range, filters, filtersInclude, maxYear],
+    () =>
+      data.filter((t) =>
+        filterRecord(t, range, filters, filtersInclude, includeUndated),
+      ),
+    [data, range, filters, filtersInclude, includeUndated, maxYear],
   );
 
   const value = {
@@ -140,6 +163,8 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     setRange,
     filterOpen,
     setFilterOpen,
+    includeUndated,
+    setIncludeUndated,
     minYear,
     maxYear,
   };

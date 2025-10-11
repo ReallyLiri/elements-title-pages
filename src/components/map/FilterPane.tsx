@@ -40,6 +40,21 @@ const StyledRangeSlider = styled(RangeSlider)`
   }
 `;
 
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  input[type="checkbox"] {
+    margin: 0;
+  }
+
+  label {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+`;
+
 export const FilterPane = () => {
   const {
     data,
@@ -50,6 +65,8 @@ export const FilterPane = () => {
     filterOpen,
     range,
     setRange,
+    includeUndated,
+    setIncludeUndated,
     minYear,
     maxYear,
   } = useFilter();
@@ -66,6 +83,16 @@ export const FilterPane = () => {
         value={range}
         onChange={setRange}
       />
+
+      <CheckboxContainer>
+        <input
+          type="checkbox"
+          id="include-undated"
+          checked={includeUndated}
+          onChange={(e) => setIncludeUndated(e.target.checked)}
+        />
+        <label htmlFor="include-undated">Include undated</label>
+      </CheckboxContainer>
 
       <FiltersGroup
         data={data}

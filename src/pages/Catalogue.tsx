@@ -228,7 +228,7 @@ function Catalogue() {
                     <FaBookReader style={{ color: SEA_COLOR }} />
                   </a>
                 ))}
-              {info.row.original.diagrams_extracted && (
+              {info.row.original.diagrams_extracted === "True" && (
                 <a
                   href={`/diagrams?key=${info.row.original.key}`}
                   target="_blank"

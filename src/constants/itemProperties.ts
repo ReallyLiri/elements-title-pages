@@ -1,4 +1,5 @@
-import {FilterGroup, FLOATING_CITY, Range} from "../types";
+import { FilterGroup, FLOATING_CITY, Range } from "../types";
+import { compareElementsStatementCode } from "../types/elements_statment.ts";
 
 const formatCompare = (a: string, b: string): number => {
   const order = [
@@ -27,95 +28,6 @@ const formatCompare = (a: string, b: string): number => {
   }
 };
 
-export const dottedLinesCasesCompare = (a: string, b: string): number => {
-  if (a === "Uncatalogued" && b === "Uncatalogued") return 0;
-  if (a === "Uncatalogued") return 1;
-  if (b === "Uncatalogued") return -1;
-
-  const parseCase = (caseStr: string) => {
-    const romanToNumber = (roman: string): number => {
-      const romanMap: { [key: string]: number } = {
-        I: 1,
-        II: 2,
-        III: 3,
-        IV: 4,
-        V: 5,
-        VI: 6,
-        VII: 7,
-        VIII: 8,
-        IX: 9,
-        X: 10,
-        XI: 11,
-        XII: 12,
-        XIII: 13,
-        XIV: 14,
-        XV: 15,
-        XVI: 16,
-      };
-      return romanMap[roman] || 999;
-    };
-
-    // Handle range format like "VII-IX"
-    const rangeMatch = caseStr.match(/^([IVX]+)-([IVX]+)$/);
-    if (rangeMatch) {
-      const [, startRoman] = rangeMatch;
-      const startBook = romanToNumber(startRoman);
-      return {
-        book: startBook,
-        section: "",
-        sectionOrder: 999,
-        number: 0,
-        remainder: "",
-      };
-    }
-
-    // Handle standard format like "I.Def.2", "III.5", "I throughout"
-    const match = caseStr.match(
-      /^([IVX]+)(?:\.(.+?)(?:\.(\d+))?)?(?:\s+(.+))?$/,
-    );
-    if (!match)
-      return {book: 999, section: "", sectionOrder: 999, number: 999};
-
-    const [, bookRoman, section, numberStr, remainder] = match;
-    const book = romanToNumber(bookRoman);
-    const number = numberStr ? parseInt(numberStr, 10) : 0;
-
-    const sectionOrder =
-      section === "Def"
-        ? 0
-        : section === "Post"
-          ? 1
-          : section === "CN"
-            ? 2
-            : 999;
-
-    return {
-      book,
-      section: section || "",
-      sectionOrder,
-      number,
-      remainder: remainder || "",
-    };
-  };
-
-  const parsedA = parseCase(a);
-  const parsedB = parseCase(b);
-
-  if (parsedA.book !== parsedB.book) {
-    return parsedA.book - parsedB.book;
-  }
-
-  if (parsedA.sectionOrder !== parsedB.sectionOrder) {
-    return parsedA.sectionOrder - parsedB.sectionOrder;
-  }
-
-  if (parsedA.number !== parsedB.number) {
-    return parsedA.number - parsedB.number;
-  }
-
-  return a.localeCompare(b);
-};
-
 export type ItemProperty = {
   displayName: string;
   filterGroup?: FilterGroup | "General";
@@ -133,7 +45,7 @@ function parseRangeIfNeeded(a: Range | string): Range {
     return a;
   }
   if (a === "None") {
-    return {start: 100, end: 100};
+    return { start: 100, end: 100 };
   }
   const parts = (a as string).split("-");
   return {
@@ -159,7 +71,7 @@ export const itemProperties: {
     customCompareFn: ((a: string, b: string) => {
       if (a === FLOATING_CITY) return -1;
       if (b === FLOATING_CITY) return 1;
-      return a.localeCompare(b, undefined, {sensitivity: "base"});
+      return a.localeCompare(b, undefined, { sensitivity: "base" });
     }) as (a: unknown, b: unknown) => number,
     groupByJoinArray: true,
   },
@@ -207,18 +119,42 @@ export const itemProperties: {
     displayName: "Diagrams Extracted",
     filterGroup: "Diagrams",
   },
+  has_diagrams: {
+    displayName: "Has Diagrams",
+    filterGroup: "Diagrams",
+  },
+  dotted_lines_b79_cases: {
+    displayName: "Case: Token Lines VII-IX",
+    filterGroup: "Diagrams",
+  },
+  dotted_lines_b10_case: {
+    displayName: "Case: Token Units X",
+    filterGroup: "Diagrams",
+  },
+  dotted_lines_b2_cases: {
+    displayName: "Case: Non-geo Dotted Variation II",
+    filterGroup: "Diagrams",
+    isArray: true,
+    customCompareFn: compareElementsStatementCode,
+  },
+  dotted_lines_geo_cases: {
+    displayName: "Case: Geo Dotted",
+    filterGroup: "Diagrams",
+    isArray: true,
+    customCompareFn: compareElementsStatementCode,
+  },
+  dotted_lines_other_cases: {
+    displayName: "Case: Dotted (Other)",
+    filterGroup: "Diagrams",
+    isArray: true,
+    customCompareFn: compareElementsStatementCode,
+  },
   dotted_lines_cases: {
     displayName: "Dotted Lines Cases",
     filterGroup: "Diagrams",
     isArray: true,
-    customCompareFn: dottedLinesCasesCompare as (
-      a: unknown,
-      b: unknown,
-    ) => number,
-  },
-  has_diagrams: {
-    displayName: "Has Diagrams",
-    filterGroup: "Diagrams",
+    notFilterable: true,
+    customCompareFn: compareElementsStatementCode,
   },
   study_corpora: {
     displayName: "Study Corpus",

@@ -63,13 +63,10 @@ export const FiltersGroup = ({
     .filter((key) => !fields[key as keyof Item]?.notFilterable)
     .map((field) => field as keyof Item);
 
-  const groupOrder = [
-    "Common",
-    "Elements",
-    "Title Page",
-    "Material",
-    "Diagrams",
-  ];
+  const groupOrder = useMemo(
+    () => ["Common", "Elements", "Title Page", "Material", "Diagrams"],
+    [],
+  );
   const [collapsedGroups, setCollapsedGroups] = useState<
     Record<string, boolean>
   >({});
@@ -131,7 +128,9 @@ export const FiltersGroup = ({
                   return 0;
                 }),
             )
-            .map((n) => n.toString()),
+            .map((n) =>
+              n.toString().replace("(?)", "").replace("?", "").trim(),
+            ),
         ).map(
           field === "authors"
             ? (n) => ({
