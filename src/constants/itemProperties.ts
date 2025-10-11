@@ -1,5 +1,5 @@
-import {FilterGroup, FLOATING_CITY, Range} from "../types";
-import {compareElementsStatementCode} from "../types/elements_statment.ts";
+import { FilterGroup, FLOATING_CITY, Range } from "../types";
+import { compareElementsStatementCode } from "../types/elements_statment.ts";
 
 const formatCompare = (a: string, b: string): number => {
   const order = [
@@ -45,7 +45,7 @@ function parseRangeIfNeeded(a: Range | string): Range {
     return a;
   }
   if (a === "None") {
-    return {start: 100, end: 100};
+    return { start: 100, end: 100 };
   }
   const parts = (a as string).split("-");
   return {
@@ -71,7 +71,7 @@ export const itemProperties: {
     customCompareFn: ((a: string, b: string) => {
       if (a === FLOATING_CITY) return -1;
       if (b === FLOATING_CITY) return 1;
-      return a.localeCompare(b, undefined, {sensitivity: "base"});
+      return a.localeCompare(b, undefined, { sensitivity: "base" });
     }) as (a: unknown, b: unknown) => number,
     groupByJoinArray: true,
   },

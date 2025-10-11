@@ -8,9 +8,9 @@ import {
   Item,
   Range,
 } from "../types";
-import {isEmpty, startCase, uniq} from "lodash";
+import { isEmpty, startCase, uniq } from "lodash";
 import Papa from "papaparse";
-import {Dispatch, SetStateAction} from "react";
+import { Dispatch, SetStateAction } from "react";
 import {
   CSV_PATH_CITIES,
   CSV_PATH_COPIES,
@@ -21,10 +21,14 @@ import {
   FeatureToColumnName,
   ItemTypes,
 } from "../constants";
-import {Point} from "react-simple-maps";
-import {ElementsStatementCode, parseElementsStatementCode, toDisplay} from "../types/elements_statment.ts";
-import {groupByMap} from "./util.ts";
-import {fetchDiagramDirectories} from "./diagrams.ts";
+import { Point } from "react-simple-maps";
+import {
+  ElementsStatementCode,
+  parseElementsStatementCode,
+  toDisplay,
+} from "../types/elements_statment.ts";
+import { groupByMap } from "./util.ts";
+import { fetchDiagramDirectories } from "./diagrams.ts";
 
 const parseBooks = (
   booksRaw: string | null,
@@ -82,7 +86,7 @@ const parseBooks = (
         }
       } else if (singleMatch) {
         const num = parseInt(singleMatch[1], 10);
-        elementsBooks.push({start: num, end: num});
+        elementsBooks.push({ start: num, end: num });
         elementsBooksExpanded.push(num);
       } else {
         console.error(`Unrecognized book format: ${part}`);
@@ -90,7 +94,7 @@ const parseBooks = (
     }
   }
 
-  return {elementsBooks, elementsBooksExpanded, additionalContent};
+  return { elementsBooks, elementsBooksExpanded, additionalContent };
 };
 
 const ifEmpty = <T>(arr: T[], defaultValue: T[]): T[] =>
@@ -117,27 +121,27 @@ function parseExplicitLanguages(langs: string) {
             /latin|latina|latino|latine|latein|latijn|latinum|latinit|la tine|latijnsche/,
           lang: "Latin",
         },
-        {match: /greek|graec|græc|grec|griech/, lang: "Greek"},
-        {match: /fran[çc]ois|francois|french/, lang: "French"},
-        {match: /italien|italian|italiana|thoscana|toscana/, lang: "Italian"},
+        { match: /greek|graec|græc|grec|griech/, lang: "Greek" },
+        { match: /fran[çc]ois|francois|french/, lang: "French" },
+        { match: /italien|italian|italiana|thoscana|toscana/, lang: "Italian" },
         {
           match: /spanish|espanol|española|traduzidas|castellano|hispanice/,
           lang: "Spanish",
         },
-        {match: /german|teutsch|teutscher|deutsch/, lang: "German"},
+        { match: /german|teutsch|teutscher|deutsch/, lang: "German" },
         {
           match: /nederduyts|nederduytse|neerduid|neerduyts|neerdvyt|niderland/,
           lang: "Dutch",
         },
-        {match: /arabic/, lang: "Arabic"},
-        {match: /english|englishe/, lang: "English"},
+        { match: /arabic/, lang: "Arabic" },
+        { match: /english|englishe/, lang: "English" },
         {
           match: /romance|vulgar|volgar|vvlgare|vernacul|en nostre langve/,
           lang: "general-vernacular",
         },
       ];
 
-      for (const {match, lang} of rules) {
+      for (const { match, lang } of rules) {
         if (match.test(normalized)) return lang;
       }
 
@@ -166,7 +170,7 @@ function parseInstitutions(institutions: string) {
         },
       ];
 
-      for (const {match, label} of rules) {
+      for (const { match, label } of rules) {
         if (match.test(normalized)) return label;
       }
 
@@ -497,12 +501,12 @@ export const loadEditionsData = (
   ])
     .then(
       ([
-         elementsText,
-         secondaryText,
-         diagramDirectories,
-         dottedLinesMap,
-         copiesMap,
-       ]) => {
+        elementsText,
+        secondaryText,
+        diagramDirectories,
+        dottedLinesMap,
+        copiesMap,
+      ]) => {
         const processData = (csvText: string, type: keyof typeof ItemTypes) => {
           return new Promise<Item[]>((resolve) => {
             Papa.parse(csvText, {
@@ -541,8 +545,8 @@ export const loadEditionsData = (
                       scanUrl: (() => {
                         const originalUrls = raw["scan_url"]
                           ? (raw["scan_url"] as string)
-                            .split(";")
-                            .filter(Boolean)
+                              .split(";")
+                              .filter(Boolean)
                           : [];
                         const copiesUrls =
                           copiesMap[raw["key"] as string] || [];
@@ -578,8 +582,8 @@ export const loadEditionsData = (
                         : null,
                       titlePageDesign: hasTitleImage
                         ? startCase(
-                          (raw["tp_design"] as string | null)?.toLowerCase(),
-                        )
+                            (raw["tp_design"] as string | null)?.toLowerCase(),
+                          )
                         : null,
                       titlePageNumberOfTypes: hasTitleImage
                         ? raw["num_of_types"]
@@ -588,41 +592,41 @@ export const loadEditionsData = (
                         : null,
                       titlePageFrameType: hasTitleImage
                         ? startCase(
-                          (raw["frame_type"] as string | null)?.toLowerCase(),
-                        )
+                            (raw["frame_type"] as string | null)?.toLowerCase(),
+                          )
                         : null,
                       titlePageEngraving: hasTitleImage
                         ? startCase(
-                          (raw["engraving"] as string | null)?.toLowerCase(),
-                        )
+                            (raw["engraving"] as string | null)?.toLowerCase(),
+                          )
                         : null,
                       hasPrintersDevice: hasTitleImage
                         ? toYesNo(raw["printer_device"] as string)
                         : null,
                       fontTypes: hasTitleImage
                         ? (raw["font_types"] as string | null)
-                        ?.split(", ")
-                        .map((type) => startCase(type.toLowerCase()))
-                        .filter(Boolean) || []
+                            ?.split(", ")
+                            .map((type) => startCase(type.toLowerCase()))
+                            .filter(Boolean) || []
                         : [],
                       calligraphicFeatures: hasTitleImage
                         ? startCase(
-                          (
-                            raw["calligraphic_features"] as string | null
-                          )?.toLowerCase(),
-                        )
+                            (
+                              raw["calligraphic_features"] as string | null
+                            )?.toLowerCase(),
+                          )
                         : null,
                       notes: raw["notes"] as string | null,
                       otherNamesClassification: hasTitle
                         ? ((raw["other_names_classification"] as string | null)
-                          ?.split(", ")
-                          .map((s) => mapOtherName(s))
-                          .concat(raw["EUCLID REF"] ? ["Euclid"] : [])
-                          .filter(Boolean) ?? [])
+                            ?.split(", ")
+                            .map((s) => mapOtherName(s))
+                            .concat(raw["EUCLID REF"] ? ["Euclid"] : [])
+                            .filter(Boolean) ?? [])
                         : null,
                       hasIntendedAudience: hasTitle
                         ? raw["EXPLICIT RECIPIENT"] ||
-                        raw["EXPLICIT RECIPIENT 2"]
+                          raw["EXPLICIT RECIPIENT 2"]
                           ? ("Yes" as const)
                           : ("No" as const)
                         : null,
@@ -648,24 +652,24 @@ export const loadEditionsData = (
                         : null,
                       explicitLanguageReferences: hasTitle
                         ? parseExplicitLanguages(
-                          `${raw["EXPLICITLY STATED: TRANSLATED FROM"] || ""}, ${raw["EXPLICITLY STATED: TRANSLATED TO"] || ""}`,
-                        )
+                            `${raw["EXPLICITLY STATED: TRANSLATED FROM"] || ""}, ${raw["EXPLICITLY STATED: TRANSLATED TO"] || ""}`,
+                          )
                         : null,
                       institutions: hasTitle
                         ? parseInstitutions(
-                          (raw["INSTITUTIONS"] as string | null) || "",
-                        )
+                            (raw["INSTITUTIONS"] as string | null) || "",
+                          )
                         : null,
                       otherNames: hasTitle
                         ? parseOtherNames(
-                          (raw["OTHER NAMES"] as string | null) || "",
-                        )
+                            (raw["OTHER NAMES"] as string | null) || "",
+                          )
                         : null,
                       features: Object.keys(FeatureToColumnName).reduce(
                         (acc, feature) => {
                           acc[feature as Feature] = FeatureToColumnName[
                             feature as Feature
-                            ]
+                          ]
                             .filter((column) => !!raw[column])
                             .map((column) => raw[column] as string)
                             .flatMap((text) =>
@@ -679,7 +683,7 @@ export const loadEditionsData = (
                               type === "elements"
                                 ? [raw["BASE CONTENT"] as string]
                                 : raw["ELEMENTS DESIGNATION"] === "none" &&
-                                type === "elements"
+                                    type === "elements"
                                   ? []
                                   : acc[feature as Feature];
                           }
@@ -687,14 +691,40 @@ export const loadEditionsData = (
                         },
                         {} as Partial<Record<Feature, string[]>>,
                       ),
-                      diagrams_extracted: startCase(diagramDirectories.has(raw["key"] as string).toString()),
-                      has_diagrams: startCase(dottedLinesMap[raw["key"] as string]?.hasDiagrams.toString()) || "Uncatalogued",
-                      dotted_lines_cases: dottedLinesMap[raw["key"] as string]?.all.map(toDisplay) || ["Uncatalogued"],
-                      dotted_lines_b79_cases: startCase(dottedLinesMap[raw["key"] as string]?.hasBook7To9Token.toString()),
-                      dotted_lines_b10_case: startCase(dottedLinesMap[raw["key"] as string]?.hasBook10Dotted.toString()),
-                      dotted_lines_b2_cases: dottedLinesMap[raw["key"] as string]?.book2Cases.map(toDisplay) || [],
-                      dotted_lines_geo_cases: dottedLinesMap[raw["key"] as string]?.geoCases.map(toDisplay) || [],
-                      dotted_lines_other_cases: dottedLinesMap[raw["key"] as string]?.otherCases.map(toDisplay) || [],
+                      diagrams_extracted: startCase(
+                        diagramDirectories.has(raw["key"] as string).toString(),
+                      ),
+                      has_diagrams:
+                        startCase(
+                          dottedLinesMap[
+                            raw["key"] as string
+                          ]?.hasDiagrams.toString(),
+                        ) || "Uncatalogued",
+                      dotted_lines_cases: dottedLinesMap[
+                        raw["key"] as string
+                      ]?.all.map(toDisplay) || ["Uncatalogued"],
+                      dotted_lines_b79_cases: startCase(
+                        dottedLinesMap[
+                          raw["key"] as string
+                        ]?.hasBook7To9Token.toString(),
+                      ),
+                      dotted_lines_b10_case: startCase(
+                        dottedLinesMap[
+                          raw["key"] as string
+                        ]?.hasBook10Dotted.toString(),
+                      ),
+                      dotted_lines_b2_cases:
+                        dottedLinesMap[raw["key"] as string]?.book2Cases.map(
+                          toDisplay,
+                        ) || [],
+                      dotted_lines_geo_cases:
+                        dottedLinesMap[raw["key"] as string]?.geoCases.map(
+                          toDisplay,
+                        ) || [],
+                      dotted_lines_other_cases:
+                        dottedLinesMap[raw["key"] as string]?.otherCases.map(
+                          toDisplay,
+                        ) || [],
                     };
                   })
                   .filter((item) => !!item.key);
@@ -724,7 +754,7 @@ export const loadEditionsData = (
 export const loadCitiesAsync = async (): Promise<Record<string, Point>> => {
   const response = await fetch(CSV_PATH_CITIES);
   const data = await response.text();
-  const cities = Papa.parse<City>(data.trim(), {header: true}).data;
+  const cities = Papa.parse<City>(data.trim(), { header: true }).data;
   cities.push(FLOATING_CITY_ENTRY);
   return groupByMap(
     cities,
@@ -736,7 +766,7 @@ export const loadCitiesAsync = async (): Promise<Record<string, Point>> => {
 const loadCopiesAsync = async (): Promise<Record<string, string[]>> => {
   const response = await fetch(CSV_PATH_COPIES);
   const data = await response.text();
-  const copies = Papa.parse<EditionCopy>(data.trim(), {header: true}).data;
+  const copies = Papa.parse<EditionCopy>(data.trim(), { header: true }).data;
 
   const copiesMap: Record<string, string[]> = {};
 
@@ -752,51 +782,59 @@ const loadCopiesAsync = async (): Promise<Record<string, string[]>> => {
   return copiesMap;
 };
 
-const loadDottedLinesAsync = async (): Promise<Record<string, {
-  hasDiagrams: boolean;
-  hasBook7To9Token: boolean;
-  hasBook10Dotted: boolean;
-  book2Cases: ElementsStatementCode[];
-  geoCases: ElementsStatementCode[];
-  otherCases: ElementsStatementCode[];
-  all: ElementsStatementCode[];
-}>> => {
+const loadDottedLinesAsync = async (): Promise<
+  Record<
+    string,
+    {
+      hasDiagrams: boolean;
+      hasBook7To9Token: boolean;
+      hasBook10Dotted: boolean;
+      book2Cases: ElementsStatementCode[];
+      geoCases: ElementsStatementCode[];
+      otherCases: ElementsStatementCode[];
+      all: ElementsStatementCode[];
+    }
+  >
+> => {
   const response = await fetch(CSV_PATH_DOTTED_LINES);
   const data = await response.text();
   const dottedLines = Papa.parse<DottedLine>(data.trim(), {
     header: true,
   }).data;
 
-  return groupByMap(dottedLines, (line) => line.key, (line) => {
+  return groupByMap(
+    dottedLines,
+    (line) => line.key,
+    (line) => {
+      const hasDiagrams = !isEmpty(line.has_diagrams);
+      const hasBook7To9Token = !isEmpty(line.uc_b79_token);
+      const hasBook10Dotted = !isEmpty(line.uc_b10);
+      const book2Cases =
+        line.uc_b2?.split(", ").map(parseElementsStatementCode) || [];
+      const geoCases =
+        line.uc_geo_dotted?.split(", ").map(parseElementsStatementCode) || [];
+      const otherCases =
+        line.uc_other?.split(", ").map(parseElementsStatementCode) || [];
+      const all =
+        [...book2Cases, ...geoCases, ...otherCases].filter(Boolean) || [];
+      if (hasBook7To9Token) {
+        all.unshift(parseElementsStatementCode("b79"));
+      }
+      if (hasBook10Dotted) {
+        all.unshift(parseElementsStatementCode("b10"));
+      }
 
-    const hasDiagrams = !isEmpty(line.has_diagrams);
-    const hasBook7To9Token = !isEmpty(line.uc_b79_token);
-    const hasBook10Dotted = !isEmpty(line.uc_b10);
-    const book2Cases = line.uc_b2?.split(", ").map(parseElementsStatementCode) || [];
-    const geoCases = line.uc_geo_dotted?.split(", ").map(parseElementsStatementCode) || [];
-    const otherCases = line.uc_other?.split(", ").map(parseElementsStatementCode) || [];
-    const all = [
-      ...book2Cases,
-      ...geoCases,
-      ...otherCases
-    ].filter(Boolean) || [];
-    if (hasBook7To9Token) {
-      all.unshift(parseElementsStatementCode("b79"));
-    }
-    if (hasBook10Dotted) {
-      all.unshift(parseElementsStatementCode("b10"));
-    }
-
-    return {
-      hasDiagrams,
-      hasBook7To9Token,
-      hasBook10Dotted,
-      book2Cases,
-      geoCases,
-      otherCases,
-      all,
-    };
-  },);
+      return {
+        hasDiagrams,
+        hasBook7To9Token,
+        hasBook10Dotted,
+        book2Cases,
+        geoCases,
+        otherCases,
+        all,
+      };
+    },
+  );
 };
 
 export const authorDisplayName = (author: string) => {

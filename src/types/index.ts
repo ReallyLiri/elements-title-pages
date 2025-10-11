@@ -85,11 +85,11 @@ export type Item = {
   otherNames: string[] | null;
   diagrams_extracted: string;
   has_diagrams: string;
-  dotted_lines_b79_cases: string,
-  dotted_lines_b10_case: string,
-  dotted_lines_b2_cases: string[],
-  dotted_lines_geo_cases: string[],
-  dotted_lines_other_cases: string[],
+  dotted_lines_b79_cases: string;
+  dotted_lines_b10_case: string;
+  dotted_lines_b2_cases: string[];
+  dotted_lines_geo_cases: string[];
+  dotted_lines_other_cases: string[];
   dotted_lines_cases: string[];
 };
 
