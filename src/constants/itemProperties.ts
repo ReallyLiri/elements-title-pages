@@ -1,5 +1,5 @@
 import { FilterGroup, FLOATING_CITY, Range } from "../types";
-import { compareElementsStatementCode } from "../types/elements_statment.ts";
+import { compareBookStatementRef } from "../types/book_statement_ref.ts";
 
 const formatCompare = (a: string, b: string): number => {
   const order = [
@@ -135,26 +135,26 @@ export const itemProperties: {
     displayName: "Case: Non-geo Dotted Variation II",
     filterGroup: "Diagrams",
     isArray: true,
-    customCompareFn: compareElementsStatementCode,
+    customCompareFn: compareBookStatementRef,
   },
   dotted_lines_geo_cases: {
     displayName: "Case: Geo Dotted",
     filterGroup: "Diagrams",
     isArray: true,
-    customCompareFn: compareElementsStatementCode,
+    customCompareFn: compareBookStatementRef,
   },
   dotted_lines_other_cases: {
     displayName: "Case: Dotted (Other)",
     filterGroup: "Diagrams",
     isArray: true,
-    customCompareFn: compareElementsStatementCode,
+    customCompareFn: compareBookStatementRef,
   },
   dotted_lines_cases: {
     displayName: "Dotted Lines Cases",
     filterGroup: "Diagrams",
     isArray: true,
     notFilterable: true,
-    customCompareFn: compareElementsStatementCode,
+    customCompareFn: compareBookStatementRef,
   },
   study_corpora: {
     displayName: "Study Corpus",

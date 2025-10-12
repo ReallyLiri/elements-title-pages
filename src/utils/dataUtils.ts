@@ -23,10 +23,10 @@ import {
 } from "../constants";
 import { Point } from "react-simple-maps";
 import {
-  ElementsStatementCode,
-  parseElementsStatementCode,
+  BookStatementRef,
+  parseBookStatementRef,
   toDisplay,
-} from "../types/elements_statment.ts";
+} from "../types/book_statement_ref.ts";
 import { groupByMap } from "./util.ts";
 import { fetchDiagramDirectories } from "./diagrams.ts";
 
@@ -789,10 +789,10 @@ const loadDottedLinesAsync = async (): Promise<
       hasDiagrams: boolean;
       hasBook7To9Token: boolean;
       hasBook10Dotted: boolean;
-      book2Cases: ElementsStatementCode[];
-      geoCases: ElementsStatementCode[];
-      otherCases: ElementsStatementCode[];
-      all: ElementsStatementCode[];
+      book2Cases: BookStatementRef[];
+      geoCases: BookStatementRef[];
+      otherCases: BookStatementRef[];
+      all: BookStatementRef[];
     }
   >
 > => {
@@ -810,18 +810,18 @@ const loadDottedLinesAsync = async (): Promise<
       const hasBook7To9Token = !isEmpty(line.uc_b79_token);
       const hasBook10Dotted = !isEmpty(line.uc_b10);
       const book2Cases =
-        line.uc_b2?.split(", ").map(parseElementsStatementCode) || [];
+        line.uc_b2?.split(", ").map(parseBookStatementRef) || [];
       const geoCases =
-        line.uc_geo_dotted?.split(", ").map(parseElementsStatementCode) || [];
+        line.uc_geo_dotted?.split(", ").map(parseBookStatementRef) || [];
       const otherCases =
-        line.uc_other?.split(", ").map(parseElementsStatementCode) || [];
+        line.uc_other?.split(", ").map(parseBookStatementRef) || [];
       const all =
         [...book2Cases, ...geoCases, ...otherCases].filter(Boolean) || [];
       if (hasBook7To9Token) {
-        all.unshift(parseElementsStatementCode("b79"));
+        all.unshift(parseBookStatementRef("b79"));
       }
       if (hasBook10Dotted) {
-        all.unshift(parseElementsStatementCode("b10"));
+        all.unshift(parseBookStatementRef("b10"));
       }
 
       return {
